@@ -15,7 +15,11 @@ return [
     |
     */
 
+
+     //from
     'default' => env('DB_CONNECTION', 'mysql'),
+     //to
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
