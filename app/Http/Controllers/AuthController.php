@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $users = DB::select('select * from usuario where USUARI_C_EMAIL = :email and USUARI_C_PASSWORD = :password', ['email' => $request->input('email'), 'password' => $request->input('password')]);
+        $users = DB::select('select * from USUARIO where USUARI_C_EMAIL = :email and USUARI_C_PASSWORD = :password', ['email' => $request->input('email'), 'password' => $request->input('password')]);
         
         if(count($users) > 0){
             var_dump($users);
