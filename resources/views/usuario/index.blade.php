@@ -28,9 +28,14 @@
     </table>
 </section>
         
+nuevo
+
+<a href="{{url()->current()}}/new" class="btn-floating btn-large red">
+        <i class="large material-icons">nuevo usuario</i>
+    </a>
 
 <div class="fixed-action-btn">
-    <a href="usuarios/nuevo" class="btn-floating btn-large red">
+    <a href="{{url()->current()}}/change" class="btn-floating btn-large red">
         <i class="large material-icons">add</i>
     </a>
 </div>      
