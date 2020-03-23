@@ -30,7 +30,7 @@
         
 
 <div class="fixed-action-btn">
-    <a href="insumo/nuevo" class="btn-floating btn-large red">
+    <a href="usuarios/nuevo" class="btn-floating btn-large red">
         <i class="large material-icons">add</i>
     </a>
 </div>      

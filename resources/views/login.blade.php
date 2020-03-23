@@ -17,8 +17,8 @@
                 </div>
             </form>
             <div class="divider"></div>
-            <p>¿No tienes cuenta? </p>
-            <a href="signup" class="col s12 btn-large">Registrarme</a>
+            
+            <a href="signup" class="col" >Crear cuenta</a>
         </div>
     </div>
 @endsection
