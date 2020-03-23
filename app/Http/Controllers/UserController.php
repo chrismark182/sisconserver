@@ -43,10 +43,11 @@ class UserController extends Controller
     }
 
 
-    public function change(Request $request)
+    public function change(Request $request, $id)
     {
-        if(!empty($request->session()->get('user'))):        
-            return view('usuario/change', ['status' => $request->session()->get('status')]);
+        if(!empty($request->session()->get('user'))):   
+            $users = DB::select('SELECT * FROM usuario where USUARI_N_ID = :id', ['id' => $id]);
+            return view('usuario/change', ['status' => $request->session()->get('status'), 'user' => $users[0]]);
         else:
             return redirect('/');
         endif;
@@ -58,7 +59,7 @@ class UserController extends Controller
         
         if(!empty($request->session()->get('user'))):       
             DB::table('USUARIO')
-            ->where('USUARI_N_ID', 1)
+            ->where('USUARI_N_ID', $request->input('id'))
             ->update(['USUARI_C_PASSWORD' => $request->input('password') 
             ]);   
             

@@ -1,5 +1,9 @@
 .brand-logo img
 {
     width: 200px;
-    margin: 12px;
+    margin: 12px 0;
+}
+nav
+{
+    padding: 0 1em;
 }

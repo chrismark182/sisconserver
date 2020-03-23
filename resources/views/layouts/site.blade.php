@@ -7,18 +7,18 @@
     <title>Constructora Bigote</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{ url('/') }}/css/main.css">
 </head>
 <body>
 <nav class="brown lighten-1">
     <div class="nav-wrapper">
         <a href="#" class="brand-logo">
-            <img src="images/logo_blanco.png" alt="" >
+            <img src="{{ url('/') }}/images/logo_blanco.png" alt="" >
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
         @if (!empty(session('user')))
             <li><a href="clientes">Cliente</a></li>
-            <li><a href="menus">Menu</a></li>
+            <li><a href="{{ url('menus') }}">Menu</a></li>
             <li><a href="categorias">Categoria</a></li>
             <li><a href="{{ url('usuarios') }}">Usuarios</a></li>
             <li><a href="{{ url('logout') }}">Cerrar Sesión</a></li>

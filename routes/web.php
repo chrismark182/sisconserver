@@ -25,7 +25,9 @@ Route::get('/test', ['uses' => 'TestController@index']);
 
 //Usuarios
 Route::get('/usuarios', ['uses' => 'UserController@index']);
-Route::get('/usuarios/change', ['uses' => 'UserController@change']);
+
+Route::get('/usuarios/{id}/newpass', ['uses' => 'UserController@change']);
+
 Route::post('/usuarios/update', ['uses' => 'UserController@update']);
 Route::get('/usuarios/new', ['uses' => 'UserController@new']);    
 Route::post('/usuarios/signup', ['uses' => 'UserController@signup']);  
