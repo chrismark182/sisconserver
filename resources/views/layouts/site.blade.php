@@ -17,6 +17,7 @@
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
         @if (!empty(session('user')))
+            <li><a href="{{ url('sedes') }}">Sedes</a></li>
             <li><a href="clientes">Cliente</a></li>
             <li><a href="{{ url('menus') }}">Menu</a></li>
             <li><a href="categorias">Categoria</a></li>

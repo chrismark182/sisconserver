@@ -36,3 +36,9 @@ Route::post('/usuarios/signup', ['uses' => 'UserController@signup']);
 Route::get('/menus', ['uses' => 'MenuController@index']);
 Route::get('/menus/nuevo', ['uses' => 'MenuController@new']);
 Route::post('/menus/save', ['uses' => 'MenuController@save']);
+
+//sedes
+
+Route::get('/sedes', ['uses' => 'SedesController@index']);
+Route::get('/sedes/nuevo', ['uses' => 'SedesController@new']);
+Route::post('/sedes/save', ['uses' => 'SedesController@save']);
