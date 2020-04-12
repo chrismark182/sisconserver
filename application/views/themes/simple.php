@@ -1,38 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<?php
-		 foreach($js as $file){
-				echo "\n\t\t";
-				?><script src="<?php echo $file; ?>"></script><?php
-		 } echo "\n\t";
-?>
-<?php
-
-		 foreach($css as $file){
-		 	echo "\n\t\t";
-			?><link rel="stylesheet" href="<?php echo $file; ?>" type="text/css" /><?php
-		 } echo "\n\t";
-?>
-<?php
-		if(!empty($meta))
-			foreach($meta as $name=>$content){
-				echo "\n\t\t";
-				?><meta name="<?php echo $name; ?>" content="<?php echo is_array($content) ? implode(", ", $content) : $content; ?>" /><?php
-		 }
-	?>
-	<style type="text/css">
-
-	</style>
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/materialize.min.css">
 </head>
 <body>
-<div>
-	<a href="<?php echo site_url(); ?>">Home</a> |
-	<a href="<?php echo site_url('example/example_1'); ?>">Example 1</a> |
-	<a href="<?php echo site_url('example/example_2'); ?>">Example 2</a> |
-	<a href="<?php echo site_url('example/example_3'); ?>">Example 3</a> |
-	<a href="<?php echo site_url('example/example_4'); ?>">Example 4</a>
-</div>
+	<nav>	
+    	<div class="nav-wrapper">
+      		<a href="#" class="brand-logo">Logo</a>
+      		<ul id="nav-mobile" class="right hide-on-med-and-down">
+        		<li><a href="sass.html">Sass</a></li>
+        		<li><a href="badges.html">Components</a></li>
+        		<li><a href="collapsible.html">JavaScript</a></li>
+      		</ul>
+    	</div>
+  </nav>
 <?php echo $output;?>
 </body>
 </html>

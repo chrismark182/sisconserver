@@ -7,8 +7,8 @@ class C_home extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-		$this->_init();
 		$this->load->model('M_crud');
+		$this->_init();
 		if($this->session->userdata('logged_in')):
 			redirect(base_url().'dashboard','refresh');
         endif;
@@ -16,8 +16,9 @@ class C_home extends CI_Controller {
     }
 	private function _init()
 	{
-		$this->output->set_template('siscon');
+		$this->output->set_template('simple');
 	}
+	
 	public function index()
 	{
         $empresa = $this->M_crud->read('empresa', array());
