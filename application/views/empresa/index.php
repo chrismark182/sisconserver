@@ -1,9 +1,9 @@
 <div class="section container">
-    <h4>Bienvenido a el sistema de restaurant</h4>
-    <p>En estos momento procederá a configurar el nombre del restaurante que quiere empezar a gestionar</p>
+    <h4>Bienvenido a el sistema SISCON</h4>
+    <p>En estos momento procederá a configurar el nombre de la empresa que quiere empezar a gestionar</p>
     
     <div class="section container center">
-    <form action="<?= base_url() ?>home/crear" method="post">
+    <form action="<?= base_url() ?>empresa/crear" method="post">
         <div class="row">
             <div class="input-field col s8">
                 <input id="ruc" type="text" name="ruc" class="validate">

@@ -22,7 +22,7 @@ class M_crud extends CI_Model
 	 *
 	 */
 	public function read($tabla, $datos, $orden = ''){
-		//$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 		$this->db->select('*');
 		$this->db->from($tabla);
 		$this->db->where($datos);

@@ -1,12 +1,12 @@
 <!DOCTYPE>
 <html>
 <head>
-	<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/materialize.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/siscon.css?<?= time() ?>">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Restaurante</title>
+	<title>SISCON</title>
 </head>
 <body>
 	<nav class="blue-grey darken-1" style="padding: 0 1em;">
@@ -14,7 +14,7 @@
 		<?php if($this->session->userdata('logged_in')): ?>
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<?php endif; ?>
-			<a href="<?= base_url() ?>" class="brand-logo"><?=$empresa->EMPRES_RAZON_SOCIAL?></a>
+			<a href="<?= base_url() ?>" class="brand-logo">SISCON</a>
 			<!-- Dropdown Structure -->
 			<ul id="dropUsuario" class="dropdown-content">
 				<li><a href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
@@ -51,7 +51,7 @@
 							<?php endif; ?>
 						<?php endforeach; ?>
 					<?php endif; ?>
-					<li><a href="#" class="dropdown-trigger" data-target="dropUsuario"><?= $session->USUARI_USERNAME ?>
+					<li><a href="#" class="dropdown-trigger" data-target="dropUsuario"><?= $session->USUARI_C_USERNAME ?>
 						<i class="material-icons right">arrow_drop_down</i></a></li>
 				<?php else: ?>
 				
