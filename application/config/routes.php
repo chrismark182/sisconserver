@@ -20,3 +20,10 @@ $route['menu/(:num)/actualizar'] = function ($id){return 'C_menu/actualizar/'.st
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+//Sedes
+
+$route['sedes'] = 'C_sede';
+$route['sede/nuevo'] = 'C_sede/nuevo';
+$route['sede/crear'] = 'C_sede/crear';
+$route['sede/(:num)/editar'] = function ($id){return 'C_sede/$id/editar/'.strtolower($id);};
