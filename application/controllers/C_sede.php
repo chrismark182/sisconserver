@@ -37,9 +37,8 @@ class C_sede extends CI_Controller {
     }
     public function editar($id)
     {  
-        $this->data['sedes'] = $this->M_crud->read('sede',  array('SEDE_N_ID' => $id));  
-        $sede = $this->M_crud->read('sede','', array('SEDE_N_ID' => $id));
-        $this->data['sedes'] = $sedes[0];
+        $sedes = $this->M_crud->read('sede', array('SEDE_N_ID' => $id));
+        $this->data['sede'] = $sedes[0];
         $this->load->view('sede/V_editar',$this->data);
     }
     public function crear(){
