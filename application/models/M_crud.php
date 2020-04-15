@@ -53,8 +53,8 @@ class M_crud extends CI_Model
 
 
 	public function delete($tabla, $datos){
-		//$this->output->enable_profiler(TRUE);
-		$rs = $this->read($tabla, NULL, $datos);
+		$this->output->enable_profiler(TRUE);
+		$rs = $this->read($tabla, $datos);
 
 		if ($rs) {
 			$this->db->where($datos);
