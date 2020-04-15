@@ -27,3 +27,5 @@ $route['sedes'] = 'C_sede';
 $route['sede/nuevo'] = 'C_sede/nuevo';
 $route['sede/crear'] = 'C_sede/crear';
 $route['sede/(:num)/editar'] = function ($id){return 'C_sede/editar/'.strtolower($id);};
+$route['sede/(:num)/actualizar'] = function ($id){return 'C_sede/actualizar/'.strtolower($id);};
+$route['sede/(:num)/eliminar'] = function ($id){return 'C_sede/eliminar/'.strtolower($id);};

@@ -6,6 +6,8 @@
                 <th>Descripcion</th>
                 <th>Direccion</th>
                 <th>Abreviatura</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +23,12 @@
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
+                        <td>
+                        <a href="<?= base_url() ?>sede/<?= $sede->SEDE_N_ID ?>/eliminar" onclick="")>
+                        <i class="material-icons">delete</i>
+                        </a>
+                        </td>
+            
                     </tr>
                 <?php endforeach; ?>  
             <?php endif; ?>

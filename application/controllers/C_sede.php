@@ -60,11 +60,20 @@ class C_sede extends CI_Controller {
                         'SEDE_C_DESCRIPCION'    =>  $this->input->post('descripcion'),
                         'SEDE_C_DIRECCION'      =>  $this->input->post('direccion'),
                         'SEDE_C_ABREVIATURA'    =>  $this->input->post('abreviatura'),
-                        'UPDATE_USUARI_ID' 	    =>  $this->data['session']->USUARI_ID,
-					    'UPDATE_DATE'			=>  date('Y-m-d H:i:s')
+                        'SEDE_C_USUARIO_REG' 	=>  $this->data['session']->USUARI_N_ID,
+					    'SEDE_D_FECHA_REG'	    =>  date('Y-m-d H:i:s')
                     );
         $this->M_crud->update('sede', $data, array('SEDE_N_ID' => $id));      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
+        redirect('sedes', 'refresh');       
+    }  
+    public function eliminar($id)
+    {
+        $data = array(
+            'SEDE_N_ID' => $id
+        );
+        $this->M_crud->delete('sede', $data);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('sedes', 'refresh');       
     }  
 
