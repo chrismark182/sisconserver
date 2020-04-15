@@ -24,7 +24,7 @@
                             </a>
                         </td>
                         <td>
-                        <a href="<?= base_url() ?>sede/<?= $sede->SEDE_N_ID ?>/eliminar" onclick="")>
+                        <a href="sede/<?= $sede->SEDE_N_ID ?>/eliminar")>
                         <i class="material-icons">delete</i>
                         </a>
                         </td>
