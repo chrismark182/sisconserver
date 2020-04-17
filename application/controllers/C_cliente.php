@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_ubicacion extends CI_Controller {
+class C_cliente extends CI_Controller {
     var $data = array();
 
     public function __construct()
@@ -25,41 +25,39 @@ class C_ubicacion extends CI_Controller {
 
     public function index() 
 	{         
-        $sql = "Exec UBICACION_LIS 0,0,0";
-        $this->data['ubicaciones'] = $this->M_crud->sql($sql);
-        
-
-        $this->load->view('ubicacion/V_index', $this->data);
+        $sql = "Exec CLIENTE_LIS 0,0" 
+                                    
+        ;
+        $this->data['clientes'] = $this->M_crud->sql($sql);
+        $this->load->view('cliente/V_index', $this->data);
     }
     public function nuevo()
     {
-        $this->data['sedes'] = $this->M_crud->read('sede', array());
-        $this->data['talmacenes'] = $this->M_crud->read('tipo_almacen', array());
-        $this->load->view('ubicacion/V_nuevo', $this->data);
+        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $this->load->view('cliente/V_nuevo', $this->data);
         
     }
-    public function editar($empresa,$sede,$id)
+    public function editar($empresa,$cliente)
     {  
-        $sql = "Exec UBICACION_LIS "    .$empresa . ","
-                                        .$sede . ","
-                                        .$id;
+        $sql = "Exec CLIENTE_LIS "    .$empresa . ","
+                                        .$cliente ;
         
          
         $ubicaciones = $this->M_crud->sql($sql);
-        $this->data['ubicacion'] = $ubicaciones[0];
-        $this->load->view('ubicacion/V_editar',$this->data);
+        $this->data['cliente'] = $clientes[0];
+        $this->load->view('cliente/V_editar',$this->data);
     }
     public function crear(){
 
-        $sql = "Exec UBICACION_INS "    . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('sede') . "," 
-                                        . $this->input->post('talmacen') . ",'" 
-                                        . $this->input->post('descripcion') . "','" 
-                                        . $this->input->post('metro') . "', '0'," 
-                                        . $this->data['session']->USUARI_N_ID;
+        $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
+                                        . $this->input->post('t_documento') . ",'" 
+                                        . $this->input->post('ndocumento') . "','" 
+                                        . $this->input->post('razon_social') . "','" 
+                                        . $this->input->post('direccion') . "', '0','0','0','0','0','0'," 
+                                        . $this->data['session']->USUARI_N_ID ;
 
         $this->M_crud->sql($sql);
-        redirect('ubicaciones','refresh');   
+        redirect('clientes','refresh');   
                
           
     }

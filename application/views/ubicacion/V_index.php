@@ -22,12 +22,14 @@
                         <td><?=$ubicacion->UBICAC_C_DESCRIPCION?></td>
                         <td><?=$ubicacion->UBICAC_N_M2?></td>
                         <td>
-                            <a href="<?= base_url() ?>ubicacion/<?= $ubicacion->UBICAC_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td>
-                        <a href="ubicacion/<?= $ubicacion->UBICAC_N_ID ?>/eliminar")>
+                        
+                        <a href="ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/eliminar")>
+                        
                         <i class="material-icons">delete</i>
                         </a>
                         </td>
