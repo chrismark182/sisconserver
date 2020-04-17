@@ -5,7 +5,7 @@
         <a href="#!" class="breadcrumb">Menus</a>
       </div>
     </div>
-  </nav>
+</nav>
 <div class="section container">
     <table>
         <thead>
