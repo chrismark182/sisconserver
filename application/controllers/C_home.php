@@ -21,11 +21,11 @@ class C_home extends CI_Controller {
 	
 	public function index()
 	{
-        $empresa = $this->M_crud->read('empresa', array());
+		$empresa = $this->M_crud->sql('Exec EMPRESA_LIS 0');
 		if($empresa):
 			redirect('login','refresh');   
 		else:
 			$this->load->view('empresa/index');
-		endif;
+		endif; 
     }
 }

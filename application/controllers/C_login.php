@@ -18,14 +18,12 @@ class C_login extends CI_Controller {
     
     public function index()
     {
-        $empresa = $this->M_crud->read('empresa', array());
-        if($empresa):
-            $this->data['empresa'] = $empresa[0];
-            $users = $this->M_crud->read('usuario', array());
+		$empresas = $this->M_crud->sql('Exec EMPRESA_LIS 0');
+		if($empresas):
+			$this->data['empresas'] = $empresas;
+            $users = $this->M_crud->sql("Exec USUARIO_LIS 0, '', ''");
             if($users):
-                $this->data['empresa']=$empresa[0];
-                $this->load->view('login/V_index', $this->data);
-                
+                $this->load->view('login/V_index', $this->data);                
             else:
                 $this->load->view('login/V_create', $this->data);
             endif;
@@ -34,12 +32,14 @@ class C_login extends CI_Controller {
         endif;
     }
 	public function userpass(){
-		$existe = $this->M_crud->read('usuario', array('USUARI_C_USERNAME' => $this->input->post('username'), 
-														'USUARI_C_PASSWORD' => md5($this->input->post('password'))));
+		$pass = md5($this->input->post('password'));
+		$sql = "Exec USUARIO_LIS ".$this->input->post('empresa').",'".$this->input->post('username')."', '".$pass."'";
+		$existe = $this->M_crud->sql($sql);
 		$existe = $existe[0];
 		 if($existe): 
-			$session = array(	'id'		=> $existe->USUARI_N_ID,
-								'username' 	=> $existe->USUARI_C_USERNAME,
+			$session = array(	'id'			=> $existe->USUARI_N_ID,
+								'username' 		=> $existe->USUARI_C_USERNAME,
+								'empresa_id'	=> $existe->EMPRES_N_ID,
 								'logged_in'	=> TRUE	);
 			$this->session->set_userdata($session);
 			redirect(base_url(),'refresh');

@@ -12,7 +12,7 @@ class M_crud extends CI_Model
 		//$this->output->enable_profiler(TRUE);
 		$rs = $this->db->insert($tabla, $datos);
 		if ($rs) {
-			//$r = $this->read($tabla, NULL,  array($tabla.'_id' => $this->db->insert_id()));
+			$r = $this->read($tabla, NULL,  array($tabla.'_id' => $this->db->insert_id()));
 			return $this->db->insert_id();
 		}else{
 			return FALSE;
@@ -22,7 +22,7 @@ class M_crud extends CI_Model
 	 *
 	 */
 	public function read($tabla, $datos, $orden = ''){
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 		$this->db->select('*');
 		$this->db->from($tabla);
 		$this->db->where($datos);
@@ -53,7 +53,7 @@ class M_crud extends CI_Model
 
 
 	public function delete($tabla, $datos){
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 		$rs = $this->read($tabla, $datos);
 
 		if ($rs) {

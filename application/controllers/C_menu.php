@@ -40,8 +40,8 @@ class C_menu extends CI_Controller {
         $this->data['menu'] = $menus[0];
         $this->load->view('menu/V_editar',$this->data);
     }
-    public function crear(){
-    
+    public function crear()
+    {
         $data = array(
                         'MENU_DESCRIPCION'      =>  $this->input->post('descripcion'),
                         'MENU_RUTA'             =>  $this->input->post('ruta'),
