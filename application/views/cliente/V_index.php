@@ -2,13 +2,10 @@
     <table>
         <thead>
             <tr>          
-                
                 <th>Tipo de Documento</th>
                 <th>Nº Documento</th>
                 <th>Razon Social</th>
                 <th>Direccion</th>
-                
-                
             </tr>
         </thead>
         <tbody>
@@ -22,7 +19,7 @@
                         <td><?=$cliente->CLIENT_C_DIRECCION?></td>
                         
                         <td>
-                            <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?> /editar">
+                            <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
