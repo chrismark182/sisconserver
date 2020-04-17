@@ -35,6 +35,18 @@ $route['sede/(:num)/eliminar'] = function ($id){return 'C_sede/eliminar/'.strtol
 $route['ubicaciones'] = 'C_ubicacion';
 $route['ubicacion/nuevo'] = 'C_ubicacion/nuevo';
 $route['ubicacion/crear'] = 'C_ubicacion/crear';
-$route['ubicacion/(:num)/editar'] = function ($id){return 'C_ubicacion/editar/'.strtolower($id);};
-$route['ubicacion/(:num)/actualizar'] = function ($id){return 'C_ubicacion/actualizar/'.strtolower($id);};
-$route['ubicacion/(:num)/eliminar'] = function ($id){return 'C_ubicacion/eliminar/'.strtolower($id);};
+$route['ubicacion/(:num)/(:num)/(:num)/editar'] = function ($empresa , $sede , $id){return 'C_ubicacion/editar/'.$empresa.'/'.$sede.'/'.$id;};
+$route['ubicacion/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $sede , $id ){return 'C_ubicacion/actualizar/'.$empresa.'/'.$sede.'/'.$id;};
+$route['ubicacion/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede , $id ){return 'C_ubicacion/eliminar/'.$empresa.'/'.$sede.'/'.$id;};
+
+
+//Clientes
+
+$route['clientes'] = 'C_cliente';
+$route['cliente/nuevo'] = 'C_cliente/nuevo';
+$route['cliente/crear'] = 'C_cliente/crear';
+$route['cliente/(:num)/(:num)/(:num)/editar'] = function ($empresa , $cliente ){return 'C_cliente/editar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
+
+
