@@ -44,6 +44,7 @@ class C_sede extends CI_Controller {
     public function crear(){
     
         $data = array(
+                        'EMPRES_N_ID'           =>  $this->data['empresa']->EMPRES_N_ID,
                         'SEDE_C_DESCRIPCION'    =>  $this->input->post('descripcion'),
                         'SEDE_C_DIRECCION'      =>  $this->input->post('direccion'),
                         'SEDE_C_ABREVIATURA'    =>  $this->input->post('abreviatura'),

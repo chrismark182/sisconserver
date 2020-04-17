@@ -29,3 +29,12 @@ $route['sede/crear'] = 'C_sede/crear';
 $route['sede/(:num)/editar'] = function ($id){return 'C_sede/editar/'.strtolower($id);};
 $route['sede/(:num)/actualizar'] = function ($id){return 'C_sede/actualizar/'.strtolower($id);};
 $route['sede/(:num)/eliminar'] = function ($id){return 'C_sede/eliminar/'.strtolower($id);};
+
+//Ubicacion
+
+$route['ubicaciones'] = 'C_ubicacion';
+$route['ubicacion/nuevo'] = 'C_ubicacion/nuevo';
+$route['ubicacion/crear'] = 'C_ubicacion/crear';
+$route['ubicacion/(:num)/editar'] = function ($id){return 'C_ubicacion/editar/'.strtolower($id);};
+$route['ubicacion/(:num)/actualizar'] = function ($id){return 'C_ubicacion/actualizar/'.strtolower($id);};
+$route['ubicacion/(:num)/eliminar'] = function ($id){return 'C_ubicacion/eliminar/'.strtolower($id);};
