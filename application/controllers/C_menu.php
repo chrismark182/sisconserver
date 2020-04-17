@@ -42,17 +42,8 @@ class C_menu extends CI_Controller {
     }
     public function crear()
     {
-        $data = array(
-                        'MENU_DESCRIPCION'      =>  $this->input->post('descripcion'),
-                        'MENU_RUTA'             =>  $this->input->post('ruta'),
-                        'MENU_PADRE_ID'         =>  $this->input->post('mpadre'),
-                        'MENU_ESTADO'           =>  1,
-                        'REGISTER_USUARI_N_ID' 	=>  $this->data['session']->USUARI_N_ID, 
-                        'REGISTER_DATE'			=>  date('Y-m-d H:i:s'),
-					    'UPDATE_USUARI_N_ID' 	=>  $this->data['session']->USUARI_N_ID,
-					    'UPDATE_DATE'			=>  date('Y-m-d H:i:s')
-                    );
-        $this->M_crud->create('menu',$data);
+        $sql = "Exec MENU_INS '".$this->input->post('descripcion')."', '".$this->input->post('ruta')."', ".$this->input->post('mpadre').", ".$this->data['session']->USUARI_N_ID."";
+        $this->M_crud->sql($sql);
 		redirect('menus','refresh');   
     }
     public function actualizar($id)
