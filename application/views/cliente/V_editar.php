@@ -2,6 +2,24 @@
     <form action="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
+
+            <div class="input-field col s12 m6 l4">
+                <select id="tdocumento" name="tdocumento">
+                    <option value="" disabled selected>Escoge una opcion</option>
+                    
+                    <?php if($tdocumentos): ?>
+                    <?php foreach($tdocumentos as $tdocumento): ?> 
+                    <tr>
+                    <option value="<?= $cliente->TIPDOC_N_ID ?>"><?= $cliente->TIPDOC_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$tdocumentos</label>
+                </select>
+        </div>
+
+
+
+            
                 <input id="tdocumento" type="text" name="tdocumento" value="<?= $cliente->TIPDOC_N_ID ?>" class="validate">
                 <label class="active" for="tdocumento">Numero de Documento</label> 
             </div>
