@@ -46,8 +46,8 @@ $route['clientes'] = 'C_cliente';
 $route['cliente/nuevo'] = 'C_cliente/nuevo';
 $route['cliente/crear'] = 'C_cliente/crear';
 $route['cliente/(:num)/(:num)/editar'] = function ($empresa , $cliente){return 'C_cliente/editar/'.$empresa.'/'.$cliente;};
-$route['cliente/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
-$route['cliente/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
 
 //Ubicacion
 $route['usuarios'] = 'C_usuario';

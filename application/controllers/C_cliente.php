@@ -63,19 +63,19 @@ class C_cliente extends CI_Controller {
     }
     public function actualizar($empresa,$cliente)
     {
-        $sql = "Exec CLIENTE_UPD "    . $empresa . ","
-                                        . $cliente . ",'"  
-                                        . $this->input->post('ndocumento') . "','" 
-                                        . $this->input->post('razon_social') ."','"
-                                        . $this->input->post('direccion')."'"
+        $sql = "Exec CLIENTE_UPD "      . $empresa. ","
+                                        . $cliente. ",'" 
+                                        .$this->input->post('tdocumento')."','"
+                                        .$this->input->post('ndocumento') . "','" 
+                                        .$this->input->post('razon_social') ."','"
+                                        .$this->input->post('direccion')."'"
                                         ; 
-
-                    
+        echo $sql;
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('ubicaciones', 'refresh');       
+        redirect('clientes', 'refresh');       
     }  
-    public function eliminar($empresa,$id)
+    public function eliminar($empresa,$cliente)
     {
         $sql = "Exec CLIENTE_DEL "     . $empresa .","
                                         . $cliente 
@@ -83,7 +83,7 @@ class C_cliente extends CI_Controller {
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('ubicaciones', 'refresh');       
+        redirect('clientes', 'refresh');       
     }  
 
 
