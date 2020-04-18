@@ -25,10 +25,8 @@ class C_sede extends CI_Controller {
 
     public function index() 
 	{           
-        $this->data['sedes'] = $this->M_crud->read('sede', array(), ' SEDE_N_ID
-        ,SEDE_C_DESCRIPCION
-        ,SEDE_C_DIRECCION
-        ,SEDE_C_ABREVIATURA');  
+        $sql= "Exec SEDE_LIS 0,0" ;
+        $this->data['sedes'] = $this->M_crud->sql($sql);  
         $this->load->view('sede/V_index', $this->data);
     }
     public function nuevo()
@@ -43,37 +41,35 @@ class C_sede extends CI_Controller {
     }
     public function crear(){
     
-        $data = array(
-                        'EMPRES_N_ID'           =>  $this->data['empresa']->EMPRES_N_ID,
-                        'SEDE_C_DESCRIPCION'    =>  $this->input->post('descripcion'),
-                        'SEDE_C_DIRECCION'      =>  $this->input->post('direccion'),
-                        'SEDE_C_ABREVIATURA'    =>  $this->input->post('abreviatura'),
-                        'SEDE_C_ESTADO'         =>  '0',
-                        'SEDE_C_USUARIO_REG' 	=>  $this->data['session']->USUARI_N_ID,
-					    'SEDE_D_FECHA_REG'		=>  date('Y-m-d H:i:s')
-                    );
-        $this->M_crud->create('sede',$data);
+        $sql = "Exec SEDE_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
+                                    . $this->input->post('descripcion') . "','" 
+                                    . $this->input->post('direccion') . "','" 
+                                    . $this->input->post('abreviatura') . "', '0'," 
+                                    . $this->data['session']->USUARI_N_ID;
+                    
+                                    echo $sql;
+        $this->M_crud->sql($sql);
 		redirect('sedes','refresh');   
     }
     public function actualizar($id)
     {
-        $data = array(                        
-                        'SEDE_C_DESCRIPCION'    =>  $this->input->post('descripcion'),
-                        'SEDE_C_DIRECCION'      =>  $this->input->post('direccion'),
-                        'SEDE_C_ABREVIATURA'    =>  $this->input->post('abreviatura'),
-                        'SEDE_C_USUARIO_REG' 	=>  $this->data['session']->USUARI_N_ID,
-					    'SEDE_D_FECHA_REG'	    =>  date('Y-m-d H:i:s')
+        $sql ="Exec SEDE_UPD"  $this->input->post('descripcion'),
+                            $this->input->post('direccion'),
+                          $this->input->post('abreviatura'),
+                         $this->data['session']->USUARI_N_ID,
+					      date('Y-m-d H:i:s')
                     );
-        $this->M_crud->update('sede', $data, array('SEDE_N_ID' => $id));      
+        $this->M_crud->update($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('sedes', 'refresh');       
     }  
-    public function eliminar($id)
+    public function eliminar($empresa, $sede)
     {
-        $data = array(
-            'SEDE_N_ID' => $id
-        );
-        $this->M_crud->delete('sede', $data);      
+       $sql = "Exec SEDE_DEL "   .$empresa .","
+                                .$sede;
+        
+
+        $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('sedes', 'refresh');       
     }  
