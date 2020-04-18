@@ -21,7 +21,8 @@ class C_empresa extends CI_Controller {
 	
 	public function index()
 	{
-        $empresa = $this->M_crud->read('empresa', array());
+		$sql = "Exec EMPRES_LIS 0";
+        $empresa = $this->M_crud->sql($sql);
 		if($empresa):
 			redirect('login','refresh');   
 		else:
@@ -30,10 +31,6 @@ class C_empresa extends CI_Controller {
     }
     public function crear()
     {           
-        $data = array(
-                        'EMPRES_C_RUC'            => $this->input->post('ruc'),
-                        'EMPRES_C_RAZON_SOCIAL'   =>$this->input->post('razon_social')
-					);
 		$sql = "Exec EMPRESA_INS '".$this->input->post('ruc')."', '".$this->input->post('razon_social')."'";
         $this->M_crud->sql($sql);
         
