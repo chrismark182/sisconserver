@@ -39,12 +39,12 @@ class C_cliente extends CI_Controller {
     }
     public function editar($empresa,$cliente)
     {  
-        $sql = "Exec CLIENTE_LIS "    .$empresa . ","
+        $sql = "Exec CLIENTE_LIS "    .$empresa. ","
                                         .$cliente ;
         
          
         $ubicaciones = $this->M_crud->sql($sql);
-        $this->data['cliente'] = $clientes[0];
+        $this->data['clientes'] = $cliente[0];
         $this->load->view('cliente/V_editar',$this->data);
     }
     public function crear(){
