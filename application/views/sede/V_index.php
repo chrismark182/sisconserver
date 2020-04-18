@@ -19,7 +19,7 @@
                         <td><?=$sede->SEDE_C_DIRECCION?></td>
                         <td><?=$sede->SEDE_C_ABREVIATURA?></td>
                         <td>
-                            <a href="<?= base_url() ?>sede/<?= $sede->SEDE_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>sede/<?= $sede->EMPRES_N_ID ?>/<?= $sede->SEDE_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>

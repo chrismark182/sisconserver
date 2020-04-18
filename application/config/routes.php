@@ -26,8 +26,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['sedes'] = 'C_sede';
 $route['sede/nuevo'] = 'C_sede/nuevo';
 $route['sede/crear'] = 'C_sede/crear';
-$route['sede/(:num)/(:num)/editar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
-$route['sede/(:num)/(:num)/actualizar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
+$route['sede/(:num)/(:num)/editar'] = function ($empresa,$id){return 'C_sede/editar/'.$empresa.'/'.$id;};
+$route['sede/(:num)/(:num)/actualizar'] = function ($empresa,$id){return 'C_sede/actualizar/'.$empresa.'/'.$id;};
 $route['sede/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
 
 //Ubicacion

@@ -39,12 +39,12 @@ class C_cliente extends CI_Controller {
     }
     public function editar($empresa,$cliente)
     {  
-        $sql = "Exec CLIENTE_LIS "    .$empresa. ","
-                                        .$cliente ;
+        $sql = "Exec CLIENTE_LIS "  .$empresa. ","
+                                    .$cliente ;
         
-         
-        $ubicaciones = $this->M_crud->sql($sql);
-        $this->data['clientes'] = $cliente[0];
+        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $clientes = $this->M_crud->sql($sql);
+        $this->data['cliente'] = $clientes[0];
         $this->load->view('cliente/V_editar',$this->data);
     }
     public function crear(){
@@ -61,24 +61,25 @@ class C_cliente extends CI_Controller {
                
           
     }
-    public function actualizar($empresa,$sede,$id)
+    public function actualizar($empresa,$cliente)
     {
-        $sql = "Exec UBICACION_UPD "    . $empresa . ","
-                                        . $sede . "," 
-                                        . $id . ",'"  
-                                        . $this->input->post('descripcion') . "'," 
-                                        . $this->input->post('metro') ; 
+        $sql = "Exec CLIENTE_UPD "    . $empresa . ","
+                                        . $cliente . ",'"  
+                                        . $this->input->post('ndocumento') . "','" 
+                                        . $this->input->post('razon_social') ."','"
+                                        . $this->input->post('direccion')."'"
+                                        ; 
 
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('ubicaciones', 'refresh');       
     }  
-    public function eliminar($empresa,$sede,$id)
+    public function eliminar($empresa,$id)
     {
-        $sql = "Exec UBICACION_DEL "     . $empresa .","
-                                        . $sede . "," 
-                                        . $id;
+        $sql = "Exec CLIENTE_DEL "     . $empresa .","
+                                        . $cliente 
+                                        ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

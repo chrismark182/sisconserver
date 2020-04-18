@@ -1,5 +1,5 @@
 <div class="section container center">
-    <form action="<?= base_url() ?>sede/<?= $sede->SEDE_N_ID ?>/actualizar" method="post">
+    <form action="<?= base_url() ?>sede/<?= $sede->EMPRES_N_ID ?>/<?= $sede->SEDE_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
                 <input id="descripcion" type="text" name="descripcion" value="<?= $sede->SEDE_C_DESCRIPCION ?>" class="validate">
