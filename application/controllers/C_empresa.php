@@ -33,8 +33,9 @@ class C_empresa extends CI_Controller {
         $data = array(
                         'EMPRES_C_RUC'            => $this->input->post('ruc'),
                         'EMPRES_C_RAZON_SOCIAL'   =>$this->input->post('razon_social')
-                    );
-        $this->M_crud->create('empresa', $data);
+					);
+		$sql = "Exec EMPRESA_INS '".$this->input->post('ruc')."', '".$this->input->post('razon_social')."'";
+        $this->M_crud->sql($sql);
         
 		redirect('dashboard','refresh');   
     }

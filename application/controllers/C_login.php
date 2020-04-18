@@ -56,52 +56,39 @@ class C_login extends CI_Controller {
     }
 	public function create()
 	{
-		$rol = array(
-						'CATEGO_N_ID' 				=> 1,
-						'CATEGO_C_DESCRIPCION' 		=> 'ADMINISTRADOR',
-					  	'REGISTER_USUARI_N_ID' 	=> 1, 
-					  	'UPDATE_USUARI_N_ID' 		=> 1,
-					  	'UPDATE_DATE'			=> date('Y-m-d H:i:s')
-					);
-		$this->M_crud->create('CATEGORIA', $rol);		
-
+		$categoria = "Exec CATEGORIA_INS 'ADMINISTRADOR', 1";
+		$this->M_crud->sql($categoria);		
 		
-		$data = array('USUARI_C_USERNAME' 		=> $this->input->post('username'),
-					  'USUARI_C_PASSWORD' 		=> md5($this->input->post('password')),
-					  'CATEGO_N_ID'				=> 1,
-					  'REGISTER_USUARI_N_ID' 	=> 1, 
-					  'REGISTER_DATE'			=> date('Y-m-d H:i:s'),
-					  'UPDATE_USUARI_N_ID' 		=> 1,
-					  'UPDATE_DATE'				=> date('Y-m-d H:i:s')
-					);
-					$this->M_crud->create('usuario', $data);
+		$usuario = "Exec USUARIO_INS '".$this->input->post('username')."','".md5($this->input->post('password'))."', 1, 1, 1"; 
+		$this->M_crud->sql($usuario);
 					
-		$data = array(	'MENU_DESCRIPCION' 		=> 'Mantenimientos',
-						'MENU_RUTA'				=> '#',
-                        'MENU_TIPO'				=> 1,
-                        'MENU_PADRE_ID'			=> 0,
-						'MENU_ESTADO' 	        => 1, 
-						'REGISTER_USUARI_N_ID' 	=> 1, 
-						'REGISTER_DATE'			=> date('Y-m-d H:i:s'),
-						'UPDATE_USUARI_N_ID' 		=> 1,
-						'UPDATE_DATE'				=> date('Y-m-d H:i:s')
-					);
-		$this->M_crud->create('MENU', $data);
+		$menu = "Exec MENU_INS 'Seguridad', '#', 0, 1";
+		$this->M_crud->sql($menu);
 
-		$data = array(	'MENU_DESCRIPCION' 		=> 'Menus',
-						'MENU_RUTA'				=> 'menus',
-						'MENU_TIPO'				=> 2,
-						'MENU_PADRE_ID'			=> 1,
-						'MENU_ESTADO' 			=> 1, 
-						'REGISTER_USUARI_N_ID' 	=> 1, 
-						'REGISTER_DATE'			=> date('Y-m-d H:i:s'),
-						'UPDATE_USUARI_N_ID' 		=> 1,
-						'UPDATE_DATE'				=> date('Y-m-d H:i:s')
-					);
-		$this->M_crud->create('MENU', $data);
+		$menu = "Exec MENU_INS 'Usuarios', 'usuarios', 1, 1";
+		$this->M_crud->sql($menu);
 
-		$session = array(	'id'		=> '1',
-							'username' 	=> $this->input->post('username'),
+		$menu = "Exec MENU_INS 'Opciones del sistema', 'menus', 1, 1";
+		$this->M_crud->sql($menu);
+
+		$menu = "Exec MENU_INS 'Categorías', 'categorias', 1, 1";
+		$this->M_crud->sql($menu);
+
+		$menu = "Exec MENU_INS 'Mantenimientos', '#', 0, 1";
+		$this->M_crud->sql($menu);
+
+		$menu = "Exec MENU_INS 'Clientes', 'clientes', 5, 1";
+		$this->M_crud->sql($menu);
+
+		$menu = "Exec MENU_INS 'Sedes', 'sedes', 5, 1";
+		$this->M_crud->sql($menu);
+		
+		$menu = "Exec MENU_INS 'Ubicaciones', 'ubicaciones', 5, 1";
+		$this->M_crud->sql($menu);
+
+		$session = array(	'id'			=> '1',
+							'username' 		=> $this->input->post('username'),
+							'empresa_id'	=> '1',
 							'logged_in'	=> TRUE	);
 		$this->session->set_userdata($session);
 		redirect(base_url(),'refresh');
