@@ -9,7 +9,8 @@
 <div class="section container">
     <table>
         <thead>
-            <tr>          
+            <tr>     
+                <th>Menú Padre</th>
                 <th>Decripción</th>
                 <th>Ruta</th>
                 <th>Editar</th>
@@ -19,6 +20,7 @@
             <?php if($menus): ?>
                 <?php foreach($menus as $menu): ?> 
                     <tr>
+                        <td><?=$menu->MENU_PADRE_DESCRIPCION?></td>
                         <td><?=$menu->MENU_DESCRIPCION?></td>
                         <td><a href="<?= base_url() ?><?= $menu->MENU_RUTA ?>"><?= base_url() ?><?= $menu->MENU_RUTA ?></a></td>
                         <td>

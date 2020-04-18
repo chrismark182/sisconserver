@@ -25,7 +25,8 @@ class C_menu extends CI_Controller {
 
     public function index() 
 	{           
-        $this->data['menus'] = $this->M_crud->read('menu', array(), 'MENU_PADRE_ID, MENU_DESCRIPCION');  
+        $sql = "Exec MENU_LIS ";
+        $this->data['menus'] = $this->M_crud->sql($sql);  
         $this->load->view('menu/V_index', $this->data);
     }
     public function nuevo()
