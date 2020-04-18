@@ -31,9 +31,10 @@ class C_empresa extends CI_Controller {
     }
     public function crear()
     {           
-		$sql = "Exec EMPRESA_INS '".$this->input->post('ruc')."', '".$this->input->post('razon_social')."'";
-        $this->M_crud->sql($sql);
-        
+		if($this->input->post('ruc') != '' && $this->input->post('razon_social') != ''):
+			$sql = "Exec EMPRESA_INS '".$this->input->post('ruc')."', '".$this->input->post('razon_social')."'";
+			$this->M_crud->sql($sql);
+		endif;         
 		redirect('dashboard','refresh');   
     }
 }
