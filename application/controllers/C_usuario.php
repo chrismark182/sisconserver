@@ -4,46 +4,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_usuario extends CI_Controller {
 
 	var $data = array();
-	var $usuario = null;
 
 	public function __construct()
     {
         parent::__construct();
-        if($this->session->userdata('logged_in')){
-        	//Carga de librerias 
-        	$this->load->library('EsandexMenus');  
-            //Carga de modelos
-            $this->load->model('M_crud');
-            //Carga de datos del usuario logueado
-			$this->usuario = $this->M_crud->sql("EXEC Usuario_Lis 'L', '0', '{$this->session->userdata('username')}', '%', '%'");
-			$this->data['session'] = $this->usuario[0];
-			//Lista de menus
-			$menus = $this->M_crud->sql("EXEC Acceso_Menu {$this->data['session']->USUARI_ID}, {$this->data['session']->GRUPO_ID}, {$this->data['session']->USUARI_RESPETA_GRUPO}, {$this->data['session']->USUARI_ADMINISTRADOR}");			
-			$this->esandexmenus->menus($menus);
-			$this->data['menu_padres'] = $this->esandexmenus->getPadres();	
-			$this->data['menu_hijos'] = $this->esandexmenus->getHijos();	
-			//Nivel de acceso
-			$uri = $this->uri->uri_string();
-			$found = $this->esandexmenus->permission_level($uri, $this->data['menu_hijos']);
-			$this->data['permission_level'] = $found['NIVEL'];
-        }else{redirect('login');}
-    }
+		$this->_init();
+		if($this->session->userdata('logged_in')):
+			$this->load->library('EsandexAccesos');  
+			$this->data['session'] = $this->esandexaccesos->session();
+            $this->data['accesos'] = $this->esandexaccesos->accesos();
+		else:
+			redirect(base_url(),'refresh');
+		endif;
+	}
+	private function _init()
+	{
+		$this->output->set_template('siscon');
+	}
 
 	public function index()
 	{
-		if($this->data['permission_level'] != null): 
-			//Variables de pagina
-			$this->data['usuarios'] = $this->M_crud->sql("EXEC Usuario_Lis 'L', '0', '%', '%', '%'");
-			$this->data['count_result'] = count($this->data['usuarios']);
-			//Carga de vistas
-			$this->load->view('master_top', $this->data);	
-			$this->load->view('usuario/V_index');
-			$this->load->view('master_bottom');
-		else:
-			$this->load->view('master_top', $this->data);
-			$this->load->view('errors/html/error_403');
-			$this->load->view('master_bottom');
-		endif;
+		//Variables de pagina
+		$sql = "EXEC USUARIO_LIS ".$this->session->empresa_id.", '', ''";
+		$this->data['results'] = $this->M_crud->sql($sql);
+		//Carga de vistas
+		$this->load->view('usuario/V_index', $this->data);
 	}
 	public function nuevo(){
 		$this->data['grupos'] = $this->M_crud->sql("EXEC Grupo_Lis 'L', 0, '%'");

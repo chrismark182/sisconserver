@@ -49,4 +49,7 @@ $route['cliente/(:num)/(:num)/editar'] = function ($empresa , $cliente){return '
 $route['cliente/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
 $route['cliente/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
 
+//Ubicacion
+$route['usuarios'] = 'C_usuario';
+
 
