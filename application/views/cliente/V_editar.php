@@ -8,7 +8,7 @@
                     <?php if($tdocumentos): ?>
                     <?php foreach($tdocumentos as $tdocumento): ?> 
                     <tr>
-                    <option value="<?= $cliente->TIPDOC_N_ID ?>"><?= $cliente->TIPDOC_C_DESCRIPCION ?></option>
+                    <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
                     <label>$tdocumentos</label>

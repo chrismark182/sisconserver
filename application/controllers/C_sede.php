@@ -33,9 +33,12 @@ class C_sede extends CI_Controller {
     {
         $this->load->view('sede/V_nuevo', $this->data);
     }
-    public function editar($id)
+    public function editar($empresa,$sede)
     {  
-        $sedes = $this->M_crud->read('sede', array('SEDE_N_ID' => $id));
+        $sql = "Exec SEDE_LIS "     .$empresa. ","
+                                    .$sede ;
+
+        $sedes = $this->M_crud->sql($sql);
         $this->data['sede'] = $sedes[0];
         $this->load->view('sede/V_editar',$this->data);
     }
@@ -47,26 +50,27 @@ class C_sede extends CI_Controller {
                                     . $this->input->post('abreviatura') . "', '0'," 
                                     . $this->data['session']->USUARI_N_ID;
                     
-                                    echo $sql;
+
         $this->M_crud->sql($sql);
 		redirect('sedes','refresh');   
     }
-    public function actualizar($id)
+    public function actualizar($empresa,$id)
     {
-        $sql ="Exec SEDE_UPD"  $this->input->post('descripcion'),
-                            $this->input->post('direccion'),
-                          $this->input->post('abreviatura'),
-                         $this->data['session']->USUARI_N_ID,
-					      date('Y-m-d H:i:s')
-                    );
-        $this->M_crud->update($sql);      
+        $sql = "Exec SEDE_UPD "  .$empresa. ","
+                                .$id. ",'"
+                                .$this->input->post('descripcion'). "','"
+                                .$this->input->post('direccion')."','"
+                                .$this->input->post('abreviatura')."'";
+                                
+
+        $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('sedes', 'refresh');       
     }  
-    public function eliminar($empresa, $sede)
+    public function eliminar($empresa, $id)
     {
-       $sql = "Exec SEDE_DEL "   .$empresa .","
-                                .$sede;
+       $sql = "Exec SEDE_DEL "   .$empresa.","
+                                .$id;
         
 
         $this->M_crud->sql($sql);      

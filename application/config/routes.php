@@ -26,8 +26,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['sedes'] = 'C_sede';
 $route['sede/nuevo'] = 'C_sede/nuevo';
 $route['sede/crear'] = 'C_sede/crear';
-$route['sede/(:num)/(:num)/editar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
-$route['sede/(:num)/(:num)/actualizar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
+$route['sede/(:num)/(:num)/editar'] = function ($empresa,$id){return 'C_sede/editar/'.$empresa.'/'.$id;};
+$route['sede/(:num)/(:num)/actualizar'] = function ($empresa,$id){return 'C_sede/actualizar/'.$empresa.'/'.$id;};
 $route['sede/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_sede/eliminar/'.$empresa.'/'.$id;};
 
 //Ubicacion
@@ -46,8 +46,8 @@ $route['clientes'] = 'C_cliente';
 $route['cliente/nuevo'] = 'C_cliente/nuevo';
 $route['cliente/crear'] = 'C_cliente/crear';
 $route['cliente/(:num)/(:num)/editar'] = function ($empresa , $cliente){return 'C_cliente/editar/'.$empresa.'/'.$cliente;};
-$route['cliente/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
-$route['cliente/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
+$route['cliente/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
 
 //Ubicacion
 $route['usuarios'] = 'C_usuario';
