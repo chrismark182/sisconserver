@@ -87,6 +87,9 @@ class C_login extends CI_Controller {
 			$menu = "Exec MENU_INS 'Ubicaciones', 'ubicaciones', 5, 1";
 			$this->M_crud->sql($menu);
 
+			$menu = "Exec MENU_INS 'Servicios', 'servicios', 5, 1";
+			$this->M_crud->sql($menu);
+
 			$session = array(	'id'			=> '1',
 								'username' 		=> $this->input->post('username'),
 								'empresa_id'	=> '1',
