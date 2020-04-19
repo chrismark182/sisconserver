@@ -49,10 +49,7 @@ $route['cliente/(:num)/(:num)/editar'] = function ($empresa , $cliente){return '
 $route['cliente/(:num)/(:num)/actualizar'] = function ($empresa , $cliente){return 'C_cliente/actualizar/'.$empresa.'/'.$cliente;};
 $route['cliente/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return 'C_cliente/eliminar/'.$empresa.'/'.$cliente;};
 
-//Ubicacion
-$route['usuarios'] = 'C_usuario';
-$route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
-$route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
+
 
 //Servicios
 $route['servicios'] = 'C_servicio';
@@ -62,8 +59,14 @@ $route['servicio/(:num)/(:num)/editar'] = function ($empresa , $servicio){return
 $route['servicio/(:num)/(:num)/actualizar'] = function ($empresa , $servicio){return 'C_servicio/actualizar/'.$empresa.'/'.$servicio;};
 $route['servicio/(:num)/(:num)/eliminar'] = function ($empresa , $servicio){return 'C_servicio/eliminar/'.$empresa.'/'.$servicio;};
 
+//Ubicacion
+$route['usuarios'] = 'C_usuario';
+$route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
+$route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
+
 //Categorias
 $route['categorias'] = 'C_categoria';
 $route['categoria/nuevo'] = 'C_categoria/nuevo';
 $route['categoria/crear'] = 'C_categoria/crear';
+$route['categoria/(:num)/editar'] = function ($id){return 'C_categoria/edit/'.$id;};
 

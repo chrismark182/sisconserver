@@ -39,14 +39,12 @@ class C_categoria extends CI_Controller {
         $this->M_crud->sql($sql);
 		redirect('categorias','refresh');   
     }
-    public function editar($empresa,$sede)
+    public function editar($id)
     {  
-        $sql = "Exec SEDE_LIS "     .$empresa. ","
-                                    .$sede ;
-
-        $sedes = $this->M_crud->sql($sql);
-        $this->data['sede'] = $sedes[0];
-        $this->load->view('sede/V_editar',$this->data);
+        $sql = "Exec CATEGORIA_LIS " .$id;
+        $categorias = $this->M_crud->sql($sql);
+        $this->data['categoria'] = $categorias[0];
+        $this->load->view('categoria/V_editar',$this->data);
     }
     
     public function actualizar($empresa,$id)

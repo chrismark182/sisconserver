@@ -21,7 +21,7 @@ class C_login extends CI_Controller {
 		$empresas = $this->M_crud->sql('Exec EMPRESA_LIS 0');
 		if($empresas):
 			$this->data['empresas'] = $empresas;
-            $users = $this->M_crud->sql("Exec USUARIO_LIS 0, '', ''");
+            $users = $this->M_crud->sql("Exec USUARIO_LIS 0, 0,'', ''");
             if($users):
                 $this->load->view('login/V_index', $this->data);                
             else:
