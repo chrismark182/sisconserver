@@ -44,18 +44,32 @@ class C_sede extends CI_Controller {
     }
     public function crear(){
     
+        if($this->input->post('descripcion') != '' &&
+            $this->input->post('direccion') != '' &&
+            $this->input->post('abreviatura') != ''):
+
         $sql = "Exec SEDE_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
                                     . $this->input->post('descripcion') . "','" 
                                     . $this->input->post('direccion') . "','" 
                                     . $this->input->post('abreviatura') . "', '0'," 
                                     . $this->data['session']->USUARI_N_ID;
-                    
-
+                 
+        
         $this->M_crud->sql($sql);
-		redirect('sedes','refresh');   
+        redirect('sedes','refresh'); 
+          
+    else:
+       
+    $this->session->set_flashdata('message','No puede guardar en vacio');
+    header("Location: nuevo");
+    
+    endif;
     }
     public function actualizar($empresa,$id)
     {
+        if($this->input->post('descripcion') != '' &&
+            $this->input->post('direccion') != '' &&
+            $this->input->post('abreviatura') != ''):
         $sql = "Exec SEDE_UPD "  .$empresa. ","
                                 .$id. ",'"
                                 .$this->input->post('descripcion'). "','"
@@ -65,7 +79,14 @@ class C_sede extends CI_Controller {
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('sedes', 'refresh');       
+        redirect('sedes', 'refresh');  
+    else:
+       
+        $this->session->set_flashdata('message','No puede guardar en vacio');
+        header("Location: editar");
+
+
+    endif;     
     }  
     public function eliminar($empresa, $id)
     {

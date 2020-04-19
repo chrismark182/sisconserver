@@ -27,6 +27,7 @@ class C_servicio extends CI_Controller {
 
 	public function index()
 	{
+        
 		$sql = "Exec SERVICIO_LIS 0,0";
         $this->data['servicios'] = $this->M_crud->sql($sql);
         
@@ -40,6 +41,7 @@ class C_servicio extends CI_Controller {
 	}
 	public function editar($empresa,$servicio)
     {  
+
         $sql = "Exec SERVICIO_LIS "    .$empresa . ","
                                         .$servicio ;
                                         
@@ -51,18 +53,27 @@ class C_servicio extends CI_Controller {
     }
     public function crear(){
 
+        if($this->input->post('descripcion') != ''):
+            
 		$sql = "Exec SERVICIO_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
 										. $this->input->post('descripcion') . "','0','0','0',"
 										. $this->data['session']->USUARI_N_ID;
-            echo $sql;
+
 
         $this->M_crud->sql($sql);
         redirect('servicios','refresh');   
-               
+
+        else:
+
+        $this->session->set_flashdata('message','No puede guardar en vacio');
+        header("Location: nuevo");
+        endif;       
           
     }
     public function actualizar($empresa,$servicio)
     {
+
+        if($this->input->post('descripcion') != ''):
         $sql = "Exec SERVICIO_UPD "    . $empresa . ","
                                         . $servicio . ",'" 
                                         . $this->input->post('descripcion') . "'" 
@@ -71,7 +82,15 @@ class C_servicio extends CI_Controller {
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('servicios', 'refresh');       
+        redirect('servicios', 'refresh'); 
+        
+        elseif($this->input->post('descripcion') == ''):
+
+            $this->session->set_flashdata('message','No puede guardar en vacio');
+            header("Location: editar");
+
+        endif;
+
     }  
     public function eliminar($empresa,$servicio)
     {
