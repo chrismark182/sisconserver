@@ -53,8 +53,7 @@ $route['cliente/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return
 $route['usuarios'] = 'C_usuario';
 
 
-// 
-
+//Servicios
 $route['servicios'] = 'C_servicio';
 $route['servicio/nuevo'] = 'C_servicio/nuevo';
 $route['servicio/crear'] = 'C_servicio/crear';
