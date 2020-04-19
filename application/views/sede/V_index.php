@@ -24,9 +24,9 @@
                             </a>
                         </td>
                         <td>
-                        <a href="sede/<?= $sede->EMPRES_N_ID ?>/<?= $sede->SEDE_N_ID ?>/eliminar")>
-                        <i class="material-icons">delete</i>
-                        </a>
+                            <a href="sede/<?= $sede->EMPRES_N_ID ?>/<?= $sede->SEDE_N_ID ?>/eliminar")>
+                                <i class="material-icons">delete</i>
+                            </a>
                         </td>
             
                     </tr>

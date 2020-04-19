@@ -28,6 +28,11 @@
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
+                        <td>
+                            <a href="<?= base_url() ?>menu/<?= $menu->MENU_ID ?>/eliminar")>
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>  
             <?php endif; ?>
