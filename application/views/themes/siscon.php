@@ -87,9 +87,6 @@
 		<li><a class="waves-effect" href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
 	</ul>
 	<div class="container">
-		<?php if ($this->session->flashdata('message')): ?>
-			<div class="card-panel teal lighten-2 white-text"><?= $this->session->flashdata('message'); ?></div>
-		<?php endif ?>
 		<?php if ($this->session->flashdata('error')): ?>
 			<div class="card-panel red lighten-2 white-text"><?= $this->session->flashdata('error'); ?></div>
 		<?php endif ?>
@@ -104,6 +101,11 @@
 		$('.modal').modal();
 		$('.dropdown-trigger').dropdown();
 		$('.tooltipped').tooltip();
+		var message = '<?= $this->session->flashdata('message'); ?>';
+		if(message != '')
+		{
+			M.toast({html: message, classes: 'rounded'});
+		}
 	</script>
 </body>
 </html>

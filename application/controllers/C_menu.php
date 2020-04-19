@@ -60,6 +60,15 @@ class C_menu extends CI_Controller {
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('menus', 'refresh');       
     }  
+    public function eliminar($id)
+    {
+       $sql = "Exec MENU_DEL " .$id;       
+
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('menus', 'refresh');       
+    }  
+
 
 
 }
