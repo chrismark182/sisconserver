@@ -25,7 +25,7 @@ class C_usuario extends CI_Controller {
 	public function index()
 	{
 		//Variables de pagina
-		$sql = "EXEC USUARIO_LIS ".$this->session->empresa_id.", '', ''";
+		$sql = "EXEC USUARIO_LIS ".$this->session->empresa_id.", 0, '', ''";
 		$this->data['results'] = $this->M_crud->sql($sql);
 		//Carga de vistas
 		$this->load->view('usuario/V_index', $this->data);
@@ -39,17 +39,13 @@ class C_usuario extends CI_Controller {
 	}
 	public function edit($id){
 		//Variables de pagina
-        $usuario = $this->M_crud->sql("EXEC Usuario_Lis 'L', $id, '%', '%', '%'");
-        $this->data['grupos'] = $this->M_crud->sql("EXEC Grupo_Lis 'L', 0, '%'");
-        $this->data['usuario'] = $usuario[0];
-        $this->data['respeta_grupo'] = '';
-        $this->data['administrador'] = '';
-        if($usuario[0]->USUARI_RESPETA_GRUPO){ $this->data['respeta_grupo'] =  "checked"; }
-        if($usuario[0]->USUARI_ADMINISTRADOR){ $this->data['administrador'] =  "checked"; }
-		//Carga de vistas
-		$this->load->view('master_top', $this->data);
-		$this->load->view('usuario/V_editar');
-		$this->load->view('master_bottom');	
+		$sql = "EXEC USUARIO_LIS 0, $id, '', ''";
+        $usuario = $this->M_crud->sql($sql);
+		$this->data['usuario'] = $usuario[0];       
+		$sql =  "EXEC CATEGORIA_LIS 0";
+		$this->data['categorias'] = $this->M_crud->sql($sql);
+		//Carga de vistas		
+		$this->load->view('usuario/V_editar', $this->data);		
 	}
 	public function ver($id){
 		//Variables de pagina
@@ -98,25 +94,13 @@ class C_usuario extends CI_Controller {
 			redirect('usuario/nuevo', 'refresh');        	
         }
 	}
-	public function update($id){
-		//$this->output->enable_profiler(TRUE);
-		$rg = '0';
-		$adm = '0';
-		$pass = '';
-		if($this->input->post('respeta_grupo')){$rg = '1';}
-        if($this->input->post('administrador')){$adm = '1';}
+	public function update($id)
+	{
 		if($this->input->post('password')){$pass = md5($this->input->post('password'));}		
-	   	$this->M_crud->sql("EXEC Usuario_Upd 	$id,
-							        			'{$this->input->post('alias')}',
-							        			'{$pass}',
-							        			'{$this->input->post('nombre')}',
-							        			'{$this->input->post('apellido')}',
-							        			'{$this->input->post('email')}',
-							        			{$this->input->post('grupo_id')},
-							        			'{$rg}',
-												'{$adm}',
-								        		{$this->usuario[0]->USUARI_ID},
-								        		'{$_SERVER['REMOTE_ADDR']}'
+	   	$this->M_crud->sql("EXEC USUARIO_UPD 	$id,
+												'{$this->input->post('username')}',
+												'{$this->input->post('categoria')}',
+								        		{$this->session->userdata('id')}
 								        ");	    	   
         $this->session->set_flashdata('message', 'Usuario actualizado correctamente'); 
     	//$pagina_anterior=$_SERVER['HTTP_REFERER'];  
