@@ -61,3 +61,9 @@ $route['servicio/crear'] = 'C_servicio/crear';
 $route['servicio/(:num)/(:num)/editar'] = function ($empresa , $servicio){return 'C_servicio/editar/'.$empresa.'/'.$servicio;};
 $route['servicio/(:num)/(:num)/actualizar'] = function ($empresa , $servicio){return 'C_servicio/actualizar/'.$empresa.'/'.$servicio;};
 $route['servicio/(:num)/(:num)/eliminar'] = function ($empresa , $servicio){return 'C_servicio/eliminar/'.$empresa.'/'.$servicio;};
+
+//Categorias
+$route['categorias'] = 'C_categoria';
+$route['categoria/nuevo'] = 'C_categoria/nuevo';
+$route['categoria/crear'] = 'C_categoria/crear';
+
