@@ -56,41 +56,43 @@ class C_login extends CI_Controller {
     }
 	public function create()
 	{
-		$categoria = "Exec CATEGORIA_INS 'ADMINISTRADOR', 1";
-		$this->M_crud->sql($categoria);		
-		
-		$usuario = "Exec USUARIO_INS '".$this->input->post('username')."','".md5($this->input->post('password'))."', 1, 1, 1"; 
-		$this->M_crud->sql($usuario);
-					
-		$menu = "Exec MENU_INS 'Seguridad', '#', 0, 1";
-		$this->M_crud->sql($menu);
+		if($this->input->post('username') != '' && $this->input->post('password') != ''):
+			$categoria = "Exec CATEGORIA_INS 'ADMINISTRADOR', 1";
+			$this->M_crud->sql($categoria);		
+			
+			$usuario = "Exec USUARIO_INS '".$this->input->post('username')."','".md5($this->input->post('password'))."', 1, 1, 1"; 
+			$this->M_crud->sql($usuario);
+						
+			$menu = "Exec MENU_INS 'Seguridad', '#', 0, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Usuarios', 'usuarios', 1, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Usuarios', 'usuarios', 1, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Opciones del sistema', 'menus', 1, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Opciones del sistema', 'menus', 1, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Categorías', 'categorias', 1, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Categorías', 'categorias', 1, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Mantenimientos', '#', 0, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Mantenimientos', '#', 0, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Clientes', 'clientes', 5, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Clientes', 'clientes', 5, 1";
+			$this->M_crud->sql($menu);
 
-		$menu = "Exec MENU_INS 'Sedes', 'sedes', 5, 1";
-		$this->M_crud->sql($menu);
-		
-		$menu = "Exec MENU_INS 'Ubicaciones', 'ubicaciones', 5, 1";
-		$this->M_crud->sql($menu);
+			$menu = "Exec MENU_INS 'Sedes', 'sedes', 5, 1";
+			$this->M_crud->sql($menu);
+			
+			$menu = "Exec MENU_INS 'Ubicaciones', 'ubicaciones', 5, 1";
+			$this->M_crud->sql($menu);
 
-		$session = array(	'id'			=> '1',
-							'username' 		=> $this->input->post('username'),
-							'empresa_id'	=> '1',
-							'logged_in'	=> TRUE	);
-		$this->session->set_userdata($session);
+			$session = array(	'id'			=> '1',
+								'username' 		=> $this->input->post('username'),
+								'empresa_id'	=> '1',
+								'logged_in'	=> TRUE	);
+			$this->session->set_userdata($session);
+		endif;
 		redirect(base_url(),'refresh');
 	}
 }
