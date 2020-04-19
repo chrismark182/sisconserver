@@ -10,9 +10,12 @@ class C_servicio extends CI_Controller {
         parent::__construct();
 		$this->_init();
 		if($this->session->userdata('logged_in')):
-			$this->load->library('EsandexAccesos');  
+            $this->load->library('EsandexAccesos');  
+           
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
+            $empresa = $this->M_crud->read('empresa', array());
+            $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -32,52 +35,51 @@ class C_servicio extends CI_Controller {
 	}
 	public function nuevo(){
 		
-		$this->load->view('servicio/V_nuevo');
+		$this->load->view('servicio/V_nuevo',$this->data);
 	
 	}
 	public function editar($empresa,$servicio)
     {  
-        $sql = "Exec UBICACION_LIS "    .$empresa . ","
+        $sql = "Exec SERVICIO_LIS "    .$empresa . ","
                                         .$servicio ;
                                         
         
          
         $servicios = $this->M_crud->sql($sql);
-        $this->data['servicio'] = $ubicaciones[0];
+        $this->data['servicio'] = $servicios[0];
         $this->load->view('servicio/V_editar',$this->data);
     }
     public function crear(){
 
 		$sql = "Exec SERVICIO_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0','0','0'"
+										. $this->input->post('descripcion') . "','0','0','0',"
 										. $this->data['session']->USUARI_N_ID;
+            echo $sql;
 
         $this->M_crud->sql($sql);
         redirect('servicios','refresh');   
                
           
     }
-    public function actualizar($empresa,$sede,$id)
+    public function actualizar($empresa,$servicio)
     {
-        $sql = "Exec UBICACION_UPD "    . $empresa . ","
-                                        . $sede . "," 
-                                        . $id . ",'"  
-                                        . $this->input->post('descripcion') . "'," 
-                                        . $this->input->post('metro') ; 
+        $sql = "Exec SERVICIO_UPD "    . $empresa . ","
+                                        . $servicio . ",'" 
+                                        . $this->input->post('descripcion') . "'" 
+                                        ;
 
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('ubicaciones', 'refresh');       
+        redirect('servicios', 'refresh');       
     }  
-    public function eliminar($empresa,$sede,$id)
+    public function eliminar($empresa,$servicio)
     {
-        $sql = "Exec UBICACION_DEL "     . $empresa .","
-                                        . $sede . "," 
-                                        . $id;
+        $sql = "Exec SERVICIO_DEL "     . $empresa .","
+                                        . $servicio ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('ubicaciones', 'refresh');       
+        redirect('servicios', 'refresh');       
     }  
 }
