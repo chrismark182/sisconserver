@@ -48,6 +48,13 @@ class C_cliente extends CI_Controller {
         $this->load->view('cliente/V_editar',$this->data);
     }
     public function crear(){
+        if(
+            $this->input->post('tdocumento') != ''&&
+         $this->input->post('ndocumento')  != ''&&
+         $this->input->post('razon_social') != ''&&
+         $this->input->post('direccion')!= ''
+         ):
+        
 
         $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('t_documento') . ",'" 
@@ -58,11 +65,21 @@ class C_cliente extends CI_Controller {
 
         $this->M_crud->sql($sql);
         redirect('clientes','refresh');   
-               
-          
+            
+    else:
+        $this->session->set_flashdata('message','No puede guardar en vacio ');
+        header("Location: nuevo");
+
+        endif;
     }
     public function actualizar($empresa,$cliente)
     {
+        if(
+            $this->input->post('tdocumento') != '' &&
+         $this->input->post('ndocumento')  != '' &&
+         $this->input->post('razon_social') != '' &&
+         $this->input->post('direccion')!= ''
+         ):
         $sql = "Exec CLIENTE_UPD "      . $empresa. ","
                                         . $cliente. ",'" 
                                         .$this->input->post('tdocumento')."','"
@@ -73,7 +90,14 @@ class C_cliente extends CI_Controller {
         echo $sql;
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('clientes', 'refresh');       
+        redirect('clientes', 'refresh');      
+
+    else:
+        $this->session->set_flashdata('message','No puede guardar en vacio ');
+        header("Location: editar");
+
+        
+        endif;
     }  
     public function eliminar($empresa,$cliente)
     {

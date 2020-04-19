@@ -1,3 +1,12 @@
+<nav class="blue-grey lighten-1" style="padding: 0 1em;">
+    <div class="nav-wrapper">
+      <div class="col s12">
+       
+        <a href="#!" class="breadcrumb">Clientes</a>
+        <a href="#!" class="breadcrumb">Nuevo</a>
+      </div>
+    </div>
+</nav>
 <div class="section container center">
     <form action="<?= base_url() ?>cliente/crear" method="post">
         <div class="row">

@@ -51,30 +51,51 @@ class C_ubicacion extends CI_Controller {
     }
     public function crear(){
 
+        if($this->input->post('sede') != ''&&
+            $this->input->post('talmacen') != ''&&
+            $this->input->post('descripcion') != ''&&
+            $this->input->post('metro') != ''):
+
         $sql = "Exec UBICACION_INS "    . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('sede') . "," 
                                         . $this->input->post('talmacen') . ",'" 
                                         . $this->input->post('descripcion') . "','" 
-                                        . $this->input->post('metro') . "', '0'," 
+                                        . $this->input->post('metro') . "','0'," 
                                         . $this->data['session']->USUARI_N_ID;
+                                        echo $sql;
 
         $this->M_crud->sql($sql);
         redirect('ubicaciones','refresh');   
-               
-          
+    else:
+        $this->session->set_flashdata('message','No puede guardar en vacio ');
+        header("Location: nuevo");
+       
+
+    endif;
     }
     public function actualizar($empresa,$sede,$id)
     {
+
+        if(
+        $this->input->post('descripcion') != ''&&
+        $this->input->post('metro') != ''):
+
         $sql = "Exec UBICACION_UPD "    . $empresa . ","
                                         . $sede . "," 
                                         . $id . ",'"  
                                         . $this->input->post('descripcion') . "'," 
                                         . $this->input->post('metro') ; 
-
+            echo $sql;
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('ubicaciones', 'refresh');       
+        redirect('ubicaciones', 'refresh'); 
+        
+    else:
+        $this->session->set_flashdata('message','No puede guardar en vacio ');
+        header("Location: editar");    
+
+    endif;
     }  
     public function eliminar($empresa,$sede,$id)
     {
