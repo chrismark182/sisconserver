@@ -52,4 +52,7 @@ $route['cliente/(:num)/(:num)/eliminar'] = function ($empresa , $cliente){return
 //Ubicacion
 $route['usuarios'] = 'C_usuario';
 
-
+//Categorias
+$route['categorias'] = 'C_categoria';
+$route['categoria/nuevo'] = 'C_categoria/nuevo';
+$route['categoria/crear'] = 'C_categoria/crear';
