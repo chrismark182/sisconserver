@@ -13,7 +13,7 @@
         
         <div class="input-field col s12 m6 l4">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Escoge una opcion</option>
+                    <option value="" disabled selected>Escoge una sede</option>
                     
                     <?php if($sedes): ?>
                     <?php foreach($sedes as $sede): ?> 
@@ -27,7 +27,7 @@
 
             <div class="input-field col s12 m6 l4">
             <select id="talmacen" name="talmacen">
-                    <option value="" disabled selected>Escoge una opcion</option>
+                    <option value="" disabled selected>Escoge una Ubicacion</option>
                     
                     <?php if($talmacenes): ?>
                     <?php foreach($talmacenes as $talmacen): ?> 
