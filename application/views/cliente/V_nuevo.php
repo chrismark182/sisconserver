@@ -13,7 +13,7 @@
         
             <div class="input-field col s12 m6 l4">
                 <select id="t_documento" name="t_documento">
-                    <option value="" disabled selected>Escoge una opcion</option>
+                    <option value="" disabled selected>Tipo de documento</option>
                     
                     <?php if($tdocumentos): ?>
                     <?php foreach($tdocumentos as $tdocumento): ?> 
