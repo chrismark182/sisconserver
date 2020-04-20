@@ -33,11 +33,16 @@ class C_categoria extends CI_Controller {
     }
     public function crear(){
     
-        $sql = "Exec CATEGORIA_INS '"   . $this->input->post('descripcion') . "',"                                    
-                                        . $this->data['session']->USUARI_N_ID;                    
-
-        $this->M_crud->sql($sql);
-		redirect('categorias','refresh');   
+        if($this->input->post('descripcion') != ''):
+            $sql = "Exec CATEGORIA_INS '"   . $this->input->post('descripcion') . "'," 
+                                            . $this->data['session']->USUARI_N_ID;
+            $this->M_crud->sql($sql);
+            $this->session->set_flashdata('message','Registro creado correctamente');
+            redirect('categorias','refresh');   
+        else: 
+            $this->session->set_flashdata('message','No puede guardar en vacio');
+            redirect('categoria/nuevo','refresh');   
+        endif;
     }
     public function editar($id)
     {  
@@ -47,28 +52,27 @@ class C_categoria extends CI_Controller {
         $this->load->view('categoria/V_editar',$this->data);
     }
     
-    public function actualizar($empresa,$id)
+    public function actualizar($id)
     {
-        $sql = "Exec SEDE_UPD "  .$empresa. ","
-                                .$id. ",'"
-                                .$this->input->post('descripcion'). "','"
-                                .$this->input->post('direccion')."','"
-                                .$this->input->post('abreviatura')."'";
-                                
-
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('sedes', 'refresh');       
+        if($this->input->post('descripcion') != ''):
+            $sql = "Exec CATEGORIA_UPD  {$id},
+                                        '{$this->input->post('descripcion')}',
+                                        '{$this->session->userdata('id')}'";
+            $this->M_crud->sql($sql);      
+            $this->session->set_flashdata('message','Datos actualizados correctamente');
+            redirect('categorias', 'refresh');       
+        else: 
+            $this->session->set_flashdata('message','No puede guardar en vacio');
+            redirect('categoria/'.$id.'/editar','refresh');   
+        endif;
     }  
-    public function eliminar($empresa, $id)
+    public function eliminar($id)
     {
-       $sql = "Exec SEDE_DEL "   .$empresa.","
-                                .$id;
-        
+       $sql = "Exec CATEGORIA_DEL {$id}";        
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('sedes', 'refresh');       
+        redirect('categorias', 'refresh');       
     }  
 
 
