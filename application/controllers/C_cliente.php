@@ -76,7 +76,12 @@ class C_cliente extends CI_Controller {
     }
     public function actualizar($empresa,$cliente)
     {
-        
+        if(
+            $this->input->post('t_documento') != '' &&
+         $this->input->post('ndocumento')  != '' &&
+         $this->input->post('razon_social') != '' &&
+         $this->input->post('direccion')!= ''
+         ):
         $sql = "Exec CLIENTE_UPD "      . $empresa. ","
                                         . $cliente. ",'" 
                                         .$this->input->post('t_documento')."','"
@@ -88,6 +93,14 @@ class C_cliente extends CI_Controller {
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('clientes', 'refresh');      
+
+
+    else:
+        $this->session->set_flashdata('message','No puede guardar en vacio ');
+        header("Location: editar");
+
+        
+        endif;
 
     }
     public function eliminar($empresa,$cliente)
