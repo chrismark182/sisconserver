@@ -6,6 +6,23 @@
       </div>
     </div>
 </nav>
+
+<div class="section container center">
+    <div class="row">
+            <div class="input-field col s12 m6 l4">
+                <input id="documento" type="text" name="documento"  class="validate">
+                <label class="active" for="documento">Id</label> 
+            </div>
+            <div class="input-field col s6 m6 l4">
+                <input id="razon_social" type="text" name="razon_social"  class="validate">
+                <label class="active" for="razon_social">Razon_social</label> 
+            </div>
+            <div class="input-field col s12">
+                <input class="btn-large" type="submit" value="Buscar">
+            </div>
+        </div>
+    
+</div>
 <div class="container">
     <table>
         <thead>
