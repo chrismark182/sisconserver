@@ -70,7 +70,7 @@ class M_crud extends CI_Model
 		}
 	}
 	public function sql($sql){
-		$this->output->enable_profiler(TRUE);
+		//z$this->output->enable_profiler(TRUE);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

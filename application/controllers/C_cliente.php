@@ -24,10 +24,12 @@ class C_cliente extends CI_Controller {
 	}
 
     public function index() 
-	{         
-        $sql = "Exec CLIENTE_LIS 0,0" 
-                                    
-        ;
+	{       
+        if($this->input->server('REQUEST_METHOD') == 'POST'): 
+            $sql = "Exec CLIENTE_LIS 0,0, '{$this->input->post('numero_documento')}%', '{$this->input->post('razon_social')}%'";
+        else: 
+            $sql = "Exec CLIENTE_LIS 0,0, '', ''";
+        endif; 
         $this->data['clientes'] = $this->M_crud->sql($sql);
         $this->load->view('cliente/V_index', $this->data);
     }
