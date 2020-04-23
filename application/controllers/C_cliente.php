@@ -52,10 +52,10 @@ class C_cliente extends CI_Controller {
     public function crear(){
         
         if(
-            $this->input->post('t_documento') != '' &&
-         $this->input->post('ndocumento')  != '' &&
-         $this->input->post('razon_social') != '' &&
-         $this->input->post('direccion')!= ''
+            trim($this->input->post('t_documento')) != '' &&
+            trim($this->input->post('ndocumento'))  != '' &&
+            trim($this->input->post('razon_social')) != '' &&
+            trim($this->input->post('direccion')) != ''
          ):
 
 
@@ -78,11 +78,10 @@ class C_cliente extends CI_Controller {
     }
     public function actualizar($empresa,$cliente)
     {
-        if(
-            $this->input->post('t_documento') != '' &&
-         $this->input->post('ndocumento')  != '' &&
-         $this->input->post('razon_social') != '' &&
-         $this->input->post('direccion')!= ''
+        if( trim($this->input->post('t_documento')) != '' &&
+         trim($this->input->post('ndocumento'))  != '' &&
+         trim($this->input->post('razon_social')) != '' &&
+         trim($this->input->post('direccion')) != ''
          ):
         $sql = "Exec CLIENTE_UPD "      . $empresa. ","
                                         . $cliente. ",'" 

@@ -8,6 +8,10 @@
     </div>
 </nav>
 <div class="container">
+            <div class="input-field col s10 right-align" style="margin: 0px">
+            <div>Total Registros: 
+                <span id="total" class="btn"><?php echo count($sedes);?></span></div>
+            </div>
     <table>
         <thead>
             <tr>          

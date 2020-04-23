@@ -44,9 +44,9 @@ class C_sede extends CI_Controller {
     }
     public function crear(){
     
-        if($this->input->post('descripcion') != '' &&
-            $this->input->post('direccion') != '' &&
-            $this->input->post('abreviatura') != ''):
+        if( trim($this->input->post('descripcion')) != '' &&
+            trim($this->input->post('direccion')) != '' &&
+            trim($this->input->post('abreviatura')) != ''):
 
         $sql = "Exec SEDE_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
                                     . $this->input->post('descripcion') . "','" 
@@ -67,9 +67,9 @@ class C_sede extends CI_Controller {
     }
     public function actualizar($empresa,$id)
     {
-        if($this->input->post('descripcion') != '' &&
-            $this->input->post('direccion') != '' &&
-            $this->input->post('abreviatura') != ''):
+        if( trim($this->input->post('descripcion')) != '' &&
+            trim($this->input->post('direccion')) != '' &&
+            trim($this->input->post('abreviatura')) != ''):
         $sql = "Exec SEDE_UPD "  .$empresa. ","
                                 .$id. ",'"
                                 .$this->input->post('descripcion'). "','"

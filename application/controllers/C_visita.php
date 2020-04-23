@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_servicio extends CI_Controller {
+class C_visita extends CI_Controller {
 
 	var $data = array();
 
@@ -27,40 +27,40 @@ class C_servicio extends CI_Controller {
 
 	public function index()
 	{
-        
-		$sql = "Exec SERVICIO_LIS 0,0";
-        $this->data['servicios'] = $this->M_crud->sql($sql);  
 
-		$this->load->view('servicio/V_index', $this->data);
+        $sql = "Exec VISITA_LIS 0,0";        
+        $this->data['visitas'] = $this->M_crud->sql($sql); 
+        $this->load->view('visita/V_index', $this->data);
+        
 	}
 	public function nuevo(){
 		
-		$this->load->view('servicio/V_nuevo',$this->data);
+		$this->load->view('visita/V_nuevo',$this->data);
 	
 	}
-	public function editar($empresa,$servicio)
+	public function editar($empresa,$visita)
     {  
 
-        $sql = "Exec SERVICIO_LIS "    .$empresa . ","
-                                        .$servicio ;
+        $sql = "Exec VISITA_LIS "    .$empresa . ","
+                                        .$visita ;
                                         
         
          
-        $servicios = $this->M_crud->sql($sql);
-        $this->data['servicio'] = $servicios[0];
-        $this->load->view('servicio/V_editar',$this->data);
+        $visitas = $this->M_crud->sql($sql);
+        $this->data['visita'] = $visitas[0];
+        $this->load->view('visita/V_editar',$this->data);
     }
     public function crear(){
 
         if(trim($this->input->post('descripcion')) != ''):
             
-		$sql = "Exec SERVICIO_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0','0','0',"
-										. $this->data['session']->USUARI_N_ID;
+		$sql = "Exec VISITA_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
+										. $this->input->post('descripcion') . "','0',"
+										. $this->data['session']->USUARI_N_ID ;
 
-
+            echo $sql;
         $this->M_crud->sql($sql);
-        redirect('servicios','refresh');   
+        redirect('visitas','refresh');   
 
         else:
 
@@ -69,35 +69,36 @@ class C_servicio extends CI_Controller {
         endif;       
           
     }
-    public function actualizar($empresa,$servicio)
+    public function actualizar($empresa,$visita)
     {
 
         if(trim($this->input->post('descripcion')) != ''):
-        $sql = "Exec SERVICIO_UPD "    . $empresa . ","
-                                        . $servicio . ",'" 
+
+        $sql = "Exec VISITA_UPD "    . $empresa . ","
+                                        . $visita . ",'" 
                                         . $this->input->post('descripcion') . "'" 
                                         ;
 
-                    
+
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('servicios', 'refresh'); 
+        redirect('visitas', 'refresh'); 
         
         else:
 
             $this->session->set_flashdata('message','No puede guardar en vacio');
             header("Location: editar");
-
+            //redirect('visita/'.$empresa.'/'.$visita.'/editar','refresh');
         endif;
 
     }  
-    public function eliminar($empresa,$servicio)
+    public function eliminar($empresa,$visita)
     {
-        $sql = "Exec SERVICIO_DEL "     . $empresa .","
-                                        . $servicio ;
+        $sql = "Exec VISITA_DEL "     . $empresa .","
+                                        . $visita ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('servicios', 'refresh');       
+        redirect('visitas', 'refresh');       
     }  
 }

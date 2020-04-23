@@ -51,10 +51,10 @@ class C_ubicacion extends CI_Controller {
     }
     public function crear(){
 
-        if($this->input->post('sede') != ''&&
-            $this->input->post('talmacen') != ''&&
-            $this->input->post('descripcion') != ''&&
-            $this->input->post('metro') != ''):
+        if( trim($this->input->post('sede')) != ''&&
+            trim($this->input->post('talmacen')) != ''&&
+            trim($this->input->post('descripcion')) != ''&&
+            trim($this->input->post('metro')) != ''):
 
         $sql = "Exec UBICACION_INS "    . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('sede') . "," 
@@ -76,9 +76,8 @@ class C_ubicacion extends CI_Controller {
     public function actualizar($empresa,$sede,$id)
     {
 
-        if(
-        $this->input->post('descripcion') != ''&&
-        $this->input->post('metro') != ''):
+        if( trim($this->input->post('sede')) != ''&&
+            trim($this->input->post('talmacen')) != '' ):
 
         $sql = "Exec UBICACION_UPD "    . $empresa . ","
                                         . $sede . "," 

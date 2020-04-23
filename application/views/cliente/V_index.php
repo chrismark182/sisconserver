@@ -21,7 +21,12 @@
             <div class="input-field col s12">
                 <input class="btn-large" type="submit" value="Buscar">
             </div>
-        </form>  
+            <div class="input-field col s10 right-align" style="margin: 0px">
+            <div>Total Registros: 
+            <span id="total" class="btn"><?php echo count($clientes);?></span></div>
+            </div>
+        </form>
+
     </div>
     
 </div>
