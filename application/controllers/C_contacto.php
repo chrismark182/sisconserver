@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_visita extends CI_Controller {
+class C_contacto extends CI_Controller {
 
 	var $data = array();
 
@@ -28,39 +28,51 @@ class C_visita extends CI_Controller {
 	public function index()
 	{
 
-        $sql = "Exec VISITA_LIS 0,0";        
-        $this->data['visitas'] = $this->M_crud->sql($sql); 
-        $this->load->view('visita/V_index', $this->data);
+        $sql = "Exec CONTACTO_LIS 0,0,0";        
+        $this->data['contactos'] = $this->M_crud->sql($sql); 
+        $this->load->view('contacto/V_index', $this->data);
         
 	}
 	public function nuevo(){
-		
-		$this->load->view('visita/V_nuevo',$this->data);
+        $this->data['clientes'] = $this->M_crud->read('cliente', array());
+		$this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+		$this->load->view('contacto/V_nuevo',$this->data);
 	
 	}
-	public function editar($empresa,$visita)
+	public function editar($empresa,$cliente,$contacto)
     {  
 
-        $sql = "Exec VISITA_LIS "    .$empresa . ","
-                                        .$visita ;
+        $sql = "Exec CONTACTO_LIS "    .$empresa . ","
+                                        .$cliente. ","
+                                        .$contacto ;
                                         
         
          
-        $visitas = $this->M_crud->sql($sql);
-        $this->data['visita'] = $visitas[0];
-        $this->load->view('visita/V_editar',$this->data);
+        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $this->data['clientes'] = $this->M_crud->read('cliente', array());
+        $contactos = $this->M_crud->sql($sql);
+        $this->data['contacto'] = $contactos[0];
+        $this->load->view('contacto/V_editar',$this->data);
     }
     public function crear(){
 
-        if(trim($this->input->post('descripcion')) != ''):
-            
-		$sql = "Exec VISITA_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0',"
+        
+       if(  trim($this->input->post('cliente')) != '' &&
+            trim($this->input->post('t_documento')) != '' &&
+            trim($this->input->post('ndocumento')) != '' &&
+            trim($this->input->post('nombres')) != ''):
+         
+        $sql = "Exec CONTACTO_INS "     . $this->data['empresa']->EMPRES_N_ID . ","
+                                        . $this->input->post('cliente') . ","
+                                        . $this->input->post('t_documento') . ",'"
+                                        . $this->input->post('ndocumento') . "','"
+										. $this->input->post('nombres') . "','0',"
 										. $this->data['session']->USUARI_N_ID ;
 
-            echo $sql;
+           
+
         $this->M_crud->sql($sql);
-        redirect('visitas','refresh');   
+        redirect('contactos','refresh');   
 
         else:
 
@@ -69,21 +81,26 @@ class C_visita extends CI_Controller {
         endif;       
           
     }
-    public function actualizar($empresa,$visita)
+    public function actualizar($empresa,$cliente,$contacto)
     {
 
-        if(trim($this->input->post('descripcion')) != ''):
+        if(
+            trim($this->input->post('ndocumento')) != '' &&
+            trim($this->input->post('nombres')) != ''
+        ):
 
-        $sql = "Exec VISITA_UPD "    . $empresa . ","
-                                        . $visita . ",'" 
-                                        . $this->input->post('descripcion') . "'" 
+        $sql = "Exec CONTACTO_UPD "     . $empresa . ","
+                                        . $cliente   . ","
+                                        . $contacto . ",'"
+                                        .$this->input->post('ndocumento') . "','" 
+                                        .$this->input->post('nombres') . "'" 
                                         ;
-
+        
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('visitas', 'refresh'); 
-        
+        redirect('contactos', 'refresh'); 
+       
         else:
 
             $this->session->set_flashdata('message','No puede guardar en vacio');
@@ -92,13 +109,14 @@ class C_visita extends CI_Controller {
         endif;
 
     }  
-    public function eliminar($empresa,$visita)
+    public function eliminar($empresa,$cliente,$contacto)
     {
-        $sql = "Exec VISITA_DEL "     . $empresa .","
-                                        . $visita ;
+        $sql = "Exec CONTACTO_DEL "     . $empresa .","
+                                        . $cliente. ","
+                                        . $contacto ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('visitas', 'refresh');       
+        redirect('contactos', 'refresh');       
     }  
 }
