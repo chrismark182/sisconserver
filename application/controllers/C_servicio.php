@@ -55,9 +55,9 @@ class C_servicio extends CI_Controller {
         if(trim($this->input->post('descripcion')) != ''):
             
 		$sql = "Exec SERVICIO_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0','0','0',"
+										. $this->input->post('descripcion') . "','0','0',"
 										. $this->data['session']->USUARI_N_ID;
-
+            
 
         $this->M_crud->sql($sql);
         redirect('servicios','refresh');   
@@ -75,9 +75,9 @@ class C_servicio extends CI_Controller {
         if(trim($this->input->post('descripcion')) != ''):
         $sql = "Exec SERVICIO_UPD "    . $empresa . ","
                                         . $servicio . ",'" 
-                                        . $this->input->post('descripcion') . "'" 
-                                        ;
-
+                                        . $this->input->post('descripcion') . "'," 
+                                        . $this->data['session']->USUARI_N_ID;
+                                        echo $sql;
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
@@ -94,7 +94,9 @@ class C_servicio extends CI_Controller {
     public function eliminar($empresa,$servicio)
     {
         $sql = "Exec SERVICIO_DEL "     . $empresa .","
-                                        . $servicio ;
+                                        . $servicio.","
+                                        .$this->data['session']->USUARI_N_ID;
+
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

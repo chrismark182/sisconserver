@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="clientes" class="breadcrumb">Clientes</a>
+        <a href="<?= base_url() ?>clientes" class="breadcrumb">Clientes</a>
         <a href="#!" class="breadcrumb">Editar</a>
       </div>
     </div>
@@ -17,7 +17,7 @@
                     <?php if($tdocumentos): ?>
                     <?php foreach($tdocumentos as $tdocumento): ?> 
                     <tr>
-                    <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
+                    <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
                     <label>$tdocumentos</label>

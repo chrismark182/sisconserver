@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
         
-        <a href="#!" class="breadcrumb">Sedes</a>
+        <a href="<?= base_url() ?>sedes" class="breadcrumb">Sedes</a>
         <a href="#!" class="breadcrumb">Editar</a>
       </div>
     </div>

@@ -55,10 +55,10 @@ class C_visita extends CI_Controller {
         if(trim($this->input->post('descripcion')) != ''):
             
 		$sql = "Exec VISITA_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0',"
+										. $this->input->post('descripcion') . "',"
 										. $this->data['session']->USUARI_N_ID ;
 
-            echo $sql;
+            
         $this->M_crud->sql($sql);
         redirect('visitas','refresh');   
 
@@ -76,8 +76,8 @@ class C_visita extends CI_Controller {
 
         $sql = "Exec VISITA_UPD "    . $empresa . ","
                                         . $visita . ",'" 
-                                        . $this->input->post('descripcion') . "'" 
-                                        ;
+                                        . $this->input->post('descripcion'). "',"
+										. $this->data['session']->USUARI_N_ID ;
 
 
         $this->M_crud->sql($sql);      
@@ -95,7 +95,9 @@ class C_visita extends CI_Controller {
     public function eliminar($empresa,$visita)
     {
         $sql = "Exec VISITA_DEL "     . $empresa .","
-                                        . $visita ;
+                                        . $visita.
+                                        ","
+										. $this->data['session']->USUARI_N_ID ; ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

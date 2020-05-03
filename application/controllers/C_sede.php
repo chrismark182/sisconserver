@@ -51,9 +51,9 @@ class C_sede extends CI_Controller {
         $sql = "Exec SEDE_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
                                     . $this->input->post('descripcion') . "','" 
                                     . $this->input->post('direccion') . "','" 
-                                    . $this->input->post('abreviatura') . "', '0'," 
+                                    . $this->input->post('abreviatura') . "'," 
                                     . $this->data['session']->USUARI_N_ID;
-                 
+                
         
         $this->M_crud->sql($sql);
         redirect('sedes','refresh'); 
@@ -74,9 +74,9 @@ class C_sede extends CI_Controller {
                                 .$id. ",'"
                                 .$this->input->post('descripcion'). "','"
                                 .$this->input->post('direccion')."','"
-                                .$this->input->post('abreviatura')."'";
+                                .$this->input->post('abreviatura')."',"
+                                .$this->data['session']->USUARI_N_ID;
                                 
-
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('sedes', 'refresh');  
@@ -91,9 +91,9 @@ class C_sede extends CI_Controller {
     public function eliminar($empresa, $id)
     {
        $sql = "Exec SEDE_DEL "   .$empresa.","
-                                .$id;
-        
-
+                                .$id.","
+                                .$this->data['session']->USUARI_N_ID;
+                                echo$sql;
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('sedes', 'refresh');       

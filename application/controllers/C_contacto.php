@@ -66,7 +66,7 @@ class C_contacto extends CI_Controller {
                                         . $this->input->post('cliente') . ","
                                         . $this->input->post('t_documento') . ",'"
                                         . $this->input->post('ndocumento') . "','"
-										. $this->input->post('nombres') . "','0',"
+										. $this->input->post('nombres') . "',"
 										. $this->data['session']->USUARI_N_ID ;
 
            
@@ -93,9 +93,9 @@ class C_contacto extends CI_Controller {
                                         . $cliente   . ","
                                         . $contacto . ",'"
                                         .$this->input->post('ndocumento') . "','" 
-                                        .$this->input->post('nombres') . "'" 
-                                        ;
-        
+                                        .$this->input->post('nombres') . "'," 
+                                       . $this->data['session']->USUARI_N_ID ;
+                                        echo $sql;
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
@@ -113,7 +113,9 @@ class C_contacto extends CI_Controller {
     {
         $sql = "Exec CONTACTO_DEL "     . $empresa .","
                                         . $cliente. ","
-                                        . $contacto ;
+                                        . $contacto. ","
+                                        . $this->data['session']->USUARI_N_ID ;
+                                        echo $sql ;
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

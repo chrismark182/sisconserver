@@ -28,7 +28,7 @@ class C_cliente extends CI_Controller {
         if($this->input->server('REQUEST_METHOD') == 'POST'): 
             $sql = "Exec CLIENTE_LIS 0,0, '{$this->input->post('numero_documento')}%', '{$this->input->post('razon_social')}%'";
         else: 
-            $sql = "Exec CLIENTE_LIS 0,0, '', ''";
+            $sql = "Exec CLIENTE_LIS 0,0,'',''";
         endif; 
         $this->data['clientes'] = $this->M_crud->sql($sql);
         $this->load->view('cliente/V_index', $this->data);
@@ -41,7 +41,7 @@ class C_cliente extends CI_Controller {
     }
     public function editar($empresa,$cliente)
     {  
-        $sql = "Exec CLIENTE_LIS "  .$empresa. ","
+        $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
                                     .$cliente ;
         
         $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
@@ -63,8 +63,10 @@ class C_cliente extends CI_Controller {
                                         . $this->input->post('t_documento') . ",'" 
                                         . $this->input->post('ndocumento') . "','" 
                                         . $this->input->post('razon_social') . "','" 
-                                        . $this->input->post('direccion') . "', '0','0','0','0','0','0'," 
+                                        . $this->input->post('direccion') . "', '0','0','0','0'," 
                                         . $this->data['session']->USUARI_N_ID ;
+        
+                                        
 
         $this->M_crud->sql($sql);
         redirect('clientes','refresh');   
@@ -88,9 +90,9 @@ class C_cliente extends CI_Controller {
                                         .$this->input->post('t_documento')."','"
                                         .$this->input->post('ndocumento') . "','" 
                                         .$this->input->post('razon_social') ."','"
-                                        .$this->input->post('direccion')."'"
-                                        ; 
-        echo $sql;
+                                        .$this->input->post('direccion')."',"
+                                        .$this->data['session']->USUARI_N_ID ; 
+        
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('clientes', 'refresh');      
@@ -108,9 +110,9 @@ class C_cliente extends CI_Controller {
     {
 
         $sql = "Exec CLIENTE_DEL "     . $empresa .","
-                                        . $cliente 
-                                        ;
-            
+                                        . $cliente.","
+                                        .$this->data['session']->USUARI_N_ID ; 
+                                        
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('clientes', 'refresh');       

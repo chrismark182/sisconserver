@@ -43,7 +43,7 @@ class C_ubicacion extends CI_Controller {
         $sql = "Exec UBICACION_LIS "    .$empresa . ","
                                         .$sede . ","
                                         .$id;
-        
+
          
         $ubicaciones = $this->M_crud->sql($sql);
         $this->data['ubicacion'] = $ubicaciones[0];
@@ -60,9 +60,9 @@ class C_ubicacion extends CI_Controller {
                                         . $this->input->post('sede') . "," 
                                         . $this->input->post('talmacen') . ",'" 
                                         . $this->input->post('descripcion') . "','" 
-                                        . $this->input->post('metro') . "','0'," 
+                                        . $this->input->post('metro') . "'," 
                                         . $this->data['session']->USUARI_N_ID;
-                                        echo $sql;
+                                       
 
         $this->M_crud->sql($sql);
         redirect('ubicaciones','refresh');   
@@ -76,15 +76,16 @@ class C_ubicacion extends CI_Controller {
     public function actualizar($empresa,$sede,$id)
     {
 
-        if( trim($this->input->post('sede')) != ''&&
-            trim($this->input->post('talmacen')) != '' ):
+        if( trim($this->input->post('descripcion')) != ''&&
+            trim($this->input->post('metro')) != '' ):
 
         $sql = "Exec UBICACION_UPD "    . $empresa . ","
                                         . $sede . "," 
                                         . $id . ",'"  
                                         . $this->input->post('descripcion') . "'," 
-                                        . $this->input->post('metro') ; 
-            echo $sql;
+                                        . $this->input->post('metro').","
+                                        . $this->data['session']->USUARI_N_ID; 
+            
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
@@ -100,7 +101,8 @@ class C_ubicacion extends CI_Controller {
     {
         $sql = "Exec UBICACION_DEL "     . $empresa .","
                                         . $sede . "," 
-                                        . $id;
+                                        . $id.","
+                                        . $this->data['session']->USUARI_N_ID; 
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
