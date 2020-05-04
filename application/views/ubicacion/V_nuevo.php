@@ -11,7 +11,7 @@
     <form action="<?= base_url() ?>ubicacion/crear" method="post">
         <div class="row">
         
-        <div class="input-field col s12 m6 l4">
+        <div class="input-field col s12 m6 l6">
                 <select id="sede" name="sede">
                     <option value="" disabled selected>Escoge una sede</option>
                     
@@ -25,9 +25,9 @@
                 </select>
         </div>
 
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l6">
             <select id="talmacen" name="talmacen">
-                    <option value="" disabled selected>Escoge una Ubicacion</option>
+                    <option value="" disabled selected>Escoge un Tipo de Almacén</option>
                     
                     <?php if($talmacenes): ?>
                     <?php foreach($talmacenes as $talmacen): ?> 
@@ -38,16 +38,16 @@
                     <label>$Tipo de Almacen</label>
                 </select>
             </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="descripcion" type="text" name="descripcion" class="validate">
-                <label class="active" for="descripcion">Descripcion</label> 
+            <div class="input-field col s12 m6 l6">
+                <input id="descripcion" maxlength="100" type="text" name="descripcion" class="validate">
+                <label class="active" for="descripcion">Descripción</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l6">
                 <input id="metro" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="metro" class="validate">
-                <label class="active" for="metro">Metro Cuadrado</label> 
+                <label class="active" for="metro">Area (m2)</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-large" type="submit" value="Guardar">
+                <input class="btn-small" type="submit" value="Guardar">
             </div>
         </div>
     </form>

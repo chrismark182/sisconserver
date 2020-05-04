@@ -39,15 +39,15 @@
                     </select>
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="ndocumento" type="text" name="ndocumento" class="validate">
+                <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
                 <label class="active" for="ndocumento">Numero de Documento</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="nombres" type="text" name="nombres" class="validate">
+            <div class="input-field col s12 m6 l12">
+                <input id="nombres" maxlength="100" type="text" name="nombres" class="validate">
                 <label class="active" for="nombres">Nombres</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-large" type="submit" value="Guardar">
+                <input class="btn-small" type="submit" value="Guardar">
             </div>
         </div>
     </form>

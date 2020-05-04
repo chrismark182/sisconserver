@@ -11,7 +11,7 @@
     <form action="<?= base_url() ?>cliente/crear" method="post">
         <div class="row">
         
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <select id="t_documento" name="t_documento">
                     <option value="" disabled selected>Tipo de documento</option>
                     
@@ -25,20 +25,20 @@
                 </select>
             </div>
             
-            <div class="input-field col s12 m6 l4">
-                <input id="ndocumento" type="text" name="ndocumento" class="validate">
+            <div class="input-field col s12 m6 l3">
+                <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
                 <label class="active" for="ndocumento">Numero de Documento</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="razon_social" type="text" name="razon_social" class="validate">
+            <div class="input-field col s12 m6 l6">
+                <input id="razon_social" maxlength="250" type="text" name="razon_social" class="validate">
                 <label class="active" for="razon_social">Razon Social</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="direccion" type="text" name="direccion" class="validate">
+            <div class="input-field col s12 m6 l12">
+                <input id="direccion" maxlength="250" type="text" name="direccion" class="validate">
                 <label class="active" for="direccion">Direccion</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-large" type="submit" value="Guardar">
+                <input class="btn-small" type="submit" value="Guardar">
             </div>
         </div>
     </form>
