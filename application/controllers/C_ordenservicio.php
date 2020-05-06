@@ -25,7 +25,7 @@ class C_ordenservicio extends CI_Controller {
 
     public function index() 
 	{         
-        $sql = "Exec UBICACION_LIS 0,0,0";
+        $sql = "Exec ORDEN_SERVICIO_LIS 0,0,0";
         $this->data['ordenes'] = $this->M_crud->sql($sql);
         
 
@@ -40,7 +40,7 @@ class C_ordenservicio extends CI_Controller {
     }
     public function editar($empresa,$sede,$id)
     {  
-        $sql = "Exec UBICACION_LIS "    .$empresa . ","
+        $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
                                         .$sede . ","
                                         .$id;
 
