@@ -51,6 +51,23 @@ class C_cliente extends CI_Controller {
     }
     public function crear(){
         
+$esclient='0';
+$esproveedor='0';
+$estransportista='0';
+$ordencompra='0';
+if($this->input->post('escliente')=='on'):
+    $esclient='1';
+endif;
+if($this->input->post('esproveedor')=='on'):
+    $esproveedor='1';
+endif;
+if($this->input->post('estransportista')=='on'):
+    $estransportista='1';
+endif;
+if($this->input->post('ordencompra')=='on'):
+    $ordencompra='1';
+endif;
+
         if(
             trim($this->input->post('t_documento')) != '' &&
             trim($this->input->post('ndocumento'))  != '' &&
@@ -58,19 +75,23 @@ class C_cliente extends CI_Controller {
             trim($this->input->post('direccion')) != ''
          ):
 
-
+//var_dump($this->input->post());
         $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('t_documento') . ",'" 
                                         . $this->input->post('ndocumento') . "','" 
                                         . $this->input->post('razon_social') . "','" 
-                                        . $this->input->post('direccion') . "', '0','0','0','0'," 
+                                        . $this->input->post('direccion') . "','" 
+                                        . $esclient . "','"
+                                        . $esproveedor . "','"
+                                        . $estransportista . "','"
+                                        . $ordencompra . "',"
                                         . $this->data['session']->USUARI_N_ID ;
         
-                                        
+
 
         $this->M_crud->sql($sql);
         redirect('clientes','refresh');   
-    else:
+         else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
         header("Location: nuevo");
 

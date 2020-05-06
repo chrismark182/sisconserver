@@ -37,10 +37,57 @@
                 <input id="direccion" maxlength="250" type="text" name="direccion" class="validate">
                 <label class="active" for="direccion">Direccion</label> 
             </div>
+            <div class="input-field col s12 m6 l4 left-align">       
+                <p>
+                    <label>
+                        <input id="escliente" name="escliente" class="validate" type="checkbox"/>
+                        <span>Es Cliente</span>
+                    </label>
+                </p>
+                
+                <p>
+                    <label>
+                        <input id="esproveedor" name="esproveedor" type="checkbox"/>
+                        <span>Es proveedor</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input id="estransportista" name="estransportista" type="checkbox"/>
+                        <span>Es Transportista</span>
+                    </label>
+                </p>
+             
+            </div>
+            <div class="input-field col s12 m6 l4">
+            <p>
+                    <label>
+                        <input  id="ordencompra" name="ordencompra" type="checkbox" disabled="disabled"/>
+                        <span>Requiere Orden de Compra</span>
+                    </label>
+                </p>
+            </div>
             <div class="input-field col s12">
                 <input class="btn-small" type="submit" value="Guardar">
             </div>
+            
         </div>
     </form>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+        
+        // Si se hace click sobre el input de tipo checkbox con id checkb
+        $('#escliente').click(function() {
+            // Si esta seleccionado (si la propiedad checked es igual a true)
+            if ($(this).prop('checked')) {
+                // Selecciona cada input que tenga la clase .checar
+                $('#ordencompra').prop('disabled', false);
+            } else {
+                // Deselecciona cada input que tenga la clase .checar
+                $('#ordencompra').prop('disabled', true);
+            }
+        });
+    </script>
         
