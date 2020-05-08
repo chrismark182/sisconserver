@@ -41,12 +41,14 @@ class C_cliente extends CI_Controller {
     }
     public function editar($empresa,$cliente)
     {  
+        
         $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
                                     .$cliente ;
         
         $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
         $clientes = $this->M_crud->sql($sql);
         $this->data['cliente'] = $clientes[0];
+       
         $this->load->view('cliente/V_editar',$this->data);
     }
     public function crear(){
@@ -101,6 +103,23 @@ endif;
     }
     public function actualizar($empresa,$cliente)
     {
+$esclient='0';
+$esproveedor='0';
+$estransportista='0';
+$ordencompra='0';
+if($this->input->post('escliente')=='on'):
+    $esclient='1';
+endif;
+if($this->input->post('esproveedor')=='on'):
+    $esproveedor='1';
+endif;
+if($this->input->post('estransportista')=='on'):
+    $estransportista='1';
+endif;
+if($this->input->post('ordencompra')=='on'):
+    $ordencompra='1';
+endif;
+
         if( trim($this->input->post('t_documento')) != '' &&
          trim($this->input->post('ndocumento'))  != '' &&
          trim($this->input->post('razon_social')) != '' &&
@@ -111,7 +130,11 @@ endif;
                                         .$this->input->post('t_documento')."','"
                                         .$this->input->post('ndocumento') . "','" 
                                         .$this->input->post('razon_social') ."','"
-                                        .$this->input->post('direccion')."',"
+                                        .$this->input->post('direccion')."','"
+                                        . $esclient . "','"
+                                        . $esproveedor . "','"
+                                        . $estransportista . "','"
+                                        . $ordencompra . "',"
                                         .$this->data['session']->USUARI_N_ID ; 
         
         $this->M_crud->sql($sql);      

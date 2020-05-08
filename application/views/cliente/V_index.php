@@ -42,8 +42,12 @@
                 <th class="center-align">NUMERO</th>
                 <th class="left-align">RAZÓN SOCIAL</th>
                 <th class="left-align">DIRECCIÓN</th>
+                <th class="center-align">CLIENTE</th>
+                <th class="center-align">PROVEEDOR</th>
+                <th class="center-align">TRANSPORTISTA</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
+
             </tr>
         </thead>
         <tbody>
@@ -54,16 +58,33 @@
                         <td class="center-align"><?=$cliente->CLIENT_C_DOCUMENTO?></td>
                         <td class="left-align"><?=$cliente->CLIENT_C_RAZON_SOCIAL?></td>
                         <td class="left-align"><?=$cliente->CLIENT_C_DIRECCION?></td>
+                        <td > <?php 
+                        if($cliente->CLIENT_C_ESCLIENTE=='1'): ?>
+                            <span class="material-icons">done</span>
+                       <?php endif;
+                        ?>
+                        </td>
+                        <td > <?php 
+                        if($cliente->CLIENT_C_ESPROVEEDOR=='1'): ?>
+                            <span class="material-icons">done</span>
+                       <?php endif;
+                        ?>
+                        <td > <?php 
+                        if($cliente->CLIENT_C_ESTRANSPORTISTA=='1'): ?>
+                            <span class="material-icons">done</span>
+                       <?php endif;
+                        ?>
                         <td class="center-align">
                             <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
-                            </a>
+
+                                <i class="material-icons" onclick="confirmareliminar()">delete</i>
+                       
                         </td>
+                        </div>
                     </tr>
                 <?php endforeach; ?>  
             <?php endif; ?>
@@ -73,3 +94,17 @@
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>cliente/nuevo"><i class="material-icons">add</i></a>
+
+    <script>
+    function confirmareliminar(){
+        console.log;
+        $('#modal1').modal('open');
+       // cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/eliminar
+
+
+    }
+		
+    
+    </script>
+
+
