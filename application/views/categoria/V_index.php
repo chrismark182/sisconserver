@@ -28,9 +28,7 @@
                             </a>
                         </td>
                         <td>
-                        <a href="categoria/<?= $row->CATEGO_N_ID ?>/eliminar")>
-                        <i class="material-icons">delete</i>
-                        </a>
+                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?=$row->CATEGO_N_ID?>)">delete</i>                        
                         </td>
             
                     </tr>
@@ -48,6 +46,15 @@
       <p>¿Está seguro que desea elimniar el registro?</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+<script>
+    function confirmarEliminar($id)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'categoria/<?= $row->CATEGO_N_ID ?>/eliminar')
+    }
+</script>
