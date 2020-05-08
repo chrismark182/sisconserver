@@ -74,15 +74,13 @@
                             <span class="material-icons">done</span>
                        <?php endif;
                         ?>
-                        <td class="center-align">
+                        <td>
                             <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
-                        <td class="center-align">
-
-                                <i class="material-icons" onclick="confirmareliminar()">delete</i>
-                       
+                        <td>
+                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>)">delete</i>                        
                         </td>
                         </div>
                     </tr>
@@ -95,16 +93,24 @@
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>cliente/nuevo"><i class="material-icons">add</i></a>
 
-    <script>
-    function confirmareliminar(){
-        console.log;
-        $('#modal1').modal('open');
-       // cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/eliminar
-
-
+  <!-- Modal Structure -->
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar</h4>
+      <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+<script>
+    function confirmarEliminar($id)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/eliminar')
     }
-		
-    
-    </script>
+</script>
 
 
