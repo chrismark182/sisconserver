@@ -66,4 +66,4 @@
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
-    href="<?= base_url()?>ubicacion/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>ordenservicio/nuevo"><i class="material-icons">add</i></a>

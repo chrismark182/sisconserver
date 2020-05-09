@@ -26,15 +26,16 @@ class C_ordenservicio extends CI_Controller {
     public function index() 
 	{         
         $sql = "Exec ORDEN_SERVICIO_LIS 0,0,0";
-        $this->data['ordenes'] = $this->M_crud->sql($sql);
-        
+        $this->data['ordenes'] = $this->M_crud->sql($sql);        
 
         $this->load->view('ordenservicio/V_index', $this->data);
     }
     public function nuevo()
     {
-        $this->data['sedes'] = $this->M_crud->read('sede', array());
-        $this->data['talmacenes'] = $this->M_crud->read('tipo_almacen', array());
+        $this->data['sedes'] = $this->M_crud->read('sede','SEDE_C_ESTADO = 1', array());
+        $this->data['clientes'] = $this->M_crud->read('cliente','CLIENT_C_ESCLIENTE = 1 and CLIENT_C_ESTADO = 1', array());
+        $this->data['servicios'] = $this->M_crud->read('servicio','SERVIC_C_REQUIERE_OS = 1 AND SERVIC_C_ESTADO = 1', array());
+        $this->data['monedas'] = $this->M_crud->read('moneda', array());
         $this->load->view('ordenservicio/V_nuevo', $this->data);
         
     }
@@ -52,15 +53,22 @@ class C_ordenservicio extends CI_Controller {
     public function crear(){
 
         if( trim($this->input->post('sede')) != ''&&
-            trim($this->input->post('talmacen')) != ''&&
-            trim($this->input->post('descripcion')) != ''&&
-            trim($this->input->post('metro')) != ''):
+            trim($this->input->post('cliente')) != ''&&
+            trim($this->input->post('servicio')) != ''&&
+            trim($this->input->post('horas')) != ''&&
+            trim($this->input->post('tarifa')) != ''):
 
-        $sql = "Exec UBICACION_INS "    . $this->data['empresa']->EMPRES_N_ID . ","
+        $sql = "Exec ORDEN_SERVICIO_INS " . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('sede') . "," 
-                                        . $this->input->post('talmacen') . ",'" 
-                                        . $this->input->post('descripcion') . "','" 
-                                        . $this->input->post('metro') . "'," 
+                                        . $this->input->post('cliente') . "," 
+                                        . $this->input->post('servicio') . ",'" 
+                                        . $this->input->post('numerofisico') . "','" 
+                                        . $this->input->post('solicitante') . "','" 
+                                        . $this->input->post('codproyecto') . "'," 
+                                        . $this->input->post('horas') . "," 
+                                        . $this->input->post('tarifa') . "," 
+                                        . $this->input->post('moneda') . "," 
+                                        . $this->input->post('preciounitario') . "," 
                                         . $this->data['session']->USUARI_N_ID;
                                        
 
