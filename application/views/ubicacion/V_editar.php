@@ -8,6 +8,38 @@
     </div>
 </nav>
 <div class="section container center">
+        <select id="sede" name="sede" disabled>
+            <option value="" disabled>Sede </option>
+
+                <?php if($sedes): ?>
+                <?php foreach($sedes as $sede): 
+                $selected='';
+                if($sede->SEDE_N_ID == $ubicacion->SEDE_N_ID): 
+                    $selected='selected';
+                endif;
+                ?> 
+
+                <option value="<?= $sede->SEDE_N_ID ?>" <?= $selected ?>><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                <?php endforeach; ?> 
+                <?php endif; ?>
+            <label>$sede</label>
+        </select>
+        <select id="talmacen" name="talmacen" disabled>
+            <option value="" disabled>Tipo de almacen </option>
+
+                <?php if($talmacenes): ?>
+                <?php foreach($talmacenes as $talmacen): 
+                $selected='';
+                if($talmacen->TIPALM_N_ID == $ubicacion->TIPALM_N_ID): 
+                    $selected='selected';
+                endif;
+                ?> 
+
+                <option value="<?= $talmacen->TIPALM_N_ID ?>" <?= $selected ?>><?= $talmacen->TIPALM_C_DESCRIPCION ?></option>
+                <?php endforeach; ?> 
+                <?php endif; ?>
+            <label>$talmacen</label>
+        </select>
     <form action="<?= base_url() ?>ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
