@@ -44,7 +44,7 @@ class C_ubicacion extends CI_Controller {
                                         .$sede . ","
                                         .$id;
 
-         
+        $this->data['sedes'] = $this->M_crud->read('sede', array());
         $ubicaciones = $this->M_crud->sql($sql);
         $this->data['ubicacion'] = $ubicaciones[0];
         $this->load->view('ubicacion/V_editar',$this->data);
