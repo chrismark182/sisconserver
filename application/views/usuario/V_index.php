@@ -12,6 +12,7 @@
             <tr>          
 				<th>ID</th>
 				<th>Usuario</th>
+                <th>Descripción</th>
                 <th>Editar</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                     <tr>
                         <td><?=$row->USUARI_N_ID?></td>
 						<td><?=$row->USUARI_C_USERNAME?></td>
+                        <td><?=$row->CATEGO_C_DESCRIPCION?></td>
                         <td>
                             <a href="<?= base_url() ?>usuario/<?= $row->USUARI_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
@@ -33,4 +35,4 @@
     </table>
 </div>
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
-    href="<?= base_url()?>menu/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>usuario/nuevo"><i class="material-icons">add</i></a>

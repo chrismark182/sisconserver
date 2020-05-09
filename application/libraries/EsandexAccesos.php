@@ -29,13 +29,10 @@ class EsandexAccesos
     {
         $user = $this->CI->M_crud->read('usuario', array('USUARI_N_ID' =>  $this->CI->session->userdata('id')));
         $menu = array();
-        if($user[0]->CATEGO_N_ID == 1):
+        
             $menu['padres'] = $this->CI->M_crud->read('menu', array('MENU_PADRE_ID' => 0), 'MENU_DESCRIPCION');
             $menu['hijos'] = $this->CI->M_crud->read('menu', array(), 'MENU_DESCRIPCION');
-        else:
-            $menu['padres'] = $this->CI->M_crud->read('menu', array('MENU_ID' => 9), 'MENU_DESCRIPCION');
-            $menu['hijos'] = $this->CI->M_crud->read('menu', array('MENU_ID' => 9), 'MENU_DESCRIPCION');
-        endif;
+        
         return $menu;
     }
  
