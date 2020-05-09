@@ -67,13 +67,14 @@
                         <td > <?php 
                         if($cliente->CLIENT_C_ESPROVEEDOR=='1'): ?>
                             <span class="material-icons">done</span>
-                       <?php endif;
-                        ?>
+                       <?php endif;                        ?>
+                       </td>
                         <td > <?php 
                         if($cliente->CLIENT_C_ESTRANSPORTISTA=='1'): ?>
                             <span class="material-icons">done</span>
                        <?php endif;
                         ?>
+                        </td>
                         <td>
                             <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>

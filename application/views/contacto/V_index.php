@@ -46,8 +46,8 @@
                             </a>
                         </td>
                         <td class="center-align">                        
-                            <a href="contacto/<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
+                        <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>)">delete</i>                        
+                      
                             </a>
                         </td>
                     </tr>
@@ -59,3 +59,21 @@
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>contacto/nuevo"><i class="material-icons">add</i></a>
+    <div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar</h4>
+      <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+<script>
+    function confirmarEliminar($id)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'cliente/<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>/eliminar')
+    }
+</script>
