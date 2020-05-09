@@ -7,6 +7,23 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>SISCON</title>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+	<script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/materialize.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			$('select').formSelect();
+			$('.sidenav').sidenav();
+			$('.modal').modal();
+			$('.dropdown-trigger').dropdown();
+			$('.tooltipped').tooltip();
+			var message = '<?= $this->session->flashdata('message'); ?>';
+			if(message != '')
+			{
+				M.toast({html: message, classes: 'rounded'});
+			}
+		});
+	</script>
 </head>
 <body>
 	<nav class="blue-grey darken-1" style="padding: 0 1em;">
@@ -92,20 +109,6 @@
 		<?php endif ?>
 	</div>
 	<?php echo $output;?>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-	<script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
-	<script src="<?= base_url() ?>assets/js/materialize.js"></script>
-	<script>
-		$('select').formSelect();
-		$('.sidenav').sidenav();
-		$('.modal').modal();
-		$('.dropdown-trigger').dropdown();
-		$('.tooltipped').tooltip();
-		var message = '<?= $this->session->flashdata('message'); ?>';
-		if(message != '')
-		{
-			M.toast({html: message, classes: 'rounded'});
-		}
-	</script>
+	
 </body>
 </html>

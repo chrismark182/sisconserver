@@ -14,7 +14,35 @@
                 <input id="descripcion" maxlength="100" type="text" name="descripcion" value="<?= $servicio->SERVIC_C_DESCRIPCION ?>" class="validate">
                 <label class="active" for="descripcion">Descripción</label> 
             </div>
-
+            <div class="input-field col s12 m6 l4 left-align">       
+            <?php   $checked='';
+                    
+                    if($servicio->SERVIC_C_REQUIERE_OS=='1'):
+                        $checked='checked';
+                         
+                     endif; ?>
+                <p>
+                    <label>
+                    <input  <?= $checked ?> id="requiereos" name="requiereos" class="validate" type="checkbox"/>
+                        <span>Requiere OS</span>
+                        
+                    </label>
+                </p>
+               <?php  
+                $checked='';
+                    
+                    if($servicio->SERVIC_C_AFECTO_IGV=='1'):
+                        $checked='checked';
+                         
+                     endif; ?>
+                <p>
+                    <label>
+                        <input <?= $checked ?> id="afectoigv" name="afectoigv" type="checkbox"/>
+                        <span>Afecto IGV</span>
+                    </label>
+                </p>
+               
+               
             <div class="input-field col s12">
                 <input class="btn-small" type="submit" value="Guardar">
             </div>

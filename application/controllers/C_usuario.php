@@ -30,18 +30,21 @@ class C_usuario extends CI_Controller {
 		//Carga de vistas
 		$this->load->view('usuario/V_index', $this->data);
 	}
-	public function nuevo(){
-		$this->data['grupos'] = $this->M_crud->sql("EXEC Grupo_Lis 'L', 0, '%'");
+	public function nuevo()
+	{
+		$this->data['empresas'] = $this->M_crud->sql("EXEC EMPRESA_LIS 0");
+
+		$sql =  "EXEC CATEGORIA_LIS 0";
+		$this->data['categorias'] = $this->M_crud->sql($sql);
 		//Carga de vistas
-		$this->load->view('master_top', $this->data);
-		$this->load->view('usuario/V_nuevo');
-		$this->load->view('master_bottom');	
+		$this->load->view('usuario/V_nuevo', $this->data);
 	}
 	public function edit($id){
 		//Variables de pagina
 		$sql = "EXEC USUARIO_LIS 0, $id, '', ''";
         $usuario = $this->M_crud->sql($sql);
-		$this->data['usuario'] = $usuario[0];       
+		$this->data['usuario'] = $usuario[0];   
+
 		$sql =  "EXEC CATEGORIA_LIS 0";
 		$this->data['categorias'] = $this->M_crud->sql($sql);
 		//Carga de vistas		
@@ -66,43 +69,41 @@ class C_usuario extends CI_Controller {
         $this->session->set_flashdata('message', 'Usuario eliminado correctamente');    
     	redirect('usuarios', 'refresh');
 	}
-	public function crear(){
-		$rg = '0';
-		$adm = '0';
+	public function crear()
+	{
 		//Validación
-        $existe = $this->M_crud->sql("EXEC Usuario_Lis 'V', 0, '{$this->input->post('username')}', '%', '%'");
-        if (!$existe) {
-        	$pass = md5($this->input->post('password'));
-        	if($this->input->post('respeta_grupo')){$rg = '1';}
-        	if($this->input->post('administrador')){$adm = '1';}
-
-			$this->M_crud->sql("EXEC Usuario_Ins 	'{$this->input->post('username')}',
-													'{$pass}',
-													'{$this->input->post('nombre')}',
-													'{$this->input->post('apellido')}',
-													'{$this->input->post('email')}',
-													{$this->input->post('grupo_id')},
-													'{$rg}',
-													'{$adm}',
-													'{$this->session->userdata('id')}',
-													'{$_SERVER['REMOTE_ADDR']}'
-												");	       
-	        $this->session->set_flashdata('message', 'Usuario creado correctamente');    
-        	redirect('usuarios', 'refresh');
-        }else{
-        	$this->session->set_flashdata('message', 'El nombre de usuario ya se encuentra uso');    
-			redirect('usuario/nuevo', 'refresh');        	
-        }
+		if($this->input->post('username') != '')
+		{
+			$existe = $this->M_crud->sql("EXEC USUARIO_LIS 0, 0, '{$this->input->post('username')}',''");
+			if (!$existe) {
+				$pass = md5(1234);
+				
+				$this->M_crud->sql("EXEC USUARIO_INS 	'{$this->input->post('username')}',
+														'{$pass}',
+														{$this->input->post('categoria')},
+														{$this->input->post('empresa')},
+														{$this->session->userdata('id')}
+													");	       
+				$this->session->set_flashdata('message', 'Usuario creado correctamente');    
+				redirect('usuarios', 'refresh');
+			}else{
+				$this->session->set_flashdata('message', 'El nombre de usuario ya se encuentra uso');    
+				redirect('usuario/nuevo', 'refresh');        	
+			}
+		}else{
+			$this->session->set_flashdata('message', 'No se puede registrar un nombre de usuario vacio');    
+			redirect('usuario/nuevo', 'refresh'); 
+		}
 	}
 	public function update($id)
 	{
-		if($this->input->post('password')){$pass = md5($this->input->post('password'));}		
-	   	$this->M_crud->sql("EXEC USUARIO_UPD 	$id,
-												'{$this->input->post('username')}',
-												'{$this->input->post('categoria')}',
-								        		{$this->session->userdata('id')}
-								        ");	    	   
-        $this->session->set_flashdata('message', 'Usuario actualizado correctamente'); 
+		$sql = "EXEC USUARIO_UPD 	$id,
+									'{$this->input->post('username')}',
+									{$this->input->post('categoria')},
+									{$this->session->userdata('id')}
+							";
+		$this->M_crud->sql($sql);	    	   
+		$this->session->set_flashdata('message', 'Usuario actualizado correctamente'); 
     	//$pagina_anterior=$_SERVER['HTTP_REFERER'];  
     	redirect('usuarios', 'refresh');    
 	}
