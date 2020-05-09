@@ -52,13 +52,24 @@ class C_servicio extends CI_Controller {
     }
     public function crear(){
 
+$requiereos='0';
+$afectoigv='0';
+if($this->input->post('requiereos')=='on'):
+$requiereos='1';
+endif;
+if($this->input->post('afectoigv')=='on'):
+    $afectoigv='1';
+endif;
+
         if(trim($this->input->post('descripcion')) != ''):
             
 		$sql = "Exec SERVICIO_INS "     . $this->data['empresa']->EMPRES_N_ID . ",'"
-										. $this->input->post('descripcion') . "','0','0',"
+                                        . $this->input->post('descripcion') . "','"
+                                        .$requiereos. "','"
+                                        .$afectoigv. "',"
 										. $this->data['session']->USUARI_N_ID;
             
-
+            echo $sql;
         $this->M_crud->sql($sql);
         redirect('servicios','refresh');   
 
@@ -72,10 +83,20 @@ class C_servicio extends CI_Controller {
     public function actualizar($empresa,$servicio)
     {
 
+$requiereos='0';
+$afectoigv='0';
+if($this->input->post('requiereos')=='on'):
+$requiereos='1';
+endif;
+if($this->input->post('afectoigv')=='on'):
+    $afectoigv='1';
+endif;
         if(trim($this->input->post('descripcion')) != ''):
         $sql = "Exec SERVICIO_UPD "    . $empresa . ","
                                         . $servicio . ",'" 
-                                        . $this->input->post('descripcion') . "'," 
+                                        . $this->input->post('descripcion') . "','"
+                                        .$requiereos. "','" 
+                                        .$afectoigv. "',"
                                         . $this->data['session']->USUARI_N_ID;
                                         echo $sql;
                     

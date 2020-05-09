@@ -24,8 +24,10 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="center-align">ID</th>
+                
                 <th class="left-align">SERVICIO</th>
+                <th class="center-align">REQUIERE OS</th>
+                <th class="center-align">AFECTO IGV</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -34,16 +36,24 @@
             <?php if($servicios): ?>
                 <?php foreach($servicios as $servicio): ?> 
                     <tr>
-                        <td class="center-align"><?=$servicio->SERVIC_N_ID?></td>
+                        
                         <td class="left-align"><?=$servicio->SERVIC_C_DESCRIPCION?></td>
-                        <td class="center-align">
+                        <td class="center-align"> <?php if($servicio->SERVIC_C_REQUIERE_OS=='1'): ?>
+                            <span class="material-icons">done</span>
+                       <?php endif;
+                        ?>
+                        </td>
+                        <td class="center-align"> <?php if($servicio->SERVIC_C_AFECTO_IGV=='1'): ?>
+                            <span class="material-icons">done</span>
+                       <?php endif;  ?>
+                       </td>
+                       <td class="center-align">
                             <a href="<?= base_url() ?>servicio/<?= $servicio->EMPRES_N_ID ?>/<?= $servicio->SERVIC_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="servicio/<?= $servicio->EMPRES_N_ID ?>/<?= $servicio->SERVIC_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
+                        <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $servicio->EMPRES_N_ID ?>/<?= $servicio->SERVIC_N_ID ?>)">delete</i>
                             </a>
                         </td>
                     </tr>
@@ -55,3 +65,21 @@
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>servicio/nuevo"><i class="material-icons">add</i></a>
+    <div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar</h4>
+      <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+<script>
+    function confirmarEliminar($id)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'servicio/<?= $servicio->EMPRES_N_ID ?>/<?= $servicio->SERVIC_N_ID ?>/eliminar')
+    }
+</script>

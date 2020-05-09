@@ -8,6 +8,22 @@
     </div>
 </nav>
 <div class="section container center">
+    <select id="cliente" name="cliente" disabled>
+    <option value="" disabled>Cliente </option>
+
+        <?php if($clientes): ?>
+        <?php foreach($clientes as $cliente): 
+        $selected='';
+        if($cliente->CLIENT_N_ID == $contacto->CLIENT_N_ID): 
+            $selected='selected';
+        endif;
+        ?> 
+
+        <option value="<?= $cliente->CLIENT_N_ID ?>" <?= $selected ?>><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+        <?php endforeach; ?> 
+        <?php endif; ?>
+    <label>$clientes</label>
+    </select>
     <form action="<?= base_url() ?>contacto/<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
