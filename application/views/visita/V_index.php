@@ -42,9 +42,8 @@
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="visita/<?= $visita->EMPRES_N_ID ?>/<?= $visita->MOTVIS_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
-                            </a>
+                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $visita->EMPRES_N_ID ?>,<?= $visita->MOTVIS_N_ID ?>)">delete
+                            </i>
                         </td>
                     </tr>
                 <?php endforeach; ?>  
@@ -55,3 +54,22 @@
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>visita/nuevo"><i class="material-icons">add</i></a>
+
+    <div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar</h4>
+      <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+<script>
+    function confirmarEliminar($empresa,$visita)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'ubicacion/'+$empresa+'/'+$visita+'/eliminar')
+    }
+</script>

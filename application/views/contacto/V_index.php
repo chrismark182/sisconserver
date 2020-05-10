@@ -46,7 +46,7 @@
                             </a>
                         </td>
                         <td class="center-align">                        
-                        <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>)">delete</i>                        
+                        <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $contacto->EMPRES_N_ID ?>,<?= $contacto->CLIENT_N_ID ?>,<?= $contacto->CLICON_N_ID ?>)">delete</i>                        
                       
                             </a>
                         </td>
@@ -70,10 +70,10 @@
     </div>
 </div>
 <script>
-    function confirmarEliminar($id)
+    function confirmarEliminar($empresa, $cliente,$contacto)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'cliente/<?= $contacto->EMPRES_N_ID ?>/<?= $contacto->CLIENT_N_ID ?>/<?= $contacto->CLICON_N_ID ?>/eliminar')
+        $('#btnConfirmar').attr('href', 'cliente/'+$empresa+'/'+$cliente+'/'+contacto+'/eliminar')
     }
 </script>
