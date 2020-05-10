@@ -27,8 +27,7 @@ class C_tarifario extends CI_Controller {
 
 	public function index()
 	{
-
-        $sql = "Exec TARIFARIO_LIS 0,0";        
+        $sql = "Exec TARIFARIO_LIS 0,0";
         $this->data['tarifas'] = $this->M_crud->sql($sql); 
         $this->load->view('tarifario/V_index', $this->data);
         
@@ -140,4 +139,10 @@ class C_tarifario extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('tarifas', 'refresh');       
     }  
+    public function api($empresa, $sede, $cliente, $servicio)
+    {
+        //SELECT * FROM TARIFARIO Where EMPRES_N_ID = 1 And SEDE_N_ID = 1 And CLIENT_N_ID = 377 And SERVIC_N_ID = 2
+        $query = $this->M_crud->sql("SELECT * FROM TARIFARIO Where EMPRES_N_ID = " . $empresa . "And SEDE_N_ID = ". $sede ."And CLIENT_N_ID = ". $cliente ." And SERVIC_N_ID = " . $servicio);
+        echo $query;
+    }
 }
