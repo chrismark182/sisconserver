@@ -42,14 +42,14 @@
                         <td class="left-align"><?=$tarifa->CLIENT_C_RAZON_SOCIAL?></td>
                         <td class="left-align"><?=$tarifa->SERVIC_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$tarifa->MONEDA_C_ABREVIATURA?></td>
-                        <td class="left-align"><?=$tarifa->TARIFA_N_PRECIO_UNIT?></td>
+                        <td class="center-align"><?=$tarifa->TARIFA_N_PRECIO_UNIT?></td>
                         <td class="center-align">
-                            <a href="<?= base_url() ?>ordenservicio/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="ordenservicio/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->SEDE_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/eliminar")>
+                            <a href="tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/eliminar")>
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -61,4 +61,4 @@
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
-    href="<?= base_url()?>ubicacion/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>tarifa/nuevo"><i class="material-icons">add</i></a>

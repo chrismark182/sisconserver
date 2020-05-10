@@ -86,11 +86,21 @@ $route['visita/(:num)/(:num)/actualizar'] = function ($empresa , $visita){return
 $route['visita/(:num)/(:num)/eliminar'] = function ($empresa , $visita){return 'C_visita/eliminar/'.$empresa.'/'.$visita;};
 
 //Contactos
+$route['contactos'] = 'C_contacto';
+$route['contacto/nuevo'] = 'C_contacto/nuevo';
+$route['contacto/crear'] = 'C_contacto/crear';
+$route['contacto/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};
+$route['contacto/(:num)/(:num)/(:num)/actualizar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/actualizar/'.$empresa.'/'.$cliente.'/'.$contacto;};
+$route['contacto/(:num)/(:num)/(:num)/eliminar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/eliminar/'.$empresa.'/'.$cliente.'/'.$contacto;};
+
+//Contactos
 $route['tarifas'] = 'C_tarifario';
 $route['tarifa/nuevo'] = 'C_tarifario/nuevo';
 $route['tarifa/crear'] = 'C_tarifario/crear';
 $route['tarifa/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['tarifa/(:num)/(:num)/(:num)/actualizar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/actualizar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['tarifa/(:num)/(:num)/(:num)/eliminar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/eliminar/'.$empresa.'/'.$cliente.'/'.$contacto;};
+
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
+

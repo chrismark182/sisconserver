@@ -33,12 +33,19 @@ class C_tarifario extends CI_Controller {
         
 	}
 	public function nuevo(){
-        $this->data['clientes'] = $this->M_crud->read('cliente', array());
-        $this->data['monedas'] = $this->M_crud->read('moneda', array());
-        $this->data['sedes'] = $this->M_crud->read('sede', array());
-        $this->data['servicios'] = $this->M_crud->read('servicio', array());
         
-		$this->load->view('contacto/V_nuevo',$this->data);
+
+        $clientes = 'Exec CLIENTE_LIS2 0,0';
+        $sedes = 'Exec SEDE_LIS 0,0';
+        $servicios = 'Exec SERVICIO_LIS 0,0';
+        
+
+        $this->data['clientes'] =$this->M_crud->sql($clientes);
+        $this->data['monedas'] = $this->M_crud->read('moneda', array());
+        $this->data['sedes'] = $this->M_crud->sql($sedes);
+        $this->data['servicios'] = $this->M_crud->sql($servicios);
+        
+		$this->load->view('tarifario/V_nuevo',$this->data);
 	
 	}
 	public function editar($empresa,$cliente,$contacto)
@@ -50,7 +57,7 @@ class C_tarifario extends CI_Controller {
                                         
         
          
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $this->data['tdocumentos'] = $this->M_crud->SQL('tipo_documento', array());
         $this->data['clientes'] = $this->M_crud->read('cliente', array());
         $contactos = $this->M_crud->sql($sql);
         $this->data['contacto'] = $contactos[0];
@@ -60,21 +67,23 @@ class C_tarifario extends CI_Controller {
 
         
        if(  trim($this->input->post('cliente')) != '' &&
-            trim($this->input->post('t_documento')) != '' &&
-            trim($this->input->post('ndocumento')) != '' &&
-            trim($this->input->post('nombres')) != ''):
+            trim($this->input->post('sede')) != '' &&
+            trim($this->input->post('servicio')) != '' &&
+            trim($this->input->post('precio')) != '' &&
+            trim($this->input->post('moneda')) != ''):
          
-        $sql = "Exec CONTACTO_INS "     . $this->data['empresa']->EMPRES_N_ID . ","
+        $sql = "Exec TARIFA_INS "     . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('cliente') . ","
-                                        . $this->input->post('t_documento') . ",'"
-                                        . $this->input->post('ndocumento') . "','"
-										. $this->input->post('nombres') . "',"
+                                        . $this->input->post('sede') . ","
+                                        . $this->input->post('servicio') . ",'"
+                                        . $this->input->post('precio') . "',"
+                                        . $this->input->post('moneda') . ","
 										. $this->data['session']->USUARI_N_ID ;
 
-           
+           echo $sql;
 
         $this->M_crud->sql($sql);
-        redirect('contactos','refresh');   
+        redirect('tarifas','refresh');   
 
         else:
 
