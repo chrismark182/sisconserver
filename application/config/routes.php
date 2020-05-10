@@ -78,7 +78,6 @@ $route['categoria/(:num)/actualizar'] = function ($id){return 'C_categoria/actua
 $route['categoria/(:num)/eliminar'] = function ($id){return 'C_categoria/eliminar/'.$id;};
 
 //Visitas
-
 $route['visitas'] = 'C_visita';
 $route['visita/nuevo'] = 'C_visita/nuevo';
 $route['visita/crear'] = 'C_visita/crear';
@@ -93,3 +92,5 @@ $route['tarifa/crear'] = 'C_tarifario/crear';
 $route['tarifa/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['tarifa/(:num)/(:num)/(:num)/actualizar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/actualizar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['tarifa/(:num)/(:num)/(:num)/eliminar'] = function ($empresa ,$cliente, $contacto){return 'C_tarifario/eliminar/'.$empresa.'/'.$cliente.'/'.$contacto;};
+//API
+$route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};

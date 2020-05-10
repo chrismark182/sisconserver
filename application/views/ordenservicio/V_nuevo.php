@@ -99,3 +99,30 @@
     </form>
 </div>
         
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+       document.getElementById('servicio').addEventListener('change', obtenerTarifa)
+    });
+    function obtenerTarifa()
+    {
+        var empresa = <?= $this->session->userdata('id') ?>,
+            sede =  $('#sede').val(), 
+            cliente = $('#cliente').val(), 
+            servicio = $('#servicio').val(), 
+            url = '<?= base_url() ?>api/tarifa/' + empresa + '/' + sede + '/' + cliente + '/' + servicio;
+        
+        fetch(url)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('#tarifa').val(data.TARIFA_N_ID)
+            $('#moneda').val(data.MONEDA_N_ID)
+            $('#preciounitario').val(data.TARIFA_N_PRECIO_UNIT)
+            M.updateTextFields();
+            $('select').formSelect();
+            console.log(data);
+        });
+    }
+</script>
