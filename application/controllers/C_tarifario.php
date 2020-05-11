@@ -27,8 +27,19 @@ class C_tarifario extends CI_Controller {
 
 	public function index()
 	{
+        $clientes = 'Exec CLIENTE_LIS2 0,0';
+        $sedes = 'Exec SEDE_LIS 0,0';
+        $servicios = 'Exec SERVICIO_LIS 0,0';
+        
+
+        $this->data['clientes'] =$this->M_crud->sql($clientes);
+        $this->data['monedas'] = $this->M_crud->read('moneda', array());
+        $this->data['sedes'] = $this->M_crud->sql($sedes);
+        $this->data['servicios'] = $this->M_crud->sql($servicios);
+
+        
         $sql = "Exec TARIFARIO_LIS 0,0";
-        $this->data['tarifas'] = $this->M_crud->sql($sql); 
+        $this->data['tarifas'] = $this->M_crud->sql($sql);   
         $this->load->view('tarifario/V_index', $this->data);
         
 	}

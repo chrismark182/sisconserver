@@ -16,6 +16,61 @@
         </ul>
     </div>
 </nav>
+
+<div class="section container center">
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>tarifas" method="post">
+            <div class="input-field col s12 m6 l3">
+                <select id="sede" name="sede">
+                    <option value="" disabled selected>Sedes</option>
+                    
+                    <?php if($sedes): ?>
+                    <?php foreach($sedes as $sede): ?> 
+                    <tr>
+                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$tdocumentos</label>
+                </select>
+                
+            </div>
+            <div class="input-field col s12 m6 l3">
+                    <select id="cliente" name="cliente">
+                        <option value="" disabled selected>Clientes</option>
+                        
+                        <?php if($clientes): ?>
+                        <?php foreach($clientes as $cliente): ?> 
+                        <tr>
+                        <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                        <?php endforeach; ?> 
+                        <?php endif; ?>
+                        <label>$clientes</label>
+                    </select>
+            </div>
+            <div class="input-field col s6 m6 l3">
+                <select id="servicio" name="servicio">
+                    <option value="" disabled selected>Servicios</option>
+                    
+                    <?php if($servicios): ?>
+                    <?php foreach($servicios as $servicio): ?> 
+                    <tr>
+                    <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$servicios</label>
+                </select>
+            </div>
+            <div class="input-field col s3">
+                <input id="numero" maxlength="200" type="text" name="numero"  class="validate">
+                <label class="active" for="numero">Numero de Tarifa</label> 
+            </div>
+            <div class="input-field col l12">
+                <input class="btn-small" type="submit" value="Buscar">
+            </div>
+        </form>
+    </div>    
+</div>
+
 <div class="container">
     <div>
         &nbsp;

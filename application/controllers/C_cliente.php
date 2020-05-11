@@ -35,6 +35,7 @@ class C_cliente extends CI_Controller {
     }
     public function nuevo()
     {
+        $this->data['clientes'] = $this->M_crud->read('tipo_documento', array());
         $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
         $this->load->view('cliente/V_nuevo', $this->data);
         
@@ -71,7 +72,7 @@ if($this->input->post('ordencompra')=='on'):
 endif;
 
         if(
-            trim($this->input->post('t_documento')) != '' &&
+            trim($this->input->post('tdocumento')) != '' &&
             trim($this->input->post('ndocumento'))  != '' &&
             trim($this->input->post('razon_social')) != '' &&
             trim($this->input->post('direccion')) != ''
@@ -79,7 +80,7 @@ endif;
 
 //var_dump($this->input->post());
         $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('t_documento') . ",'" 
+                                        . $this->input->post('tdocumento') . ",'" 
                                         . $this->input->post('ndocumento') . "','" 
                                         . $this->input->post('razon_social') . "','" 
                                         . $this->input->post('direccion') . "','" 

@@ -11,9 +11,9 @@
     <form action="<?= base_url() ?>cliente/crear" method="post">
         <div class="row">
         
-            <div class="input-field col s12 m6 l3">
-                <select id="t_documento" name="t_documento">
-                    <option value="" disabled selected>Tipo de documento</option>
+        <div class="input-field col s12 m6 l3">
+                <select id="tdocumento" name="tdocumento">
+                    <option value="" disabled selected>Escoge un tipo de documento</option>
                     
                     <?php if($tdocumentos): ?>
                     <?php foreach($tdocumentos as $tdocumento): ?> 
@@ -23,7 +23,7 @@
                     <?php endif; ?>
                     <label>$tdocumentos</label>
                 </select>
-            </div>
+        </div>
             
             <div class="input-field col s12 m6 l3">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
