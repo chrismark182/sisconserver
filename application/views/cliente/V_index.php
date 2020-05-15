@@ -29,7 +29,7 @@
                 <label class="active" for="razon_social">Razon_social</label> 
             </div>
             <div class="input-field col s2">
-                <input class="btn-small" id="btnBuscar" type="submit" value="Buscar">
+                <div class="btn-small" id="btnBuscar">Buscar</div>
             </div>
         </form>
     </div>    
@@ -50,43 +50,8 @@
 
             </tr>
         </thead>
-        <tbody>
-            <?php if(!empty($clientes)): ?>
-                <?php foreach($clientes as $cliente): ?> 
-                    <tr>
-                        <td class="left-align"><?=$cliente->TIPDOC_C_ABREVIATURA?></td>
-                        <td class="center-align"><?=$cliente->CLIENT_C_DOCUMENTO?></td>
-                        <td class="left-align"><?=$cliente->CLIENT_C_RAZON_SOCIAL?></td>
-                        <td class="left-align"><?=$cliente->CLIENT_C_DIRECCION?></td>
-                        <td > <?php 
-                        if($cliente->CLIENT_C_ESCLIENTE=='1'): ?>
-                            <span class="material-icons">done</span>
-                       <?php endif;
-                        ?>
-                        </td>
-                        <td > <?php 
-                        if($cliente->CLIENT_C_ESPROVEEDOR=='1'): ?>
-                            <span class="material-icons">done</span>
-                       <?php endif;                        ?>
-                       </td>
-                        <td > <?php 
-                        if($cliente->CLIENT_C_ESTRANSPORTISTA=='1'): ?>
-                            <span class="material-icons">done</span>
-                       <?php endif;
-                        ?>
-                        </td>
-                        <td>
-                            <a href="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
-                        <td>
-                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cliente->EMPRES_N_ID ?>,<?= $cliente->CLIENT_N_ID ?>)">delete</i>                        
-                        </td>
-                        </div>
-                    </tr>
-                <?php endforeach; ?>  
-            <?php endif; ?>
+        <tbody id="resultados">
+            
         </tbody>
     </table>
 </div>
@@ -106,14 +71,65 @@
     </div>
 </div>
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            numero = getParameterByName('n')
-            if(numero != '')
-            {
-                $('#numero_documento').val(numero)
-                $('#btnBuscar').click()
+    document.addEventListener('DOMContentLoaded', function() {
+        numero = getParameterByName('n')
+        if(numero != '')
+        {
+            $('#numero_documento').val(numero)
+            $('#btnBuscar').click()
+        }
+        var btnBuscar = document.getElementById("btnBuscar"); 
+        btnBuscar.addEventListener("click", buscar, false);
+    });
+    function buscar()
+    {
+        var url = 'api/clientes';
+        var data = {numero_documento: document.getElementById("numero_documento").value, 
+                    razon_social: document.getElementById("razon_social").value};
+        
+        $('#resultados').html('');
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+                $('#resultados').append(`
+                                        
+                                            <tr>
+                                                <td class="left-align">${data[index].TIPDOC_C_ABREVIATURA}</td>
+                                                <td class="center-align">${data[index].CLIENT_C_DOCUMENTO}</td>
+                                                <td class="left-align">${data[index].CLIENT_C_RAZON_SOCIAL}</td>
+                                                <td class="left-align">${data[index].CLIENT_C_DIRECCION}</td>
+                                                <td > 
+                                                </td>
+                                                <td > 
+                                                </td>
+                                                <td > 
+                                                </td>
+                                                <td>
+                                                    <a href="<?= base_url() ?>cliente/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/editar">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID})">delete</i>                        
+                                                </td>
+                                                </div>
+                                            </tr>
+                                    `);
             }
+                            
         });
+    }
     function confirmarEliminar($empresa,$cliente)
     {
         console.log('confirmar eliminar')

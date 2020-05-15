@@ -22,4 +22,11 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql("SELECT * FROM TARIFARIO Where EMPRES_N_ID = " . $empresa . "And SEDE_N_ID = ". $sede ."And CLIENT_N_ID = ". $cliente ." And SERVIC_N_ID = " . $servicio);
         echo json_encode($query[0], true);
     }
+    public function clientes()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = "Exec CLIENTE_LIS 0,0, '{$data['numero_documento']}%', '{$data['razon_social']}%'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
 }

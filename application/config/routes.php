@@ -103,4 +103,5 @@ $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C
 
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
+$route['api/clientes'] = function (){return 'C_api/clientes'; };
 
