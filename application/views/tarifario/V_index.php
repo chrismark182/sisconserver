@@ -61,7 +61,7 @@
                 </select>
             </div>
             <div class="input-field col s3">
-                <input id="numero" maxlength="200" type="text" name="numero"  class="validate">
+                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
                 <label class="active" for="numero">Numero de Tarifa</label> 
             </div>
             <div class="input-field col l12">

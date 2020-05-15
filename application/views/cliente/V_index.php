@@ -9,7 +9,7 @@
                     <b>
                         Total Registros: 
                         &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2"><?php echo count($clientes);?></span>
+                        <span id="total" class="btn blue-grey darken-2"><?php echo  $contador;?></span>
                     </b>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <label class="active" for="razon_social">Razon_social</label> 
             </div>
             <div class="input-field col s2">
-                <input class="btn-small" type="submit" value="Buscar">
+                <input class="btn-small" id="btnBuscar" type="submit" value="Buscar">
             </div>
         </form>
     </div>    
@@ -51,7 +51,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php if($clientes): ?>
+            <?php if(!empty($clientes)): ?>
                 <?php foreach($clientes as $cliente): ?> 
                     <tr>
                         <td class="left-align"><?=$cliente->TIPDOC_C_ABREVIATURA?></td>
@@ -106,12 +106,30 @@
     </div>
 </div>
 <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            numero = getParameterByName('n')
+            if(numero != '')
+            {
+                $('#numero_documento').val(numero)
+                $('#btnBuscar').click()
+            }
+        });
     function confirmarEliminar($empresa,$cliente)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'cliente/'+$empresa+'/'+$cliente+'/eliminar')
     }
+
+
+    function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+
 </script>
 
 

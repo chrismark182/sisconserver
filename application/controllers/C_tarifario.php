@@ -14,7 +14,7 @@ class C_tarifario extends CI_Controller {
            
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
-            $empresa = $this->M_crud->read('empresa', array());
+            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('id')));
             $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
@@ -38,13 +38,38 @@ class C_tarifario extends CI_Controller {
         $this->data['servicios'] = $this->M_crud->sql($servicios);
 
         
-        $sql = "Exec TARIFARIO_LIS 0,0";
+
+        if($this->input->server('REQUEST_METHOD') == 'POST' ):
+            $numero=0;
+            $sede=0;
+            $cliente=0;
+            $servicio=0;
+            if($this->input->post('numero')!='' ):
+              $numero= $this->input->post('numero');
+            endif;
+            if($this->input->post('sede')!='' ):
+                $sede= $this->input->post('sede');
+              endif;
+              if($this->input->post('cliente')!='' ):
+                $cliente= $this->input->post('cliente');
+              endif;
+              if($this->input->post('servicio')!='' ):
+                $servicio= $this->input->post('servicio');
+              endif;
+            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
+        else:
+        $sql = "Exec TARIFARIO_BUS 0,0,0,0,0";
+        endif;
+
         $this->data['tarifas'] = $this->M_crud->sql($sql);   
         $this->load->view('tarifario/V_index', $this->data);
         
 	}
 	public function nuevo(){
         
+
+
+
 
         $clientes = 'Exec CLIENTE_LIS2 0,0';
         $sedes = 'Exec SEDE_LIS 0,0';
@@ -85,7 +110,7 @@ class C_tarifario extends CI_Controller {
     public function crear(){
 
         
-       if(  trim($this->input->post('cliente')) != '' &&
+       if(  
             trim($this->input->post('sede')) != '' &&
             trim($this->input->post('servicio')) != '' &&
             trim($this->input->post('precio')) != '' &&
@@ -114,12 +139,12 @@ class C_tarifario extends CI_Controller {
     public function actualizar($empresa,$tarifa)
     {
 
-   /*    
+     
         if(
             trim($this->input->post('moneda')) != '' &&
             trim($this->input->post('precio')) != ''
         ):
-*/
+
         $sql = "Exec TARIFA_UPD "     . $empresa . ","
                                         . $tarifa   . ","
                                         .$this->input->post('moneda') . "," 
@@ -130,14 +155,14 @@ class C_tarifario extends CI_Controller {
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('tarifas', 'refresh'); 
-     /*  
+       
         else:
 
             $this->session->set_flashdata('message','No puede guardar en vacio');
             header("Location: editar");
             //redirect('visita/'.$empresa.'/'.$visita.'/editar','refresh');
         endif;
-*/
+
     }  
     public function eliminar($empresa,$tarifa)
     {

@@ -25,19 +25,34 @@ class C_cliente extends CI_Controller {
 
     public function index() 
 	{       
+        $this->data['contador'] = 0;
+
+
+
         if($this->input->server('REQUEST_METHOD') == 'POST'): 
+            
             $sql = "Exec CLIENTE_LIS 0,0, '{$this->input->post('numero_documento')}%', '{$this->input->post('razon_social')}%'";
-        else: 
-            $sql = "Exec CLIENTE_LIS 0,0,'',''";
+
+            $url = 'clientes?n=' . $this->input->post(!empty('numero_documento'));
+            redirect($url, 'refresh'); 
+
+            $this->data['clientes'] = $this->M_crud->sql($sql);
+            $this->data['contador'] = count($this->data['clientes']);
         endif; 
-        $this->data['clientes'] = $this->M_crud->sql($sql);
+
+       
         $this->load->view('cliente/V_index', $this->data);
+
+
+        
+
     }
     public function nuevo()
     {
         $this->data['clientes'] = $this->M_crud->read('tipo_documento', array());
         $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
         $this->load->view('cliente/V_nuevo', $this->data);
+        
         
     }
     public function editar($empresa,$cliente)
@@ -104,6 +119,7 @@ endif;
     }
     public function actualizar($empresa,$cliente)
     {
+
 $esclient='0';
 $esproveedor='0';
 $estransportista='0';
@@ -140,7 +156,8 @@ endif;
         
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('clientes', 'refresh');      
+        $url = 'clientes?n=' . $this->input->post('ndocumento');
+        redirect($url, 'refresh');      
 
 
     else:
