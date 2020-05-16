@@ -9,7 +9,7 @@
                     <b>
                         Total Registros: 
                         &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2"><?php echo  $contador;?></span>
+                        <span id="total" class="btn blue-grey darken-2">0</span>
                     </b>
                 </div>
             </div>
@@ -100,8 +100,25 @@
         })
         .then(function(data) 
         {
+            $('#total').html(data.length);
+         
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
+               
+$escliente='';
+$esproveedor='';
+$estransportista='';
+               if(data[index].CLIENT_C_ESCLIENTE==1){
+                $escliente = '<i class="material-icons">done</i>'
+               }
+
+               if(data[index].CLIENT_C_ESPROVEEDOR==1){
+                $esproveedor = '<i class="material-icons">done</i>'
+               }
+               if(data[index].CLIENT_C_ESTRANSPORTISTA==1){
+                $estransportista = '<i class="material-icons">done</i>'
+               }
+
                 $('#resultados').append(`
                                         
                                             <tr>
@@ -109,12 +126,9 @@
                                                 <td class="center-align">${data[index].CLIENT_C_DOCUMENTO}</td>
                                                 <td class="left-align">${data[index].CLIENT_C_RAZON_SOCIAL}</td>
                                                 <td class="left-align">${data[index].CLIENT_C_DIRECCION}</td>
-                                                <td > 
-                                                </td>
-                                                <td > 
-                                                </td>
-                                                <td > 
-                                                </td>
+                                                <td class="center-align">${$escliente}</td>
+                                                <td class="center-align">${$esproveedor}</td>
+                                                <td class="center-align">${$estransportista}</td>
                                                 <td>
                                                     <a href="<?= base_url() ?>cliente/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/editar">
                                                         <i class="material-icons">edit</i>
