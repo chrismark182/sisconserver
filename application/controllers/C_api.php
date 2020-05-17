@@ -19,7 +19,11 @@ class C_api extends CI_Controller {
 
     public function tarifa($empresa, $sede, $cliente, $servicio)
     {
-        $query = $this->M_crud->sql("SELECT * FROM TARIFARIO Where EMPRES_N_ID = " . $empresa . "And SEDE_N_ID = ". $sede ."And CLIENT_N_ID = ". $cliente ." And SERVIC_N_ID = " . $servicio);
+        $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO " .$empresa . ","
+                                        .$sede . ","
+                                        .$cliente . ","
+                                        .$servicio;
+        $query = $this->M_crud->sql($sql);
         echo json_encode($query[0], true);
     }
     public function clientes()
