@@ -42,9 +42,9 @@ $route['ubicacion/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede ,
 $route['ordenes'] = 'C_ordenservicio';
 $route['ordenservicio/nuevo'] = 'C_ordenservicio/nuevo';
 $route['ordenservicio/crear'] = 'C_ordenservicio/crear';
-$route['ordenservicio/(:num)/(:num)/(:num)/editar'] = function ($empresa , $sede , $id){return 'C_ordenservicio/editar/'.$empresa.'/'.$sede.'/'.$id;};
-$route['ordenservicio/(:num)/(:num)/(:num)/actualizar'] = function ($empresa , $sede , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$sede.'/'.$id;};
-$route['ordenservicio/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$sede.'/'.$id;};
+$route['ordenservicio/(:num)/(:num)/editar'] = function ($empresa , $id){return 'C_ordenservicio/editar/'.$empresa.'/'.$id;};
+$route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};
+$route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$id;};
 
 //Clientes
 $route['clientes'] = 'C_cliente';

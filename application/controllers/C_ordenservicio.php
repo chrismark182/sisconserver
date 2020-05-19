@@ -25,7 +25,7 @@ class C_ordenservicio extends CI_Controller {
 
     public function index() 
 	{         
-        $sql = "Exec ORDEN_SERVICIO_LIS 0,0,0";
+        $sql = "Exec ORDEN_SERVICIO_LIS 0,0";
         $this->data['ordenes'] = $this->M_crud->sql($sql);        
 
         $this->load->view('ordenservicio/V_index', $this->data);
@@ -39,15 +39,13 @@ class C_ordenservicio extends CI_Controller {
         $this->load->view('ordenservicio/V_nuevo', $this->data);
         
     }
-    public function editar($empresa,$sede,$id)
+    public function editar($empresa,$id)
     {  
         $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
-                                        .$sede . ","
                                         .$id;
-
          
         $ordenes = $this->M_crud->sql($sql);
-        $this->data['ordenservicio'] = $ordenes[0];
+        $this->data['ordenes'] = $ordenes[0];
         $this->load->view('ordenservicio/V_editar',$this->data);
     }
     public function crear(){
@@ -77,11 +75,9 @@ class C_ordenservicio extends CI_Controller {
     else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
         header("Location: nuevo");
-       
-
     endif;
     }
-    public function actualizar($empresa,$sede,$id)
+    public function actualizar($empresa,$id)
     {
 
         if( trim($this->input->post('descripcion')) != ''&&
@@ -116,7 +112,5 @@ class C_ordenservicio extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('ordenes', 'refresh');       
     }  
-
-
 }
 
