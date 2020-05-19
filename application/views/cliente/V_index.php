@@ -76,13 +76,16 @@
         if(numero != '')
         {
             $('#numero_documento').val(numero)
-            $('#btnBuscar').click()
+            M.updateTextFields();
+            buscar()
         }
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
     });
     function buscar()
     {
+        console.log('Estoy buscando.. ')
+        $('.preloader-background').css({'display': 'block'});
         var url = 'api/clientes';
         var data = {numero_documento: document.getElementById("numero_documento").value, 
                     razon_social: document.getElementById("razon_social").value};
@@ -127,8 +130,9 @@
                                             </tr>
                                     `);
             }
-                            
+            $('.preloader-background').css({'display': 'none'});                            
         });
+        
     }
     function confirmarEliminar($empresa,$cliente)
     {

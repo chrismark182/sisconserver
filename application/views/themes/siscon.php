@@ -24,8 +24,45 @@
 			}
 		});
 	</script>
+	<style>
+		.preloader-background
+        {
+            display: none;
+            background-color: rgba(255,255,255,0.5);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9;
+        }
+        .preloader-wrapper.active
+        {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 20em;
+        }
+	</style>
 </head>
 <body>
+	 <!-- Preloader  -->
+	 <div class="preloader-background">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<nav class="blue-grey darken-1" style="padding: 0 1em;">
     	<div class="nav-wrapper">
 		<?php if($this->session->userdata('logged_in')): ?>
