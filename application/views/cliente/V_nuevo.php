@@ -21,8 +21,9 @@
                     <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$tdocumentos</label>
+                    
                 </select>
+                <label>Tipo de Documento</label>
         </div>
             
             <div class="input-field col s12 m6 l3">
