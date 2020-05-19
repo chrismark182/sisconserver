@@ -92,9 +92,11 @@ endif;
 
 
         $this->M_crud->sql($sql);
-        redirect('clientes','refresh');   
+        $url = 'clientes?n=' . $this->input->post('ndocumento'); 
+        redirect($url,'refresh');  
          else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
+        
         header("Location: nuevo");
 
         
