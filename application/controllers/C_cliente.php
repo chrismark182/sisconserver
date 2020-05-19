@@ -24,23 +24,7 @@ class C_cliente extends CI_Controller {
 	}
 
     public function index() 
-	{       
-        $this->data['contador'] = 0;
-
-
-
-        if($this->input->server('REQUEST_METHOD') == 'POST'): 
-            
-            $sql = "Exec CLIENTE_LIS 0,0, '{$this->input->post('numero_documento')}%', '{$this->input->post('razon_social')}%'";
-
-            $url = 'clientes?n=' . $this->input->post(!empty('numero_documento'));
-            redirect($url, 'refresh'); 
-
-            $this->data['clientes'] = $this->M_crud->sql($sql);
-            $this->data['contador'] = count($this->data['clientes']);
-        endif; 
-
-       
+	{              
         $this->load->view('cliente/V_index', $this->data);
 
 

@@ -75,7 +75,7 @@
             </div>
 
             <div class="input-field col s12 m6 l6">
-                <select id="moneda" name="moneda">
+                <select id="moneda" name="moneda" enabled="true">
                     <option value="" disabled selected>Escoge una moneda</option>
                     
                     <?php if($monedas): ?>
@@ -88,7 +88,7 @@
                 </select>
             </div>
             <div class="input-field col s12 m6 l6">
-                <input id="preciounitario" type="number" placeholder="1.00" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="preciounitario" class="validate">
+                <input id="preciounitario" type="number" readonly="false" placeholder="1.00" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="preciounitario" class="validate">
                 <label class="active" for="preciounitario">Precio Unitario</label> 
             </div>
 
@@ -101,28 +101,40 @@
         
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+       document.getElementById('sede').addEventListener('change', obtenerTarifa)
+       document.getElementById('cliente').addEventListener('change', obtenerTarifa)
        document.getElementById('servicio').addEventListener('change', obtenerTarifa)
     });
     function obtenerTarifa()
     {
         var empresa = <?= $this->session->userdata('id') ?>,
-            sede =  $('#sede').val(), 
-            cliente = $('#cliente').val(), 
-            servicio = $('#servicio').val(), 
-            url = '<?= base_url() ?>api/tarifa/' + empresa + '/' + sede + '/' + cliente + '/' + servicio;
-        
-        fetch(url)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            $('#tarifa').val(data.TARIFA_N_ID)
-            $('#moneda').val(data.MONEDA_N_ID)
-            $('#preciounitario').val(data.TARIFA_N_PRECIO_UNIT)
-            M.updateTextFields();
-            $('select').formSelect();
-            console.log(data);
-        });
+                sede =  $('#sede').val(), 
+                cliente = $('#cliente').val(), 
+                servicio = $('#servicio').val();
+
+        if( sede != null &&
+                cliente != null &&
+                servicio != null){
+
+            M.toast({html: 'Buscando tarifa por favor espere ...'});    
+            var url = '<?= base_url() ?>api/tarifa/' + empresa + '/' + sede + '/' + cliente + '/' + servicio;
+            
+            fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                if(data!=""){
+                    M.toast({html: 'Tarifa encontrada'});
+                    $('#tarifa').val(data.TARIFA_N_ID)
+                    $('#moneda').val(data.MONEDA_N_ID)
+                    $('#preciounitario').val(data.TARIFA_N_PRECIO_UNIT)
+                    M.updateTextFields();
+                    $('select').formSelect();
+                    console.log(data);
+                }
+            });
+        };
     }
 </script>
