@@ -101,8 +101,7 @@ class C_tarifario extends CI_Controller {
         $sql = "Exec TARIFARIO_LIS "    .$empresa . ","
                                         .$tarifa    
                                         ;
-                  ECHO $sql;
-                                        
+                           
         $tarifa = $this->M_crud->sql($sql);
         $this->data['tarifa'] = $tarifa[0];
         $this->load->view('tarifario/V_editar',$this->data);
@@ -124,7 +123,7 @@ class C_tarifario extends CI_Controller {
                                         . $this->input->post('precio') . ","
 										. $this->data['session']->USUARI_N_ID ;
 
-           echo $sql;
+          
 
         $this->M_crud->sql($sql);
         redirect('tarifas','refresh');   
@@ -169,7 +168,7 @@ class C_tarifario extends CI_Controller {
         $sql = "Exec TARIFA_DEL "     . $empresa .","
                                         . $tarifa . ","
                                         . $this->data['session']->USUARI_N_ID ;
-                                        echo $sql ;
+                                        
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

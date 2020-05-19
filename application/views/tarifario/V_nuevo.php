@@ -12,7 +12,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l8">
                     <select id="cliente" name="cliente">
-                        <option value="" disabled selected>Clientes</option>
+                        <option value="" disabled selected>Escoge una opcion</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -20,12 +20,13 @@
                         <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
                         <?php endif; ?>
-                        <label>$clientes</label>
+                        
                     </select>
+                    <label>Clientes</label>
             </div>
             <div class="input-field col s6 m6 l4">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Sedes</option>
+                    <option value="" disabled selected>Escoge una opcion</option>
                     
                     <?php if($sedes): ?>
                     <?php foreach($sedes as $sede): ?> 
@@ -33,12 +34,13 @@
                     <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_ABREVIATURA ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$sedes</label>
+                    
                 </select>
+                <label>Sedes</label>
             </div>
             <div class="input-field col s6 m6 l5">
                 <select id="servicio" name="servicio">
-                    <option value="" disabled selected>Servicios</option>
+                    <option value="" disabled selected>Escoge una opcion</option>
                     
                     <?php if($servicios): ?>
                     <?php foreach($servicios as $servicio): ?> 
@@ -46,12 +48,13 @@
                     <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$servicios</label>
+                    
                 </select>
+                <label>Servicios</label>
             </div>
             <div class="input-field col s6 m6 l3">
                 <select id="moneda" name="moneda">
-                    <option value="" disabled selected>Monedas</option>
+                    <option value="" disabled selected>Escoge una opcion</option>
                     
                     <?php if($monedas): ?>
                     <?php foreach($monedas as $moneda): ?> 
@@ -59,8 +62,9 @@
                     <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_SIMBOLO ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$monedas</label>
+                    
                 </select>
+                <label>Monedas</label>
             </div>
             
             
