@@ -49,12 +49,12 @@
                         <td class="center-align"><?=$orden->ORDSER_C_COD_PROYECTO?></td>
                         <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
                         <td class="center-align">
-                            <a href="<?= base_url() ?>ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->SEDE_N_ID ?>/<?= $orden->CLIENT_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->SEDE_N_ID ?>/<?= $orden->CLIENT_N_ID ?>/eliminar")>
+                            <a href="ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/eliminar")>
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
