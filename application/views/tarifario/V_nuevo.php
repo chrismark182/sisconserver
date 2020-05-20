@@ -31,7 +31,7 @@
                     <?php if($sedes): ?>
                     <?php foreach($sedes as $sede): ?> 
                     <tr>
-                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_ABREVIATURA ?></option>
+                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
                     

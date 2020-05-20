@@ -93,7 +93,7 @@
             <?php if($tarifas): ?>
                 <?php foreach($tarifas as $tarifa): ?> 
                     <tr>
-                        <td class="left-align"><?=$tarifa->SEDE_C_ABREVIATURA?></td>
+                        <td class="left-align"><?=$tarifa->SEDE_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$tarifa->CLIENT_C_RAZON_SOCIAL?></td>
                         <td class="left-align"><?=$tarifa->SERVIC_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$tarifa->MONEDA_C_ABREVIATURA?></td>
