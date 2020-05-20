@@ -22,8 +22,9 @@
                 <option value="<?= $cliente->CLIENT_N_ID ?>" <?= $selected ?>><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                 <?php endforeach; ?> 
                 <?php endif; ?>
-                <label>$clientes</label>
+                
             </select>
+            <label>Clientes</label>
         </div>
         <div class="input-field col s6 m6 l4">
             <select id="sede" name="sede" disabled>
@@ -40,8 +41,9 @@
                 <option value="<?= $sede->SEDE_N_ID ?>" <?= $selected ?>><?= $sede->SEDE_C_DESCRIPCION ?></option>
                 <?php endforeach; ?> 
                 <?php endif; ?>
-                <label>$sedes</label>
+               
             </select>
+            <label>Sedes</label>
         </div>
         <div class="input-field col s6 m6 l4">
             <select id="servicio" name="servicio" disabled>
@@ -58,8 +60,9 @@
                 <option value="<?= $servicio->SERVIC_N_ID ?>" <?= $selected ?>><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
                 <?php endforeach; ?> 
                 <?php endif; ?>
-                <label>$servicios</label>
+                
             </select>
+            <label>Servicios</label>
         </div>
         
         <form action="<?= base_url() ?>tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/actualizar" method="post">
@@ -78,13 +81,14 @@
                     <option value="<?= $moneda->MONEDA_N_ID ?>" <?= $selected ?>><?= $moneda->MONEDA_C_SIMBOLO ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$monedas</label>
+                    
             </select>
+            <label>Monedas</label>
         </div>
                                     
         <div class="input-field col s12 m6 l8">
             <input id="precio" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" value ="<?= $tarifa->TARIFA_N_PRECIO_UNIT ?>" class="validate">
-            <label class="active" for="precio"> Nombre</label> 
+            <label class="active" for="precio">Precio Unitario</label> 
         </div>
         
                                         <div class="input-field col s12">
