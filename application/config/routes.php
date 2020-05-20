@@ -9,11 +9,16 @@ $route['empresa/crear']='C_empresa/crear';
 
 $route['dashboard'] = 'C_dashboard';
 
+
 //Login
 $route['login']='C_login';
 $route['login/create'] = 'C_login/create';
 $route['login/login'] = 'C_login/userpass';
 $route['logout'] = 'C_login/logout';
+
+//Clientes
+$route['acuerdos'] = 'C_acuerdo';
+$route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 
 //Menu
 $route['menus'] = 'C_menu';
@@ -104,4 +109,4 @@ $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
 $route['api/clientes'] = function (){return 'C_api/clientes'; };
-
+$route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };

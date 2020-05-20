@@ -12,7 +12,7 @@ class C_ordenservicio extends CI_Controller {
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
-            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('id')));
+            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];      
 		else:
 			redirect(base_url(),'refresh');

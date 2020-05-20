@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_cliente extends CI_Controller {
+class C_acuerdo extends CI_Controller {
     var $data = array();
 
     public function __construct()
@@ -25,19 +25,13 @@ class C_cliente extends CI_Controller {
 
     public function index() 
 	{              
-        $this->load->view('cliente/V_index', $this->data);
-
-
-        
-
+        $this->load->view('acuerdo/V_index', $this->data);
     }
     public function nuevo()
     {
-        $this->data['clientes'] = $this->M_crud->read('tipo_documento', array());
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $this->load->view('cliente/V_nuevo', $this->data);
-        
-        
+        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
+        $this->data['sedes'] = $this->M_crud->sql("Exec SEDE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0");
+        $this->load->view('acuerdo/V_nuevo', $this->data);        
     }
     public function editar($empresa,$cliente)
     {  

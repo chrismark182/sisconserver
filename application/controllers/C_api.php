@@ -10,7 +10,7 @@ class C_api extends CI_Controller {
         parent::__construct();
         if($this->session->userdata('logged_in')):
             $this->load->model('M_crud');
-            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('id')));
+            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];           
 		else:
 			redirect(base_url(),'refresh');
@@ -30,6 +30,13 @@ class C_api extends CI_Controller {
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "Exec CLIENTE_LIS 0,0, '{$data['numero_documento']}%', '{$data['razon_social']}%'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+    public function ubicacion()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = "Exec UBICACION_LIS {$data['empresa']},{$data['sede']}, {$data['ubicacion']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }

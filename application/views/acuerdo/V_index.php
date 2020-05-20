@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Clientes</a>
+            <a href="#!" class="breadcrumb">Acuerdos de Alquiler</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -16,8 +16,8 @@
         </ul>
     </div>
 </nav>
-
-<div class="section container center">
+<!-- Buscador -->
+<!-- <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
             <div class="input-field col s5">
@@ -33,31 +33,31 @@
             </div>
         </form>
     </div>    
-</div>
-<div class="container">
+</div> -->
+
+<div class="section container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">DOCUMENTO</th>
-                <th class="center-align">NUMERO</th>
-                <th class="left-align">RAZÓN SOCIAL</th>
-                <th class="left-align">DIRECCIÓN</th>
-                <th class="center-align">CLIENTE</th>
-                <th class="center-align">PROVEEDOR</th>
-                <th class="center-align">TRANSPORTISTA</th>
+                <th class="right-align">ID</th>
+                <th class="center-align">SEDE</th>
+                <th class="left-align">UBICACIÓN</th>
+                <th class="left-align">CLIENTE</th>
+                <th class="right-align">F. INICIO</th>
+                <th class="right-align">F. TERMINO</th>
+                <th class="center-align">CERRADO</th>
+                <th class="center-align">PERIODOS</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
-
             </tr>
         </thead>
-        <tbody id="resultados">
-            
+        <tbody id="resultados">            
         </tbody>
     </table>
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
-    href="<?= base_url()?>cliente/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>acuerdo/nuevo"><i class="material-icons">add</i></a>
 
   <!-- Modal Structure -->
 <div id="modalEliminar" class="modal">
@@ -108,9 +108,9 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                
-                $escliente='';
-                $esproveedor='';
-                $estransportista='';
+$escliente='';
+$esproveedor='';
+$estransportista='';
                if(data[index].CLIENT_C_ESCLIENTE==1){
                 $escliente = '<i class="material-icons">done</i>'
                }

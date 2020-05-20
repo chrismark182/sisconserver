@@ -14,7 +14,7 @@ class C_tarifario extends CI_Controller {
            
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
-            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('id')));
+            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
@@ -65,17 +65,12 @@ class C_tarifario extends CI_Controller {
         $this->load->view('tarifario/V_index', $this->data);
         
 	}
-	public function nuevo(){
-        
-
-
-
-
+    public function nuevo()
+    {
         $clientes = 'Exec CLIENTE_LIS2 0,0';
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS 0,0';
-        
-
+    
         $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
         $this->data['sedes'] = $this->M_crud->sql($sedes);
@@ -101,7 +96,6 @@ class C_tarifario extends CI_Controller {
         $sql = "Exec TARIFARIO_LIS "    .$empresa . ","
                                         .$tarifa    
                                         ;
-                  ECHO $sql;
                                         
         $tarifa = $this->M_crud->sql($sql);
         $this->data['tarifa'] = $tarifa[0];
@@ -116,23 +110,18 @@ class C_tarifario extends CI_Controller {
             trim($this->input->post('precio')) != '' &&
             trim($this->input->post('moneda')) != ''):
          
-        $sql = "Exec TARIFA_INS "       . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('cliente') . ","
-                                        . $this->input->post('sede') . ","
-                                        . $this->input->post('servicio') . ","
-                                        . $this->input->post('moneda') . ","
-                                        . $this->input->post('precio') . ","
-										. $this->data['session']->USUARI_N_ID ;
-
-           echo $sql;
-
-        $this->M_crud->sql($sql);
-        redirect('tarifas','refresh');   
-
+            $sql = "Exec TARIFA_INS "       . $this->data['empresa']->EMPRES_N_ID . ","
+                                            . $this->input->post('cliente') . ","
+                                            . $this->input->post('sede') . ","
+                                            . $this->input->post('servicio') . ","
+                                            . $this->input->post('moneda') . ","
+                                            . $this->input->post('precio') . ","
+                                            . $this->data['session']->USUARI_N_ID ;
+            $this->M_crud->sql($sql);
+            redirect('tarifas','refresh');   
         else:
-
-        $this->session->set_flashdata('message','No puede guardar en vacio');
-        header("Location: nuevo");
+            $this->session->set_flashdata('message','No puede guardar en vacio');
+            header("Location: nuevo");
         endif;       
           
     }
