@@ -56,7 +56,7 @@
     </table>
 </div>
 
-<a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
+<a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
     href="<?= base_url()?>acuerdo/nuevo"><i class="material-icons">add</i></a>
 
   <!-- Modal Structure -->
@@ -86,7 +86,7 @@
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
-        var url = 'api/clientes';
+        var url = 'api/acuerdos';
         var data = {numero_documento: document.getElementById("numero_documento").value, 
                     razon_social: document.getElementById("razon_social").value};
         

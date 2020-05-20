@@ -19,7 +19,7 @@ $route['logout'] = 'C_login/logout';
 //Clientes
 $route['acuerdos'] = 'C_acuerdo';
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
-
+$route['acuerdo/crear'] = 'C_acuerdo/crear';
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';

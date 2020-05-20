@@ -50,16 +50,23 @@ class C_acuerdo extends CI_Controller {
     }
     public function crear()
     {
-        $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('tdocumento') . ",'" 
-                                        . $this->input->post('ndocumento') . "','" 
-                                        . $this->input->post('razon_social') . "','" 
-                                        . $this->input->post('direccion') . "','" 
-                                        . $esclient . "','"
-                                        . $esproveedor . "','"
-                                        . $estransportista . "','"
-                                        . $ordencompra . "',"
-                                        . $this->data['session']->USUARI_N_ID ;
+        $facturable = '0';
+        if($this->input->post('facturable') == 'on'):
+            $facturable = '1';
+        endif;
+        $sql = "Exec ALQUILER_INS   {$this->data['empresa']->EMPRES_N_ID}, 
+                                    {$this->input->post('sede')}, 
+                                    {$this->input->post('ubicacion')},
+                                    {$this->input->post('cliente')}, 
+                                    '{$facturable}',
+                                    '{$this->input->post('fecha_inicio')}', 
+                                    '{$this->input->post('fecha_termino')}', 
+                                    {$this->input->post('area')}, 
+                                    '{$this->input->post('observaciones')}', 
+                                    {$this->input->post('moneda')}, 
+                                    {$this->input->post('precio')}, 
+                                    {$this->data['session']->USUARI_N_ID}";
+        echo $sql;
         $this->M_crud->sql($sql);
         redirect('acuerdos','refresh');   
     }
