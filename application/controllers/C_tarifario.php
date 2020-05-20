@@ -82,7 +82,7 @@ class C_tarifario extends CI_Controller {
 	public function editar($empresa,$tarifa)
     {  
 
-        $clientes = 'Exec CLIENTE_LIS2 0,0';
+        $clientes = "Exec CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS 0,0';
         
