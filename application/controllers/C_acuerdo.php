@@ -29,8 +29,11 @@ class C_acuerdo extends CI_Controller {
     }
     public function nuevo()
     {
+        $id = $this->M_crud->sql("Select isnull(max(ALQUIL_N_ID),0) + 1 As ID From ALQUILER Where EMPRES_N_ID = {$this->data['empresa']->EMPRES_N_ID}");
+        $this->data['nextId'] = $id[0]->ID;
         $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
         $this->data['sedes'] = $this->M_crud->sql("Exec SEDE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0");
+        $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('acuerdo/V_nuevo', $this->data);        
     }
     public function editar($empresa,$cliente)
@@ -45,33 +48,8 @@ class C_acuerdo extends CI_Controller {
        
         $this->load->view('cliente/V_editar',$this->data);
     }
-    public function crear(){
-        
-$esclient='0';
-$esproveedor='0';
-$estransportista='0';
-$ordencompra='0';
-if($this->input->post('escliente')=='on'):
-    $esclient='1';
-endif;
-if($this->input->post('esproveedor')=='on'):
-    $esproveedor='1';
-endif;
-if($this->input->post('estransportista')=='on'):
-    $estransportista='1';
-endif;
-if($this->input->post('ordencompra')=='on'):
-    $ordencompra='1';
-endif;
-
-        if(
-            trim($this->input->post('tdocumento')) != '' &&
-            trim($this->input->post('ndocumento'))  != '' &&
-            trim($this->input->post('razon_social')) != '' &&
-            trim($this->input->post('direccion')) != ''
-         ):
-
-//var_dump($this->input->post());
+    public function crear()
+    {
         $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
                                         . $this->input->post('tdocumento') . ",'" 
                                         . $this->input->post('ndocumento') . "','" 
@@ -82,50 +60,17 @@ endif;
                                         . $estransportista . "','"
                                         . $ordencompra . "',"
                                         . $this->data['session']->USUARI_N_ID ;
-        
-
-
         $this->M_crud->sql($sql);
-        redirect('clientes','refresh');   
-         else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: nuevo");
-
-        
-        endif;
-    
+        redirect('acuerdos','refresh');   
     }
     public function actualizar($empresa,$cliente)
     {
-
-$esclient='0';
-$esproveedor='0';
-$estransportista='0';
-$ordencompra='0';
-if($this->input->post('escliente')=='on'):
-    $esclient='1';
-endif;
-if($this->input->post('esproveedor')=='on'):
-    $esproveedor='1';
-endif;
-if($this->input->post('estransportista')=='on'):
-    $estransportista='1';
-endif;
-if($this->input->post('ordencompra')=='on'):
-    $ordencompra='1';
-endif;
-
-        if( trim($this->input->post('t_documento')) != '' &&
-         trim($this->input->post('ndocumento'))  != '' &&
-         trim($this->input->post('razon_social')) != '' &&
-         trim($this->input->post('direccion')) != ''
-         ):
         $sql = "Exec CLIENTE_UPD "      . $empresa. ","
                                         . $cliente. ",'" 
-                                        .$this->input->post('t_documento')."','"
-                                        .$this->input->post('ndocumento') . "','" 
-                                        .$this->input->post('razon_social') ."','"
-                                        .$this->input->post('direccion')."','"
+                                        . $this->input->post('t_documento')."','"
+                                        . $this->input->post('ndocumento') . "','" 
+                                        . $this->input->post('razon_social') ."','"
+                                        . $this->input->post('direccion')."','"
                                         . $esclient . "','"
                                         . $esproveedor . "','"
                                         . $estransportista . "','"
@@ -135,16 +80,7 @@ endif;
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         $url = 'clientes?n=' . $this->input->post('ndocumento');
-        redirect($url, 'refresh');      
-
-
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: editar");
-
-        
-        endif;
-
+        redirect($url, 'refresh');     
     }
     public function eliminar($empresa,$cliente)
     {

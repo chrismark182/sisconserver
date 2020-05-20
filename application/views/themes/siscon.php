@@ -44,6 +44,10 @@
             margin: auto;
             top: 20em;
         }
+		i
+		{
+			color: #039be5;
+		}
 	</style>
 </head>
 <body>
