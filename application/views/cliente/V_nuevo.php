@@ -86,7 +86,8 @@
     {
         var url =  '<?= base_url() ?>api/clientevalidar';
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    ndocumento: document.getElementById("ndocumento").value,
+            tdocumento: document.getElementById("tdocumento").value,            
+            ndocumento: document.getElementById("ndocumento").value
                     };
         
         
@@ -102,7 +103,7 @@
         })
         .then(function(data) 
         {
-            console.log(data.length)
+            console.log(data)
             if(data.length>0){
                 M.toast({html: 'Documento Duplicada', classes: 'rounded'});
             }
