@@ -22,8 +22,9 @@
                 <option value="<?= $sede->SEDE_N_ID ?>" <?= $selected ?>><?= $sede->SEDE_C_DESCRIPCION ?></option>
                 <?php endforeach; ?> 
                 <?php endif; ?>
-            <label>$sede</label>
+                <label>sede</label>
         </select>
+        
         <select id="talmacen" name="talmacen" disabled>
             <option value="" disabled>Tipo de almacen </option>
 
@@ -38,8 +39,9 @@
                 <option value="<?= $talmacen->TIPALM_N_ID ?>" <?= $selected ?>><?= $talmacen->TIPALM_C_DESCRIPCION ?></option>
                 <?php endforeach; ?> 
                 <?php endif; ?>
-            <label>$talmacen</label>
+                <label>Tipo de almacen</label>
         </select>
+        
     <form action="<?= base_url() ?>ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">

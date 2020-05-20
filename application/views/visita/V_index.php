@@ -70,6 +70,6 @@
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'ubicacion/'+$empresa+'/'+$visita+'/eliminar')
+        $('#btnConfirmar').attr('href', 'visita/'+$empresa+'/'+$visita+'/eliminar')
     }
 </script>

@@ -69,7 +69,7 @@ endif;
                                         .$afectoigv. "',"
 										. $this->data['session']->USUARI_N_ID;
             
-            echo $sql;
+            
         $this->M_crud->sql($sql);
         redirect('servicios','refresh');   
 
@@ -98,7 +98,7 @@ endif;
                                         .$requiereos. "','" 
                                         .$afectoigv. "',"
                                         . $this->data['session']->USUARI_N_ID;
-                                        echo $sql;
+                                        
                     
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');

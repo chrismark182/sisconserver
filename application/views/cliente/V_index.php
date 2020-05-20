@@ -132,13 +132,13 @@
                                                 <td class="center-align">${$escliente}</td>
                                                 <td class="center-align">${$esproveedor}</td>
                                                 <td class="center-align">${$estransportista}</td>
-                                                <td>
-                                                    <a href="<?= base_url() ?>cliente/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/editar">
+                                                <td class="center-align">
+                                                    <a  href="<?= base_url() ?>cliente/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/editar">
                                                         <i class="material-icons">edit</i>
                                                     </a>
                                                 </td>
-                                                <td>
-                                                    <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID})">delete</i>                        
+                                                <td class="center-align">
+                                                    <i class="material-icons " style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID})">delete</i>                        
                                                 </td>
                                                 </div>
                                             </tr>
