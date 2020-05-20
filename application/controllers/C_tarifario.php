@@ -14,7 +14,7 @@ class C_tarifario extends CI_Controller {
            
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
-            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('id')));
+            $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
@@ -65,17 +65,12 @@ class C_tarifario extends CI_Controller {
         $this->load->view('tarifario/V_index', $this->data);
         
 	}
-	public function nuevo(){
-        
-
-
-
-
+    public function nuevo()
+    {
         $clientes = 'Exec CLIENTE_LIS2 0,0';
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS 0,0';
-        
-
+    
         $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
         $this->data['sedes'] = $this->M_crud->sql($sedes);

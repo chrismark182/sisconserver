@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_cliente extends CI_Controller {
+class C_acuerdo extends CI_Controller {
     var $data = array();
 
     public function __construct()
@@ -25,19 +25,13 @@ class C_cliente extends CI_Controller {
 
     public function index() 
 	{              
-        $this->load->view('cliente/V_index', $this->data);
-
-
-        
-
+        $this->load->view('acuerdo/V_index', $this->data);
     }
     public function nuevo()
     {
-        $this->data['clientes'] = $this->M_crud->read('tipo_documento', array());
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $this->load->view('cliente/V_nuevo', $this->data);
-        
-        
+        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
+        $this->data['sedes'] = $this->M_crud->sql("Exec SEDE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0");
+        $this->load->view('acuerdo/V_nuevo', $this->data);        
     }
     public function editar($empresa,$cliente)
     {  
@@ -77,44 +71,27 @@ endif;
             trim($this->input->post('direccion')) != ''
          ):
 
-            $validar = "Exec CLIENTE_LIS "     . $this->data['empresa']->EMPRES_N_ID . ",0,'"
-                                                . $this->input->post('ndocumento') . "',''" 
+//var_dump($this->input->post());
+        $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
+                                        . $this->input->post('tdocumento') . ",'" 
+                                        . $this->input->post('ndocumento') . "','" 
+                                        . $this->input->post('razon_social') . "','" 
+                                        . $this->input->post('direccion') . "','" 
+                                        . $esclient . "','"
+                                        . $esproveedor . "','"
+                                        . $estransportista . "','"
+                                        . $ordencompra . "',"
+                                        . $this->data['session']->USUARI_N_ID ;
+        
 
-                                                    ;
 
-
-
-                  echo $validar;                                          
-            $busc=$this->M_crud->sql($validar);
-            
-
-            if(count($busc)==0):
-                $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
-                                                . $this->input->post('tdocumento') . ",'" 
-                                                . $this->input->post('ndocumento') . "','" 
-                                                . $this->input->post('razon_social') . "','" 
-                                                . $this->input->post('direccion') . "','" 
-                                                . $esclient . "','"
-                                                . $esproveedor . "','"
-                                                . $estransportista . "','"
-                                                . $ordencompra . "',"
-                                                . $this->data['session']->USUARI_N_ID ;
-                
-                                                $this->M_crud->sql($sql);
-                                                $url = 'clientes?n=' . $this->input->post('ndocumento'); 
-                                                redirect($url,'refresh');
-
-                                                    
-            else:
-                $this->session->set_flashdata('message','Documento duplicado');
-                    header("Location: nuevo");
-            endif;
-
-         
+        $this->M_crud->sql($sql);
+        redirect('clientes','refresh');   
          else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
-        
         header("Location: nuevo");
+
+        
         endif;
     
     }
