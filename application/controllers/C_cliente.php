@@ -77,29 +77,44 @@ endif;
             trim($this->input->post('direccion')) != ''
          ):
 
-//var_dump($this->input->post());
-        $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('tdocumento') . ",'" 
-                                        . $this->input->post('ndocumento') . "','" 
-                                        . $this->input->post('razon_social') . "','" 
-                                        . $this->input->post('direccion') . "','" 
-                                        . $esclient . "','"
-                                        . $esproveedor . "','"
-                                        . $estransportista . "','"
-                                        . $ordencompra . "',"
-                                        . $this->data['session']->USUARI_N_ID ;
-        
+            $validar = "Exec CLIENTE_LIS "     . $this->data['empresa']->EMPRES_N_ID . ",0,'"
+                                                . $this->input->post('ndocumento') . "',''" 
+
+                                                    ;
 
 
-        $this->M_crud->sql($sql);
-        $url = 'clientes?n=' . $this->input->post('ndocumento'); 
-        redirect($url,'refresh');  
+
+                  echo $validar;                                          
+            $busc=$this->M_crud->sql($validar);
+            
+
+            if(count($busc)==0):
+                $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
+                                                . $this->input->post('tdocumento') . ",'" 
+                                                . $this->input->post('ndocumento') . "','" 
+                                                . $this->input->post('razon_social') . "','" 
+                                                . $this->input->post('direccion') . "','" 
+                                                . $esclient . "','"
+                                                . $esproveedor . "','"
+                                                . $estransportista . "','"
+                                                . $ordencompra . "',"
+                                                . $this->data['session']->USUARI_N_ID ;
+                
+                                                $this->M_crud->sql($sql);
+                                                $url = 'clientes?n=' . $this->input->post('ndocumento'); 
+                                                redirect($url,'refresh');
+
+                                                    
+            else:
+                $this->session->set_flashdata('message','Documento duplicado');
+                    header("Location: nuevo");
+            endif;
+
+         
          else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
         
         header("Location: nuevo");
-
-        
         endif;
     
     }

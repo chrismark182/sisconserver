@@ -19,10 +19,10 @@ class C_api extends CI_Controller {
 
     public function tarifa($empresa, $sede, $cliente, $servicio)
     {
-        $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO " .$empresa . ","
-                                        .$sede . ","
-                                        .$cliente . ","
-                                        .$servicio;
+        $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO "  .$empresa . ","
+                                                    .$sede . ","
+                                                    .$cliente . ","
+                                                    .$servicio;
         $query = $this->M_crud->sql($sql);
         echo json_encode($query[0], true);
     }
@@ -33,4 +33,15 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
+    public function tarifaValidar(){
+
+    $data = json_decode(file_get_contents('php://input'), true);
+    $validar= "Exec TARIFARIO_BUS " . $this->data['empresa']->EMPRES_N_ID . ",0,"
+                                    . $this->input->post('sede') . ","                                
+                                    . $this->input->post('cliente') . ","
+                                    . $this->input->post('servicio');
+                                    
+    
+                                }
 }

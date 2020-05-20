@@ -115,31 +115,42 @@ class C_tarifario extends CI_Controller {
             trim($this->input->post('precio')) != '' &&
             trim($this->input->post('moneda')) != ''):
          
-            $busc =  $this->M_crud->sql($validar);
+            $validar= "Exec TARIFARIO_BUS " . $this->data['empresa']->EMPRES_N_ID . ",0,"
+            . $this->input->post('sede') . ","                                
+            . $this->input->post('cliente') . ","
+            . $this->input->post('servicio')  
+    ;
+    
+          $busc =  $this->M_crud->sql($validar);
 
             if (count($busc)==0):
 
                 $sql = "Exec TARIFA_INS "       . $this->data['empresa']->EMPRES_N_ID . ","
-                                                . $this->input->post('cliente') . ","
-                                                . $this->input->post('sede') . ","
-                                                . $this->input->post('servicio') . ","
-                                                . $this->input->post('moneda') . ","
-                                                . $this->input->post('precio') . ","
-                                                . $this->data['session']->USUARI_N_ID ;
+                . $this->input->post('cliente') . ","
+                . $this->input->post('sede') . ","
+                . $this->input->post('servicio') . ","
+                . $this->input->post('moneda') . ","
+                . $this->input->post('precio') . ","
+                . $this->data['session']->USUARI_N_ID ;
+                
+                $this->M_crud->sql($sql);   
+                redirect('tarifas','refresh');   
+
                 
                 else:
                     $this->session->set_flashdata('message','Registro duplicado');
                     header("Location: nuevo");
-                endif;  
-            
-        $this->M_crud->sql($sql);   
-        redirect('tarifas','refresh');   
-
+            endif;
+        
         else:
 
         $this->session->set_flashdata('message','No puede guardar en vacio');
         header("Location: nuevo");
-        endif;          
+        endif;   
+        
+        
+
+          
     }
     public function actualizar($empresa,$tarifa)
     {
