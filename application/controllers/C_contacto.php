@@ -35,7 +35,8 @@ class C_contacto extends CI_Controller {
 	}
 	public function nuevo(){
        
-		$this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
+        $this->data['clientes'] = $this->M_crud->read('cliente', array());
 		$this->load->view('contacto/V_nuevo',$this->data);
 	
 	}

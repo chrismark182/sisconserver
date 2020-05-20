@@ -8,7 +8,7 @@
     </div>
 </nav>
 <div class="section container center">
-    <form action="<?= base_url() ?>tarifa/crear" method="post">
+    <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
         <div class="row">
             <div class="input-field col s12 m6 l8">
                     <select id="cliente" name="cliente">
@@ -73,11 +73,51 @@
                 <label class="active" for="precio">Precio Unitario</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+                    <div class="btn-small" id="btn_guardar" >Guardar
+                </div>
             </div>
         </div>
     </form>
-</div>
+    </div>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", validar, false); 
+    });
+    function validar()
+    {
+        var url =  '<?= base_url() ?>api/tarifavalidar';
+        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                        sede: document.getElementById("sede").value,
+                    cliente: document.getElementById("cliente").value,
+                    servicio: document.getElementById("servicio").value};
+        
+        
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            console.log(data.length)
+            if(data.length>0){
+                M.toast({html: 'Tarifa Duplicada', classes: 'rounded'});
+            }
+            else{
+                document.getElementById('form').submit();
+            }
+
+        });
+    }
+    </script>
 
 
         

@@ -27,7 +27,7 @@ class C_tarifario extends CI_Controller {
 
 	public function index()
 	{
-        $clientes = 'Exec CLIENTE_LIS2 0,0';
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS 0,0';
         
@@ -109,17 +109,7 @@ class C_tarifario extends CI_Controller {
             trim($this->input->post('servicio')) != '' &&
             trim($this->input->post('precio')) != '' &&
             trim($this->input->post('moneda')) != ''):
-         
-            $validar= "Exec TARIFARIO_BUS " . $this->data['empresa']->EMPRES_N_ID . ",0,"
-            . $this->input->post('sede') . ","                                
-            . $this->input->post('cliente') . ","
-            . $this->input->post('servicio')  
-    ;
-    
-          $busc =  $this->M_crud->sql($validar);
-
-            if (count($busc)==0):
-
+        
                 $sql = "Exec TARIFA_INS "       . $this->data['empresa']->EMPRES_N_ID . ","
                 . $this->input->post('cliente') . ","
                 . $this->input->post('sede') . ","
@@ -131,11 +121,6 @@ class C_tarifario extends CI_Controller {
                 $this->M_crud->sql($sql);   
                 redirect('tarifas','refresh');   
 
-                
-                else:
-                    $this->session->set_flashdata('message','Registro duplicado');
-                    header("Location: nuevo");
-            endif;
         
         else:
 

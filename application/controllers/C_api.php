@@ -51,4 +51,14 @@ class C_api extends CI_Controller {
         echo json_encode($query, true);
     }
 
+    public function clienteValidar()
+    {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec CLIENTE_LIS {$data['empresa']} ,0,{$data['ndocumento']},''";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+
+
 }

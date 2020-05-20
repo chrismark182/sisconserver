@@ -93,7 +93,7 @@ class C_sede extends CI_Controller {
        $sql = "Exec SEDE_DEL "   .$empresa.","
                                 .$id.","
                                 .$this->data['session']->USUARI_N_ID;
-                                echo$sql;
+                                
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('sedes', 'refresh');       
