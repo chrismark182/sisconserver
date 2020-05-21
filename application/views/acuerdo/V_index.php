@@ -40,11 +40,11 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="right-align">ID</th>
-                <th class="center-align">SEDE</th>
+                <th class="left-align">SEDE</th>
                 <th class="left-align">UBICACIÓN</th>
                 <th class="left-align">CLIENTE</th>
-                <th class="right-align">F. INICIO</th>
-                <th class="right-align">F. TERMINO</th>
+                <th class="center-align">F. INICIO</th>
+                <th class="center-align">F. TERMINO</th>
                 <th class="center-align">CERRADO</th>
                 <th class="center-align">PERIODOS</th>
                 <th class="center-align">EDITAR</th>
@@ -72,23 +72,14 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        numero = getParameterByName('n')
-        if(numero != '')
-        {
-            $('#numero_documento').val(numero)
-            M.updateTextFields();
-            buscar()
-        }
-        var btnBuscar = document.getElementById("btnBuscar"); 
-        btnBuscar.addEventListener("click", buscar, false);
+        buscar();
     });
     function buscar()
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
         var url = 'api/acuerdos';
-        var data = {numero_documento: document.getElementById("numero_documento").value, 
-                    razon_social: document.getElementById("razon_social").value};
+        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>};
         
         $('#resultados').html('');
         fetch(url, {
@@ -108,37 +99,33 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                
-$escliente='';
-$esproveedor='';
-$estransportista='';
-               if(data[index].CLIENT_C_ESCLIENTE==1){
-                $escliente = '<i class="material-icons">done</i>'
-               }
+                $cerrado='<i class="material-icons">lock_open</i>';
 
-               if(data[index].CLIENT_C_ESPROVEEDOR==1){
-                $esproveedor = '<i class="material-icons">done</i>'
-               }
-               if(data[index].CLIENT_C_ESTRANSPORTISTA==1){
-                $estransportista = '<i class="material-icons">done</i>'
-               }
+                if(element.ALQUIL_C_ESTA_CERRADO==1){
+                    $cerrado = '<i class="material-icons">lock</i>'
+                }
 
-                $('#resultados').append(`
-                                        
-                                            <tr>
-                                                <td class="left-align">${data[index].TIPDOC_C_ABREVIATURA}</td>
-                                                <td class="center-align">${data[index].CLIENT_C_DOCUMENTO}</td>
-                                                <td class="left-align">${data[index].CLIENT_C_RAZON_SOCIAL}</td>
-                                                <td class="left-align">${data[index].CLIENT_C_DIRECCION}</td>
-                                                <td class="center-align">${$escliente}</td>
-                                                <td class="center-align">${$esproveedor}</td>
-                                                <td class="center-align">${$estransportista}</td>
-                                                <td>
-                                                    <a href="<?= base_url() ?>cliente/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/editar">
+               
+                $('#resultados').append(`   <tr>
+                                                <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                                                <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
+                                                <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                                                <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
+                                                <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
+                                                <td class="center-align">${$cerrado}</td>
+                                                <td class="center-align">
+                                                    <a href="#">
+                                                        <i class="material-icons">assignment</i>
+                                                    </a>
+                                                </td>
+                                                <td class="center-align">
+                                                    <a href="#">
                                                         <i class="material-icons">edit</i>
                                                     </a>
                                                 </td>
-                                                <td>
-                                                    <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID})">delete</i>                        
+                                                <td class="center-align">
+                                                    <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.CLIENT_N_ID})">delete</i>                        
                                                 </td>
                                                 </div>
                                             </tr>
