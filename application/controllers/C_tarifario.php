@@ -29,7 +29,7 @@ class C_tarifario extends CI_Controller {
 	{
         $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
-        $servicios = 'Exec SERVICIO_LIS 0,0';
+        $servicios = 'Exec SERVICIO_LIS_ORDEN_SERVICIO 0,0';
         
 
         $this->data['clientes'] =$this->M_crud->sql($clientes);
@@ -67,9 +67,9 @@ class C_tarifario extends CI_Controller {
 	}
     public function nuevo()
     {
-        $clientes = 'Exec CLIENTE_LIS2 0,0';
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
-        $servicios = 'Exec SERVICIO_LIS 0,0';
+        $servicios = 'Exec SERVICIO_LIS_ORDEN_SERVICIO 0,0';
     
         $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
@@ -82,9 +82,9 @@ class C_tarifario extends CI_Controller {
 	public function editar($empresa,$tarifa)
     {  
 
-        $clientes = "Exec CLIENTE_ESCLIENTE_LIS 1,'1'";
-        $sedes = 'Exec SEDE_LIS 0,0';
-        $servicios = 'Exec SERVICIO_LIS 0,0';
+        $clientes = "Exec CLIENTE_ESCLIENTE_LIS 1,'0'";
+        $sedes = 'Exec SEDE_LIS 1,0';
+        $servicios = 'Exec SERVICIO_LIS 1,0';
         
 
         $this->data['clientes'] =$this->M_crud->sql($clientes);
