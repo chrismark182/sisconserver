@@ -9,64 +9,21 @@
 </nav>
 <div class="section container center">
     <div class="row">                   
-        <div class="input-field col s6 m6 l4">
-            <select id="cliente" name="cliente" disabled>
-                <option value="" disabled>Cliente </option>
-                    <?php if($clientes): ?>
-                    <?php foreach($clientes as $cliente): 
-                    $selected='';
-                    if($cliente->CLIENT_N_ID == $tarifa->CLIENT_N_ID): 
-                        $selected='selected';
-                    endif;
-                    ?> 
-                <option value="<?= $cliente->CLIENT_N_ID ?>" <?= $selected ?>><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                <?php endforeach; ?> 
-                <?php endif; ?>
-                
-            </select>
-            <label>Clientes</label>
+        <div class="input-field col s6 m6 l8 " >
+            <input disabled id="cliente" type="text" name="cliente" value ="<?= $tarifa->CLIENT_C_RAZON_SOCIAL ?>" class="validate">
+            <label class="active" for="cliente">Cliente</label> 
         </div>
         <div class="input-field col s6 m6 l4">
-            <select id="sede" name="sede" disabled>
-                <option value="" disabled>Sede </option>
-
-                    <?php if($sedes): ?>
-                    <?php foreach($sedes as $sede): 
-                    $selected='';
-                    if($sede->SEDE_N_ID == $tarifa->SEDE_N_ID): 
-                        $selected='selected';
-                    endif;
-                    ?> 
-
-                <option value="<?= $sede->SEDE_N_ID ?>" <?= $selected ?>><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                <?php endforeach; ?> 
-                <?php endif; ?>
-               
-            </select>
-            <label>Sedes</label>
+        <input disabled id="sede" type="text" name="sede" value ="<?= $tarifa->SEDE_C_DESCRIPCION ?>" class="validate">
+            <label class="active" for="sede">Sede</label> 
         </div>
-        <div class="input-field col s6 m6 l4">
-            <select id="servicio" name="servicio" disabled>
-                <option value="" disabled>Servicio </option>
-
-                    <?php if($servicios): ?>
-                    <?php foreach($servicios as $servicio): 
-                    $selected='';
-                    if($servicio->SERVIC_N_ID == $tarifa->SERVIC_N_ID): 
-                        $selected='selected';
-                    endif;
-                    ?> 
-
-                <option value="<?= $servicio->SERVIC_N_ID ?>" <?= $selected ?>><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
-                <?php endforeach; ?> 
-                <?php endif; ?>
-                
-            </select>
-            <label>Servicios</label>
+        <div class="input-field col s6 m6 l5">
+            <input disabled id="servicio" type="text" name="servicio" value ="<?= $tarifa->SERVIC_C_DESCRIPCION ?>" class="validate">
+            <label class="active" for="servicio">Servicio</label> 
         </div>
         
         <form action="<?= base_url() ?>tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/actualizar" method="post">
-            <div class="input-field col s6 m6 l4">
+            <div class="input-field col s6 m6 l3">
                 <select id="moneda" name="moneda" >
                     <option value="" disabled>Moneda </option>
 
@@ -86,7 +43,7 @@
             <label>Monedas</label>
         </div>
                                     
-        <div class="input-field col s12 m6 l8">
+        <div class="input-field col s12 m6 l4">
             <input id="precio" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" value ="<?= $tarifa->TARIFA_N_PRECIO_UNIT ?>" class="validate">
             <label class="active" for="precio">Precio Unitario</label> 
         </div>
