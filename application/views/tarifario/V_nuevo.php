@@ -12,7 +12,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l8">
                     <select id="cliente" name="cliente">
-                        <option value="" disabled selected>Escoge una opcion</option>
+                        <option value=""  selected>Sin Cliente</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -92,7 +92,8 @@
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
                         sede: document.getElementById("sede").value,
                     cliente: document.getElementById("cliente").value,
-                    servicio: document.getElementById("servicio").value};
+                    servicio: document.getElementById("servicio").value,
+                    moneda: document.getElementById("moneda").value};
         
         
         fetch(url, {

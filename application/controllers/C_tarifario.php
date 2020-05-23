@@ -118,6 +118,8 @@ class C_tarifario extends CI_Controller {
                 . $this->input->post('precio') . ","
                 . $this->data['session']->USUARI_N_ID ;
                 
+        echo $sql;
+
                 $this->M_crud->sql($sql);   
                 redirect('tarifas','refresh');   
 
