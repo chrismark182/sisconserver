@@ -19,7 +19,7 @@ $route['logout'] = 'C_login/logout';
 //Clientes
 $route['acuerdos'] = 'C_acuerdo';
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
-
+$route['acuerdo/crear'] = 'C_acuerdo/crear';
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';
@@ -112,3 +112,4 @@ $route['api/clientes'] = function (){return 'C_api/clientes'; };
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
+$route['api/acuerdos'] = function (){return 'C_api/acuerdos'; };

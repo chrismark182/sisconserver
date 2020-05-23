@@ -8,7 +8,7 @@
     </div>
 </nav>
 <div class="section container center">
-    <form action="<?= base_url() ?>cliente/crear" method="post">
+    <form action="<?= base_url() ?>acuerdo/crear" method="post">
         <div class="row">
             <div class="input-field col s12 m6">
                 <input id="id" maxlength="15" type="text" name="id" class="right-align validate" value="<?= $nextId ?>" disabled>
@@ -19,7 +19,7 @@
                 <label class="active" for="fecha">Fecha</label> 
             </div>    
             <div class="input-field col s12">
-                <select>
+                <select id="cliente" name="cliente">
                     <option value="" disabled selected>Escoge una opción</option>
                     <?php foreach ($clientes as $row): ?>
                         <option value="<?= $row->CLIENT_N_ID ?>"><?= $row->CLIENT_C_RAZON_SOCIAL ?></option>
@@ -28,7 +28,7 @@
                 <label>Cliente</label>
             </div> 
             <div class="input-field col s12">
-                <select id="sede">
+                <select id="sede" name="sede">
                     <option value="" disabled selected>Escoge una opción</option>
                     <?php foreach ($sedes as $row): ?>
                         <option value="<?= $row->SEDE_N_ID ?>"><?= $row->SEDE_C_DESCRIPCION ?></option>
@@ -37,7 +37,7 @@
                 <label>Sede</label>
             </div> 
             <div class="input-field col s12">
-                <select id="ubicacion" onchange="obtenerUbicacion()">
+                <select id="ubicacion" name="ubicacion" onchange="obtenerUbicacion()">
                     <option value="" disabled selected>Escoge una opción</option>
                 </select>
                 <label>Ubicación</label>
@@ -49,7 +49,7 @@
             <div class="input-field col s12 m6 l6">
                 <p>
                     <label>
-                        <input type="checkbox" />
+                        <input type="checkbox" name="facturable" />
                         <span>Facturable</span>
                     </label>
                 </p>
@@ -71,7 +71,7 @@
                 <label class="active" for="precio">Precio x M2</label> 
             </div>
             <div class="input-field col s12 m6">
-                <select>
+                <select name="moneda">
                     <option value="" disabled selected>Escoge una opción</option>
                     <?php foreach ($monedas as $row): ?>
                         <option value="<?= $row->MONEDA_N_ID ?>"><?= $row->MONEDA_C_DESCRIPCION ?> (<?= $row->MONEDA_C_SIMBOLO ?>)</option>
@@ -84,7 +84,7 @@
                 <label class="active" for="total">Total</label> 
             </div>
             <div class="input-field col s12">
-                <textarea id="observaciones" class="materialize-textarea"></textarea>
+                <textarea id="observaciones" name="observaciones" class="materialize-textarea"></textarea>
                 <label for="observaciones">Observaciones</label>
             </div>
             <div class="input-field col s12">

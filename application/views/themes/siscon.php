@@ -44,7 +44,7 @@
             margin: auto;
             top: 20em;
         }
-		i
+		td i
 		{
 			color: #039be5;
 		}
