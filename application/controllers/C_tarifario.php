@@ -58,10 +58,10 @@ class C_tarifario extends CI_Controller {
               endif;
             $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
         else:
-        $sql = "Exec TARIFARIO_BUS 0,0,0,0,0";
+            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},0,0,0,0";
         endif;
-
-        $this->data['tarifas'] = $this->M_crud->sql($sql);   
+        
+        $this->data['tarifas'] =  $this->M_crud->sql($sql);   ;
         $this->load->view('tarifario/V_index', $this->data);
         
 	}

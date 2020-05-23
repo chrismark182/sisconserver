@@ -46,8 +46,9 @@ class C_api extends CI_Controller {
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec TARIFARIO_VALidar {$data['empresa']} ,0,{$data['sede']},{$data['cliente']},{$data['servicio']}.{$data['moneda']}";
+        $sql= "Exec TARIFARIO_VALIDAR {$data['empresa']}, {$data['sede']},{$data['cliente']},{$data['servicio']},{$data['moneda']}";
         $query = $this->M_crud->sql($sql);
+        $respons = array($sql, $query);
         echo json_encode($query, true);
     }
 

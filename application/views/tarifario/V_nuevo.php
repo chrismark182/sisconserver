@@ -12,7 +12,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l8">
                     <select id="cliente" name="cliente">
-                        <option value=""  selected>Sin Cliente</option>
+                        <option value="0"  selected>Sin Cliente</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -90,7 +90,7 @@
     {
         var url =  '<?= base_url() ?>api/tarifavalidar';
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                        sede: document.getElementById("sede").value,
+                    sede: document.getElementById("sede").value,
                     cliente: document.getElementById("cliente").value,
                     servicio: document.getElementById("servicio").value,
                     moneda: document.getElementById("moneda").value};
@@ -113,7 +113,7 @@
                 M.toast({html: 'Tarifa Duplicada', classes: 'rounded'});
             }
             else{
-                document.getElementById('form').submit();
+               document.getElementById('form').submit();
             }
 
         });
