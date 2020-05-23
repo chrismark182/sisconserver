@@ -159,6 +159,14 @@
         {
             console.log(data)
             document.getElementById('tipo_almacen').value = data[0].TIPALM_C_DESCRIPCION
+            if(data[0].TIPALM_N_ID == 1)
+            {
+                document.getElementById("tipo_almacen").disabled = true;
+            }
+            else if(data[0].TIPALM_N_ID == 2)
+            {
+                document.getElementById("tipo_almacen").disabled = false;
+            }
             document.getElementById('area').value = data[0].UBICAC_N_M2
 
             M.updateTextFields();

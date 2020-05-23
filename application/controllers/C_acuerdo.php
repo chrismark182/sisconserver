@@ -89,16 +89,17 @@ class C_acuerdo extends CI_Controller {
         $url = 'clientes?n=' . $this->input->post('ndocumento');
         redirect($url, 'refresh');     
     }
-    public function eliminar($empresa,$cliente)
+    public function eliminar($empresa,$acuerdo)
     {
 
-        $sql = "Exec CLIENTE_DEL "     . $empresa .","
-                                        . $cliente.","
-                                        .$this->data['session']->USUARI_N_ID ; 
+        $sql = "Exec ALQUILER_DEL "     . $empresa .","
+                                        . $acuerdo; 
+                                      /*   .","
+                                        .$this->data['session']->USUARI_N_ID ;  */
                                         
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('clientes', 'refresh');       
+        redirect('acuerdos', 'refresh');       
     }  
 
 

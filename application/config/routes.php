@@ -20,6 +20,7 @@ $route['logout'] = 'C_login/logout';
 $route['acuerdos'] = 'C_acuerdo';
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 $route['acuerdo/crear'] = 'C_acuerdo/crear';
+$route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';
