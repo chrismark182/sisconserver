@@ -55,15 +55,15 @@
                 </p>
             </div>
             <div class="input-field col s12 m6">
-                <input id="fecha_inicio" maxlength="15" type="text" name="fecha_inicio" class="right-align datepicker validate">
+                <input id="fecha_inicio" maxlength="15" type="text" name="fecha_inicio" class="right-align datepicker validate" required>
                 <label class="active" for="fecha_inicio">Fecha Inicio</label> 
             </div>    
             <div class="input-field col s12 m6">
-                <input id="fecha_termino" maxlength="15" type="text" name="fecha_termino" class="right-align datepicker validate">
+                <input id="fecha_termino" maxlength="15" type="text" name="fecha_termino" class="right-align datepicker validate" required>
                 <label class="active" for="fecha_termino">Fecha Termino</label> 
             </div>   
             <div class="input-field col s12 m6">
-                <input id="area" maxlength="15" type="text" name="area" class="right-align validate" onchange="calcularTotal()" readonly>
+                <input id="area" maxlength="15" type="text" name="area" class="right-align" onchange="calcularTotal()">
                 <label class="active" for="area">Area M2</label> 
             </div> 
             <div class="input-field col s12 m6">
@@ -108,7 +108,7 @@
         var sede = document.getElementById("sede"); 
         sede.addEventListener("change", ubicaciones, false); 
 
-        M.textareaAutoResize($('#textarea1'));
+        M.textareaAutoResize($('#observaciones'));
 
     });
     function ubicaciones()
@@ -161,11 +161,13 @@
             document.getElementById('tipo_almacen').value = data[0].TIPALM_C_DESCRIPCION
             if(data[0].TIPALM_N_ID == 1)
             {
-                document.getElementById("tipo_almacen").disabled = true;
+                console.log('techado')
+                document.getElementById("area").readOnly = true;
             }
             else if(data[0].TIPALM_N_ID == 2)
             {
-                document.getElementById("tipo_almacen").disabled = false;
+                console.log('patio')
+                document.getElementById("area").readOnly = false;
             }
             document.getElementById('area').value = data[0].UBICAC_N_M2
 

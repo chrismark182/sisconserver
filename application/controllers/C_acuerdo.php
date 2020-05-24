@@ -66,7 +66,6 @@ class C_acuerdo extends CI_Controller {
                                     {$this->input->post('moneda')}, 
                                     {$this->input->post('precio')}, 
                                     {$this->data['session']->USUARI_N_ID}";
-        echo $sql;
         $this->M_crud->sql($sql);
         redirect('acuerdos','refresh');   
     }

@@ -70,6 +70,33 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+ <!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Periodos</h4>
+        <table class="striped" style="font-size: 12px;">
+            <thead class="blue-grey darken-1" style="color: white">
+                <tr>          
+                    <th class="right-align">ID</th>
+                    <th class="left-align">SEDE</th>
+                    <th class="left-align">UBICACIÓN</th>
+                    <th class="left-align">CLIENTE</th>
+                    <th class="center-align">F. INICIO</th>
+                    <th class="center-align">F. TERMINO</th>
+                    <th class="center-align">CERRADO</th>
+                    <th class="center-align">PERIODOS</th>
+                    <th class="center-align">EDITAR</th>
+                    <th class="center-align">ELIMINAR</th>
+                </tr>
+            </thead>
+            <tbody id="resultados">            
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         buscar();
@@ -99,12 +126,22 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                
-                $cerrado='<i class="material-icons">lock_open</i>';
+                $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
 
                 if(element.ALQUIL_C_ESTA_CERRADO==1){
                     $cerrado = '<i class="material-icons">lock</i>'
+                }else if(element.ALQUIL_C_ESTA_CERRADO==0){
+                    if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
+                    {
+                        $cerrado='<i class="material-icons">lock_open</i>';
+                    }
                 }
 
+                $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
+                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                {
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                }
                
                 $('#resultados').append(`   <tr>
                                                 <td class="left-align">${element.ALQUIL_N_ID}</td>
@@ -125,7 +162,7 @@
                                                     </a>
                                                 </td>
                                                 <td class="center-align">
-                                                    <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>                        
+                                                    ${$eliminar}                
                                                 </td>
                                                 </div>
                                             </tr>

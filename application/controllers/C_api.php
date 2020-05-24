@@ -44,7 +44,6 @@ class C_api extends CI_Controller {
 
     public function tarifaValidar()
     {
-
         $data = json_decode(file_get_contents('php://input'), true);
         $sql= "Exec TARIFARIO_VALIDAR {$data['empresa']}, {$data['sede']},{$data['cliente']},{$data['servicio']},{$data['moneda']}";
         $query = $this->M_crud->sql($sql);
