@@ -77,19 +77,6 @@ endif;
             trim($this->input->post('razon_social')) != '' &&
             trim($this->input->post('direccion')) != ''
          ):
-
-           $validar = "Exec CLIENTE_LIS "     . $this->data['empresa']->EMPRES_N_ID . ",0,'"
-                                                . $this->input->post('ndocumento') . "',''" 
-
-                                                    ;
-
-
-
-                                                          
-            $busc=$this->M_crud->sql($validar);
-            
-
-            if(count($busc)==0):
                 $sql = "Exec CLIENTE_INS "      . $this->data['empresa']->EMPRES_N_ID . ","
                                                 . $this->input->post('tdocumento') . ",'" 
                                                 . $this->input->post('ndocumento') . "','" 
@@ -105,12 +92,7 @@ endif;
                                                 $url = 'clientes?n=' . $this->input->post('ndocumento'); 
                                                 redirect($url,'refresh');
 
-                                                echo $sql;                          
-            else:
-                $this->session->set_flashdata('message','Documento duplicado');
-                    header("Location: nuevo");
-            endif;
-
+                                                
          
          else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
