@@ -1,3 +1,12 @@
+<nav class="blue-grey lighten-1" style="padding: 0 1em;">
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a href="#!" class="breadcrumb">Seguridad</a>
+        <a href="<?= base_url() ?>menus" class="breadcrumb">Opciones del Sistema</a>
+        <a href="#!" class="breadcrumb">Editar</a>
+      </div>
+    </div>
+</nav>
 <div class="section container center">
     <form action="<?= base_url() ?>menu/<?= $menu->MENU_ID ?>/actualizar" method="post">
         <div class="row">
