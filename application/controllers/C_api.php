@@ -61,9 +61,23 @@ class C_api extends CI_Controller {
     public function acuerdos()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec ALQUILER_LIS {$data['empresa']}";
+        $sql= "Exec ALQUILER_LIS {$data['empresa']}, {$data['acuerdo']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
-
+    public function acuerdos_periodos()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec ALQUILER_DETALLE_LIS {$data['empresa']}, {$data['acuerdo']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+    public function acuerdos_periodos_guardar()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec ALQUILER_DETALLE_INS {$data['empresa']}, {$data['acuerdo']}, {$data['area']}, {$data['precio']}, {$data['usuario']}";
+        echo $sql;
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
 }
