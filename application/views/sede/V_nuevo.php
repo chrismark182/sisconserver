@@ -20,32 +20,29 @@
             <div class="input-field col s12 m6 l4">
                 <input id="abreviatura" maxlength="10" type="text" name="abreviatura" class="validate">
                 <label class="active" for="abreviatura">Abreviatura</label> 
+            </div>      
+            <div class="btn-small" id="btn_guardar" >Guardar
             </div>
-        </div>
-        <div class="row">        
-        <div class="btn-small" id="btn_guardar" >Guardar
-            </div>
-            
         </div>
     </form>
 </div>
            
 <script>
-            document.addEventListener('DOMContentLoaded', function() {
-        
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("pagina")
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validar, false); 
     });
     function validar()
     {
-
+        console.log("validando")
         if( 
             document.getElementById('descripcion').value.trim() != '' &&
             document.getElementById('direccion').value.trim()  != '' &&
             document.getElementById('abreviatura').value.trim() != ''
         )
         {
-            var url =  '<?= base_url() ?>api/sedes_guardar';
+            var url =  '<?= base_url() ?>sede/crear';
             var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
             descripcion: document.getElementById("descripcion").value,            
             direccion: document.getElementById("direccion").value,
@@ -68,7 +65,7 @@
                 console.log(data)
                 M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
                 setTimeout(() => {
-                    window.location.href('<?= base_url() ?>sede/crear');
+                    window.location.href='<?= base_url() ?>sedes';
                 }, 1000);
              });
 
@@ -80,3 +77,4 @@
 
     }
 
+</script>

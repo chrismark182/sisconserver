@@ -7,7 +7,7 @@ class C_ubicacion extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-		$this->_init();
+		
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
@@ -24,7 +24,8 @@ class C_ubicacion extends CI_Controller {
 	}
 
     public function index() 
-	{         
+	{    
+        $this->_init();
         $sql = "Exec UBICACION_LIS 0,0,0";
         $this->data['ubicaciones'] = $this->M_crud->sql($sql);
         
@@ -33,6 +34,7 @@ class C_ubicacion extends CI_Controller {
     }
     public function nuevo()
     {
+        $this->_init();
         $sede = "Exec SEDE_LIS 0,0";
         $this->data['sedes'] = $this->M_crud->sql($sede);
         $this->data['talmacenes'] = $this->M_crud->read('tipo_almacen', array());
@@ -41,6 +43,7 @@ class C_ubicacion extends CI_Controller {
     }
     public function editar($empresa,$sede,$id)
     {  
+        $this->_init();
         $sql = "Exec UBICACION_LIS "    .$empresa . ","
                                         .$sede . ","
                                         .$id;
@@ -53,27 +56,11 @@ class C_ubicacion extends CI_Controller {
     }
     public function crear(){
 
-        if( trim($this->input->post('sede')) != ''&&
-            trim($this->input->post('talmacen')) != ''&&
-            trim($this->input->post('descripcion')) != ''&&
-            trim($this->input->post('metro')) != ''):
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec UBICACION_INS {$data['empresa']}, {$data['sede']}, {$data['talmacen']}, '{$data['descripcion']}', {$data['metro']}, {$data['usuario']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
 
-        $sql = "Exec UBICACION_INS "    . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('sede') . "," 
-                                        . $this->input->post('talmacen') . ",'" 
-                                        . $this->input->post('descripcion') . "','" 
-                                        . $this->input->post('metro') . "'," 
-                                        . $this->data['session']->USUARI_N_ID;
-                                       
-
-        $this->M_crud->sql($sql);
-        redirect('ubicaciones','refresh');   
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: nuevo");
-       
-
-    endif;
     }
     public function actualizar($empresa,$sede,$id)
     {

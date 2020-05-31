@@ -116,5 +116,5 @@ $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
 $route['api/acuerdos'] = function (){return 'C_api/acuerdos'; };
 $route['api/acuerdos/periodos'] = function (){return 'C_api/acuerdos_periodos'; };
 $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_periodos_guardar'; };
-$route['api/contactos_guardar'] = function (){return 'C_api/contactos_guardar'; };
+
 $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };

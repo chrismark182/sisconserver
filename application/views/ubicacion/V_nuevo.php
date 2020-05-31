@@ -8,7 +8,7 @@
     </div>
 </nav>
 <div class="section container center">
-    <form action="<?= base_url() ?>ubicacion/crear" method="post">
+    <form action="<?= base_url() ?>ubicacion/crear"  id="form" method="post">
         <div class="row">
         
         <div class="input-field col s12 m6 l6">
@@ -47,9 +47,63 @@
                 <label class="active" for="metro">Area (m2)</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+                <div class="btn-small" id="btn_guardar">Guardar
             </div>
         </div>
     </form>
 </div>
         
+   
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("cargo pantalla")
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", validar, false); 
+        
+    });
+    function validar()
+    {
+        console.log("Validar");
+        if( 
+            document.getElementById('sede').value.trim() != '' &&
+            document.getElementById('talmacen').value.trim()  != '' &&
+            document.getElementById('descripcion').value.trim() != '' &&
+            document.getElementById('metro').value.trim() != ''
+        )
+        {
+            var url =  '<?= base_url() ?>ubicacion/crear';
+            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                sede: document.getElementById("sede").value,            
+                talmacen: document.getElementById("talmacen").value,
+                descripcion: document.getElementById("descripcion").value,
+                metro: document.getElementById("metro").value,
+            usuario: <?= $session->USUARI_N_ID ?>
+                    };
+
+            fetch(url, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+                M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
+                setTimeout(() => {
+                    window.location.href='<?= base_url() ?>ubicaciones';
+                }, 2000);
+             });
+
+        }
+        else
+        {
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+        }
+
+    }
+</script>
