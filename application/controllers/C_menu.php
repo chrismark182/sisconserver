@@ -25,7 +25,7 @@ class C_menu extends CI_Controller {
 
     public function index() 
 	{           
-        $sql = "Exec MENU_LIS ";
+        $sql = "Exec MENU_LIS 0, 0";
         $this->data['menus'] = $this->M_crud->sql($sql);  
         $this->load->view('menu/V_index', $this->data);
     }
@@ -36,8 +36,9 @@ class C_menu extends CI_Controller {
     }
     public function editar($id)
     {  
-        $this->data['menus_padre'] = $this->M_crud->read('menu', '', array('MENU_PADRE_ID' => 0));  
-        $menus = $this->M_crud->read('menu','', array('MENU_ID' => $id));
+        $this->data['menus_padre'] = $this->M_crud->sql("Exec MENU_LIS 0, 0");  
+        $sql = "Exec MENU_LIS 0, {$id}";
+        $menus = $this->M_crud->sql($sql);
         $this->data['menu'] = $menus[0];
         $this->load->view('menu/V_editar',$this->data);
     }
@@ -49,14 +50,10 @@ class C_menu extends CI_Controller {
     }
     public function actualizar($id)
     {
-        $data = array(                        
-                        'MENU_DESCRIPCION'      =>  $this->input->post('descripcion'),
-                        'MENU_RUTA'             =>  $this->input->post('ruta'),
-                        'MENU_PADRE_ID'         => $this->input->post('mpadre'),
-                        'UPDATE_USUARI_ID' 	    =>  $this->data['session']->USUARI_ID,
-					    'UPDATE_DATE'			=>  date('Y-m-d H:i:s')
-                    );
-        $this->M_crud->update('menu', $data, array('MENU_ID' => $id));      
+        $sql = "Exec MENU_UPD {$id}, '{$this->input->post('descripcion')}', '{$this->input->post('ruta')}', {$this->input->post('mpadre')}, 
+                        {$this->data['session']->USUARI_N_ID}";
+        
+        $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');
         redirect('menus', 'refresh');       
     }  
