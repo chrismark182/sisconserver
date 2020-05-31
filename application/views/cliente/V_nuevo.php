@@ -84,20 +84,26 @@
     });
     function validar()
     {
-        var url =  '<?= base_url() ?>api/clientevalidar';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+
+        if( 
+            document.getElementById('tdocumento').value.trim() != '' &&
+            document.getElementById('ndocumento').value.trim()  != '' &&
+            document.getElementById('razon_social').value.trim() != '' &&
+            document.getElementById('direccion').value.trim() != ''
+        )
+        {
+            var url =  '<?= base_url() ?>api/clientevalidar';
+            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
             tdocumento: document.getElementById("tdocumento").value,            
             ndocumento: document.getElementById("ndocumento").value
                     };
-        
-        
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
+            fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+                'Content-Type': 'application/json'
+                }
+            })
         .then(function(response) {
             return response.json();
         })
@@ -112,9 +118,21 @@
             }
 
         });
+
+        }
+        else
+        {
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+        }
+
+
+        
+        
+        
+        
     }
 
-
+    
 
 
 

@@ -7,7 +7,7 @@
     </div>
 </nav>
 <div class="section container center">
-    <form action="<?= base_url() ?>sede/crear" method="post">
+    <form action="<?= base_url() ?>sede/crear"  id="form" method="post">
         <div class="row">        
             <div class="input-field col s12 m6 l4">
                 <input id="descripcion" maxlength="100" type="text" name="descripcion" class="validate">
@@ -23,10 +23,60 @@
             </div>
         </div>
         <div class="row">        
-            <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+        <div class="btn-small" id="btn_guardar" >Guardar
             </div>
+            
         </div>
     </form>
 </div>
+           
+<script>
+            document.addEventListener('DOMContentLoaded', function() {
         
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", validar, false); 
+    });
+    function validar()
+    {
+
+        if( 
+            document.getElementById('descripcion').value.trim() != '' &&
+            document.getElementById('direccion').value.trim()  != '' &&
+            document.getElementById('abreviatura').value.trim() != ''
+        )
+        {
+            var url =  '<?= base_url() ?>sede/crear';
+            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+            descripcion: document.getElementById("descripcion").value,            
+            direccion: document.getElementById("direccion").value,
+            abreviatura: document.getElementById("abreviatura").value,
+            usuario: <?= $session->USUARI_N_ID ?>
+                    };
+
+            fetch(url, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+                M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
+                setTimeout(() => {
+                    window.location.href('<?= base_url() ?>sede/crear');
+                }, 1000);
+             });
+
+        }
+        else
+        {
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+        }
+
+    }
+

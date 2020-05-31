@@ -33,7 +33,8 @@ class C_ubicacion extends CI_Controller {
     }
     public function nuevo()
     {
-        $this->data['sedes'] = $this->M_crud->read('sede', array());
+        $sede = "Exec SEDE_LIS 0,0";
+        $this->data['sedes'] = $this->M_crud->sql($sede);
         $this->data['talmacenes'] = $this->M_crud->read('tipo_almacen', array());
         $this->load->view('ubicacion/V_nuevo', $this->data);
         

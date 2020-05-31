@@ -8,7 +8,7 @@
     </div>
 </nav>
 <div class="section container center">
-    <form action="<?= base_url() ?>contacto/crear" method="post">
+    <form action="<?= base_url() ?>contacto/crear" id="form" method="post">
         <div class="row">
         
             <div class="input-field col s12 m6 l4">
@@ -47,9 +47,62 @@
                 <label class="active" for="nombres">Nombres</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+            <div class="btn-small" id="btn_guardar" >Guardar
+            </div>
+            
             </div>
         </div>
     </form>
 </div>
+    
+<script>
+            document.addEventListener('DOMContentLoaded', function() {
         
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", validar, false); 
+    });
+    function validar()
+    {
+
+        if( 
+            document.getElementById('cliente').value.trim() != '' &&
+            document.getElementById('t_documento').value.trim()  != '' &&
+            document.getElementById('ndocumento').value.trim() != '' &&
+            document.getElementById('nombres').value.trim() != ''
+        )
+        {
+            var url =  '<?= base_url() ?>contacto/crear';
+            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+            cliente: document.getElementById("cliente").value,            
+            t_documento: document.getElementById("t_documento").value,
+            ndocumento: document.getElementById("ndocumento").value,
+            nombres: document.getElementById("nombres").value,
+            usuario: <?= $session->USUARI_N_ID ?>
+                    };
+
+            fetch(url, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+                M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
+                setTimeout(() => {
+                    window.location.href('<?= base_url() ?>contacto/crear');
+                }, 1000);
+             });
+
+        }
+        else
+        {
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+        }
+
+    }
