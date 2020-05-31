@@ -87,3 +87,4 @@ class C_sede extends CI_Controller {
 
 
 }
+</script>

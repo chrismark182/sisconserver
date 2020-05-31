@@ -69,11 +69,12 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
 <script>
     function confirmarEliminar($empresa, $cliente,$contacto)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'cliente/'+$empresa+'/'+$cliente+'/'+contacto+'/eliminar')
+        $('#btnConfirmar').attr('href', 'contacto/'+$empresa+'/'+$cliente+'/'+$contacto+'/eliminar')
     }
 </script>

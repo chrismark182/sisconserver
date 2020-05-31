@@ -10,19 +10,17 @@
 <div class="section container center">
     <form action="<?= base_url() ?>contacto/crear" id="form" method="post">
         <div class="row">
-        
             <div class="input-field col s12 m6 l4">
                     <select id="cliente" name="cliente">
                         <option value="" disabled selected>Cliente</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
-                        <tr>
                         <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
                         <?php endif; ?>
-                        <label>$clientes</label>
                     </select>
+                        <label>clientes</label>
             </div>
 
             <div class="input-field col s12 m6 l4">
@@ -31,12 +29,11 @@
                         
                         <?php if($tdocumentos): ?>
                         <?php foreach($tdocumentos as $tdocumento): ?> 
-                        <tr>
                         <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
                         <?php endforeach; ?> 
                         <?php endif; ?>
-                        <label>$tdocumentos</label>
                     </select>
+                        <label>Tipo de Documento</label>
             </div>
             <div class="input-field col s12 m6 l4">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
@@ -47,23 +44,24 @@
                 <label class="active" for="nombres">Nombres</label> 
             </div>
             <div class="input-field col s12">
-            <div class="btn-small" id="btn_guardar" >Guardar
-            </div>
-            
+                <div class="btn-small" id="btn_guardar">
+                    Guardar
+                </div>
             </div>
         </div>
     </form>
 </div>
     
 <script>
-            document.addEventListener('DOMContentLoaded', function() {
-        
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("cargo pantalla")
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validar, false); 
+        
     });
     function validar()
     {
-
+        console.log("Validar");
         if( 
             document.getElementById('cliente').value.trim() != '' &&
             document.getElementById('t_documento').value.trim()  != '' &&
@@ -95,8 +93,8 @@
                 console.log(data)
                 M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
                 setTimeout(() => {
-                    window.location.href('<?= base_url() ?>contacto/crear');
-                }, 1000);
+                    window.location.href='<?= base_url() ?>contactos';
+                }, 2000);
              });
 
         }
@@ -106,3 +104,4 @@
         }
 
     }
+</script>

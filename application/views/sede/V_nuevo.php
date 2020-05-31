@@ -45,7 +45,7 @@
             document.getElementById('abreviatura').value.trim() != ''
         )
         {
-            var url =  '<?= base_url() ?>sede/crear';
+            var url =  '<?= base_url() ?>api/sedes_guardar';
             var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
             descripcion: document.getElementById("descripcion").value,            
             direccion: document.getElementById("direccion").value,

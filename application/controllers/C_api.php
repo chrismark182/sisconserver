@@ -80,18 +80,11 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
-    public function contactos_guardar()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', {$data['usuario']}";
-        echo $sql;
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
+    
     public function sedes_guardar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec SEDE_INS {$data['empresa']}, {$data['acuerdo']}, {$data['area']}, {$data['precio']}, {$data['usuario']}";
+        $sql= "Exec SEDE_INS {$data['empresa']}, '{$data['descripcion']}', '{$data['direccion']}', '{$data['abreviatura']}', {$data['usuario']}";
         echo $sql;
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
