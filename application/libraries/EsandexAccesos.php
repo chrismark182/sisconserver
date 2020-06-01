@@ -28,10 +28,18 @@ class EsandexAccesos
     public function accesos()
     {
         $user = $this->CI->M_crud->read('usuario', array('USUARI_N_ID' =>  $this->CI->session->userdata('id')));
+        $menus = $this->CI->M_crud->sql("Exec ACCESO_MENU ". $this->CI->session->userdata('id'));
         $menu = array();
+        $menu['padres'] = array(); 
+        $menu['hijos'] = array(); 
         
-            $menu['padres'] = $this->CI->M_crud->read('menu', array('MENU_PADRE_ID' => 0), 'MENU_DESCRIPCION');
-            $menu['hijos'] = $this->CI->M_crud->read('menu', array(), 'MENU_DESCRIPCION');
+        foreach($menus as $row):
+            if($row->MENU_PADRE_ID == 0):
+                array_push($menu['padres'], $row);
+            else: 
+                array_push($menu['hijos'], $row);
+            endif;
+        endforeach;       
         
         return $menu;
     }

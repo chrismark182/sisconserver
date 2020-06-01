@@ -35,8 +35,8 @@ class C_login extends CI_Controller {
 		$pass = md5($this->input->post('password'));
 		$sql = "Exec USUARIO_LIS ".$this->input->post('empresa').", 0, '".$this->input->post('username')."', '".$pass."'";
 		$existe = $this->M_crud->sql($sql);
-		$existe = $existe[0];
-		 if($existe): 
+		if($existe): 
+			$existe = $existe[0];
 			$session = array(	'id'			=> $existe->USUARI_N_ID,
 								'username' 		=> $existe->USUARI_C_USERNAME,
 								'empresa_id'	=> $existe->EMPRES_N_ID,
