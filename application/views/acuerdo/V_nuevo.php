@@ -113,7 +113,10 @@
     });
     function ubicaciones()
     {
-        $('#ubicacion').html(`<option value="" disabled selected>Escoge una opción</option>`)
+        M.toast({html: 'Cargando ubicaciones', classes: 'rounded'});
+        $('#ubicacion').html(`<option value="" disabled selected>Cargando ubicaciones...</option>`)
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
         var url =  '<?= base_url() ?>api/ubicacion';
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
                     sede: document.getElementById("sede").value,
@@ -130,6 +133,7 @@
         })
         .then(function(data) 
         {            
+            $('#ubicacion').html(`<option value="" disabled selected>Escoge una opción</option>`)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];            
                 $('#ubicacion').append(`<option value="${element.UBICAC_N_ID}">${element.UBICAC_C_DESCRIPCION}</option>`)
@@ -141,6 +145,7 @@
     function obtenerUbicacion()
     {
         console.log('Ubicación')
+        M.toast({html: 'Cargando datos de la Ubicación...', classes: 'rounded'});
         var url =  '<?= base_url() ?>api/ubicacion';
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
                     sede: document.getElementById("sede").value,

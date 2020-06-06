@@ -18,9 +18,11 @@ $route['logout'] = 'C_login/logout';
 
 //Clientes
 $route['acuerdos'] = 'C_acuerdo';
+$route['acuerdo/buscar'] = function (){return 'C_acuerdo/buscar'; };
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 $route['acuerdo/crear'] = 'C_acuerdo/crear';
 $route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
+$route['acuerdo/(:num)/(:num)/cerrar'] = function ($empresa,$id){return 'C_acuerdo/cerrar/'.$empresa.'/'.$id;};
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';
@@ -113,7 +115,7 @@ $route['api/clientes'] = function (){return 'C_api/clientes'; };
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
-$route['api/acuerdos'] = function (){return 'C_api/acuerdos'; };
+
 $route['api/acuerdos/periodos'] = function (){return 'C_api/acuerdos_periodos'; };
 $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_periodos_guardar'; };
 

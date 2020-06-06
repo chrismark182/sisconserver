@@ -1,3 +1,8 @@
+<?php 
+    $fechaDesde = new DateTime();
+    $fechaDesde->modify('-1 month');
+    $fechaHasta = new DateTime();
+?>
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
@@ -17,23 +22,35 @@
     </div>
 </nav>
 <!-- Buscador -->
-<!-- <div class="section container center">
+ <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
-            <div class="input-field col s5">
-                <input id="numero_documento" maxlength="15" type="text" name="numero_documento"  class="validate">
-                <label class="active" for="numero_documento">Nro. Documento</label> 
+            <div class="input-field col s12 m6 l4">
+                <input id="acuerdo_id" maxlength="11" type="text" class="validate">
+                <label class="active" for="acuerdo_id">ID Acuerdo</label> 
             </div>
-            <div class="input-field col s5">
+            <div class="input-field col s12 m6 l4">
                 <input id="razon_social" maxlength="200" type="text" name="razon_social"  class="validate">
-                <label class="active" for="razon_social">Razon_social</label> 
+                <label class="active" for="razon_social">Cliente</label> 
+            </div>
+            <div class="input-field col s12 m6 l4">
+                <input id="sede" maxlength="100" type="text"  class="validate">
+                <label class="active" for="sede">Sede</label> 
+            </div>
+            <div class="input-field col s12 m6 l4">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="desde">Desde</label> 
+            </div>
+            <div class="input-field col s12 m6 l4">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="hasta">Hasta</label> 
             </div>
             <div class="input-field col s2">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
             </div>
         </form>
     </div>    
-</div> -->
+</div> 
 
 <div class="section container">
     <table class="striped" style="font-size: 12px;">
@@ -70,16 +87,28 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+<!-- Confirmar Cerrar -->
+<div id="confirmarCerrar" class="modal">
+    <div class="modal-content">
+    <h4>Cerrar</h4>
+    <p>¿Está seguro que desea cerrar el registro?</p>
+    </div>
+    <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+    <a id="btnConfirmarCerrar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
  <!-- Ver periodos -->
 <div id="modalPeriodos" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4 class="left">Periodos</h4>
-        <input type="hidden" id="acuerdo_id" >
+        <input type="hidden" id="acuerdo_id_periodo" >
         <div class="btn right" onclick="agregarPeriodo()">Agregar Periodo</div>
         <div class="section">
             <table class="striped" style="font-size: 12px;">
                 <thead class="blue-grey darken-1" style="color: white">
-                    <tr>          
+                    <tr>
+                        <th class="center-align">ID</th>          
                         <th class="center-align">F. INICIO</th>
                         <th class="center-align">F. TERMINO</th>
                         <th class="right-align">AREA</th>
@@ -120,14 +149,45 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        buscar();
+        var btnBuscar = document.getElementById("btnBuscar"); 
+        btnBuscar.addEventListener("click", buscar, false);
     });
     function buscar()
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
-        var url = 'api/acuerdos';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, acuerdo: 0};
+
+        var url = 'acuerdo/buscar';
+
+        var acuerdo_id = 0; 
+        if($('#acuerdo_id').val() != '')
+        {
+            acuerdo_id = $('#acuerdo_id').val();
+        }
+        var cliente = '%'; 
+        if($('#razon_social').val() != '')
+        {
+            cliente = $('#razon_social').val() + '%';
+        }
+        var sede = '%'; 
+        if($('#sede').val() != '')
+        {
+            sede = $('#sede').val() + '%';
+        }
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
+
+        var data = {
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    acuerdo: acuerdo_id,
+                    cliente: cliente,
+                    sede: sede,
+                    fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                    fecha_hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
+                    };
         
         $('#resultados').html('');
         fetch(url, {
@@ -154,7 +214,7 @@
                 }else if(element.ALQUIL_C_ESTA_CERRADO==0){
                     if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
                     {
-                        $cerrado='<i class="material-icons">lock_open</i>';
+                        $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
                     }
                 }
 
@@ -199,6 +259,12 @@
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
     }
+    function confirmarCerrar($empresa,$acuerdo)
+    {
+        console.log('confirmar cerrar')
+        $('#confirmarCerrar').modal('open');
+        $('#btnConfirmarCerrar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/cerrar')
+    }
     function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -209,7 +275,7 @@
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
-        $('#acuerdo_id').val($acuerdo)
+        $('#acuerdo_id_periodo').val($acuerdo)
         var url = 'api/acuerdos/periodos';
         var data = {empresa: $empresa,
                     acuerdo: $acuerdo};
@@ -231,16 +297,23 @@
          
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
-               
+
+                $situacion = ``
+                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                {
+                    $situacion = `<i class="material-icons">assignment_turned_in</i>`
+                }
+                
                
                 $('#periodos').append(`   <tr>
+                                                <td class="center-align">${element.ALQDET_N_ID}</td>
                                                 <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
                                                 <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
                                                 <td class="right-align">${element.ALQDET_N_AREA}</td>
                                                 <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                                 <td class="right-align">${element.TOTAL}</td>
                                                 <td class="center-align">
-                                                    
+                                                   ${$situacion} 
                                                 </td>
                                             </tr>
                                     `);
@@ -255,11 +328,22 @@
         console.log('Estoy buscando.. ')
         $('.modal').modal('close');
         $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id').val();
+        $acuerdo = $('#acuerdo_id_periodo').val();
 
-        var url = 'api/acuerdos';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>,
-                    acuerdo: $acuerdo};
+        var url = 'acuerdo/buscar';
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
+        var data = {
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    acuerdo: acuerdo_id,
+                    cliente: '%',
+                    sede: '%',
+                    fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                    fecha_hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
+                    };
         
         $('#periodos').html('');
         fetch(url, {
@@ -296,7 +380,7 @@
         console.log('Estoy buscando.. ')
         $('.modal').modal('close');
         $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id').val();
+        $acuerdo = $('#acuerdo_id_periodo').val();
 
         var url = 'api/acuerdos/periodo/guardar';
         var data = {empresa: <?= $empresa->EMPRES_N_ID ?>,
