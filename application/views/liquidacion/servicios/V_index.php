@@ -75,7 +75,7 @@
             </div>
 
             <div class="input-field col l12">
-                <input class="btn-small" type="submit" value="Buscar">
+                <div id="btnBuscar">Buscar</div>
             </div>
         </form>
     </div>    
