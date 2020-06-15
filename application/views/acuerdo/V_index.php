@@ -1,6 +1,7 @@
 <?php 
     $fechaDesde = new DateTime();
-    $fechaDesde->modify('-1 month');
+    //$fechaDesde->modify('-1 month');
+    $fechaDesde->modify('first day of this month');    
     $fechaHasta = new DateTime();
 ?>
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
@@ -338,7 +339,7 @@
         $fecha_hasta = $fecha_hasta.split('/');
         var data = {
                     empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    acuerdo: acuerdo_id,
+                    acuerdo: $acuerdo,
                     cliente: '%',
                     sede: '%',
                     fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],

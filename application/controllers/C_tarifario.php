@@ -68,12 +68,14 @@ class C_tarifario extends CI_Controller {
     public function nuevo()
     {
         $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
+        $this->data['clientes'] =$this->M_crud->sql($clientes);
+
         $sedes = 'Exec SEDE_LIS 0,0';
+        $this->data['sedes'] = $this->M_crud->sql($sedes);
+        
         $servicios = 'Exec SERVICIO_LIS_ORDEN_SERVICIO 0,0';
     
-        $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
-        $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->data['servicios'] = $this->M_crud->sql($servicios);
         
 		$this->load->view('tarifario/V_nuevo',$this->data);

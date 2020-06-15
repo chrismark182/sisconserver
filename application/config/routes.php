@@ -54,6 +54,13 @@ $route['ordenservicio/(:num)/(:num)/editar'] = function ($empresa , $id){return 
 $route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$id;};
 
+//Liquidacion de Servicio
+$route['liq_servicios'] = 'C_liquidacion_servicios';
+$route['liq_servicios/nuevo'] = 'C_liquidacion_servicios/nuevo';
+$route['liq_servicios/nuevo/buscar'] = 'C_liquidacion_servicios/nuevo_buscar';
+$route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_cabecera';
+$route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
+
 //Clientes
 $route['clientes'] = 'C_cliente';
 $route['cliente/nuevo'] = 'C_cliente/nuevo';
