@@ -42,10 +42,17 @@ class C_liquidacion_servicios extends CI_Controller {
         $this->data['servicios'] = $this->M_crud->read('servicio','SERVIC_C_REQUIERE_OS = 1 AND SERVIC_C_ESTADO = 1', array());
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
 
-        $this->load->view('liquidacion/servicios/V_nuevo', $this->data);
-        
+        $this->load->view('liquidacion/servicios/V_nuevo', $this->data);        
     }
     //Procesos
+    public function buscar()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['situacion']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+
     public function nuevo_buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -78,34 +85,34 @@ class C_liquidacion_servicios extends CI_Controller {
         $this->data['ordenes'] = $ordenes[0];
         $this->load->view('ordenservicio/V_editar',$this->data);
     }
-    public function crear(){
-
+    public function crear()
+    {
         if( trim($this->input->post('sede')) != ''&&
             trim($this->input->post('cliente')) != ''&&
             trim($this->input->post('servicio')) != ''&&
             trim($this->input->post('horas')) != ''&&
             trim($this->input->post('tarifa')) != ''):
 
-        $sql = "Exec ORDEN_SERVICIO_INS " . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('sede') . "," 
-                                        . $this->input->post('cliente') . "," 
-                                        . $this->input->post('servicio') . ",'" 
-                                        . $this->input->post('numerofisico') . "','" 
-                                        . $this->input->post('solicitante') . "','" 
-                                        . $this->input->post('codproyecto') . "'," 
-                                        . $this->input->post('horas') . "," 
-                                        . $this->input->post('tarifa') . "," 
-                                        . $this->input->post('moneda') . "," 
-                                        . $this->input->post('preciounitario') . "," 
-                                        . $this->data['session']->USUARI_N_ID;
-                                       
+            $sql = "Exec ORDEN_SERVICIO_INS " . $this->data['empresa']->EMPRES_N_ID . ","
+                                            . $this->input->post('sede') . "," 
+                                            . $this->input->post('cliente') . "," 
+                                            . $this->input->post('servicio') . ",'" 
+                                            . $this->input->post('numerofisico') . "','" 
+                                            . $this->input->post('solicitante') . "','" 
+                                            . $this->input->post('codproyecto') . "'," 
+                                            . $this->input->post('horas') . "," 
+                                            . $this->input->post('tarifa') . "," 
+                                            . $this->input->post('moneda') . "," 
+                                            . $this->input->post('preciounitario') . "," 
+                                            . $this->data['session']->USUARI_N_ID;
+                                        
 
-        $this->M_crud->sql($sql);
-        redirect('ordenes','refresh');   
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: nuevo");
-    endif;
+            $this->M_crud->sql($sql);
+            redirect('ordenes','refresh');   
+        else:
+            $this->session->set_flashdata('message','No puede guardar en vacio ');
+            header("Location: nuevo");
+        endif;
     }
     public function actualizar($empresa,$id)
     {
@@ -131,16 +138,15 @@ class C_liquidacion_servicios extends CI_Controller {
 
     endif;
     }  
-    public function eliminar($empresa,$sede,$id)
+    public function eliminar($empresa,$id)
     {
-        $sql = "Exec UBICACION_DEL "     . $empresa .","
-                                        . $sede . "," 
+        $sql = "Exec LIQUIDACION_DEL "    . $empresa .","
                                         . $id.","
                                         . $this->data['session']->USUARI_N_ID; 
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('ordenes', 'refresh');       
+        redirect('liq_servicios', 'refresh');       
     }  
 }
 

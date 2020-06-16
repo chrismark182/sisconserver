@@ -49,7 +49,7 @@
 
             <div class="input-field col s12 m6 l4">
                 <select id="sede" name="sede">
-                    <option value="o" selected>Todas las Sedes</option>
+                    <option value="0" selected>Todas las Sedes</option>
                     <?php if($sedes): ?>
                         <?php foreach($sedes as $sede): ?> 
                             <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
@@ -60,13 +60,13 @@
             </div>
 
             <div class="input-field col s12 m6 l4">
-                <input id="numero" type="number" min="1" maxlength="9" name="numero" class="validate">
+                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
                 <label class="active" for="numero">Orden de Compra</label> 
             </div>
 
             <div class="input-field col s6 m6 l4">
-                <select id="servicio" name="servicio">
-                    <option value="" disabled selected>Elige una situación</option>
+                <select id="situacion">
+                    <option value="" selected>Cualquier situación</option>
                     <option value="0">Pendiente de O/C</option>
                     <option value="1">Liquidado</option>
                     <option value="2">En Navasoft</option>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="input-field col l12">
-                <div id="btnBuscar">Buscar</div>
+                <div id="btnBuscar" class="btn">Buscar</div>
             </div>
         </form>
     </div>    
@@ -85,19 +85,16 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="center-align">O.S.</th>
-                <th class="left-align">SERVICIO</th>
-                <th class="left-align">SEDE</th>
+                <th class="center-align">ID</th>
                 <th class="left-align">CLIENTE</th>
-                <th class="left-align">NUM. FISICO</th>
+                <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
-                <th class="center-align">COD.PROY</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="resultados">
         </tbody>
     </table>
 </div>
@@ -105,46 +102,54 @@
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
     href="<?= base_url()?>liq_servicios/nuevo"><i class="material-icons">add</i></a>
 
-    <script>
+<!-- Confirmar Eliminar -->
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar</h4>
+      <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
+        buscar();
     });
     function buscar()
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
 
-        var url = 'acuerdo/buscar';
-
-        var acuerdo_id = 0; 
-        if($('#acuerdo_id').val() != '')
-        {
-            acuerdo_id = $('#acuerdo_id').val();
-        }
-        var cliente = '%'; 
-        if($('#razon_social').val() != '')
-        {
-            cliente = $('#razon_social').val() + '%';
-        }
-        var sede = '%'; 
-        if($('#sede').val() != '')
-        {
-            sede = $('#sede').val() + '%';
-        }
+        var url = 'liq_servicios/buscar';
         $fecha_desde = $('#desde').val();
         $fecha_desde = $fecha_desde.split('/');
         
         $fecha_hasta = $('#hasta').val();
         $fecha_hasta = $fecha_hasta.split('/');
+        var cliente = $('#cliente').val();
+        var sede = $('#sede').val();
 
+        var orden_compra = '%'; 
+        if($('#orden_compra').val() != '')
+        {
+            orden_compra = $('#orden_compra').val() + '%';
+        }
+        
+        var situacion = $('#situacion').val();
+        
         var data = {
                     empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    acuerdo: acuerdo_id,
+                    desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                    hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                     cliente: cliente,
                     sede: sede,
-                    fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
-                    fecha_hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
+                    orden_compra: orden_compra,
+                    situacion: situacion
                     };
         
         $('#resultados').html('');
@@ -165,42 +170,39 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                
-                $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
-
-                if(element.ALQUIL_C_ESTA_CERRADO==1){
-                    $cerrado = '<i class="material-icons">lock</i>'
-                }else if(element.ALQUIL_C_ESTA_CERRADO==0){
-                    if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
-                    {
-                        $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
-                    }
-                }
-
+                $situacion = '';
                 $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
-                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                if(element.LIQCAB_C_SITUACION == 0)
                 {
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                    $situacion = 'Pendiente O/C';
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                }else
+                if(element.LIQCAB_C_SITUACION == 1)
+                {
+                    $situacion = 'Liquidado';
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                }else
+                if(element.LIQCAB_C_SITUACION == 2)
+                {
+                    $situacion = 'En Navasoft';
+                    $eliminar = `<i class="material-icons tooltipped" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
                 }
+
                
                 $('#resultados').append(`   
                     <tr>
-                        <td class="center-align"><?=$orden->ORDSER_N_ID?></td>
-                        <td class="left-align"><?=$orden->SERVIC_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$orden->SEDE_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
-                        <td class="left-align"><?=$orden->ORDSER_C_NUMERO_FISICO?></td>
-                        <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
-                        <td class="center-align"><?=$orden->ORDSER_C_COD_PROYECTO?></td>
-                        <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
+                        <td class="center-align">${element.LIQCAB_N_ID}</td>
+                        <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                        <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                        <td class="center-align">${element.LIQCAB_C_FECHA}</td>
+                        <td class="center-align">${$situacion}</td>
                         <td class="center-align">
-                            <a href="<?= base_url() ?>ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>ordenservicio///editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a href="ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
-                            </a>
+                            ${$eliminar}
                         </td>
                     </tr>
                                     `);
@@ -208,5 +210,11 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
         
+    }
+    function confirmarEliminar($empresa,$liquidacion)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/eliminar')
     }
 </script>

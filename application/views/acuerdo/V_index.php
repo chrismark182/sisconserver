@@ -77,7 +77,7 @@
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
     href="<?= base_url()?>acuerdo/nuevo"><i class="material-icons">add</i></a>
 
-  <!-- Modal Structure -->
+<!-- Confirmar Eliminar -->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
       <h4>Eliminar</h4>
