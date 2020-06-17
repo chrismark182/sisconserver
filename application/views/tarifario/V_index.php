@@ -128,6 +128,44 @@
     </div>
 </div>
 <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("pagina")
+        var btn_buscar = document.getElementById("btn_buscar"); 
+        btn_buscar.addEventListener("click", validar, false); 
+    });
+    function buscar(){
+
+        console.log("Buscando")
+       var numero=0;
+       var sede=0;
+       var cliente=0;
+       var servicio=0;
+
+    if(document.getElementById('numero').value.trim() !='' ){
+        numero= document.getElementById('numero').value.trim();
+        }
+    if(document.getElementById('sede').value.trim() !='' ){
+        sede= document.getElementById('sede').value.trim();
+        }
+    if(document.getElementById('cliente').value.trim() !='' ){
+        cliente= document.getElementById('cliente').value.trim();
+    }
+    if(document.getElementById('servicio').value.trim() !='' ){
+        servicio= document.getElementById('servicio').value.trim();
+        }
+    if(){
+
+        $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
+        }
+        else{
+            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},0,0,0,0";
+        }
+
+    }
+    
+
+
     function confirmarEliminar($empresa,$tarifa)
     {
         console.log('confirmar eliminar')

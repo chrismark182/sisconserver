@@ -25,8 +25,24 @@ class C_tarifario extends CI_Controller {
 		$this->output->set_template('siscon');
 	}
 
+    public function buscar(){
+
+        
+
+        $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
+        
+
+
+
+        
+    }
+
+
+
+
 	public function index()
 	{
+
         $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS_ORDEN_SERVICIO 0,0';
@@ -40,22 +56,7 @@ class C_tarifario extends CI_Controller {
         
 
         if($this->input->server('REQUEST_METHOD') == 'POST' ):
-            $numero=0;
-            $sede=0;
-            $cliente=0;
-            $servicio=0;
-            if($this->input->post('numero')!='' ):
-              $numero= $this->input->post('numero');
-            endif;
-            if($this->input->post('sede')!='' ):
-                $sede= $this->input->post('sede');
-              endif;
-              if($this->input->post('cliente')!='' ):
-                $cliente= $this->input->post('cliente');
-              endif;
-              if($this->input->post('servicio')!='' ):
-                $servicio= $this->input->post('servicio');
-              endif;
+            
             $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
         else:
             $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},0,0,0,0";

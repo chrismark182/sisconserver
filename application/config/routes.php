@@ -107,6 +107,11 @@ $route['tarifa/(:num)/(:num)/editar'] = function ($empresa ,$tarifa){return 'C_t
 $route['tarifa/(:num)/(:num)/actualizar'] = function ($empresa ,$tarifa){return 'C_tarifario/actualizar/'.$empresa.'/'.$tarifa;};
 $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C_tarifario/eliminar/'.$empresa.'/'.$tarifa;};
 
+//Tipo de Cambio
+
+$route['cambios'] = 'C_tipo_cambio';
+
+
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
 $route['api/clientes'] = function (){return 'C_api/clientes'; };
