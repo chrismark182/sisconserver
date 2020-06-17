@@ -18,9 +18,11 @@ $route['logout'] = 'C_login/logout';
 
 //Clientes
 $route['acuerdos'] = 'C_acuerdo';
+$route['acuerdo/buscar'] = function (){return 'C_acuerdo/buscar'; };
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 $route['acuerdo/crear'] = 'C_acuerdo/crear';
 $route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
+$route['acuerdo/(:num)/(:num)/cerrar'] = function ($empresa,$id){return 'C_acuerdo/cerrar/'.$empresa.'/'.$id;};
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';
@@ -51,6 +53,18 @@ $route['ordenservicio/crear'] = 'C_ordenservicio/crear';
 $route['ordenservicio/(:num)/(:num)/editar'] = function ($empresa , $id){return 'C_ordenservicio/editar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$id;};
+
+//Liquidacion de Servicio
+$route['liq_servicios'] = 'C_liquidacion_servicios';
+$route['liq_servicios/buscar'] = 'C_liquidacion_servicios/buscar';
+
+$route['liq_servicios/nuevo'] = 'C_liquidacion_servicios/nuevo';
+$route['liq_servicios/nuevo/buscar'] = 'C_liquidacion_servicios/nuevo_buscar';
+$route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_cabecera';
+$route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
+
+$route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
+$route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
 
 //Clientes
 $route['clientes'] = 'C_cliente';
@@ -118,7 +132,7 @@ $route['api/clientes'] = function (){return 'C_api/clientes'; };
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
-$route['api/acuerdos'] = function (){return 'C_api/acuerdos'; };
+
 $route['api/acuerdos/periodos'] = function (){return 'C_api/acuerdos_periodos'; };
 $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_periodos_guardar'; };
 

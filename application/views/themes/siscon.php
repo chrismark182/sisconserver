@@ -15,8 +15,16 @@
 			$('select').formSelect();
 			$('.sidenav').sidenav();
 			$('.modal').modal();
+			var options = {
+				format: 'dd/mm/yyyy',
+				autoClose: true, 
+				setDefaultDate: true
+			}
+			var elems = document.querySelectorAll('.datepicker');
+			var instances = M.Datepicker.init(elems, options);
 			$('.dropdown-trigger').dropdown();
 			$('.tooltipped').tooltip();
+			
 			var message = '<?= $this->session->flashdata('message'); ?>';
 			if(message != '')
 			{

@@ -7,7 +7,6 @@ class C_acuerdo extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-		$this->_init();
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
@@ -22,19 +21,29 @@ class C_acuerdo extends CI_Controller {
 	{
 		$this->output->set_template('siscon');
 	}
-
+    //Vistas
     public function index() 
 	{              
+        $this->_init();
         $this->load->view('acuerdo/V_index', $this->data);
     }
     public function nuevo()
     {
+        $this->_init();
         $id = $this->M_crud->sql("Select isnull(max(ALQUIL_N_ID),0) + 1 As ID From ALQUILER Where EMPRES_N_ID = {$this->data['empresa']->EMPRES_N_ID}");
         $this->data['nextId'] = $id[0]->ID;
         $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
         $this->data['sedes'] = $this->M_crud->sql("Exec SEDE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0");
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('acuerdo/V_nuevo', $this->data);        
+    }
+    //Procesos
+    public function buscar()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec ALQUILER_LIS {$data['empresa']}, {$data['acuerdo']}, '{$data['cliente']}', '{$data['sede']}', '{$data['fecha_desde']}', '{$data['fecha_hasta']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
     }
     public function editar($empresa,$cliente)
     {  
@@ -98,6 +107,18 @@ class C_acuerdo extends CI_Controller {
                                         
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('acuerdos', 'refresh');       
+    }  
+    public function cerrar($empresa,$acuerdo)
+    {
+
+        $sql = "Exec ALQUILER_CERRAR "      . $empresa .","
+                                            . $acuerdo; 
+                                      /*   .","
+                                        .$this->data['session']->USUARI_N_ID ;  */
+                                        
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Registro cerrado correctamente');
         redirect('acuerdos', 'refresh');       
     }  
 
