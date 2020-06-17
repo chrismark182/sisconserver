@@ -24,7 +24,7 @@
             </div>
             <div class="input-field col s6 m6 l4">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Escoge una opcion</option>
+                    <option value="" disabled selected>Elige una Sede</option>
                     <?php if($sedes): ?>
                         <?php foreach($sedes as $sede): ?> 
                             <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
@@ -46,12 +46,15 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="center-align"></th>
-                <th class="center-align">O.S.</th>
+                <th class="center-align">ORDEN SERV.</th>
                 <th class="left-align">SERVICIO</th>
-                <th class="left-align">SEDE</th>
-                <th class="left-align">CLIENTE</th>
                 <th class="left-align">NUM. FISICO</th>
                 <th class="center-align">FECHA</th>
+                <th class="left-align">SOLICITANTE</th>
+                <th class="center-align">PROYECTO</th>
+                <th class="center-align">HORAS</th>
+                <th class="center-align">MON</th>
+                <th class="right-align">PREC. UNIT</th>
             </tr>
         </thead>
         <tbody id="resultados">
@@ -111,10 +114,13 @@
                                                 </td>
                                                 <td class="center-align">${element.ORDSER_N_ID}</td>
                                                 <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                 <td class="left-align">${element.ORDSER_C_NUMERO_FISICO}</td>
                                                 <td class="center-align">${element.ORDSER_C_FECHA}</td>
+                                                <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
+                                                <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
+                                                <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                                                <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
+                                                <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
                                             </tr>
                                         `);
                 }

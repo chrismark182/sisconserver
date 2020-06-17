@@ -122,13 +122,13 @@
 <div id="modalAgregarOC" class="modal">
     <form id="frmAgregarOC" action="<?= base_url() ?>liq_servicios/updateoc" method="post">
         <div class="modal-content">
-            <h4>Agregar Orden de Compra</h4>
+            <h4>Asignar Orden de Compra</h4>
             <div class="row">
                 <input id="ocempresa" type="hidden" name="ocempresa">
                 <input id="ocliquidacion" type="hidden" name="ocliquidacion">
                 <div class="input-field col s12">
                     <input id="orden_compra" type="text" name="orden_compra" placeholder=" " class="validate">
-                    <label for="orden_compra">Orden de Compra</label>
+                    <label for="orden_compra">Orden de Compra del Cliente</label>
                 </div>
             </div>
         </div>
