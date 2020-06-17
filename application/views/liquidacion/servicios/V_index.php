@@ -85,14 +85,16 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="center-align">ID</th>
+                <th class="center-align">LIQ</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">O/C</th>
+                <th class="center-align">ORDENES</th>
+                <th class="center-align">MON</th>
+                <th class="right-align">IMPORTE</th>
                 <th class="center-align">REPORTE</th>
-                <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -193,7 +195,7 @@
             $('#total').html(data.length);
             if(data.length > 0)
             {
-                M.toast({html: 'Cargando ubicaciones', classes: 'rounded'});
+                M.toast({html: 'Cargando liquidaciones', classes: 'rounded'});
             }
 
             for (let index = 0; index < data.length; index++) {
@@ -214,19 +216,22 @@
                 if(element.LIQCAB_C_SITUACION == 2)
                 {
                     $situacion = 'En Navasoft';
-                    $eliminar = `<i class="material-icons tooltipped" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
+                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
                 }
 
-                $orden_compra = 'No require';
                 if(element.CLIENT_C_REQUIERE_OC == 1)
                 {
                     if(element.LIQCAB_C_SITUACION < 2)
                     {
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">edit</i>`
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
                     }else{
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA}`
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
                     }
+                }else{
+                    $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
                 }
+
+
                
                 $('#resultados').append(`   
                     <tr>
@@ -236,12 +241,10 @@
                         <td class="center-align">${element.LIQCAB_C_FECHA}</td>
                         <td class="center-align">${$situacion}</td>
                         <td class="right-align">${$orden_compra}</td>
+                        <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
+                        <td class="center-align">${element.SERVIC_C_MONEDA}</td>
+                        <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
                         <td class="center-align"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Estamos trabajando...">description</i></td>                        
-                        <td class="center-align">
-                            <a href="<?= base_url() ?>ordenservicio///editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
                         <td class="center-align">
                             ${$eliminar}
                         </td>

@@ -5,7 +5,7 @@
             <div class="input-field col s12">
                 <select id="empresa" name="empresa">
                     <?php if($empresas): ?>
-                        <option value="" disabled>Escoge una opción</option>
+                        <option value="" disabled>Escoge una empresa</option>
                         <?php foreach($empresas as $empresa): ?> 
                             <option value="<?= $empresa->EMPRES_N_ID ?>"><?= $empresa->EMPRES_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?>  
