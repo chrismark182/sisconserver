@@ -24,6 +24,7 @@
 			var instances = M.Datepicker.init(elems, options);
 			$('.dropdown-trigger').dropdown();
 			$('.tooltipped').tooltip();
+			
 			var message = '<?= $this->session->flashdata('message'); ?>';
 			if(message != '')
 			{

@@ -48,7 +48,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['situacion']}'";
+        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['situacion']}', '{$data['tipo']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -144,6 +144,13 @@ class C_liquidacion_servicios extends CI_Controller {
                                         . $id.","
                                         . $this->data['session']->USUARI_N_ID; 
             
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('liq_servicios', 'refresh');       
+    }  
+    public function updateoc()
+    {
+        $sql = "Exec LIQUIDACION_UPD_OC {$this->input->post('ocempresa')}, {$this->input->post('ocliquidacion')}, '{$this->input->post('orden_compra')}', {$this->data['session']->USUARI_N_ID}"; 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('liq_servicios', 'refresh');       

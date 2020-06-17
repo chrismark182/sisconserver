@@ -90,6 +90,8 @@
                 <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
                 <th class="center-align">SITUACION</th>
+                <th class="center-align">O/C</th>
+                <th class="center-align">REPORTE</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -114,6 +116,27 @@
     </div>
 </div>
 
+<!-- Agregar OC -->
+<div id="modalAgregarOC" class="modal">
+    <form id="frmAgregarOC" action="<?= base_url() ?>liq_servicios/updateoc" method="post">
+        <div class="modal-content">
+            <h4>Agregar Orden de Compra</h4>
+            <div class="row">
+                <input id="ocempresa" type="hidden" name="ocempresa">
+                <input id="ocliquidacion" type="hidden" name="ocliquidacion">
+                <div class="input-field col s12">
+                    <input id="orden_compra" type="text" name="orden_compra" placeholder=" " class="validate">
+                    <label for="orden_compra">Orden de Compra</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+            <input type="submit" class="modal-close btn" value="ACEPTAR">
+        </div>
+    </form>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
@@ -123,6 +146,7 @@
     function buscar()
     {
         console.log('Estoy buscando.. ')
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
 
         var url = 'liq_servicios/buscar';
@@ -149,7 +173,8 @@
                     cliente: cliente,
                     sede: sede,
                     orden_compra: orden_compra,
-                    situacion: situacion
+                    situacion: situacion,
+                    tipo: 'S'
                     };
         
         $('#resultados').html('');
@@ -166,7 +191,11 @@
         .then(function(data) 
         {
             $('#total').html(data.length);
-         
+            if(data.length > 0)
+            {
+                M.toast({html: 'Cargando ubicaciones', classes: 'rounded'});
+            }
+
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                
@@ -188,6 +217,16 @@
                     $eliminar = `<i class="material-icons tooltipped" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
                 }
 
+                $orden_compra = 'No require';
+                if(element.CLIENT_C_REQUIERE_OC == 1)
+                {
+                    if(element.LIQCAB_C_SITUACION < 2)
+                    {
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">edit</i>`
+                    }else{
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA}`
+                    }
+                }
                
                 $('#resultados').append(`   
                     <tr>
@@ -196,6 +235,8 @@
                         <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                         <td class="center-align">${element.LIQCAB_C_FECHA}</td>
                         <td class="center-align">${$situacion}</td>
+                        <td class="right-align">${$orden_compra}</td>
+                        <td class="center-align"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Estamos trabajando...">description</i></td>                        
                         <td class="center-align">
                             <a href="<?= base_url() ?>ordenservicio///editar">
                                 <i class="material-icons">edit</i>
@@ -208,13 +249,22 @@
                                     `);
             }
             $('.preloader-background').css({'display': 'none'});                            
+            $('.tooltipped').tooltip();
         });
-        
     }
     function confirmarEliminar($empresa,$liquidacion)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/eliminar')
+    }
+
+    function agregarOC($empresa,$liquidacion)
+    {
+        console.log('confirmar eliminar')
+        $('#modalAgregarOC').modal('open');
+        $('#ocempresa').val($empresa)
+        $('#ocliquidacion').val($liquidacion)
+        //$('#frmAgregarOC').attr('action', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/updateoc')
     }
 </script>

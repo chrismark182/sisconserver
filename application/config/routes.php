@@ -64,6 +64,7 @@ $route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_
 $route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
 
 $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
+$route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
 
 //Clientes
 $route['clientes'] = 'C_cliente';
