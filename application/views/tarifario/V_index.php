@@ -84,7 +84,7 @@
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SERVICIO</th>
                 <th class="center-align">MONEDA</th>
-                <th class="center-align">PRECIO UNITARIO</th>
+                <th class="right-align">PRECIO UNITARIO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -96,8 +96,8 @@
                         <td class="left-align"><?=$tarifa->SEDE_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$tarifa->CLIENT_C_RAZON_SOCIAL?></td>
                         <td class="left-align"><?=$tarifa->SERVIC_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$tarifa->MONEDA_C_ABREVIATURA?></td>
-                        <td class="center-align"><?=$tarifa->TARIFA_N_PRECIO_UNIT?></td>
+                        <td class="center-align"><?=$tarifa->MONEDA_C_ABREVIATURA?></td>
+                        <td class="right-align"><?=$tarifa->TARIFA_N_PRECIO_UNIT?></td>
                         <td class="center-align">
                             <a href="<?= base_url() ?>tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>

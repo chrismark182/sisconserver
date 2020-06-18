@@ -75,7 +75,7 @@
             </div>
 
             <div class="input-field col s12 m6 l6">
-                <select id="moneda" name="moneda" enabled="true">
+                <select id="moneda" name="moneda" enabled="false">
                     <option value="" disabled selected>Escoge una moneda</option>
                     
                     <?php if($monedas): ?>
