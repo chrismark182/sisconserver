@@ -28,12 +28,14 @@
                 <th class="left-align">SERVICIO</th>
                 <th class="left-align">SEDE</th>
                 <th class="left-align">CLIENTE</th>
-                <th class="left-align">NUM. FISICO</th>
                 <th class="center-align">FECHA</th>
-                <th class="center-align">COD.PROY</th>
+                <th class="left-align">SOLICITANTE</th>
+                <th class="left-align">NUM. FISICO</th>
+                <th class="center-align">COD. PROY</th>
+                <th class="center-align">HORAS</th>
+                <th class="right-align">PRECIO UNITARIO</th>
                 <th class="center-align">SITUACION</th>
-                <th class="center-align">EDITAR</th>
-                <th class="center-align">ELIMINAR</th>
+                <th class="center-align">ELIM.</th>
             </tr>
         </thead>
         <tbody>
@@ -44,15 +46,13 @@
                         <td class="left-align"><?=$orden->SERVIC_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$orden->SEDE_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
-                        <td class="left-align"><?=$orden->ORDSER_C_NUMERO_FISICO?></td>
                         <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
+                        <td class="left-align"><?=$orden->ORDSER_C_SOLICITANTE?></td>
+                        <td class="left-align"><?=$orden->ORDSER_C_NUMERO_FISICO?></td>
                         <td class="center-align"><?=$orden->ORDSER_C_COD_PROYECTO?></td>
+                        <td class="center-align"><?=$orden->ORDSER_N_HORAS?></td>
+                        <td class="right-align"><?=$orden->ORDSER_N_PRECIO_UNIT?></td>
                         <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
-                        <td class="center-align">
-                            <a href="<?= base_url() ?>ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
                         <td class="center-align">
                             <a href="ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/eliminar")>
                                 <i class="material-icons">delete</i>

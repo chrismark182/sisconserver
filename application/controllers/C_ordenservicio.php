@@ -77,30 +77,7 @@ class C_ordenservicio extends CI_Controller {
         header("Location: nuevo");
     endif;
     }
-    public function actualizar($empresa,$id)
-    {
-
-        if( trim($this->input->post('descripcion')) != ''&&
-            trim($this->input->post('metro')) != '' ):
-
-        $sql = "Exec UBICACION_UPD "    . $empresa . ","
-                                        . $sede . "," 
-                                        . $id . ",'"  
-                                        . $this->input->post('descripcion') . "'," 
-                                        . $this->input->post('metro').","
-                                        . $this->data['session']->USUARI_N_ID; 
-            
-                    
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('ordenes', 'refresh'); 
-        
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: editar");    
-
-    endif;
-    }  
+    
     public function eliminar($empresa,$sede,$id)
     {
         $sql = "Exec UBICACION_DEL "     . $empresa .","
