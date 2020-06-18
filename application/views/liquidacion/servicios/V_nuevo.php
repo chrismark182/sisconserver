@@ -13,7 +13,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l8">
                 <select id="cliente" name="cliente">
-                    <option value="0" disabled selected>Elige un Cliente</option>
+                    <option value="" disabled selected>Elige un Cliente</option>
                     <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
                             <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
@@ -61,7 +61,7 @@
         </tbody>
     </table>
     <div class="input-field col s12">
-        <div class="btn-small" id="btnLiquidar" >Liquidar</div>
+        <div class="btn-small" style="display: none" id="btnLiquidar" >Liquidar</div>
     </div>
 </div>
 <script>
@@ -73,69 +73,78 @@
     });
     function buscar()
     {
-        $('.preloader-background').css({'display': 'block'});
+        $('#resultados').html('');
         var cliente = document.getElementById("cliente").value;
-            cliente = cliente.split('-');
+        var sede = document.getElementById("sede").value;
 
-        var url =  '<?= base_url() ?>liq_servicios/nuevo/buscar';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    sede: document.getElementById("sede").value,
-                    cliente: cliente[0],
-                    };        
-        
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
+            if(cliente != '' && sede != '')
+            {
+                $('.preloader-background').css({'display': 'block'});
+                cliente = cliente.split('-');
+
+                var url =  '<?= base_url() ?>liq_servicios/nuevo/buscar';
+                var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                            sede: sede,
+                            cliente: cliente[0],
+                            };        
+                
+                fetch(url, {
+                            method: 'POST', // or 'PUT'
+                            body: JSON.stringify(data), // data can be `string` or {object}!
+                            headers:{
+                                'Content-Type': 'application/json'
+                                }
+                            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) 
+                {
+                    console.log(data.length)
+                    if(data.length>0){
+                        M.toast({html: 'Datos encontrados', classes: 'rounded'});
+                        $('#total').html(data.length);
+                    
+                        for (let index = 0; index < data.length; index++) {
+                            const element = data[index];
+                            $('#resultados').append(`
+                                                    <tr>
+                                                        <td class="center-align">
+                                                            <p>
+                                                                <label>
+                                                                    <input type="checkbox" class="check" value="${element.ORDSER_N_ID}"/>
+                                                                    <span></span>
+                                                                </label>
+                                                            </p>
+                                                        </td>
+                                                        <td class="center-align">${element.ORDSER_N_ID}</td>
+                                                        <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
+                                                        <td class="left-align">${element.ORDSER_C_NUMERO_FISICO}</td>
+                                                        <td class="center-align">${element.ORDSER_C_FECHA}</td>
+                                                        <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
+                                                        <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
+                                                        <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                                                        <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
+                                                        <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
+                                                    </tr>
+                                                `);
                         }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            console.log(data.length)
-            if(data.length>0){
-                M.toast({html: 'Datos encontrados', classes: 'rounded'});
-                $('#total').html(data.length);
-            
-                for (let index = 0; index < data.length; index++) {
-                    const element = data[index];
-                    $('#resultados').append(`
-                                            <tr>
-                                                <td class="center-align">
-                                                    <p>
-                                                        <label>
-                                                            <input type="checkbox" class="check" value="${element.ORDSER_N_ID}"/>
-                                                            <span></span>
-                                                        </label>
-                                                    </p>
-                                                </td>
-                                                <td class="center-align">${element.ORDSER_N_ID}</td>
-                                                <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.ORDSER_C_NUMERO_FISICO}</td>
-                                                <td class="center-align">${element.ORDSER_C_FECHA}</td>
-                                                <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
-                                                <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
-                                                <td class="center-align">${element.ORDSER_N_HORAS}</td>
-                                                <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
-                                                <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
-                                            </tr>
-                                        `);
-                }
-            }
-            else{
-                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
-            }
-            $('.preloader-background').css({'display': 'none'});    
+                        document.getElementById("btnLiquidar").style.display = "inline-block";
+                    }
+                    else{
+                        document.getElementById("btnLiquidar").style.display = "none";
+                        M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+                    }
+                    $('.preloader-background').css({'display': 'none'});    
 
-        });
+                });
+            }else{
+                M.toast({html: 'Debe elegir un cliente y una sede', classes: 'rounded'});
+            }
     }
 
     function liquidar()
     {
-        $('.preloader-background').css({'display': 'block'});
 
         var cliente = document.getElementById("cliente").value;
             cliente = cliente.split('-');
@@ -145,38 +154,42 @@
 
         var checados = $('.check:checked')
         console.log('Checados:' + checados.length);
-
-        var url =  '<?= base_url() ?>liq_servicios/nuevo/grabar_cabecera';
-        var data = {
-                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    cliente: cliente[0],
-                    sede: document.getElementById("sede").value,
-                    situacion: situacion, 
-                    usuario: <?= $this->data['session']->USUARI_N_ID ?>
-                    };
-        
-        
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
+        if(checados.length > 0)
         {
-            if(data.length>0){
-                M.toast({html: 'Datos encontrados', classes: 'rounded'});
-                insertarDetalles(data[0].LIQCAB_N_ID, checados)    
-            }
-            else{
-                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
-            }   
+            $('.preloader-background').css({'display': 'block'});
+            var url =  '<?= base_url() ?>liq_servicios/nuevo/grabar_cabecera';
+            var data = {
+                        empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                        cliente: cliente[0],
+                        sede: document.getElementById("sede").value,
+                        situacion: situacion, 
+                        usuario: <?= $this->data['session']->USUARI_N_ID ?>
+                        };
+            
+            
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                if(data.length>0){
+                    insertarDetalles(data[0].LIQCAB_N_ID, checados)    
+                }
+                else{
+                    M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+                }   
 
-        });
+            });
+        }else{
+            M.toast({html: 'Debe elegir al menos una orden de servicio', classes: 'rounded'});
+        }
     }
 
     async function insertarDetalles(liquidacion, checados)
@@ -215,7 +228,7 @@
                 console.log('Hubo un problema con la petición Fetch:' + error.message);
             });
         }
-        console.log('Terminó de ejecutar todo')
+        M.toast({html: 'Liquidación generada correctamente', classes: 'rounded'});
         $('.preloader-background').css({'display': 'none'});    
         window.location.href = "<?= base_url() ?>liq_servicios";
     }

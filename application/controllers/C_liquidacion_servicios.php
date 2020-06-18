@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_liquidacion_servicios extends CI_Controller {
     var $data = array();
 
+
     public function __construct()
     {
         parent::__construct();
@@ -13,6 +14,7 @@ class C_liquidacion_servicios extends CI_Controller {
             $this->data['accesos'] = $this->esandexaccesos->accesos();
             $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];      
+            $this->load->library('pdfgenerator');
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -43,6 +45,16 @@ class C_liquidacion_servicios extends CI_Controller {
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
 
         $this->load->view('liquidacion/servicios/V_nuevo', $this->data);        
+    }
+    //Reporte 
+    public function reporte()
+    {
+        $sql= "Exec LIQUIDACION_SERVICIOS_REPORTE 1,19";
+        $result = $this->M_crud->sql($sql);
+        ob_start();        
+        require_once(APPPATH.'views/liquidacion/servicios/reporte/index.php');
+        $html = ob_get_clean();
+        $this->pdfgenerator->generate($html, "reporte.pdf");
     }
     //Procesos
     public function buscar()
