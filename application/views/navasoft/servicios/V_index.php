@@ -153,7 +153,7 @@
                     $situacion = 'En Navasoft';
                 }
 
-                $traslado = '<i class="material-icons" onclick="generar_dbf(' + element.LIQUID_N_ID + ')" style="cursor: pointer;">cloud_download</i>'
+                $traslado = `<i class="material-icons" style="cursor: pointer" onclick="generar_dbf(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">cloud_download</i>`
 
                 $('#resultados').append(`   
                     <tr>
@@ -175,7 +175,8 @@
         });
     }
 
-    function generar_dbf($liq){
+    function generar_dbf($empresa,$liquidacion){
             M.toast({html: 'Generando...'});
-    	}
+
+    }
 </script>
