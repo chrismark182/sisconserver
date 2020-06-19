@@ -130,6 +130,11 @@ $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C
 //Tipo de Cambio
 
 $route['cambios'] = 'C_tipo_cambio';
+$route['cambio/nuevo'] = 'C_tipo_cambio/nuevo';
+$route['cambio/crear'] = 'C_tipo_cambio/crear';
+$route['cambio/(:num)/(:num)/editar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/editar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/actualizar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/actualizar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/eliminar/'.$empresa.'/'.$cambio;};
 
 
 //API
@@ -143,3 +148,4 @@ $route['api/acuerdos/periodos'] = function (){return 'C_api/acuerdos_periodos'; 
 $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_periodos_guardar'; };
 
 $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };
+$route['api/tarifas'] = function (){return 'C_api/tarifas'; };

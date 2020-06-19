@@ -86,7 +86,7 @@
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
-        var url = 'api/clientes';
+        var url = 'api/tarifas';
         var data = {numero_documento: document.getElementById("numero_documento").value, 
                     razon_social: document.getElementById("razon_social").value};
         

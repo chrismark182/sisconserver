@@ -9,7 +9,7 @@
                     <b>
                         Total Registros: 
                         &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2"><?php echo count($tarifas);?></span>
+                        <span id="total" class="btn blue-grey darken-2">0</span>
                     </b>
                 </div>
             </div>
@@ -19,10 +19,10 @@
 
 <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
-        <form action="<?= base_url() ?>tarifas" method="post">
+        <form action="<?= base_url() ?>tarifas" method="post" id="form">
             <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Sedes</option>
+                    <option value="0"  selected>Sedes</option>
                     
                     <?php if($sedes): ?>
                     <?php foreach($sedes as $sede): ?> 
@@ -36,7 +36,7 @@
             </div>
             <div class="input-field col s12 m6 l3">
                     <select id="cliente" name="cliente">
-                        <option value="" disabled selected>Clientes</option>
+                        <option value="0"  selected>Clientes</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -49,7 +49,7 @@
             </div>
             <div class="input-field col s6 m6 l3">
                 <select id="servicio" name="servicio">
-                    <option value="" disabled selected>Servicios</option>
+                    <option value="0"  selected>Servicios</option>
                     
                     <?php if($servicios): ?>
                     <?php foreach($servicios as $servicio): ?> 
@@ -65,7 +65,8 @@
                 <label class="active" for="numero">Numero de Tarifa</label> 
             </div>
             <div class="input-field col l12">
-                <input class="btn-small" type="submit" value="Buscar">
+                <div class="btn-small" id="btn_buscar">Buscar
+                </div>
             </div>
         </form>
     </div>    
@@ -89,27 +90,7 @@
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
-        <tbody>
-            <?php if($tarifas): ?>
-                <?php foreach($tarifas as $tarifa): ?> 
-                    <tr>
-                        <td class="left-align"><?=$tarifa->SEDE_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$tarifa->CLIENT_C_RAZON_SOCIAL?></td>
-                        <td class="left-align"><?=$tarifa->SERVIC_C_DESCRIPCION?></td>
-                        <td class="center-align"><?=$tarifa->MONEDA_C_ABREVIATURA?></td>
-                        <td class="right-align"><?=$tarifa->TARIFA_N_PRECIO_UNIT?></td>
-                        <td class="center-align">
-                            <a href="<?= base_url() ?>tarifa/<?= $tarifa->EMPRES_N_ID ?>/<?= $tarifa->TARIFA_N_ID ?>/editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
-                        <td class="center-align">
-                        <a class="material-icons " style="cursor: pointer" onclick="confirmarEliminar(<?= $tarifa->EMPRES_N_ID ?>,<?= $tarifa->TARIFA_N_ID ?>)">delete</i>
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>  
-            <?php endif; ?>
+        <tbody id="resultados">
         </tbody>
     </table>
 </div>
@@ -132,39 +113,89 @@
     document.addEventListener('DOMContentLoaded', function() {
         console.log("pagina")
         var btn_buscar = document.getElementById("btn_buscar"); 
-        btn_buscar.addEventListener("click", validar, false); 
+        btn_buscar.addEventListener("click", buscar, false); 
+        buscar();
     });
-    function buscar(){
+    function buscar()
+    {
+        
+        var numero=0;
+        var sede=0;
+        var cliente=0;
+        var servicio=0;
+
+        if(document.getElementById('numero').value.trim() !='' )
+        {
+            numero= document.getElementById('numero').value.trim();
+        }
+        if(document.getElementById('sede').value.trim() !='' )
+        {
+            sede= document.getElementById('sede').value.trim();
+        }
+        if(document.getElementById('cliente').value.trim() !='' )
+        {
+            cliente= document.getElementById('cliente').value.trim();
+        }
+        if(document.getElementById('servicio').value.trim() !='' )
+        {
+            servicio= document.getElementById('servicio').value.trim();
+        }
 
         console.log("Buscando")
-       var numero=0;
-       var sede=0;
-       var cliente=0;
-       var servicio=0;
+        $('.preloader-background').css({'display': 'block'});
+        var url = 'api/tarifas';
+        var data= {
+            empresa: <?= $empresa->EMPRES_N_ID ?>,
+            numero: numero,
+            sede: sede,
+            cliente: cliente,
+            servicio: servicio
 
-    if(document.getElementById('numero').value.trim() !='' ){
-        numero= document.getElementById('numero').value.trim();
         }
-    if(document.getElementById('sede').value.trim() !='' ){
-        sede= document.getElementById('sede').value.trim();
-        }
-    if(document.getElementById('cliente').value.trim() !='' ){
-        cliente= document.getElementById('cliente').value.trim();
+            $('#resultados').html('');
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('#total').html(data.length);
+            if(data.length > 0)
+            {
+                M.toast({html: 'Cargando Tarifas', classes: 'rounded'});
+            }
+            for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TARIFA_N_ID})">delete</i>`
+            $('#resultados').append(`   
+                    <tr>
+                        <td class="center-align">${element.SEDE_C_DESCRIPCION}</td>
+                        <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                        <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
+                        <td class="center-align">${element.MONEDA_C_ABREVIATURA}</td>
+                        <td class="center-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
+                        <td class="center-align">
+                            <a href="<?= base_url() ?>tarifa/${element.EMPRES_N_ID}/${element.TARIFA_N_ID}/editar">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </td>
+                        <td class="center-align">
+                            ${$eliminar}
+                        </td>
+                    </tr>
+                                    `);
+            
+            $('.preloader-background').css({'display': 'none'});                            
+            $('.tooltipped').tooltip();
+            }
+        });
     }
-    if(document.getElementById('servicio').value.trim() !='' ){
-        servicio= document.getElementById('servicio').value.trim();
-        }
-    if(){
-
-        $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
-        }
-        else{
-            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},0,0,0,0";
-        }
-
-    }
-    
-
 
     function confirmarEliminar($empresa,$tarifa)
     {

@@ -53,16 +53,6 @@ class C_tarifario extends CI_Controller {
         $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->data['servicios'] = $this->M_crud->sql($servicios);
 
-        
-
-        if($this->input->server('REQUEST_METHOD') == 'POST' ):
-            
-            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
-        else:
-            $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},0,0,0,0";
-        endif;
-        
-        $this->data['tarifas'] =  $this->M_crud->sql($sql);   ;
         $this->load->view('tarifario/V_index', $this->data);
         
 	}
@@ -99,10 +89,12 @@ class C_tarifario extends CI_Controller {
         $sql = "Exec TARIFARIO_LIS "    .$empresa . ","
                                         .$tarifa    
                                         ;
-                           
+                                        echo $sql;             
         $tarifa = $this->M_crud->sql($sql);
         $this->data['tarifa'] = $tarifa[0];
         $this->load->view('tarifario/V_editar',$this->data);
+
+        
     }
     public function crear(){
 

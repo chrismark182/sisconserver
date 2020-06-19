@@ -7,13 +7,13 @@ class C_tipo_cambio extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-		$this->_init();
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
             $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];
+            
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -24,25 +24,24 @@ class C_tipo_cambio extends CI_Controller {
 	}
 
     public function index() 
-	{              
-        $this->load->view('tipo_cambio/V_index', $this->data);
-
-
+	{   
+        $this->_init();      
         
+        $sql= "Exec TIPO_CAMBIO_LIS 0,0" ;
+        $this->data['cambios'] = $this->M_crud->sql($sql);  
+        $this->load->view('tipo_cambio/V_index', $this->data);
 
     }
     public function nuevo()
     {
-        $documento ="Exec TIPO_DOCUMENTO_EMPRESAS_LIS";
-
-        $this->data['tdocumentos'] = $this->M_crud->sql($documento);
-        $this->load->view('cliente/V_nuevo', $this->data);
+        $this->load->view('tipo_cambio/V_nuevo', $this->data);
+        $this->_init();
         
         
     }
     public function editar($empresa,$cliente)
     {  
-        
+        $this->_init();
         $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
                                     .$cliente ;
         
