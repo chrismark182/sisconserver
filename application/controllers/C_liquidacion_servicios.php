@@ -49,7 +49,7 @@ class C_liquidacion_servicios extends CI_Controller {
     //Reporte 
     public function reporte()
     {
-        $sql= "Exec LIQUIDACION_SERVICIOS_REPORTE 1,19";
+        $sql= "Exec LIQUIDACION_SERVICIOS_REPORTE 1,7";
         $result = $this->M_crud->sql($sql);
         ob_start();        
         require_once(APPPATH.'views/liquidacion/servicios/reporte/index.php');
