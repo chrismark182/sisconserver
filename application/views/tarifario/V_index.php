@@ -85,7 +85,7 @@
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SERVICIO</th>
                 <th class="center-align">MONEDA</th>
-                <th class="center-align">PRECIO UNITARIO</th>
+                <th class="right-align">PRECIO UNITARIO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>

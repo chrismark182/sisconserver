@@ -112,8 +112,6 @@ class C_tarifario extends CI_Controller {
                 . $this->input->post('moneda') . ","
                 . $this->input->post('precio') . ","
                 . $this->data['session']->USUARI_N_ID ;
-                
-        echo $sql;
 
                 $this->M_crud->sql($sql);   
                 redirect('tarifas','refresh');   
@@ -172,6 +170,5 @@ class C_tarifario extends CI_Controller {
     {
         //SELECT * FROM TARIFARIO Where EMPRES_N_ID = 1 And SEDE_N_ID = 1 And CLIENT_N_ID = 377 And SERVIC_N_ID = 2
         $query = $this->M_crud->sql("SELECT * FROM TARIFARIO Where EMPRES_N_ID = " . $empresa . "And SEDE_N_ID = ". $sede ."And CLIENT_N_ID = ". $cliente ." And SERVIC_N_ID = " . $servicio);
-        echo $query;
     }
 }
