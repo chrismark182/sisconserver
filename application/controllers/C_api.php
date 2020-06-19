@@ -74,6 +74,20 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+    // public function cambioValidar()
+    // {
+    //     $data = json_decode(file_get_contents('php://input'), true);
+    //     $sql= "Exec CLIENTE_VAL {$data['empresa']} ,{$data['tdocumento']},'{$data['ndocumento']}'";
+    //     $query = $this->M_crud->sql($sql);
+    //     echo json_encode($query, true);
+    // }
     
-    
+    public function tarifas()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = "Exec TARIFARIO_BUS {$data['empresa']},{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+
+    }
 }

@@ -17,36 +17,33 @@
     </div>
 </nav>
 <div class="container">
-    <div>
-        &nbsp;
-    </div>
+        <div>
+            &nbsp;
+        </div>
 
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">SEDE</th>
-                <th class="left-align">TIPO DE ALMACEN</th>
-                <th class="left-align">UBICACIÓN</th>
-                <th class="rigth-align">AREA M2</th>
+                <th class="left-align">FECHA</th>
+                <th class="left-align">TIPO DE CAMBIO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
+                
             </tr>
         </thead>
         <tbody>
-            <?php if($ubicaciones): ?>
-                <?php foreach($ubicaciones as $ubicacion): ?> 
+            <?php if($cambios): ?>
+                <?php foreach($cambios as $cambio): ?> 
                     <tr>
-                        <td class="left-align"><?=$ubicacion->SEDE_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$ubicacion->TIPALM_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$ubicacion->UBICAC_C_DESCRIPCION?></td>
-                        <td class="rigth-align"><?=number_format($ubicacion->UBICAC_N_M2, 2)?></td>
+                        <td class="left-align"><?=$cambio->TIPCAM_C_FECHA?></td>
+                        <td class="rigth-align"><?=$cambio->TIPCAM_N_VALOR_VENTA?></td>
                         <td class="center-align">
-                            <a href="<?= base_url() ?>ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>cambio/<?= $cambio->EMPRES_N_ID ?>/<?= $cambio->TIPCAM_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td class="center-align">
-                            <a class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $ubicacion->EMPRES_N_ID ?>,<?= $ubicacion->SEDE_N_ID ?>,<?= $ubicacion->UBICAC_N_ID ?>)">delete</i>
+                            <a class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cambio->EMPRES_N_ID ?>,<?= $cambio->TIPCAM_N_ID ?>)">delete</i>
                                </a>
                         </td>
                     </tr>
@@ -57,7 +54,7 @@
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
-    href="<?= base_url()?>ubicacion/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>cambio/nuevo"><i class="material-icons">add</i></a>
 
 
     <div id="modalEliminar" class="modal">
@@ -71,11 +68,11 @@
     </div>
 </div>
 <script>
-    function confirmarEliminar($empresa,$sede,$ubicacion)
+    function confirmarEliminar($empresa,$cambio)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'ubicacion/'+$empresa+'/'+$sede+'/'+$ubicacion+'/eliminar')
+        $('#btnConfirmar').attr('href', 'cambio/'+$empresa+'/'+$cambio+'/eliminar')
     }
 </script>
 
