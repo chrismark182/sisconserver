@@ -244,7 +244,11 @@
                         <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
                         <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                         <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
-                        <td class="center-align"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Estamos trabajando...">description</i></td>                        
+                        <td class="center-align">
+                            <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
+                                <i class="material-icons">description</i>
+                            </a>
+                        </td>                        
                         <td class="center-align">
                             ${$eliminar}
                         </td>
