@@ -23,12 +23,12 @@
                         <td><?=$row->CATEGO_N_ID?></td>
                         <td><?=$row->CATEGO_C_DESCRIPCION?></td>
                         <td>
-                            <a href="<?= base_url() ?>categoria/<?= $row->EMPRES_N_ID ?>/<?= $row->CLIENT_N_ID ?>/editar">
+                            <a href="<?= base_url() ?>categoria/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td>
-                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $row->EMPRES_N_ID ?>/<?= $row->CLIENT_N_ID ?>?>/)">delete</i>                        
+                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar()">delete</i>                        
                         </td>
             
                     </tr>
@@ -55,6 +55,6 @@
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'categoria/<?= $row->EMPRES_N_ID ?>/<?= $row->CLIENT_N_ID ?>/eliminar')
+        $('#btnConfirmar').attr('href', 'categoria/eliminar')
     }
 </script>
