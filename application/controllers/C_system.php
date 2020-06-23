@@ -7,7 +7,6 @@ class C_system extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('git');
-        $this->load->library('EsxProcess');        
 	}
 
     public function sync()
