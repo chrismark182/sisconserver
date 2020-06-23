@@ -78,7 +78,6 @@
 	<nav class="blue-grey darken-1" style="padding: 0 1em;">
     	<div class="nav-wrapper">
 		<?php if($this->session->userdata('logged_in')): ?>
-			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<?php endif; ?>
 			<a href="<?= base_url() ?>" class="brand-logo">SISCON</a>
 			<!-- Dropdown Structure -->
@@ -126,32 +125,7 @@
 			</ul>
     	</div>
   	</nav>
-	<ul id="slide-out" class="sidenav">
-		<li>
-			<div class="user-view">
-				<div class="background">
-					<img src="<?= base_url() ?>assets/images/office.jpg">
-				</div>
-				<a href="#user"><img class="circle" src="<?= base_url() ?>assets/images/yuna.jpg"></a>
-				<a href="#name"><span class="white-text name"><?= $session->USUARI_USERNAME ?></span></a>
-				<a href="#email"><span class="white-text email"><?= $session->USUARI_USERNAME ?>@gmail.com</span></a>
-			</div>
-		</li>
-		
-		<?php if($this->session->userdata('logged_in')): ?>
-			<?php if(!empty($accesos['hijos'])): ?>
-				<?php foreach($accesos['hijos'] as $acceso): ?>
-					<li>
-						<a href="<?= base_url() . $acceso->MENU_RUTA ?>"><?= $acceso->MENU_DESCRIPCION ?></a>
-					</li>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		<?php else: ?>
-		<?php endif;?>
-		<li><div class="divider"></div></li>
-		<li><a href="#!" class="subheader">Seguridad</a></li>
-		<li><a class="waves-effect" href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
-	</ul>
+
 	<div class="container">
 		<?php if ($this->session->flashdata('error')): ?>
 			<div class="card-panel red lighten-2 white-text"><?= $this->session->flashdata('error'); ?></div>
