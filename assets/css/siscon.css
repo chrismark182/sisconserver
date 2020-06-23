@@ -1,0 +1,16 @@
+.status-bar
+{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    font-size: 12px;
+    color: #fff;
+    text-align: right;
+}
+.status-bar div
+{
+    padding: 4px;
+    display: inline-block;
+}
