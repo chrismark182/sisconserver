@@ -25,10 +25,11 @@ class C_system extends CI_Controller {
     public function log()
     {
         $repo = Git::open('./');
-        $mystring = $repo->run('log -1');
-        $findme = "Date:";
+        $mystring = $repo->run("log -1 --date=iso");
+        $mystring = trim($mystring); 
+        $findme = "Date";
         $pos = strpos($mystring, $findme);
-        $originalDate = substr($mystring, ((int)$pos + 6), ((int)$pos -50));
+        $originalDate = substr($mystring, ((int)$pos + 6), 27);
         $newDate = date("Y.m.d.H.i.s", strtotime($originalDate));
         echo 'v'.$newDate;
 
