@@ -34,8 +34,8 @@
 		});
 		async function status()
 		{
-			var url = 'sistema/log';
-			var urlRevisar = 'sistema/revisar';
+			var url = '<?= base_url() ?>sistema/log';
+			var urlRevisar = '<?= base_url() ?>sistema/revisar';
 			var data = {};
 			await fetch(url, {
                 method: 'POST', // or 'PUT'
@@ -77,7 +77,7 @@
 		async function sync()
 		{
 			document.getElementById('system').innerHTML = 'Actualizando sistema...';
-			var url = 'sistema/sync';
+			var url = '<?= base_url() ?>sistema/sync';
 			var data = {};
 			await fetch(url, {
                 method: 'POST', // or 'PUT'
