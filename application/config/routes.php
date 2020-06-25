@@ -149,6 +149,7 @@ $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_peri
 
 $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };
 $route['api/tarifas'] = function (){return 'C_api/tarifas'; };
+$route['api/execsp'] = function (){return 'C_api/execsp'; };
 
 $route['sistema/sync'] = function (){return 'C_system/sync'; };
 $route['sistema/log'] = function (){return 'C_system/log'; };

@@ -16,7 +16,6 @@ class C_api extends CI_Controller {
 			redirect(base_url(),'refresh');
 		endif;
 	}
-
     public function tarifa($empresa, $sede, $cliente, $servicio)
     {
         $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO "  .$empresa . ","
@@ -74,14 +73,6 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
-    // public function cambioValidar()
-    // {
-    //     $data = json_decode(file_get_contents('php://input'), true);
-    //     $sql= "Exec CLIENTE_VAL {$data['empresa']} ,{$data['tdocumento']},'{$data['ndocumento']}'";
-    //     $query = $this->M_crud->sql($sql);
-    //     echo json_encode($query, true);
-    // }
-    
     public function tarifas()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -89,5 +80,28 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
 
+    }
+    public function execsp()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = '';
+        $count = 0;
+        foreach ($data as $key => $value) {
+            if($count > 1):
+                $sql = $sql . ", ";
+            endif; 
+            if($key == 'sp'):
+                $sql = "Exec {$value} ";
+            elseif(gettype($value) == 'string'):
+                $val = "'{$value}'";
+                $sql = $sql . $val;
+            else: 
+                $sql = $sql . $value;
+            endif;
+            $count++;
+        }
+        
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
     }
 }
