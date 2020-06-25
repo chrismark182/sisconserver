@@ -118,9 +118,11 @@
         $('#ubicacion').html(`<option value="" disabled selected>Cargando ubicaciones...</option>`)
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
-        var url =  '<?= base_url() ?>api/ubicacion';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    sede: document.getElementById("sede").value,
+        var url =  '<?= base_url() ?>api/execsp';
+        var data = {
+                    sp: 'UBICACION_DISPONIBLE_LIS',
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    sede: parseInt(document.getElementById("sede").value),
                     ubicacion: 0};
         fetch(url, {
                     method: 'POST', // or 'PUT'

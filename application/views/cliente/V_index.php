@@ -86,10 +86,16 @@
     {
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
-        var url = 'api/tarifas';
-        var data = {numero_documento: document.getElementById("numero_documento").value, 
-                    razon_social: document.getElementById("razon_social").value};
+        let url = 'api/execsp';
+        let sp = 'CLIENTE_LIS';
+        let empresa =  parseInt(<?= $empresa->EMPRES_N_ID ?>);
+        let cliente_id = 0;
+        let numero_documento = document.getElementById("numero_documento").value + '%';
+        let razon_social = document.getElementById("razon_social").value +'%';
+        data = {sp, empresa, cliente_id, numero_documento, razon_social};
         
+        console.log(data);
+
         $('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'

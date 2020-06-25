@@ -26,10 +26,6 @@ class C_cliente extends CI_Controller {
     public function index() 
 	{              
         $this->load->view('cliente/V_index', $this->data);
-
-
-        
-
     }
     public function nuevo()
     {
@@ -37,8 +33,7 @@ class C_cliente extends CI_Controller {
 
         $this->data['tdocumentos'] = $this->M_crud->sql($documento);
         $this->load->view('cliente/V_nuevo', $this->data);
-        
-        
+
     }
     public function editar($empresa,$cliente)
     {  
