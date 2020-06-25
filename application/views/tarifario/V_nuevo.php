@@ -69,7 +69,7 @@
             
             
             <div class="input-field col s6 m6 l4">
-                <input id="precio" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" class="validate">
+                <input id="precio" type="number" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" class="validate">
                 <label class="active" for="precio">Precio Unitario</label> 
             </div>
             <div class="input-field col s12">

@@ -80,7 +80,6 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                
                 <th class="left-align">SEDE</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SERVICIO</th>
@@ -175,11 +174,11 @@
             $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TARIFA_N_ID})">delete</i>`
             $('#resultados').append(`   
                     <tr>
-                        <td class="center-align">${element.SEDE_C_DESCRIPCION}</td>
+                        <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                         <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                         <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
                         <td class="center-align">${element.MONEDA_C_ABREVIATURA}</td>
-                        <td class="center-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
+                        <td class="right-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
                         <td class="center-align">
                             <a href="<?= base_url() ?>tarifa/${element.EMPRES_N_ID}/${element.TARIFA_N_ID}/editar">
                                 <i class="material-icons">edit</i>
