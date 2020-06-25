@@ -117,7 +117,7 @@
     });
     function buscar()
     {
-        
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
         var numero=0;
         var sede=0;
         var cliente=0;
@@ -143,14 +143,7 @@
         console.log("Buscando")
         $('.preloader-background').css({'display': 'block'});
         var url = 'api/tarifas';
-        var data= {
-            empresa: <?= $empresa->EMPRES_N_ID ?>,
-            numero: numero,
-            sede: sede,
-            cliente: cliente,
-            servicio: servicio
-
-        }
+        var data= { empresa, numero, sede, cliente, servicio }
             $('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -168,31 +161,33 @@
             if(data.length > 0)
             {
                 M.toast({html: 'Cargando Tarifas', classes: 'rounded'});
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TARIFA_N_ID})">delete</i>`
+                    $('#resultados').append(`   
+                            <tr>
+                                <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                                <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                                <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
+                                <td class="center-align">${element.MONEDA_C_ABREVIATURA}</td>
+                                <td class="right-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
+                                <td class="center-align">
+                                    <a href="<?= base_url() ?>tarifa/${element.EMPRES_N_ID}/${element.TARIFA_N_ID}/editar">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </td>
+                                <td class="center-align">
+                                    ${$eliminar}
+                                </td>
+                            </tr>
+                    `);
+                }
+            }else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
-            for (let index = 0; index < data.length; index++) {
-            const element = data[index];
-            $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TARIFA_N_ID})">delete</i>`
-            $('#resultados').append(`   
-                    <tr>
-                        <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                        <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-                        <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                        <td class="center-align">${element.MONEDA_C_ABREVIATURA}</td>
-                        <td class="right-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
-                        <td class="center-align">
-                            <a href="<?= base_url() ?>tarifa/${element.EMPRES_N_ID}/${element.TARIFA_N_ID}/editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
-                        <td class="center-align">
-                            ${$eliminar}
-                        </td>
-                    </tr>
-                                    `);
-            
             $('.preloader-background').css({'display': 'none'});                            
             $('.tooltipped').tooltip();
-            }
+            
         });
     }
 
