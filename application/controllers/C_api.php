@@ -25,14 +25,6 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query[0], true);
     }
-    public function clientes()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "Exec CLIENTE_LIS 0,0, '{$data['numero_documento']}%', '{$data['razon_social']}%'";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
-
     public function ubicacion()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -100,8 +92,8 @@ class C_api extends CI_Controller {
             endif;
             $count++;
         }
-        
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
+        echo $sql;
+        // $query = $this->M_crud->sql($sql);
+        // echo json_encode($query, true);
     }
 }

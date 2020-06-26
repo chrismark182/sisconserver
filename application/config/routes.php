@@ -139,7 +139,6 @@ $route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C
 
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
-$route['api/clientes'] = function (){return 'C_api/clientes'; };
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };

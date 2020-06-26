@@ -115,7 +115,8 @@
                         <th class="right-align">AREA</th>
                         <th class="right-align">PRECIO</th>
                         <th class="right-align">TOTAL</th>
-                        <th class="center-align">SITUALCION</th>
+                        <th class="center-align">SITUACIÓN</th>
+                        <th class="center-align">ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody id="periodos">            
@@ -277,9 +278,11 @@
         console.log('Estoy buscando.. ')
         $('.preloader-background').css({'display': 'block'});
         $('#acuerdo_id_periodo').val($acuerdo)
-        var url = 'api/acuerdos/periodos';
-        var data = {empresa: $empresa,
-                    acuerdo: $acuerdo};
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_LIS';
+        let empresa = $empresa;
+        let acuerdo = $acuerdo;
+        data = {sp, empresa, acuerdo};
         
         $('#periodos').html('');
         fetch(url, {
@@ -306,17 +309,18 @@
                 }
                 
                
-                $('#periodos').append(`   <tr>
-                                                <td class="center-align">${element.ALQDET_N_ID}</td>
-                                                <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
-                                                <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
-                                                <td class="right-align">${element.ALQDET_N_AREA}</td>
-                                                <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
-                                                <td class="right-align">${element.TOTAL}</td>
-                                                <td class="center-align">
-                                                   ${$situacion} 
-                                                </td>
-                                            </tr>
+                $('#periodos').append(`   
+                                        <tr>
+                                            <td class="center-align">${element.ALQDET_N_ID}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
+                                            <td class="right-align">${element.ALQDET_N_AREA}</td>
+                                            <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
+                                            <td class="right-align">${element.TOTAL}</td>
+                                            <td class="center-align">
+                                                ${$situacion} 
+                                            </td>
+                                        </tr>
                                     `);
             }
             $('#modalPeriodos').modal('open');
