@@ -88,6 +88,7 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
 <!-- Confirmar Cerrar -->
 <div id="confirmarCerrar" class="modal">
     <div class="modal-content">
@@ -153,6 +154,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
+        buscar()
     });
     function buscar()
     {
@@ -261,6 +263,12 @@
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
     }
+    function confirmarEliminar($empresa,$acuerdo, $periodo)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
+    }
     function confirmarCerrar($empresa,$acuerdo)
     {
         console.log('confirmar cerrar')
@@ -302,10 +310,10 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
 
-                $situacion = ``
-                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                $eliminar = ``
+                if(element.ALQDET_C_SITUACION == 0)
                 {
-                    $situacion = `<i class="material-icons">assignment_turned_in</i>`
+                    $eliminar = `<i class="material-icons">delete</i>`
                 }
                 
                
@@ -318,7 +326,10 @@
                                             <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                             <td class="right-align">${element.TOTAL}</td>
                                             <td class="center-align">
-                                                ${$situacion} 
+                                                
+                                            </td>
+                                            <td class="center-align">
+                                                ${$eliminar} 
                                             </td>
                                         </tr>
                                     `);
