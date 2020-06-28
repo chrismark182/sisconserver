@@ -82,10 +82,12 @@
     <div class="modal-content">
       <h4>Eliminar</h4>
       <p>¿Está seguro que desea elimniar el registro?</p>
+      <input type="hidden" id="eliminar_tipo">
+      <input type="hidden" id="eliminar_registro">
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn" onclick="confirmarEliminar()">ACEPTAR</a>
     </div>
 </div>
 
@@ -222,7 +224,7 @@
                     }
                 }
 
-                $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
+                $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
                 if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
                 {
                     $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
@@ -257,17 +259,42 @@
         });
         
     }
-    function confirmarEliminar($empresa,$acuerdo)
+    function modalEliminar($tipo, $registro)
     {
         console.log('confirmar eliminar')
+        $('.modal').modal('close');
+        $('#eliminar_tipo').val($tipo);
+        $('#eliminar_registro').val($registro);
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
     }
-    function confirmarEliminar($empresa,$acuerdo, $periodo)
+    function confirmarEliminar()
     {
-        console.log('confirmar eliminar')
-        $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
+        $('.preloader-background').css({'display': 'block'});
+        let registro = $('#eliminar_registro').val();
+        registro = registro.split('-');
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_DEL';
+        let empresa = registro[0];
+        let acuerdo = registro[1];
+        let periodo = registro[2];
+        data = {sp, empresa, acuerdo, periodo};
+        
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('.preloader-background').css({'display': 'none'});     
+            verPeriodos(empresa, acuerdo);
+        });
+
     }
     function confirmarCerrar($empresa,$acuerdo)
     {
@@ -275,6 +302,7 @@
         $('#confirmarCerrar').modal('open');
         $('#btnConfirmarCerrar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/cerrar')
     }
+    
     function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -284,6 +312,7 @@
     function verPeriodos($empresa,$acuerdo)
     {
         console.log('Estoy buscando.. ')
+        
         $('.preloader-background').css({'display': 'block'});
         $('#acuerdo_id_periodo').val($acuerdo)
         let url = 'api/execsp';
@@ -310,13 +339,15 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
 
-                $eliminar = ``
-                if(element.ALQDET_C_SITUACION == 0)
+                let $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
+                let $situacion = ``
+                if(element.ALQDET_C_SITUACION == '0')
                 {
-                    $eliminar = `<i class="material-icons">delete</i>`
+                    $eliminar = `<i class="material-icons" style="cursor: pointer;" onclick="modalEliminar('2', '${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}')">delete</i>`
+                }else if(element.ALQDET_C_SITUACION == '1'){
+                    $situacion = `<i class="material-icons">assignment_turned_in</i>`
                 }
                 
-               
                 $('#periodos').append(`   
                                         <tr>
                                             <td class="center-align">${element.ALQDET_N_ID}</td>
@@ -326,7 +357,7 @@
                                             <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                             <td class="right-align">${element.TOTAL}</td>
                                             <td class="center-align">
-                                                
+                                                ${$situacion}  
                                             </td>
                                             <td class="center-align">
                                                 ${$eliminar} 

@@ -22,6 +22,7 @@ $route['acuerdo/buscar'] = function (){return 'C_acuerdo/buscar'; };
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 $route['acuerdo/crear'] = 'C_acuerdo/crear';
 $route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
+$route['acuerdo/periodo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar_periodo/'.$empresa.'/'.$id.'/'.$periodo;};
 $route['acuerdo/(:num)/(:num)/cerrar'] = function ($empresa,$id){return 'C_acuerdo/cerrar/'.$empresa.'/'.$id;};
 //Menu
 $route['menus'] = 'C_menu';
