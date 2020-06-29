@@ -26,15 +26,7 @@ class C_tarifario extends CI_Controller {
 	}
 
     public function buscar(){
-
-        
-
         $sql = "Exec TARIFARIO_BUS {$this->data['empresa']->EMPRES_N_ID},{$numero},{$sede},{$cliente},{$servicio}";
-        
-
-
-
-        
     }
 
 
@@ -75,26 +67,21 @@ class C_tarifario extends CI_Controller {
 	public function editar($empresa,$tarifa)
     {  
 
-        $clientes = "Exec CLIENTE_ESCLIENTE_LIS 1,'0'";
-        $sedes = 'Exec SEDE_LIS 1,0';
-        $servicios = 'Exec SERVICIO_LIS 1,0';
+        $clientes = "Exec CLIENTE_ESCLIENTE_LIS " .$empresa . ",'0'";
+        $sedes = "Exec SEDE_LIS " .$empresa . ",'0'";
+        $servicios = "Exec SERVICIO_LIS " .$empresa . ",'0'";
         
-
         $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
         $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->data['servicios'] = $this->M_crud->sql($servicios);
 
-
         $sql = "Exec TARIFARIO_LIS "    .$empresa . ","
-                                        .$tarifa    
-                                        ;
-                                        echo $sql;             
+                                        .$tarifa;
         $tarifa = $this->M_crud->sql($sql);
         $this->data['tarifa'] = $tarifa[0];
         $this->load->view('tarifario/V_editar',$this->data);
-
-        
+       
     }
     public function crear(){
 
@@ -141,7 +128,6 @@ class C_tarifario extends CI_Controller {
                                         .$this->input->post('moneda') . "," 
                                         .$this->input->post('precio') . "," 
                                         .$this->data['session']->USUARI_N_ID ;
-                                        echo $sql;
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos actualizados correctamente');

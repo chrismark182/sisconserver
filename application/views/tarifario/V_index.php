@@ -95,7 +95,7 @@
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
-    href="<?= base_url()?>tarifa/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>tarifa/nuevo/"><i class="material-icons">add</i></a>
 
     <div id="modalEliminar" class="modal">
     <div class="modal-content">
