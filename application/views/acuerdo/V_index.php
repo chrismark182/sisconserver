@@ -138,12 +138,24 @@
         <div class="section">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder=" " id="nuevo_area" type="text" class="right-align">
-                    <label for="first_name">Area</label>
+                    <input placeholder=" " id="np_fecha_inicio" type="text" class="right-align" readonly>
+                    <label for="np_fecha_inicio">Fecha Inicio</label>
                 </div>
                 <div class="input-field col s6">
-                    <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align">
-                    <label for="first_name">Precio</label>
+                    <input placeholder=" " id="np_fecha_fin" type="text" class="right-align" readonly>
+                    <label for="np_fecha_fin">Fecha Final</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder=" " id="nuevo_area" type="text" class="right-align">
+                    <label for="nuevo_area">Area</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align" onkeydown="recalcular()" onchange="recalcular()">
+                    <label for="nuevo_precio">Precio</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder=" " id="np_total" type="text" class="right-align" readonly>
+                    <label for="total">Total</label>
                 </div>
             </div>
         </div>
@@ -258,6 +270,10 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
         
+    }
+    function recalcular()
+    {
+        $('#np_total').val(parseInt($('#nuevo_area').val()) * parseInt($('#nuevo_precio').val()))        
     }
     function modalEliminar($tipo, $registro)
     {
@@ -375,22 +391,12 @@
         console.log('Estoy buscando.. ')
         $('.modal').modal('close');
         $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id_periodo').val();
 
-        var url = 'acuerdo/buscar';
-        $fecha_desde = $('#desde').val();
-        $fecha_desde = $fecha_desde.split('/');
-        
-        $fecha_hasta = $('#hasta').val();
-        $fecha_hasta = $fecha_hasta.split('/');
-        var data = {
-                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    acuerdo: $acuerdo,
-                    cliente: '%',
-                    sede: '%',
-                    fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
-                    fecha_hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
-                    };
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_PROXIMO_LIS';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        let acuerdo = $('#acuerdo_id_periodo').val();
+        var data = {sp, empresa, acuerdo};
         
         $('#periodos').html('');
         fetch(url, {
@@ -406,8 +412,11 @@
         .then(function(data) 
         {
             console.log(data);
-            $('#nuevo_area').val(data[0].ALQUIL_N_AREA)
-            $('#nuevo_precio').val(data[0].ALQUIL_N_PRECIO_UNIT)
+            $('#np_fecha_inicio').val(data[0].FECHA_INICIO)
+            $('#np_fecha_fin').val(data[0].FECHA_FINAL)
+            $('#nuevo_area').val(data[0].ALQDET_N_AREA)
+            $('#nuevo_precio').val(data[0].ALQDET_N_PRECIO_UNIT)
+            $('#np_total').val(data[0].ALQDET_N_AREA * data[0].ALQDET_N_PRECIO_UNIT)
             if(data[0].TIPALM_N_ID == 1)
             {
                 console.log('techado')
