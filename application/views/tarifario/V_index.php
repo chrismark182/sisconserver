@@ -111,10 +111,18 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         console.log("pagina")
+
+        cliente = getParameterByName('c')
+        if(cliente != '')
+        {
+            $('#cliente').val(cliente)
+            M.updateTextFields();
+            buscar()
+        }
         var btn_buscar = document.getElementById("btn_buscar"); 
         btn_buscar.addEventListener("click", buscar, false); 
-        buscar();
     });
+    
     function buscar()
     {
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -197,5 +205,12 @@
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'tarifa/'+$empresa+'/'+$tarifa+'/eliminar')
     }
+
+    function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 </script>
 
