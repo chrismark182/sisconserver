@@ -154,3 +154,5 @@ $route['api/execsp'] = function (){return 'C_api/execsp'; };
 $route['sistema/sync'] = function (){return 'C_system/sync'; };
 $route['sistema/log'] = function (){return 'C_system/log'; };
 $route['sistema/revisar'] = function (){return 'C_system/revisar'; };
+
+$route['ind_ser_cliente'] = function (){return 'C_ind_ser_cliente'; };

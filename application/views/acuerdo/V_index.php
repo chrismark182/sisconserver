@@ -161,7 +161,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
+        <a href="#!" class="waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
     </div>
 </div>
 <script>
@@ -221,51 +221,56 @@
         .then(function(data) 
         {
             $('#total').html(data.length);
-         
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-               
-                $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
+            if(data.length > 0)
+            {
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                
+                    $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
 
-                if(element.ALQUIL_C_ESTA_CERRADO==1){
-                    $cerrado = '<i class="material-icons">lock</i>'
-                }else if(element.ALQUIL_C_ESTA_CERRADO==0){
-                    if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
-                    {
-                        $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
+                    if(element.ALQUIL_C_ESTA_CERRADO==1){
+                        $cerrado = '<i class="material-icons">lock</i>'
+                    }else if(element.ALQUIL_C_ESTA_CERRADO==0){
+                        if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
+                        {
+                            $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
+                        }
                     }
-                }
 
-                $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
-                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
-                {
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                    $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
+                    if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                    {
+                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                    }
+                
+                    $('#resultados').append(`   <tr>
+                                                    <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                    <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                                                    <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
+                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                                                    <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
+                                                    <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
+                                                    <td class="center-align">${$cerrado}</td>
+                                                    <td class="center-align">
+                                                        <a href="#">
+                                                            <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="center-align">
+                                                        <a href="#">
+                                                            <i class="material-icons" >edit</i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="center-align">
+                                                        ${$eliminar}                
+                                                    </td>
+                                                    </div>
+                                                </tr>
+                                        `);
                 }
-               
-                $('#resultados').append(`   <tr>
-                                                <td class="left-align">${element.ALQUIL_N_ID}</td>
-                                                <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-                                                <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
-                                                <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
-                                                <td class="center-align">${$cerrado}</td>
-                                                <td class="center-align">
-                                                    <a href="#">
-                                                        <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
-                                                    </a>
-                                                </td>
-                                                <td class="center-align">
-                                                    <a href="#">
-                                                        <i class="material-icons" >edit</i>
-                                                    </a>
-                                                </td>
-                                                <td class="center-align">
-                                                    ${$eliminar}                
-                                                </td>
-                                                </div>
-                                            </tr>
-                                    `);
+            }
+            else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                            
         });
@@ -434,38 +439,41 @@
     function guardarNuevoPeriodo()
     {
         console.log('Estoy buscando.. ')
-        $('.modal').modal('close');
-        $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id_periodo').val();
-
-        var url = 'api/acuerdos/periodo/guardar';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>,
-                    acuerdo: $acuerdo,
-                    area: $('#nuevo_area').val(),
-                    precio: $('#nuevo_precio').val(),
-                    usuario: <?= $session->USUARI_N_ID ?>
-                    };
-
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            console.log(data.success)
-            $('.preloader-background').css({'display': 'none'});                            
-        });
-        setTimeout(() => {
-            verPeriodos(<?= $empresa->EMPRES_N_ID ?>, $acuerdo);            
-        }, 1000);
-
         
+        let url = 'api/acuerdos/periodo/guardar';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        let acuerdo = $('#acuerdo_id_periodo').val();
+        let area = $('#nuevo_area').val();
+        let precio =  $('#nuevo_precio').val();
+        let usuario =  <?= $session->USUARI_N_ID ?>;
+
+        let data = {empresa, acuerdo, area, precio, usuario};
+
+        if(area != '' && precio != '')
+        {
+            $('.modal').modal('close');
+            $('.preloader-background').css({'display': 'block'});
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                M.toast({html: 'Periodo creado correctamente', classes: 'rounded'});    
+                $('.preloader-background').css({'display': 'none'});                            
+                verPeriodos(empresa, acuerdo);            
+            });
+        }else{
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+            return false; 
+        }
+
     }
 
 </script>

@@ -61,7 +61,6 @@ class C_api extends CI_Controller {
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql= "Exec ALQUILER_DETALLE_INS {$data['empresa']}, {$data['acuerdo']}, {$data['area']}, {$data['precio']}, {$data['usuario']}";
-        echo $sql;
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
