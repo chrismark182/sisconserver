@@ -59,15 +59,15 @@
             </div>
         </div>        
     </div>
-    <div class="col s8 blue-grey lighten-5">
+    <div class="col s8">
         <div id="chart_div"></div>
     </div>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // var btnBuscar = document.getElementById("btnBuscar"); 
-        // btnBuscar.addEventListener("click", buscar, false);
+        var btnBuscar = document.getElementById("btnBuscar"); 
+        btnBuscar.addEventListener("click", buscar, false);
         sedes()
         
         
