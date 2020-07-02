@@ -5,8 +5,28 @@
 }
 
 .logo img{
-	width: 150px;
+    width: 150px;
+    display: inline-block;
 }
+
+.usuario{
+    position: absolute;
+    left: 550px;
+    top: 20px;
+    width: 150px;
+    padding: 4px 0px;
+    font-size: 9px;
+}
+
+.fecha{
+    position: absolute;
+    left: 550px;
+    top: 40px;
+    width: 150px;
+    padding: 4px 0px;
+    font-size: 9px;
+}
+
 
 .fila2{
 	border-radius: 5px;
@@ -41,13 +61,6 @@
 .contenido{
     text-align: left;
     padding: 4px 0px;
-    display: inline-block;
-}
-
-.encabezado{
-    text-align: left;
-    padding: 4px 0px;
-    font-size: 9px;
     display: inline-block;
 }
 

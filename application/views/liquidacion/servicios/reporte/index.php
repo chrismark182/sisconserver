@@ -8,16 +8,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liquidación Servicio</title>
-    <link rel="stylesheet" href="<?= dirname(__FILE__) ?>/css/main.css">
+    <link rel="stylesheet" href="<?= dirname(__FILE__) ?>/css/liquidacion.css">
 </head>
 <body>
     <div class = "paper">
         <div class="fila1">
             <div class="logo">
-                
+                <img src='<?= dirname(__FILE__) ?>/Logo_Bigote.jpg'>
             </div>
-            <div class = "encabezado">
-                Constructora Bigote 
+            <div class = "usuario">
+                Usuario: <?= $this->data['session']->USUARI_C_USERNAME ?>
+            </div> 
+            <div class = "fecha">
+                Fecha: <?php echo date('d/m/Y')?> <?php echo date('H:i')?>
             </div> 
         </div> 
         <br>
@@ -77,10 +80,10 @@
                 SOLICITANTE
             </div> 
             <div class = "col_5">
-                MONEDA
+                HORAS
             </div> 
             <div class = "col_6">
-                HORAS
+                MONEDA
             </div> 
             <div class = "col_7">
                 PRECIO UNIT.
@@ -105,10 +108,10 @@
                         <?= $result[$i]->ORDSER_C_SOLICITANTE ?>
                     </div> 
                     <div class = "fila2_5">
-                        <?= $result[$i]->MONEDA_C_SIMBOLO ?>
+                        <?= $result[$i]->ORDSER_N_HORAS ?>
                     </div> 
                     <div class = "fila2_6">
-                        <?= $result[$i]->ORDSER_N_HORAS ?>
+                        <?= $result[$i]->MONEDA_C_SIMBOLO ?>
                     </div> 
                     <div class = "fila2_7">
                         <?= $result[$i]->ORDSER_N_PRECIO_UNIT ?>

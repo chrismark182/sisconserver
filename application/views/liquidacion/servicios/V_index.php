@@ -26,28 +26,8 @@
 <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>tarifas" method="post">
-            
-            <div class="input-field col s12 m6 l4">
-                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
-                <label class="active" for="desde">Desde</label> 
-            </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
-                <label class="active" for="hasta">Hasta</label> 
-            </div>
-            <div class="input-field col s12 m6 l4">
-                <select id="cliente" name="cliente">
-                    <option value="0" selected>Todos los Clientes</option>
-                    <?php if($clientes): ?>
-                        <?php foreach($clientes as $cliente): ?> 
-                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Clientes</label>
-            </div>
 
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
                     <option value="0" selected>Todas las Sedes</option>
                     <?php if($sedes): ?>
@@ -58,13 +38,7 @@
                 </select>
                 <label>Sedes</label>
             </div>
-
-            <div class="input-field col s12 m6 l4">
-                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
-                <label class="active" for="numero">Orden de Compra</label> 
-            </div>
-
-            <div class="input-field col s6 m6 l4">
+            <div class="input-field col s6 m6 l3">
                 <select id="situacion">
                     <option value="" selected>Cualquier situación</option>
                     <option value="0">Pendiente de O/C</option>
@@ -72,6 +46,34 @@
                     <option value="2">En Navasoft</option>
                 </select>
                 <label>Situación</label>
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="liquidacion" type="number" min="1" maxlength="9" name="liquidacion" class="validate">
+                <label class="active" for="liquidacion">Liquidación</label> 
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
+                <label class="active" for="numero">Orden de Compra</label> 
+            </div>
+
+            <div class="input-field col s12 m6 l6">
+                <select id="cliente" name="cliente">
+                    <option value="0" selected>Todos los Clientes</option>
+                    <?php if($clientes): ?>
+                        <?php foreach($clientes as $cliente): ?> 
+                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                        <?php endforeach; ?> 
+                    <?php endif; ?>
+                </select>
+                <label>Clientes</label>
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="desde">Desde</label> 
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="hasta">Hasta</label> 
             </div>
 
             <div class="input-field col l12">
@@ -143,8 +145,17 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
-        buscar();
+        
+        liquidacion = getParameterByName('li')
+
+        if(liquidacion != '')
+        {
+            $('#liquidacion').val(liquidacion)
+            M.updateTextFields();
+            buscar();
+        }
     });
+
     function buscar()
     {
         console.log('Estoy buscando.. ')
@@ -165,6 +176,12 @@
         {
             orden_compra = $('#orden_compra').val() + '%';
         }
+
+        var liquidacion = '0'; 
+        if($('#liquidacion').val() != '')
+        {
+            liquidacion = $('#liquidacion').val();
+        }
         
         var situacion = $('#situacion').val();
         
@@ -175,7 +192,8 @@
                     cliente: cliente,
                     sede: sede,
                     orden_compra: orden_compra,
-                    situacion: situacion,
+                    liquidacion: liquidacion,
+                    situacion: situacion,                    
                     tipo: 'S'
                     };
         
@@ -230,8 +248,6 @@
                 }else{
                     $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
                 }
-
-
                
                 $('#resultados').append(`   
                     <tr>
@@ -259,6 +275,7 @@
             $('.tooltipped').tooltip();
         });
     }
+
     function confirmarEliminar($empresa,$liquidacion)
     {
         console.log('confirmar eliminar')
@@ -274,4 +291,11 @@
         $('#ocliquidacion').val($liquidacion)
         //$('#frmAgregarOC').attr('action', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/updateoc')
     }
+
+    function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 </script>

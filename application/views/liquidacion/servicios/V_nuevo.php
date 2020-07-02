@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="<?= base_url() ?>liq_servicios" class="breadcrumb">Liquidaciones de Servicio</a>
+        <a href="<?= base_url() ?>liq_servicios" class="breadcrumb">Liquidación de Servicios</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l8">
                 <select id="cliente" name="cliente">
-                    <option value="" disabled selected>Elige un Cliente</option>
+                    <option value="" disabled selected>Seleccionar Cliente</option>
                     <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
                             <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
@@ -24,7 +24,7 @@
             </div>
             <div class="input-field col s6 m6 l4">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Elige una Sede</option>
+                    <option value="" disabled selected>Seleccionar Sede</option>
                     <?php if($sedes): ?>
                         <?php foreach($sedes as $sede): ?> 
                             <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
@@ -71,6 +71,7 @@
         var btnLiquidar = document.getElementById("btnLiquidar"); 
         btnLiquidar.addEventListener("click",  liquidar, false); 
     });
+
     function buscar()
     {
         $('#resultados').html('');
@@ -230,7 +231,7 @@
         }
         M.toast({html: 'Liquidación generada correctamente', classes: 'rounded'});
         $('.preloader-background').css({'display': 'none'});    
-        window.location.href = "<?= base_url() ?>liq_servicios";
+        window.location.href = "<?= base_url() ?>liq_servicios?li=" + liquidacion;
     }
 </script>
 
