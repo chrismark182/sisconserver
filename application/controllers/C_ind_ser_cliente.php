@@ -25,6 +25,7 @@ class C_ind_ser_cliente extends CI_Controller {
     public function index() 
 	{              
         $this->_init();
+        $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('servicios/indicador_cliente/V_index', $this->data);
     }
     public function nuevo()

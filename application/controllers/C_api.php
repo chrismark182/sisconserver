@@ -95,7 +95,7 @@ class C_api extends CI_Controller {
             endif;
             $count++;
         }
-        // echo $sql;
+        //echo $sql;
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
