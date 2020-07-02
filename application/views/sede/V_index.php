@@ -26,7 +26,7 @@
             <tr>          
                 <th class="center-align">ID</th>
                 <th class="left-align">SEDE</th>
-                <th class="left-align">DIRECCIÓN</th>
+                <th class="left-align">DIRECCIÓN DEL LOCAL</th>
                 <th class="left-align">ABREVIATURA</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>

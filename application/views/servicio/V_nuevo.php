@@ -13,20 +13,20 @@
         
             <div class="input-field col s12 m6 l4">
                 <input id="descripcion" maxlength="100" type="text" name="descripcion" class="validate">
-                <label class="active" for="descripcion">Descripcion</label> 
+                <label class="active" for="descripcion">Descripción</label> 
             </div>  
             <div class="input-field col s12 m6 l4 left-align">     
                 <p>
                     <label>
                         <input id="requiereos" name="requiereos" class="validate" type="checkbox"/>
-                        <span>Requiere OS</span>
+                        <span>Requiere Orden de Servicio</span>
                     </label>
                 </p>
                 
                 <p>
                     <label>
                         <input id="afectoigv" name="afectoigv" type="checkbox"/>
-                        <span>afecto IGV</span>
+                        <span>Afecto IGV</span>
                     </label>
                 </p>
             </div>

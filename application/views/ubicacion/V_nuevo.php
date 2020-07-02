@@ -13,7 +13,7 @@
         
         <div class="input-field col s12 m6 l6">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Escoge una sede</option>
+                    <option value="" disabled selected>Seleccionar Sede</option>
                     
                     <?php if($sedes): ?>
                     <?php foreach($sedes as $sede): ?> 
@@ -27,7 +27,7 @@
 
             <div class="input-field col s12 m6 l6">
             <select id="talmacen" name="talmacen">
-                    <option value="" disabled selected>Escoge un Tipo de Almacén</option>
+                    <option value="" disabled selected>EscoSeleccionar Tipo de Almacén</option>
                     
                     <?php if($talmacenes): ?>
                     <?php foreach($talmacenes as $talmacen): ?> 
@@ -59,8 +59,8 @@
         console.log("cargo pantalla")
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validar, false); 
-        
     });
+
     function validar()
     {
         console.log("Validar");
@@ -98,12 +98,10 @@
                     window.location.href='<?= base_url() ?>ubicaciones';
                 }, 2000);
              });
-
         }
         else
         {
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
         }
-
     }
 </script>

@@ -24,7 +24,7 @@
                 <p>
                     <label>
                     <input  <?= $checked ?> id="requiereos" name="requiereos" class="validate" type="checkbox"/>
-                        <span>Requiere OS</span>
+                        <span>Requiere Orden de Servicio</span>
                         
                     </label>
                 </p>

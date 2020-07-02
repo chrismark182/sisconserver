@@ -20,23 +20,9 @@
 <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>tarifas" method="post" id="form">
-            <div class="input-field col s12 m6 l3">
-                <select id="sede" name="sede">
-                    <option value="0"  selected>Sedes</option>
-                    
-                    <?php if($sedes): ?>
-                    <?php foreach($sedes as $sede): ?> 
-                    <tr>
-                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
-                    <?php endif; ?>
-                    <label>$tdocumentos</label>
-                </select>
-                
-            </div>
-            <div class="input-field col s12 m6 l3">
+            <div class="input-field col s12 m6 l9">
                     <select id="cliente" name="cliente">
-                        <option value="0"  selected>Clientes</option>
+                        <option value="0"  selected>Todos los Clientes</option>
                         
                         <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -47,9 +33,26 @@
                         <label>$clientes</label>
                     </select>
             </div>
-            <div class="input-field col s6 m6 l3">
+            <div class="input-field col s3">
+                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
+                <label class="active" for="numero">Numero de Tarifa</label> 
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <select id="sede" name="sede">
+                    <option value="0"  selected>Todas las Sedes</option>
+                    
+                    <?php if($sedes): ?>
+                    <?php foreach($sedes as $sede): ?> 
+                    <tr>
+                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$tdocumentos</label>
+                </select>
+            </div>
+            <div class="input-field col s6 m6 l6">
                 <select id="servicio" name="servicio">
-                    <option value="0"  selected>Servicios</option>
+                    <option value="0"  selected>Todos los Servicios</option>
                     
                     <?php if($servicios): ?>
                     <?php foreach($servicios as $servicio): ?> 
@@ -60,11 +63,7 @@
                     <label>$servicios</label>
                 </select>
             </div>
-            <div class="input-field col s3">
-                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
-                <label class="active" for="numero">Numero de Tarifa</label> 
-            </div>
-            <div class="input-field col l12">
+            <div class="input-field col l3">
                 <div class="btn-small" id="btn_buscar">Buscar
                 </div>
             </div>
@@ -98,24 +97,38 @@
     href="<?= base_url()?>tarifa/nuevo/"><i class="material-icons">add</i></a>
 
     <div id="modalEliminar" class="modal">
-    <div class="modal-content">
-      <h4>Eliminar</h4>
-      <p>¿Está seguro que desea elimniar el registro?</p>
-    </div>
+        <div class="modal-content">
+            <h4>Eliminar</h4>
+            <p>¿Está seguro que desea elimniar el registro?</p>
+        </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
-<script>
 
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         console.log("pagina")
 
-        cliente = getParameterByName('c')
-        if(cliente != '')
+        cliente = getParameterByName('cl')
+        sede = getParameterByName('se')
+        servicio = getParameterByName('sv')
+        numero = getParameterByName('ta')
+
+        if(cliente != '' && sede != '' && servicio != '')
         {
             $('#cliente').val(cliente)
+            $('#sede').val(sede)
+            $('#servicio').val(servicio)
+            $('select').formSelect();
+            $('#numero').val(numero)
+            M.updateTextFields();
+            buscar()
+        }
+        if(numero != '')
+        {
+            $('#numero').val(numero)
             M.updateTextFields();
             buscar()
         }
@@ -177,7 +190,7 @@
                                 <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                                 <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                 <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                                <td class="center-align">${element.MONEDA_C_ABREVIATURA}</td>
+                                <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                                 <td class="right-align">${element.TARIFA_N_PRECIO_UNIT}</td>                       
                                 <td class="center-align">
                                     <a href="<?= base_url() ?>tarifa/${element.EMPRES_N_ID}/${element.TARIFA_N_ID}/editar">

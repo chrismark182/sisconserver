@@ -14,7 +14,7 @@
             <label class="active" for="cliente">Cliente</label> 
         </div>
         <div class="input-field col s6 m6 l4">
-        <input disabled id="sede" type="text" name="sede" value ="<?= $tarifa->SEDE_C_DESCRIPCION ?>" class="validate">
+            <input disabled id="sede" type="text" name="sede" value ="<?= $tarifa->SEDE_C_DESCRIPCION ?>" class="validate">
             <label class="active" for="sede">Sede</label> 
         </div>
         <div class="input-field col s6 m6 l5">

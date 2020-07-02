@@ -77,14 +77,13 @@
 </div>
 
 <script>
-            document.addEventListener('DOMContentLoaded', function() {
-        
+    document.addEventListener('DOMContentLoaded', function() { 
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validar, false); 
     });
+
     function validar()
     {
-
         if( 
             document.getElementById('tdocumento').value.trim() != '' &&
             document.getElementById('ndocumento').value.trim()  != '' &&
@@ -98,11 +97,11 @@
             ndocumento: document.getElementById("ndocumento").value
                     };
             fetch(url, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers:{
-                'Content-Type': 'application/json'
-                }
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                        'Content-Type': 'application/json'
+               }
             })
         .then(function(response) {
             return response.json();
@@ -116,7 +115,6 @@
             else{
                 document.getElementById('form').submit();
             }
-
         });
 
         }
@@ -124,35 +122,18 @@
         {
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
         }
-
-
-        
-        
-        
-        
     }
-
     
-
-
-
-
-
-        // Si se hace click sobre el input de tipo checkbox con id checkb
-        $('#escliente').click(function() {
-            // Si esta seleccionado (si la propiedad checked es igual a true)
-            if ($(this).prop('checked')) {
-                // Selecciona cada input que tenga la clase .checar
-                $('#ordencompra').prop('disabled', false);
-            } else {
-                // Deselecciona cada input que tenga la clase .checar
-                $('#ordencompra').prop('disabled', true);
-            }
-        });
-
-
-
-
-        
-    </script>
+    // Si se hace click sobre el input de tipo checkbox con id checkb
+    $('#escliente').click(function() {
+        // Si esta seleccionado (si la propiedad checked es igual a true)
+        if ($(this).prop('checked')) {
+            // Selecciona cada input que tenga la clase .checar
+            $('#ordencompra').prop('disabled', false);
+        } else {
+            // Deselecciona cada input que tenga la clase .checar
+            $('#ordencompra').prop('disabled', true);
+        }
+    });        
+</script>
         
