@@ -26,7 +26,7 @@
             <tr>          
                 
                 <th class="left-align">SERVICIO</th>
-                <th class="center-align">REQUIERE OS</th>
+                <th class="center-align">REQUIERE ORDEN</th>
                 <th class="center-align">AFECTO IGV</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>

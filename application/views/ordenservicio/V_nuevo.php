@@ -13,7 +13,7 @@
         
             <div class="input-field col s12 m6 l6">
                 <select id="sede" name="sede">
-                    <option value="" disabled selected>Escoge una sede</option>
+                    <option value="" disabled selected>Seleccionar Sede</option>
                     
                     <?php if($sedes): ?>
                         <?php foreach($sedes as $sede): ?> 
@@ -26,7 +26,7 @@
             </div>
             <div class="input-field col s12 m6 l6">
                 <select id="cliente" name="cliente">
-                    <option value="" disabled selected>Escoge una cliente</option>
+                    <option value="" disabled selected>Seleccionar Cliente</option>
                     
                     <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
@@ -40,7 +40,7 @@
 
             <div class="input-field col s12 m6 l6">
                 <select id="servicio" name="servicio">
-                    <option value="" disabled selected>Escoge un servicio</option>
+                    <option value="" disabled selected>Seleccionar Servicio</option>
                     
                     <?php if($servicios): ?>
                         <?php foreach($servicios as $servicio): ?> 
@@ -76,7 +76,7 @@
 
             <div class="input-field col s12 m6 l6">
                 <select id="moneda" name="moneda" enabled="false">
-                    <option value="" disabled selected>Escoge una moneda</option>
+                    <option value="" disabled selected>Seleccionar Moneda</option>
                     
                     <?php if($monedas): ?>
                         <?php foreach($monedas as $moneda): ?> 
@@ -105,6 +105,7 @@
        document.getElementById('cliente').addEventListener('change', obtenerTarifa)
        document.getElementById('servicio').addEventListener('change', obtenerTarifa)
     });
+
     function obtenerTarifa()
     {
         var empresa = <?= $this->session->userdata('id') ?>,
@@ -125,11 +126,22 @@
             })
             .then(function(data) 
             {
-                if(data!=""){
+                console.log(data.length)
+                if(data.length>0){
                     M.toast({html: 'Tarifa encontrada'});
-                    $('#tarifa').val(data.TARIFA_N_ID)
-                    $('#moneda').val(data.MONEDA_N_ID)
-                    $('#preciounitario').val(data.TARIFA_N_PRECIO_UNIT)
+                    $('#tarifa').val(data[0].TARIFA_N_ID)
+                    $('#moneda').val(data[0].MONEDA_N_ID)
+                    $('#preciounitario').val(data[0].TARIFA_N_PRECIO_UNIT)
+                    M.updateTextFields();
+                    $('select').formSelect();
+                    console.log(data);
+                }
+                else
+                {
+                    M.toast({html: 'Tarifa NO encontrada'});
+                    $('#tarifa').val("")
+                    $('#moneda').val("")
+                    $('#preciounitario').val("")
                     M.updateTextFields();
                     $('select').formSelect();
                     console.log(data);

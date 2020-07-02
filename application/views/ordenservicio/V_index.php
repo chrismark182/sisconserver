@@ -24,18 +24,16 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="center-align">O.S.</th>
+                <th class="center-align">ORDEN</th>
                 <th class="left-align">SERVICIO</th>
                 <th class="left-align">SEDE</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="center-align">FECHA</th>
                 <th class="left-align">SOLICITANTE</th>
-                <th class="left-align">NUM. FISICO</th>
-                <th class="center-align">COD. PROY</th>
                 <th class="center-align">HORAS</th>
                 <th class="right-align">PRECIO UNITARIO</th>
                 <th class="center-align">SITUACION</th>
-                <th class="center-align">ELIM.</th>
+                <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
         <tbody>
@@ -48,8 +46,6 @@
                         <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
                         <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
                         <td class="left-align"><?=$orden->ORDSER_C_SOLICITANTE?></td>
-                        <td class="left-align"><?=$orden->ORDSER_C_NUMERO_FISICO?></td>
-                        <td class="center-align"><?=$orden->ORDSER_C_COD_PROYECTO?></td>
                         <td class="center-align"><?=$orden->ORDSER_N_HORAS?></td>
                         <td class="right-align"><?=$orden->ORDSER_N_PRECIO_UNIT?></td>
                         <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>

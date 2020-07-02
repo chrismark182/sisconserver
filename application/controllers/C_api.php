@@ -15,7 +15,8 @@ class C_api extends CI_Controller {
 		else:
 			redirect(base_url(),'refresh');
 		endif;
-	}
+    }
+    
     public function tarifa($empresa, $sede, $cliente, $servicio)
     {
         $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO "  .$empresa . ","
@@ -23,8 +24,9 @@ class C_api extends CI_Controller {
                                                     .$cliente . ","
                                                     .$servicio;
         $query = $this->M_crud->sql($sql);
-        echo json_encode($query[0], true);
+        echo json_encode($query, true);
     }
+
     public function ubicacion()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -57,6 +59,7 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
     public function acuerdos_periodos_guardar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -64,14 +67,15 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
     public function tarifas()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "Exec TARIFARIO_BUS {$data['empresa']},{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
-
     }
+    
     public function execsp()
     {
         $data = json_decode(file_get_contents('php://input'), true);

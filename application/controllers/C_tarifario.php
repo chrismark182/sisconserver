@@ -84,9 +84,9 @@ class C_tarifario extends CI_Controller {
             trim($this->input->post('sede')) != '' &&
             trim($this->input->post('servicio')) != '' &&
             trim($this->input->post('precio')) != '' &&
-            trim($this->input->post('moneda')) != ''):
-        
-                $sql = "Exec TARIFA_INS "       . $this->data['empresa']->EMPRES_N_ID . ","
+            trim($this->input->post('moneda')) != ''
+        ):
+            $sql = "Exec TARIFA_INS " . $this->data['empresa']->EMPRES_N_ID . ","
                 . $this->input->post('cliente') . ","
                 . $this->input->post('sede') . ","
                 . $this->input->post('servicio') . ","
@@ -95,7 +95,7 @@ class C_tarifario extends CI_Controller {
                 . $this->data['session']->USUARI_N_ID ;
 
                 $this->M_crud->sql($sql); 
-                $url = 'tarifas?c=' . $this->input->post('cliente'); 
+                $url = 'tarifas?cl=' . $this->input->post('cliente') . '&se=' . $this->input->post('sede') . '&sv=' . $this->input->post('servicio'); 
                 redirect($url,'refresh');
         
         else:
@@ -110,19 +110,19 @@ class C_tarifario extends CI_Controller {
             trim($this->input->post('moneda')) != '' &&
             trim($this->input->post('precio')) != ''
         ):
+            $sql = "Exec TARIFA_UPD "     . $empresa . ","
+                                            . $tarifa   . ","
+                                            .$this->input->post('moneda') . "," 
+                                            .$this->input->post('precio') . "," 
+                                            .$this->data['session']->USUARI_N_ID ;
 
-        $sql = "Exec TARIFA_UPD "     . $empresa . ","
-                                        . $tarifa   . ","
-                                        .$this->input->post('moneda') . "," 
-                                        .$this->input->post('precio') . "," 
-                                        .$this->data['session']->USUARI_N_ID ;
-
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('tarifas', 'refresh'); 
+            $this->M_crud->sql($sql);      
+            $this->session->set_flashdata('message','Datos actualizados correctamente');
+            $url = 'tarifas?ta=' . $tarifa; 
+            redirect($url,'refresh');
+            //redirect('tarifas', 'refresh'); 
        
         else:
-
             $this->session->set_flashdata('message','No puede guardar en vacio');
             header("Location: editar");
             //redirect('visita/'.$empresa.'/'.$visita.'/editar','refresh');
