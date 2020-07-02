@@ -4,6 +4,24 @@
     $fechaDesde->modify('first day of this month');    
     $fechaHasta = new DateTime();
 ?>
+<style>
+    .column-filtros
+    {
+        position:absolute; 
+        top: 128px; 
+        bottom: 30px;
+        overflow-y: scroll;
+    }
+    .column-result
+    {
+        position:absolute; 
+        left: 34%!important;
+    }
+    h5
+    {
+        padding-left: 16px;
+    }
+</style>
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
@@ -23,7 +41,7 @@
     </div>
 </nav>
 <div class="row">
-    <div class="col s4">
+    <div class="col s4 column-filtros">
         <div class="section row">
             <div class="input-field col s12 m6">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
@@ -45,7 +63,7 @@
                 <h5>Servicios</h5>
                 <div id="servicios"></div>
             </div>
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12">
                 <select id="moneda" name="moneda" required>
                     <option value="" disabled>Escoge una opción</option>
                     <?php foreach ($monedas as $row): ?>
@@ -59,7 +77,7 @@
             </div>
         </div>        
     </div>
-    <div class="col s8">
+    <div class="col s8 column-result">
         <div id="chart_div"></div>
     </div>
 </div>
