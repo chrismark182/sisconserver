@@ -67,9 +67,9 @@ class C_ordenservicio extends CI_Controller {
                                         . $this->input->post('preciounitario') . "," 
                                         . $this->data['session']->USUARI_N_ID;
                                        
-
-        $this->M_crud->sql($sql);
-        redirect('ordenes','refresh');   
+        $ordenes = $this->M_crud->sql($sql);        
+        $url = 'ordenes';
+        redirect($url,'refresh');
     else:
         $this->session->set_flashdata('message','No puede guardar en vacio ');
         header("Location: nuevo");

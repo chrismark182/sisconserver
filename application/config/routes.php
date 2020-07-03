@@ -51,21 +51,17 @@ $route['ubicacion/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede ,
 $route['ordenes'] = 'C_ordenservicio';
 $route['ordenservicio/nuevo'] = 'C_ordenservicio/nuevo';
 $route['ordenservicio/crear'] = 'C_ordenservicio/crear';
-$route['ordenservicio/(:num)/(:num)/editar'] = function ($empresa , $id){return 'C_ordenservicio/editar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$id;};
 
 //Liquidacion de Servicio
 $route['liq_servicios'] = 'C_liquidacion_servicios';
 $route['liq_servicios/buscar'] = 'C_liquidacion_servicios/buscar';
-
 $route['liq_servicios/reporte/(:num)'] = function ($id){return 'C_liquidacion_servicios/reporte/'.$id;};;
-
 $route['liq_servicios/nuevo'] = 'C_liquidacion_servicios/nuevo';
 $route['liq_servicios/nuevo/buscar'] = 'C_liquidacion_servicios/nuevo_buscar';
 $route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_cabecera';
 $route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
-
 $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
 $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
 
@@ -149,6 +145,7 @@ $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_peri
 
 $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };
 $route['api/tarifas'] = function (){return 'C_api/tarifas'; };
+$route['api/ordenservicio'] = function (){return 'C_api/ordenservicio'; };
 $route['api/execsp'] = function (){return 'C_api/execsp'; };
 
 $route['sistema/sync'] = function (){return 'C_system/sync'; };

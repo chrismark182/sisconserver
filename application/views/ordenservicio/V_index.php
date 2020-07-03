@@ -151,10 +151,18 @@
         }
 
         console.log("Buscando")
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
         var url = 'api/ordenservicio';
-        var data= { empresa, numero, sede, cliente, servicio }
-            $('#resultados').html('');
+        var data = {
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    numero: numero,
+                    sede: sede,
+                    cliente: cliente,
+                    servicio: servicio
+                    };
+
+        $('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
                     body: JSON.stringify(data), // data can be `string` or {object}!
@@ -173,18 +181,24 @@
                 M.toast({html: 'Cargando Ordenes de Servicio', classes: 'rounded'});
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
+                    
                     $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ORDSER_N_ID})">delete</i>`
+                    if(element.ORDSER_C_SITUACION == 1)
+                    {
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
+                    }
+
                     $('#resultados').append(`   
                         <tr>
-                            <td class="center-align"><?=$orden->ORDSER_N_ID?></td>
-                            <td class="left-align"><?=$orden->SERVIC_C_DESCRIPCION?></td>
-                            <td class="left-align"><?=$orden->SEDE_C_DESCRIPCION?></td>
-                            <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
-                            <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
-                            <td class="left-align"><?=$orden->ORDSER_C_SOLICITANTE?></td>
-                            <td class="center-align"><?=$orden->ORDSER_N_HORAS?></td>
-                            <td class="right-align"><?=$orden->ORDSER_N_PRECIO_UNIT?></td>
-                            <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
+                            <td class="center-align">${element.ORDSER_N_ID}</td>
+                            <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
+                            <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                            <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                            <td class="center-align">${element.ORDSER_D_FECHA}</td>
+                            <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
+                            <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                            <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
+                            <td class="center-align">${element.ORDSER_C_SITUACION_DESCRIPCION}</td>
                             <td class="center-align">
                                 ${$eliminar}
                             </td>
@@ -196,8 +210,8 @@
             }
             $('.preloader-background').css({'display': 'none'});                            
             $('.tooltipped').tooltip();
-            
         });
+
     }
 
     function confirmarEliminar($empresa,$servicio)
