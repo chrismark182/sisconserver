@@ -9,13 +9,68 @@
                     <b>
                         Total Registros: 
                         &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2"><?php echo count($ordenes);?></span>
+                        <span id="total" class="btn blue-grey darken-2">0</span>
                     </b>
                 </div>
             </div>
         </ul>
     </div>
 </nav>
+
+<div class="section container center">
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>ordenes" method="post" id="form">
+            <div class="input-field col s12 m6 l9">
+                <select id="cliente" name="cliente">
+                    <option value="0"  selected>Todos los Clientes</option>
+                    
+                    <?php if($clientes): ?>
+                    <?php foreach($clientes as $cliente): ?> 
+                    <tr>
+                    <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$clientes</label>
+                </select>
+            </div>
+            <div class="input-field col s3">
+                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
+                <label class="active" for="numero">Orden Servicio</label> 
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <select id="sede" name="sede">
+                    <option value="0"  selected>Todas las Sedes</option>
+                    
+                    <?php if($sedes): ?>
+                    <?php foreach($sedes as $sede): ?> 
+                    <tr>
+                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$tdocumentos</label>
+                </select>
+            </div>
+            <div class="input-field col s6 m6 l6">
+                <select id="servicio" name="servicio">
+                    <option value="0"  selected>Todos los Servicios</option>
+                    
+                    <?php if($servicios): ?>
+                    <?php foreach($servicios as $servicio): ?> 
+                    <tr>
+                    <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?> 
+                    <?php endif; ?>
+                    <label>$servicios</label>
+                </select>
+            </div>
+            <div class="input-field col l3">
+                <div class="btn-small" id="btn_buscar">Buscar
+                </div>
+            </div>
+        </form>
+    </div>    
+</div>
+
 <div class="container">
     <div>
         &nbsp;
@@ -36,30 +91,126 @@
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
-        <tbody>
-            <?php if($ordenes): ?>
-                <?php foreach($ordenes as $orden): ?> 
-                    <tr>
-                        <td class="center-align"><?=$orden->ORDSER_N_ID?></td>
-                        <td class="left-align"><?=$orden->SERVIC_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$orden->SEDE_C_DESCRIPCION?></td>
-                        <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
-                        <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
-                        <td class="left-align"><?=$orden->ORDSER_C_SOLICITANTE?></td>
-                        <td class="center-align"><?=$orden->ORDSER_N_HORAS?></td>
-                        <td class="right-align"><?=$orden->ORDSER_N_PRECIO_UNIT?></td>
-                        <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
-                        <td class="center-align">
-                            <a href="ordenservicio/<?= $orden->EMPRES_N_ID ?>/<?= $orden->ORDSER_N_ID ?>/eliminar")>
-                                <i class="material-icons">delete</i>
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>  
-            <?php endif; ?>
+        <tbody id="resultados">
         </tbody>
     </table>
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>ordenservicio/nuevo"><i class="material-icons">add</i></a>
+
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+        <h4>Eliminar</h4>
+        <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("pagina")
+
+        numero = getParameterByName('os')
+        if(numero != '')
+        {
+            $('#numero').val(numero)
+            M.updateTextFields();
+            buscar()
+        }
+        var btn_buscar = document.getElementById("btn_buscar"); 
+        btn_buscar.addEventListener("click", buscar, false); 
+    });
+    
+    function buscar()
+    {
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        var numero=0;
+        var sede=0;
+        var cliente=0;
+        var servicio=0;
+
+        if(document.getElementById('numero').value.trim() !='' )
+        {
+            numero= document.getElementById('numero').value.trim();
+        }
+        if(document.getElementById('sede').value.trim() !='' )
+        {
+            sede= document.getElementById('sede').value.trim();
+        }
+        if(document.getElementById('cliente').value.trim() !='' )
+        {
+            cliente= document.getElementById('cliente').value.trim();
+        }
+        if(document.getElementById('servicio').value.trim() !='' )
+        {
+            servicio= document.getElementById('servicio').value.trim();
+        }
+
+        console.log("Buscando")
+        $('.preloader-background').css({'display': 'block'});
+        var url = 'api/ordenservicio';
+        var data= { empresa, numero, sede, cliente, servicio }
+            $('#resultados').html('');
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('#total').html(data.length);
+            if(data.length > 0)
+            {
+                M.toast({html: 'Cargando Ordenes de Servicio', classes: 'rounded'});
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ORDSER_N_ID})">delete</i>`
+                    $('#resultados').append(`   
+                        <tr>
+                            <td class="center-align"><?=$orden->ORDSER_N_ID?></td>
+                            <td class="left-align"><?=$orden->SERVIC_C_DESCRIPCION?></td>
+                            <td class="left-align"><?=$orden->SEDE_C_DESCRIPCION?></td>
+                            <td class="left-align"><?=$orden->CLIENT_C_RAZON_SOCIAL?></td>
+                            <td class="center-align"><?=$orden->ORDSER_D_FECHA?></td>
+                            <td class="left-align"><?=$orden->ORDSER_C_SOLICITANTE?></td>
+                            <td class="center-align"><?=$orden->ORDSER_N_HORAS?></td>
+                            <td class="right-align"><?=$orden->ORDSER_N_PRECIO_UNIT?></td>
+                            <td class="center-align"><?=$orden->ORDSER_C_SITUACION_DESCRIPCION?></td>
+                            <td class="center-align">
+                                ${$eliminar}
+                            </td>
+                        </tr>
+                    `);
+                }
+            }else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+            }
+            $('.preloader-background').css({'display': 'none'});                            
+            $('.tooltipped').tooltip();
+            
+        });
+    }
+
+    function confirmarEliminar($empresa,$servicio)
+    {
+        console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'ordenservicio/'+$empresa+'/'+$servicio+'/eliminar')
+    }
+
+    function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+</script>
