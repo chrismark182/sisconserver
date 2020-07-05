@@ -17,7 +17,7 @@
     </div>
 </nav>
 
-<div class="section container center">
+<div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
             <div class="input-field col s5">

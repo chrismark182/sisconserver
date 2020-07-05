@@ -7,10 +7,11 @@
       </div>
     </div>
 </nav>
+
 <!-- Buscardor -->
-<div class="section container center">
+<div class="section container center" style="padding-bottom: 0px">
     <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
-        <div class="row">
+        <div class="row" style="margin-bottom: 0px">
             <div class="input-field col s12 m6 l8">
                 <select id="cliente" name="cliente">
                     <option value="" disabled selected>Seleccionar Cliente</option>
@@ -40,6 +41,7 @@
         </div>
     </form>
 </div>
+
 <!-- Resultados -->
 <div class="section container">
     <table class="striped" style="font-size: 12px;">

@@ -1,6 +1,5 @@
 <?php 
     $fechaDesde = new DateTime();
-    //$fechaDesde->modify('-1 month');
     $fechaDesde->modify('first day of this month');    
     $fechaHasta = new DateTime();
 ?>
@@ -22,10 +21,31 @@
         </ul>
     </div>
 </nav>
+
 <!-- Buscador -->
-<div class="section container center">
+<div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>tarifas" method="post">
+
+            <div class="input-field col s12 m6 l6">
+                <select id="cliente" name="cliente">
+                    <option value="0" selected>Todos los Clientes</option>
+                    <?php if($clientes): ?>
+                        <?php foreach($clientes as $cliente): ?> 
+                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                        <?php endforeach; ?> 
+                    <?php endif; ?>
+                </select>
+                <label>Clientes</label>
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="liquidacion" type="number" min="1" maxlength="9" name="liquidacion" class="validate">
+                <label class="active" for="liquidacion">Liquidación</label> 
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
+                <label class="active" for="numero">Orden de Compra</label> 
+            </div>
 
             <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
@@ -40,32 +60,12 @@
             </div>
             <div class="input-field col s6 m6 l3">
                 <select id="situacion">
-                    <option value="" selected>Cualquier situación</option>
+                    <option value="" selected>Cualquier Situación</option>
                     <option value="0">Pendiente de O/C</option>
                     <option value="1">Liquidado</option>
                     <option value="2">En Navasoft</option>
                 </select>
                 <label>Situación</label>
-            </div>
-            <div class="input-field col s12 m6 l3">
-                <input id="liquidacion" type="number" min="1" maxlength="9" name="liquidacion" class="validate">
-                <label class="active" for="liquidacion">Liquidación</label> 
-            </div>
-            <div class="input-field col s12 m6 l3">
-                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
-                <label class="active" for="numero">Orden de Compra</label> 
-            </div>
-
-            <div class="input-field col s12 m6 l6">
-                <select id="cliente" name="cliente">
-                    <option value="0" selected>Todos los Clientes</option>
-                    <?php if($clientes): ?>
-                        <?php foreach($clientes as $cliente): ?> 
-                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Clientes</label>
             </div>
             <div class="input-field col s12 m6 l3">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
@@ -87,7 +87,7 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="center-align">LIQ</th>
+                <th class="center-align">LIQUID.</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
@@ -95,7 +95,7 @@
                 <th class="center-align">O/C</th>
                 <th class="center-align">ORDENES</th>
                 <th class="center-align">MON</th>
-                <th class="right-align">IMPORTE TOTAL</th>
+                <th class="right-align">TOTAL</th>
                 <th class="center-align">REPORTE</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -213,63 +213,64 @@
             $('#total').html(data.length);
             if(data.length > 0)
             {
-                M.toast({html: 'Cargando liquidaciones', classes: 'rounded'});
-            }
-
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-               
-                $situacion = '';
-                $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
-                if(element.LIQCAB_C_SITUACION == 0)
-                {
-                    $situacion = 'Pendiente O/C';
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
-                }else
-                if(element.LIQCAB_C_SITUACION == 1)
-                {
-                    $situacion = 'Liquidado';
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
-                }else
-                if(element.LIQCAB_C_SITUACION == 2)
-                {
-                    $situacion = 'En Navasoft';
-                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
-                }
-
-                if(element.CLIENT_C_REQUIERE_OC == 1)
-                {
-                    if(element.LIQCAB_C_SITUACION < 2)
+                M.toast({html: 'Cargando Liquidaciones', classes: 'rounded'});
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                
+                    $situacion = '';
+                    $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
+                    if(element.LIQCAB_C_SITUACION == 0)
                     {
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
-                    }else{
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+                        $situacion = 'Pendiente O/C';
+                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                    }else
+                    if(element.LIQCAB_C_SITUACION == 1)
+                    {
+                        $situacion = 'Liquidado';
+                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                    }else
+                    if(element.LIQCAB_C_SITUACION == 2)
+                    {
+                        $situacion = 'En Navasoft';
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
                     }
-                }else{
-                    $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+
+                    if(element.CLIENT_C_REQUIERE_OC == 1)
+                    {
+                        if(element.LIQCAB_C_SITUACION < 2)
+                        {
+                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
+                        }else{
+                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+                        }
+                    }else{
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+                    }
+                
+                    $('#resultados').append(`   
+                        <tr>
+                            <td class="center-align">${element.LIQCAB_N_ID}</td>
+                            <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                            <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                            <td class="center-align">${element.LIQCAB_C_FECHA}</td>
+                            <td class="center-align">${$situacion}</td>
+                            <td class="right-align">${$orden_compra}</td>
+                            <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
+                            <td class="center-align">${element.SERVIC_C_MONEDA}</td>
+                            <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
+                            <td class="center-align">
+                                <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
+                                    <i class="material-icons">description</i>
+                                </a>
+                            </td>                        
+                            <td class="center-align">
+                                ${$eliminar}
+                            </td>
+                        </tr>
+                                        `);
                 }
-               
-                $('#resultados').append(`   
-                    <tr>
-                        <td class="center-align">${element.LIQCAB_N_ID}</td>
-                        <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-                        <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                        <td class="center-align">${element.LIQCAB_C_FECHA}</td>
-                        <td class="center-align">${$situacion}</td>
-                        <td class="right-align">${$orden_compra}</td>
-                        <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
-                        <td class="center-align">${element.SERVIC_C_MONEDA}</td>
-                        <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
-                        <td class="center-align">
-                            <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
-                                <i class="material-icons">description</i>
-                            </a>
-                        </td>                        
-                        <td class="center-align">
-                            ${$eliminar}
-                        </td>
-                    </tr>
-                                    `);
+            }else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                            
             $('.tooltipped').tooltip();

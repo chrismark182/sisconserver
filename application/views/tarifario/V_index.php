@@ -17,51 +17,46 @@
     </div>
 </nav>
 
-<div class="section container center">
+<div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>tarifas" method="post" id="form">
+            
             <div class="input-field col s12 m6 l9">
-                    <select id="cliente" name="cliente">
-                        <option value="0"  selected>Todos los Clientes</option>
-                        
-                        <?php if($clientes): ?>
+                <select id="cliente" name="cliente">
+                    <option value="0"  selected>Todos los Clientes</option>
+                    <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
-                        <tr>
-                        <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
-                        <?php endif; ?>
-                        <label>$clientes</label>
-                    </select>
+                    <?php endif; ?>
+                </select>
+                <label>Clientes</label>
             </div>
             <div class="input-field col s3">
                 <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
-                <label class="active" for="numero">Numero de Tarifa</label> 
+                <label class="active" for="numero">Tarifa</label> 
             </div>
             <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
                     <option value="0"  selected>Todas las Sedes</option>
-                    
                     <?php if($sedes): ?>
-                    <?php foreach($sedes as $sede): ?> 
-                    <tr>
-                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
+                        <?php foreach($sedes as $sede): ?> 
+                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$tdocumentos</label>
                 </select>
+                <label>Sedes</label>
             </div>
             <div class="input-field col s6 m6 l6">
                 <select id="servicio" name="servicio">
                     <option value="0"  selected>Todos los Servicios</option>
-                    
                     <?php if($servicios): ?>
-                    <?php foreach($servicios as $servicio): ?> 
-                    <tr>
-                    <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
+                        <?php foreach($servicios as $servicio): ?> 
+                            <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$servicios</label>
                 </select>
+                <label>Servicios</label>
             </div>
             <div class="input-field col l3">
                 <div class="btn-small" id="btn_buscar">Buscar
@@ -72,13 +67,10 @@
 </div>
 
 <div class="container">
-    <div>
-        &nbsp;
-    </div>
-
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
+                <th class="center-align">TARIFA</th>
                 <th class="left-align">SEDE</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SERVICIO</th>
@@ -187,6 +179,7 @@
                     $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TARIFA_N_ID})">delete</i>`
                     $('#resultados').append(`   
                             <tr>
+                                <td class="center-align">${element.TARIFA_N_ID}</td>
                                 <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                                 <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                 <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>

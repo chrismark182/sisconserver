@@ -11,66 +11,55 @@
     <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
         <div class="row">
             <div class="input-field col s12 m6 l8">
-                    <select id="cliente" name="cliente">
-                        <option value="0"  selected>Seleccionar Cliente (opcional)</option>
-                        
-                        <?php if($clientes): ?>
+                <select id="cliente" name="cliente">
+                    <option value="0"  selected>Seleccionar Cliente (opcional)</option>
+                    <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
-                        <tr>
-                        <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
-                        <?php endif; ?>
-                        
-                    </select>
-                    <label>Clientes</label>
+                    <?php endif; ?>
+                </select>
+                <label>Clientes</label>
             </div>
             <div class="input-field col s6 m6 l4">
                 <select id="sede" name="sede">
                     <option value="" disabled selected>Seleccionar Sede</option>
-                    
                     <?php if($sedes): ?>
-                    <?php foreach($sedes as $sede): ?> 
-                    <tr>
-                    <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
+                        <?php foreach($sedes as $sede): ?> 
+                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
                     <?php endif; ?>
-                    
                 </select>
                 <label>Sedes</label>
             </div>
+
             <div class="input-field col s6 m6 l5">
                 <select id="servicio" name="servicio">
                     <option value="" disabled selected>Seleccionar Servicio</option>
-                    
                     <?php if($servicios): ?>
-                    <?php foreach($servicios as $servicio): ?> 
-                    <tr>
-                    <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
+                        <?php foreach($servicios as $servicio): ?> 
+                            <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
                     <?php endif; ?>
-                    
                 </select>
                 <label>Servicios</label>
             </div>
             <div class="input-field col s6 m6 l3">
                 <select id="moneda" name="moneda">
                     <option value="" disabled selected>Seleccionar Moneda</option>
-                    
                     <?php if($monedas): ?>
-                    <?php foreach($monedas as $moneda): ?> 
-                    <tr>
-                    <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?> 
+                        <?php foreach($monedas as $moneda): ?> 
+                            <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
                     <?php endif; ?>
-                    
                 </select>
                 <label>Monedas</label>
             </div>
-            
             <div class="input-field col s6 m6 l4">
                 <input id="precio" type="number" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" class="validate">
                 <label class="active" for="precio">Precio Unitario</label> 
             </div>
+            
             <div class="input-field col s12">
                     <div class="btn-small" id="btn_guardar" >Guardar
                 </div>
