@@ -41,29 +41,17 @@
     </div>
 </nav>
 <div class="row">
-    <div class="col s4 column-filtros">
+    <div class="col s12">
         <div class="section row">
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6 l4">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
             </div>
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6 l4">
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            <div class="section">
-                <h5>Sedes</h5>
-                <div id="sedes"></div>
-            </div>
-            <div class="section">
-                <h5>Clientes</h5>
-                <div id="clientes"></div>
-            </div>
-            <div class="section">
-                <h5>Servicios</h5>
-                <div id="servicios"></div>
-            </div>
-            <div class="input-field col s12">
+            <div class="input-field col s12 m6 l4">
                 <select id="moneda" name="moneda" required>
                     <option value="" disabled>Escoge una opción</option>
                     <?php foreach ($monedas as $row): ?>
@@ -72,12 +60,24 @@
                 </select>
                 <label>Moneda</label>
             </div>  
+            <div class="col s12 m6 l4 section">
+                <h5>Sedes</h5>
+                <div id="sedes"></div>
+            </div>
+            <div class="col s12 m6 l4 section">
+                <h5>Clientes</h5>
+                <div id="clientes"></div>
+            </div>
+            <div class="col s12 m6 l4 section">
+                <h5>Servicios</h5>
+                <div id="servicios"></div>
+            </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
             </div>
         </div>        
     </div>
-    <div class="col s8 column-result">
+    <div class="col s12">
         <div id="chart_div"></div>
     </div>
 </div>
@@ -306,13 +306,13 @@
     function drawGrafic(data)
     {
         var array = [
-                        ['Cliente', 'Precio Total', { role: 'style' }]
+                        ['Cliente', 'Precio Total', { role: 'style' }, { role: 'annotation' } ]
                     ]
         for (let index = 0; index < data.length; index++) {
             console.log('vuelta ' + (index + 1));
             console.log(array);
             const element = data[index];
-            const cliente = [element.CLIENT_C_RAZON_SOCIAL, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333']
+            const cliente = [element.CLIENT_C_RAZON_SOCIAL, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333', parseFloat(element.ORDSER_N_PRECIO_TOTAL)]
             array.push(cliente);
             console.log(array);
         }
