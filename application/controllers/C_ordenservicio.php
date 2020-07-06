@@ -13,7 +13,8 @@ class C_ordenservicio extends CI_Controller {
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
             $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
-            $this->data['empresa']=$empresa[0];      
+            $this->data['empresa']=$empresa[0];   
+            $this->load->library('pdfgenerator');   
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -35,6 +36,16 @@ class C_ordenservicio extends CI_Controller {
         $this->data['servicios'] = $this->M_crud->sql($servicios);
 
         $this->load->view('ordenservicio/V_index', $this->data);
+    }
+
+    public function reporte($id)
+    {
+        $sql= "Exec ORDEN_SERVICIO_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $result = $this->M_crud->sql($sql);
+        ob_start();        
+        require_once(APPPATH.'views/ordenservicio/reporte/index.php');
+        $html = ob_get_clean();
+        $this->pdfgenerator->generate($html, "reporte.pdf");
     }
 
     public function nuevo()

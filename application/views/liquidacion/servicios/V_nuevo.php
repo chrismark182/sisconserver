@@ -58,7 +58,7 @@
                 <th class="center-align">PROYECTO</th>
                 <th class="center-align">HORAS</th>
                 <th class="center-align">MON</th>
-                <th class="right-align">PRECIO UNIT</th>
+                <th class="right-align">PRECIO X HORA</th>
             </tr>
         </thead>
         <tbody id="resultados">

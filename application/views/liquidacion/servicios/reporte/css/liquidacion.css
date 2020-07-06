@@ -27,34 +27,51 @@
     font-size: 9px;
 }
 
-
-.fila2{
-	border-radius: 5px;
-    border: 1px solid black;
-    text-align: center;
-    padding: 5px;
-}
-
-.fila1,.fila3{
-	border-radius: 5px;
+.fila1{
     border: 1px solid black;
     text-align: left;
     padding: 5px;
 }
 
-.titulo{
-    border: 0px solid black;
+.fila2{
+    border: 1px solid black;
     text-align: center;
-    padding: 5px 0px;
+    padding: 5px;
+}
+
+.fila3{
+    border: 1px solid black;
+    text-align: center;
+    font-weight: normal;
+    padding: 5px;
+}
+
+.fila_resumen{
+	border: 0.5px solid black;
+    background-color: slategrey;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+    width: 420px;
+}
+
+.titulo{
+    border: 0.5px solid black;
+    background-color: black;
+    text-align: center;
+    vertical-align: middle;
     font-size: 16px;
     font-weight: bold;
+    padding: 5px;
 }
 
 .subtitulo{
     text-align: left;
     padding: 4px 10px;
     font-weight: bold;
-    width: 15%;
+    width: 18%;
     display: inline-block;
 }
 
@@ -68,7 +85,7 @@
     text-align: center;
     padding: 4px 0px;
     font-weight: bold;
-    width: 6%;
+    width: 8%;
     display: inline-block;
 }
 
@@ -80,11 +97,19 @@
     display: inline-block;
 }
 
-.col_3,.col_4{
+.col_3{
     text-align: left;
     padding: 4px 0px;
     font-weight: bold;
-    width: 22%;
+    width: 25%;
+    display: inline-block;
+}
+
+.col_4{
+    text-align: left;
+    padding: 4px 0px;
+    font-weight: bold;
+    width: 15%;
     display: inline-block;
 }
 
@@ -100,18 +125,27 @@
     text-align: right;
     padding: 4px 0px;
     font-weight: bold;
-    width: 9%;
+    width: 10%;
     display: inline-block;
 }
 
-.col_totales_titulos{
-    text-align: right;
+.col_3_resumen{
+    text-align: left;
     padding: 4px 0px;
     font-weight: bold;
-    width: 80%;
+    width: 34%;
     display: inline-block;
 }
-.col_totales{
+
+.col_5_resumen{
+    text-align: left;
+    padding: 4px 0px;
+    font-weight: bold;
+    width: 13%;
+    display: inline-block;
+}
+
+.col_7_resumen{
     text-align: right;
     padding: 4px 0px;
     font-weight: bold;
@@ -119,10 +153,28 @@
     display: inline-block;
 }
 
+.col_totales_titulos{
+    text-align: right;
+    padding: 4px 0px;
+    font-weight: bold;
+    font-size: 14px;
+    width: 73%;
+    display: inline-block;
+}
+
+.col_totales{
+    text-align: right;
+    padding: 4px 0px;
+    font-weight: bold;
+    font-size: 14px;
+    width: 21%;
+    display: inline-block;
+}
+
 .fila2_1{
     text-align: center;
     padding: 4px 0px;
-    width: 6%;
+    width: 8%;
     display: inline-block;
 }
 
@@ -133,10 +185,17 @@
     display: inline-block;
 }
 
-.fila2_3,.fila2_4{
+.fila2_3{
     text-align: left;
     padding: 4px 0px;
-    width: 22%;
+    width: 25%;
+    display: inline-block;
+}
+
+.fila2_4{
+    text-align: left;
+    padding: 4px 0px;
+    width: 15%;
     display: inline-block;
 }
 
@@ -150,14 +209,27 @@
 .fila2_7, .fila2_8{
     text-align: right;
     padding: 4px 0px;
-    width: 9%;
+    width: 10%;
     display: inline-block;
 }
 
-.totales{
-    border: 0px solid black;
+.fila2_3_resumen{
+    text-align: left;
+    padding: 4px 0px;
+    width: 34%;
+    display: inline-block;
+}
+
+.fila2_5_resumen{
+    text-align: center;
+    padding: 4px 0px;
+    width: 12%;
+    display: inline-block;
+}
+
+.fila2_7_resumen{
     text-align: right;
     padding: 4px 0px;
-    font-size: 12px;
-    font-weight: bold;
+    width: 17%;
+    display: inline-block;
 }

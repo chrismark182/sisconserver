@@ -94,10 +94,10 @@
                 <th class="left-align">SEDE</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="center-align">FECHA</th>
-                <th class="left-align">SOLICITANTE</th>
                 <th class="center-align">HORAS</th>
-                <th class="right-align">PRECIO UNIT.</th>
+                <th class="right-align">PRECIO X HORA</th>
                 <th class="center-align">SITUACION</th>
+                <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -220,10 +220,14 @@
                             <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                             <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                             <td class="center-align">${element.ORDSER_D_FECHA}</td>
-                            <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
                             <td class="center-align">${element.ORDSER_N_HORAS}</td>
                             <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
                             <td class="center-align">${element.ORDSER_C_SITUACION_DESCRIPCION}</td>
+                            <td class="center-align">
+                                <a href="ordenservicio/reporte/${element.ORDSER_N_ID}" target="_blank">
+                                    <i class="material-icons">description</i>
+                                </a>
+                            </td>    
                             <td class="center-align">
                                 ${$eliminar}
                             </td>

@@ -49,6 +49,7 @@ $route['ubicacion/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede ,
 
 //Orden Servicio
 $route['ordenes'] = 'C_ordenservicio';
+$route['ordenservicio/reporte/(:num)'] = function ($id){return 'C_ordenservicio/reporte/'.$id;};;
 $route['ordenservicio/nuevo'] = 'C_ordenservicio/nuevo';
 $route['ordenservicio/crear'] = 'C_ordenservicio/crear';
 $route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};

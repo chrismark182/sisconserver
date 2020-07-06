@@ -97,7 +97,7 @@
                 <th class="center-align">MON</th>
                 <th class="right-align">TOTAL</th>
                 <th class="center-align">SITUACION</th>
-                <th class="center-align">REPORTE</th>
+                <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -261,7 +261,7 @@
                             <td class="center-align">${$situacion}</td>
                             <td class="center-align">
                                 <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
-                                    <i class="material-icons">description</i>
+                                    <i class="material-icons">monetization_on</i>
                                 </a>
                             </td>                        
                             <td class="center-align">
