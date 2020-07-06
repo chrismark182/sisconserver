@@ -37,13 +37,13 @@
                 </select>
                 <label>Clientes</label>
             </div>
-            <div class="input-field col s12 m6 l3">
-                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
-                <label class="active" for="desde">Desde</label> 
+            <div class="input-field col s3">
+                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
+                <label class="active" for="numero">Orden de Servicio</label> 
             </div>
-            <div class="input-field col s12 m6 l3">
-                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
-                <label class="active" for="hasta">Hasta</label> 
+            <div class="input-field col s3">
+                <input id="solicitante" type="text" name="solicitante" maxlength="50" class="validate">
+                <label class="active" for="solicitante">Solicitante</label> 
             </div>
 
             <div class="input-field col s12 m6 l3">
@@ -68,11 +68,16 @@
                 </select>
                 <label>Servicios</label>
             </div>
-            <div class="input-field col s3">
-                <input id="numero" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="numero"  class="validate">
-                <label class="active" for="numero">Orden de Servicio</label> 
+            <div class="input-field col s12 m6 l3">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="desde">Desde</label> 
             </div>
-            <div class="input-field col l3">
+            <div class="input-field col s12 m6 l3">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="hasta">Hasta</label> 
+            </div>
+
+            <div class="input-field col l12">
                 <div class="btn-small" id="btn_buscar">Buscar
                 </div>
             </div>
@@ -91,7 +96,7 @@
                 <th class="center-align">FECHA</th>
                 <th class="left-align">SOLICITANTE</th>
                 <th class="center-align">HORAS</th>
-                <th class="right-align">PRECIO UNITARIO</th>
+                <th class="right-align">PRECIO UNIT.</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -161,6 +166,12 @@
         $fecha_hasta = $('#hasta').val();
         $fecha_hasta = $fecha_hasta.split('/');
 
+        var solicitante = '%'; 
+        if($('#solicitante').val() != '')
+        {
+            solicitante = '%' + $('#solicitante').val() + '%';
+        }
+
         console.log("Buscando")
         M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
@@ -172,7 +183,8 @@
                     numero: numero,
                     sede: sede,
                     cliente: cliente,
-                    servicio: servicio
+                    servicio: servicio,
+                    solicitante: solicitante
                     };
 
         $('#resultados').html('');
@@ -198,7 +210,7 @@
                     $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ORDSER_N_ID})">delete</i>`
                     if(element.ORDSER_C_SITUACION == 1)
                     {
-                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, tiene liquidación">delete</i>`
                     }
 
                     $('#resultados').append(`   

@@ -30,7 +30,7 @@ class C_api extends CI_Controller {
     public function ordenservicio()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "Exec ORDEN_SERVICIO_LIS_BUSQUEDA {$data['empresa']},'{$data['desde']}', '{$data['hasta']}',{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']}";
+        $sql = "Exec ORDEN_SERVICIO_LIS_BUSQUEDA {$data['empresa']},'{$data['desde']}','{$data['hasta']}',{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']},'{$data['solicitante']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }

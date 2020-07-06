@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifas</a>
+        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifario</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>

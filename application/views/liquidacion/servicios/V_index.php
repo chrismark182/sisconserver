@@ -43,8 +43,8 @@
                 <label class="active" for="liquidacion">Liquidación</label> 
             </div>
             <div class="input-field col s12 m6 l3">
-                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
-                <label class="active" for="numero">Orden de Compra</label> 
+                <input id="orden_compra" type="text" maxlength="20" name="orden_compra" class="validate">
+                <label class="active" for="orden_compra">Orden de Compra</label> 
             </div>
 
             <div class="input-field col s12 m6 l3">
@@ -77,7 +77,8 @@
             </div>
 
             <div class="input-field col l12">
-                <div id="btnBuscar" class="btn">Buscar</div>
+                <div class="btn-small" id="btnBuscar">Buscar
+                </div>
             </div>
         </form>
     </div>    
@@ -91,11 +92,11 @@
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
-                <th class="center-align">SITUACION</th>
                 <th class="center-align">O/C</th>
                 <th class="center-align">ORDENES</th>
                 <th class="center-align">MON</th>
                 <th class="right-align">TOTAL</th>
+                <th class="center-align">SITUACION</th>
                 <th class="center-align">REPORTE</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -174,7 +175,7 @@
         var orden_compra = '%'; 
         if($('#orden_compra').val() != '')
         {
-            orden_compra = $('#orden_compra').val() + '%';
+            orden_compra = '%' + $('#orden_compra').val() + '%';
         }
 
         var liquidacion = '0'; 
@@ -232,7 +233,7 @@
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
                         $situacion = 'En Navasoft';
-                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, esta en Navasoft">delete</i>`
                     }
 
                     if(element.CLIENT_C_REQUIERE_OC == 1)
@@ -253,11 +254,11 @@
                             <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                             <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                             <td class="center-align">${element.LIQCAB_C_FECHA}</td>
-                            <td class="center-align">${$situacion}</td>
                             <td class="right-align">${$orden_compra}</td>
                             <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
                             <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                             <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
+                            <td class="center-align">${$situacion}</td>
                             <td class="center-align">
                                 <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                     <i class="material-icons">description</i>
