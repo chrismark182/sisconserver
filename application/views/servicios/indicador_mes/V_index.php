@@ -25,7 +25,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Indicador por Cliente</a>
+            <a href="#!" class="breadcrumb">Indicador por Mes</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -280,7 +280,7 @@
 
         let url = 'api/execsp';
         let sp = 'INDICADOR_SERVICIOS_LIS';
-        let tipo = 'C';
+        let tipo = 'M';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
         let cliente = clientes_checkados();
         let sede = sedes_checkados();
@@ -316,7 +316,7 @@
             console.log('vuelta ' + (index + 1));
             console.log(array);
             const element = data[index];
-            const cliente = [element.CLIENT_C_RAZON_SOCIAL, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333', parseFloat(element.ORDSER_N_PRECIO_TOTAL)]
+            const cliente = [element.ORDSER_D_FECHA, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333', parseFloat(element.ORDSER_N_PRECIO_TOTAL)]
             array.push(cliente);
             console.log(array);
         }
