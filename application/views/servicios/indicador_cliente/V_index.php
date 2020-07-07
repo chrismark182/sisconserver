@@ -62,15 +62,45 @@
             </div>  
             <div class="col s12 m6 l4 section">
                 <h5>Sedes</h5>
-                <div id="sedes" class="lista-detalles"></div>
+                <div id="sedes" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="sede" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col s12 m6 l4 section">
                 <h5>Clientes</h5>
-                <div id="clientes" class="lista-detalles"></div>
+                <div id="clientes" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="cliente" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col s12 m6 l4 section">
                 <h5>Servicios</h5>
-                <div id="servicios" class="lista-detalles"></div>
+                <div id="servicios" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="servicio" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
@@ -93,6 +123,28 @@
         google.charts.load('current', {packages: ['corechart', 'bar']});
         
     });
+    function seleccionarTodos(e)
+    {
+        /*
+        var checados = $('#resultados').find('input:checkbox:checked');
+        checados.length;
+        console.log($(e)[0].checked);
+        console.log($(e)[0].className);
+        */
+        var checks = $('.' +$(e)[0].className);
+        console.log(checks);
+
+        if($(e)[0].checked){
+            for (let index = 0; index < checks.length; index++) {
+                checks[index].checked = true;               
+            }
+        }else{
+            for (let index = 0; index < checks.length; index++) {
+                checks[index].checked = false;               
+            }
+        }
+        //$('#resultados').find('input:checkbox')[0].checked = true
+    }
     async function sedes()
     {
         $('.preloader-background').css({'display': 'block'});         
