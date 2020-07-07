@@ -1,7 +1,7 @@
 <?php 
     $fechaDesde = new DateTime();
     //$fechaDesde->modify('-1 month');
-    $fechaDesde->modify('first day of this month');    
+    $fechaDesde->modify('first day of January');    
     $fechaHasta = new DateTime();
 ?>
 <style>
@@ -27,17 +27,6 @@
         <div class="col s4" style="display: inline-block">
             <a href="#!" class="breadcrumb">Indicador por Mes</a>
         </div>
-        <ul id="nav-mobile" class="right">
-            <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
-                <div>
-                    <b>
-                        Total Registros: 
-                        &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2">0</span>
-                    </b>
-                </div>
-            </div>
-        </ul>
     </div>
 </nav>
 <div class="row">
@@ -249,7 +238,7 @@
                     `)
             }
             console.log('Servicios Cargados');
-            buscar();
+            //buscar();
             $('.preloader-background').css({'display': 'none'});                
         });
     }
