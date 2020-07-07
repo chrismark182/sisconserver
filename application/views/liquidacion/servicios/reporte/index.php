@@ -129,7 +129,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr valign="top" >
                 <th>
-                    <td width="270px">
+                    <td width="250px">
                     </td>
                 </th>
                 <th valign="top">
@@ -179,25 +179,25 @@
             </tr>
             <tr>
                 <th>
-                    <td width="270px">
+                    <td width="250px">
                     </td>
                 </th>
                 <th>
                     <div class="fila3" style="border-top: 0px;">
                         <br>
                         <div class="fila_final">
-                            <div class = "col_totales_titulos">
+                            <div class = "col_sub_totales_titulos">
                                 SUB TOTAL
                             </div> 
-                            <div class = "col_totales">
+                            <div class = "col_sub_totales">
                                 <?= trim(number_format((float)$subtotal1, 2, '.', '')) ?>
                             </div> 
                         </div> 
                         <div class="fila_final">
-                            <div class = "col_totales_titulos">
+                            <div class = "col_sub_totales_titulos">
                                 I.G.V.
                             </div> 
-                            <div class = "col_totales">
+                            <div class = "col_sub_totales">
                                 <?= trim(number_format((float)($subtotal1 * 0.18), 2, '.', '')) ?>
                             </div> 
                         </div> 

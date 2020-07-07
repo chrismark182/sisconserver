@@ -1,3 +1,9 @@
+<?php 
+    $fechaDesde = new DateTime();
+    $fechaDesde->modify('first day of this month');    
+    $fechaHasta = new DateTime();
+?>
+
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
       <div class="col s12">
@@ -36,7 +42,16 @@
                     <label>Sedes</label>
                 </div>
 
-                <div class="input-field col s12">
+                <div class="input-field col s12 m6 l4">
+                    <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="desde">Desde</label> 
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="hasta">Hasta</label> 
+                </div>
+                
+                <div class="input-field col s4">
                     <div class="btn-small" id="btnBuscar" >Buscar</div>
                 </div>
             </div>
@@ -79,6 +94,15 @@
 
     function buscar()
     {
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
+
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
+        
         $('#resultados').html('');
         var cliente = document.getElementById("cliente").value;
         var sede = document.getElementById("sede").value;
@@ -92,6 +116,8 @@
                 var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
                             sede: sede,
                             cliente: cliente[0],
+                            desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                            hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                             };        
                 
                 fetch(url, {

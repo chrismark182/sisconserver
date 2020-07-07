@@ -70,7 +70,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function nuevo_buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}'";
+        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}','{$data['desde']}', '{$data['hasta']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
