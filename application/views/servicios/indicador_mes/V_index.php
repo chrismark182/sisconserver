@@ -130,7 +130,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -169,12 +168,8 @@
         /*
         var checados = $('#resultados').find('input:checkbox:checked');
         checados.length;
-        console.log($(e)[0].checked);
-        console.log($(e)[0].className);
         */
         var checks = $('.' +$(e)[0].className);
-        console.log(checks);
-
         if($(e)[0].checked){
             for (let index = 0; index < checks.length; index++) {
                 checks[index].checked = true;               
@@ -208,7 +203,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -224,7 +218,6 @@
                     </div>
                     `)
             }
-            console.log('Clientes cargados');
             servicios()
             $('.preloader-background').css({'display': 'none'});                
         });
@@ -265,7 +258,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -281,7 +273,6 @@
                     </div>
                     `)
             }
-            console.log('Servicios Cargados');
             //buscar();
             $('.preloader-background').css({'display': 'none'});                
         });
@@ -333,8 +324,6 @@
         })
         .then(function(data) 
         {
-            console.log('encontré resultados')
-            console.log(data)
             //google.charts.setOnLoadCallback(drawGrafic);
             drawGrafic(data)
             $('.preloader-background').css({'display': 'none'});                
@@ -346,12 +335,9 @@
                         ['Cliente', 'Precio Total', { role: 'style' }, { role: 'annotation' } ]
                     ]
         for (let index = 0; index < data.length; index++) {
-            console.log('vuelta ' + (index + 1));
-            console.log(array);
             const element = data[index];
             const cliente = [element.ORDSER_D_FECHA, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333', parseFloat(element.ORDSER_N_PRECIO_TOTAL)]
             array.push(cliente);
-            console.log(array);
         }
         var data = google.visualization.arrayToDataTable(array);
         var chart = new google.visualization.ColumnChart(
