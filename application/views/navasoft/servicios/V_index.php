@@ -26,7 +26,7 @@
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>navasoft_servicios" method="post">
 
-            <div class="input-field col s12 m6 l8">
+            <div class="input-field col s12 m6 l9">
                 <select id="cliente" name="cliente">
                     <option value="0" selected>Todos los Clientes</option>
                     <?php if($clientes): ?>
@@ -37,7 +37,7 @@
                 </select>
                 <label>Clientes</label>
             </div>
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
                     <option value="0" selected>Todas las Sedes</option>
                     <?php if($sedes): ?>
@@ -49,15 +49,19 @@
                 <label>Sedes</label>
             </div>
 
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            <div class="input-field col l4">
+            <div class="input-field col s12 m6 l3">
+                <input id="liquidacion" type="number" min="1" maxlength="9" name="liquidacion" class="validate">
+                <label class="active" for="liquidacion">Liquidación</label> 
+            </div>
+            <div class="input-field col l3">
                 <div id="btnBuscar" class="btn-small">Buscar</div>
             </div>
         </form>
@@ -89,6 +93,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
+
+        liquidacion = getParameterByName('li')
+
+        if(liquidacion != '')
+        {
+            $('#liquidacion').val(liquidacion)
+            M.updateTextFields();
+            buscar();
+        }
     });
 
     function buscar()
@@ -98,13 +111,21 @@
         $('.preloader-background').css({'display': 'block'});
 
         var url = 'navasoft_servicios/buscar';
+        
         $fecha_desde = $('#desde').val();
         $fecha_desde = $fecha_desde.split('/');
         
         $fecha_hasta = $('#hasta').val();
         $fecha_hasta = $fecha_hasta.split('/');
+        
         var cliente = $('#cliente').val();
         var sede = $('#sede').val();
+        
+        var liquidacion = '0'; 
+        if($('#liquidacion').val() != '')
+        {
+            liquidacion = $('#liquidacion').val();
+        }
 
         var data = {
                     empresa: <?= $empresa->EMPRES_N_ID ?>, 
@@ -112,7 +133,8 @@
                     hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                     cliente: cliente,
                     sede: sede,
-                    tipo: 'S'
+                    tipo: 'S',
+                    liquidacion: liquidacion
                     };
         
         $('#resultados').html('');
@@ -178,8 +200,43 @@
         });
     }
 
-    function generar_dbf($empresa,$liquidacion){
-            M.toast({html: 'Generando...'});
-
+    function generar_dbf(empresa,liquidacion){
+        M.toast({html: 'Generando archivos DBF...'});
+        $('.preloader-background').css({'display': 'block'});
+        var url =  '<?= base_url() ?>navasoft_servicios/generar_dbf';
+        var data = {
+                    empresa: empresa, 
+                    liquidacion: liquidacion,
+                    usuario: <?= $this->data['session']->USUARI_N_ID ?>
+                    };
+        
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            if(data.length>0){
+                M.toast({html: 'Archivo DBF generado correctamente', classes: 'rounded'});
+            }
+            else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+            } 
+            $('.preloader-background').css({'display': 'none'});
+            window.location.href = "<?= base_url() ?>navasoft_servicios?li=" + liquidacion;
+        });
     }
+
+    function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 </script>

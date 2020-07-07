@@ -69,6 +69,7 @@ $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/u
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';
 $route['navasoft_servicios/buscar'] = 'C_navasoft_servicios/buscar';
+$route['navasoft_servicios/generar_dbf'] = 'C_navasoft_servicios/generar_dbf';
 
 //Clientes
 $route['clientes'] = 'C_cliente';

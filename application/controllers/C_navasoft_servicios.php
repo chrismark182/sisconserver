@@ -39,7 +39,15 @@ class C_navasoft_servicios extends CI_Controller {
     public function buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NAVASOFT_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['tipo']}'";
+        $sql= "Exec LIQUIDACION_NAVASOFT_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['tipo']}', {$data['liquidacion']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+
+    public function generar_dbf()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec LIQUIDACION_UPD_NAVASOFT {$data['empresa']}, {$data['liquidacion']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
