@@ -85,7 +85,8 @@
             </div>
 
             <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+                <div class="btn-small" id="btn_guardar" >Guardar
+                </div>
             </div>
         </div>
     </form>
@@ -93,10 +94,64 @@
         
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-       document.getElementById('sede').addEventListener('change', obtenerTarifa)
-       document.getElementById('cliente').addEventListener('change', obtenerTarifa)
-       document.getElementById('servicio').addEventListener('change', obtenerTarifa)
+        document.getElementById('sede').addEventListener('change', obtenerTarifa)
+        document.getElementById('cliente').addEventListener('change', obtenerTarifa)
+        document.getElementById('servicio').addEventListener('change', obtenerTarifa)
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", crear, false); 
     });
+
+    function crear()
+    {
+        if(  
+            document.getElementById("sede").value != '' &&
+            document.getElementById("servicio").value != '' &&
+            document.getElementById("horas").value != '' &&
+            document.getElementById("solicitante").value != '' &&
+            document.getElementById("tarifa").value != '')
+        {
+            $('.preloader-background').css({'display': 'block'});
+            var url =  '<?= base_url() ?>ordenservicio/crear';
+            var data = {
+                        empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                        sede: document.getElementById("sede").value,
+                        cliente: document.getElementById("cliente").value,
+                        servicio: document.getElementById("servicio").value,
+                        numerofisico: document.getElementById("numerofisico").value,
+                        solicitante: document.getElementById("solicitante").value,
+                        codproyecto: document.getElementById("codproyecto").value,
+                        horas: document.getElementById("horas").value,
+                        tarifa: document.getElementById("tarifa").value,
+                        moneda: document.getElementById("moneda").value,
+                        preciounitario: document.getElementById("preciounitario").value,
+                        usuario: <?= $this->data['session']->USUARI_N_ID ?>
+                        };
+
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log('terminó de ejecutar');
+            }).catch(function(error) {
+                console.log('Hubo un problema con la petición Fetch:' + error.message);
+            });
+
+            M.toast({html: 'Orden Servicio generada correctamente', classes: 'rounded'});
+            $('.preloader-background').css({'display': 'none'});    
+            window.location.href = "<?= base_url() ?>ordenes";
+        }
+        else{
+            M.toast({html: 'No puede guardar vacio', classes: 'rounded'});   
+        }
+    }
 
     function obtenerTarifa()
     {

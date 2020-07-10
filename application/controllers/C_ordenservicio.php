@@ -58,33 +58,10 @@ class C_ordenservicio extends CI_Controller {
     }
 
     public function crear(){
-
-        if( trim($this->input->post('sede')) != ''&&
-            trim($this->input->post('cliente')) != ''&&
-            trim($this->input->post('servicio')) != ''&&
-            trim($this->input->post('horas')) != ''&&
-            trim($this->input->post('tarifa')) != ''):
-
-        $sql = "Exec ORDEN_SERVICIO_INS " . $this->data['empresa']->EMPRES_N_ID . ","
-                                        . $this->input->post('sede') . "," 
-                                        . $this->input->post('cliente') . "," 
-                                        . $this->input->post('servicio') . ",'" 
-                                        . $this->input->post('numerofisico') . "','" 
-                                        . $this->input->post('solicitante') . "','" 
-                                        . $this->input->post('codproyecto') . "'," 
-                                        . $this->input->post('horas') . "," 
-                                        . $this->input->post('tarifa') . "," 
-                                        . $this->input->post('moneda') . "," 
-                                        . $this->input->post('preciounitario') . "," 
-                                        . $this->data['session']->USUARI_N_ID;
-                                       
-        $ordenes = $this->M_crud->sql($sql);        
-        $url = 'ordenes';
-        redirect($url,'refresh');
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: nuevo");
-    endif;
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec ORDEN_SERVICIO_INS {$data['empresa']}, {$data['sede']}, {$data['cliente']}, {$data['servicio']}, '{$data['numerofisico']}', '{$data['solicitante']}', '{$data['codproyecto']}', {$data['horas']}, {$data['tarifa']}, {$data['moneda']}, {$data['preciounitario']}, {$data['usuario']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
     }
     
     public function eliminar($empresa,$id)
