@@ -30,7 +30,72 @@
 			{
 				M.toast({html: message, classes: 'rounded'});
 			}
+			status()
 		});
+		async function status()
+		{
+			var url = '<?= base_url() ?>sistema/log';
+			var urlRevisar = '<?= base_url() ?>sistema/revisar';
+			var data = {};
+			await fetch(url, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            	return response.text();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+				document.getElementById('version').innerHTML = data;
+				document.getElementById('system').innerHTML = 'Buscando actualización...';
+            });
+
+			await fetch(urlRevisar, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            	return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+				document.getElementById('system').innerHTML = data.message;
+				if(data.action == 1)
+				{
+					sync();
+				}
+            });
+		}
+		async function sync()
+		{
+			document.getElementById('system').innerHTML = 'Actualizando sistema...';
+			var url = '<?= base_url() ?>sistema/sync';
+			var data = {};
+			await fetch(url, {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data), // data can be `string` or {object}!
+                headers:{
+                    'Content-Type': 'application/json'
+                    }
+                })
+            .then(function(response) {
+            	return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data)
+				document.getElementById('system').innerHTML = data.message;	
+				status();
+            });
+		}
 	</script>
 	<style>
 		.preloader-background
@@ -132,6 +197,10 @@
 		<?php endif ?>
 	</div>
 	<?php echo $output;?>
+	<div class="blue-grey darken-1 status-bar">
+		<div id="system">Sistema actualizado</div>
+		<div id="version">v1</div>
+	</div>
 	
 </body>
 </html>

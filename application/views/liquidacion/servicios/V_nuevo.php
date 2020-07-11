@@ -1,47 +1,66 @@
+<?php 
+    $fechaDesde = new DateTime();
+    $fechaDesde->modify('first day of this month');    
+    $fechaHasta = new DateTime();
+?>
+
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="<?= base_url() ?>liq_servicios" class="breadcrumb">Liquidaciones de Servicio</a>
+        <a href="<?= base_url() ?>liq_servicios" class="breadcrumb">Liquidación de Servicios</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>
 </nav>
-<!-- Buscardor -->
-<div class="section container center">
-    <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
-        <div class="row">
-            <div class="input-field col s12 m6 l8">
-                <select id="cliente" name="cliente">
-                    <option value="" disabled selected>Elige un Cliente</option>
-                    <?php if($clientes): ?>
-                        <?php foreach($clientes as $cliente): ?> 
-                            <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Clientes</label>
-            </div>
-            <div class="input-field col s6 m6 l4">
-                <select id="sede" name="sede">
-                    <option value="" disabled selected>Elige una Sede</option>
-                    <?php if($sedes): ?>
-                        <?php foreach($sedes as $sede): ?> 
-                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Sedes</label>
-            </div>
 
-            <div class="input-field col s12">
-                <div class="btn-small" id="btnBuscar" >Buscar</div>
+<!-- Buscardor -->
+<div class="section container center" style="padding-bottom: 0px">
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
+            <div class="row" style="margin-bottom: 0px">
+                <div class="input-field col s12 m6 l8">
+                    <select id="cliente" name="cliente">
+                        <option value="" disabled selected>Seleccionar Cliente</option>
+                        <?php if($clientes): ?>
+                            <?php foreach($clientes as $cliente): ?> 
+                                <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Clientes</label>
+                </div>
+                <div class="input-field col s6 m6 l4">
+                    <select id="sede" name="sede">
+                        <option value="" disabled selected>Seleccionar Sede</option>
+                        <?php if($sedes): ?>
+                            <?php foreach($sedes as $sede): ?> 
+                                <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Sedes</label>
+                </div>
+
+                <div class="input-field col s12 m6 l4">
+                    <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="desde">Desde</label> 
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="hasta">Hasta</label> 
+                </div>
+                
+                <div class="input-field col s4">
+                    <div class="btn-small" id="btnBuscar" >Buscar</div>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
 <!-- Resultados -->
-<div class="section container">
+<div class="container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
@@ -54,7 +73,7 @@
                 <th class="center-align">PROYECTO</th>
                 <th class="center-align">HORAS</th>
                 <th class="center-align">MON</th>
-                <th class="right-align">PREC. UNIT</th>
+                <th class="right-align">PRECIO X HORA</th>
             </tr>
         </thead>
         <tbody id="resultados">
@@ -64,6 +83,7 @@
         <div class="btn-small" style="display: none" id="btnLiquidar" >Liquidar</div>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
@@ -71,8 +91,18 @@
         var btnLiquidar = document.getElementById("btnLiquidar"); 
         btnLiquidar.addEventListener("click",  liquidar, false); 
     });
+
     function buscar()
     {
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
+
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
+        
         $('#resultados').html('');
         var cliente = document.getElementById("cliente").value;
         var sede = document.getElementById("sede").value;
@@ -86,6 +116,8 @@
                 var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
                             sede: sede,
                             cliente: cliente[0],
+                            desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                            hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                             };        
                 
                 fetch(url, {
@@ -230,7 +262,7 @@
         }
         M.toast({html: 'Liquidación generada correctamente', classes: 'rounded'});
         $('.preloader-background').css({'display': 'none'});    
-        window.location.href = "<?= base_url() ?>liq_servicios";
+        window.location.href = "<?= base_url() ?>liq_servicios?li=" + liquidacion;
     }
 </script>
 

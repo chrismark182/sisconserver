@@ -15,11 +15,11 @@
                 <label class="active" for="id">ID Alquiler</label> 
             </div>
             <div class="input-field col s12 m6">
-                <input id="fecha" type="text" name="fecha" class="datepicker right-align validate" value="<?= $fecha->format('m/d/Y') ?>">
+                <input id="fecha" type="text" name="fecha" class="right-align" value="<?= $fecha->format('m/d/Y') ?>" readonly>
                 <label class="active" for="fecha">Fecha</label> 
             </div>    
             <div class="input-field col s12">
-                <select id="cliente" name="cliente">
+                <select id="cliente" name="cliente" required>
                     <option value="" disabled selected>Escoge una opción</option>
                     <?php foreach ($clientes as $row): ?>
                         <option value="<?= $row->CLIENT_N_ID ?>"><?= $row->CLIENT_C_RAZON_SOCIAL ?></option>
@@ -63,23 +63,23 @@
                 <label class="active" for="fecha_termino">Fecha Termino</label> 
             </div>   
             <div class="input-field col s12 m6">
-                <input id="area" maxlength="15" type="text" name="area" class="right-align" onchange="calcularTotal()">
+                <input id="area" maxlength="15" type="text" name="area" class="right-align" onchange="calcularTotal()" required>
                 <label class="active" for="area">Area M2</label> 
             </div> 
             <div class="input-field col s12 m6">
-                <input id="precio" maxlength="15" type="text" name="precio" class="right-align validate" onchange="calcularTotal()">
+                <input id="precio" maxlength="15" type="text" name="precio" class="right-align validate" onchange="calcularTotal()" required>
                 <label class="active" for="precio">Precio x M2</label> 
             </div>
             <div class="input-field col s12 m6">
-                <select name="moneda">
-                    <option value="" disabled selected>Escoge una opción</option>
+                <select id="moneda" name="moneda" required>
+                    <option value="" disabled>Escoge una opción</option>
                     <?php foreach ($monedas as $row): ?>
                         <option value="<?= $row->MONEDA_N_ID ?>"><?= $row->MONEDA_C_DESCRIPCION ?> (<?= $row->MONEDA_C_SIMBOLO ?>)</option>
                     <?php endforeach; ?>
                 </select>
                 <label>Moneda</label>
             </div>  
-            <div class="input-field col s12 m6">
+            <div class="input-field col s12 m6" required>
                 <input id="total" maxlength="15" type="text" name="total" class="right-align validate" disabled>
                 <label class="active" for="total">Total</label> 
             </div>
@@ -109,7 +109,8 @@
         sede.addEventListener("change", ubicaciones, false); 
 
         M.textareaAutoResize($('#observaciones'));
-
+        $($('#moneda').children()[2]).attr("selected","selected");
+        $('select').formSelect();
     });
     function ubicaciones()
     {
@@ -117,9 +118,11 @@
         $('#ubicacion').html(`<option value="" disabled selected>Cargando ubicaciones...</option>`)
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
-        var url =  '<?= base_url() ?>api/ubicacion';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    sede: document.getElementById("sede").value,
+        var url =  '<?= base_url() ?>api/execsp';
+        var data = {
+                    sp: 'UBICACION_DISPONIBLE_LIS',
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    sede: parseInt(document.getElementById("sede").value),
                     ubicacion: 0};
         fetch(url, {
                     method: 'POST', // or 'PUT'

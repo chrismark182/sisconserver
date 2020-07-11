@@ -49,8 +49,10 @@ class C_liquidacion_servicios extends CI_Controller {
     //Reporte 
     public function reporte($id)
     {
-        $sql= "Exec LIQUIDACION_SERVICIOS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $sql= "Exec LIQUIDACION_SERVICIOS_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
         $result = $this->M_crud->sql($sql);
+        $sql= "Exec LIQUIDACION_SERVICIOS_LIS_REPORTE_RESUMEN {$this->session->userdata('empresa_id')},{$id}";
+        $result2 = $this->M_crud->sql($sql);
         ob_start();        
         require_once(APPPATH.'views/liquidacion/servicios/reporte/index.php');
         $html = ob_get_clean();
@@ -60,7 +62,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['situacion']}', '{$data['tipo']}'";
+        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['liquidacion']}', '{$data['situacion']}', '{$data['tipo']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -68,7 +70,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function nuevo_buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}'";
+        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}','{$data['desde']}', '{$data['hasta']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }

@@ -15,8 +15,8 @@ class C_api extends CI_Controller {
 		else:
 			redirect(base_url(),'refresh');
 		endif;
-	}
-
+    }
+    
     public function tarifa($empresa, $sede, $cliente, $servicio)
     {
         $sql = "Exec TARIFARIO_LIS_ORDEN_SERVICO "  .$empresa . ","
@@ -24,12 +24,13 @@ class C_api extends CI_Controller {
                                                     .$cliente . ","
                                                     .$servicio;
         $query = $this->M_crud->sql($sql);
-        echo json_encode($query[0], true);
+        echo json_encode($query, true);
     }
-    public function clientes()
+
+    public function ordenservicio()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql = "Exec CLIENTE_LIS 0,0, '{$data['numero_documento']}%', '{$data['razon_social']}%'";
+        $sql = "Exec ORDEN_SERVICIO_LIS_BUSQUEDA {$data['empresa']},'{$data['desde']}','{$data['hasta']}',{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']},'{$data['solicitante']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -66,28 +67,44 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
     public function acuerdos_periodos_guardar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql= "Exec ALQUILER_DETALLE_INS {$data['empresa']}, {$data['acuerdo']}, {$data['area']}, {$data['precio']}, {$data['usuario']}";
-        echo $sql;
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
-    // public function cambioValidar()
-    // {
-    //     $data = json_decode(file_get_contents('php://input'), true);
-    //     $sql= "Exec CLIENTE_VAL {$data['empresa']} ,{$data['tdocumento']},'{$data['ndocumento']}'";
-    //     $query = $this->M_crud->sql($sql);
-    //     echo json_encode($query, true);
-    // }
-    
+
     public function tarifas()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "Exec TARIFARIO_BUS {$data['empresa']},{$data['numero']}, {$data['sede']}, {$data['cliente']},{$data['servicio']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
-
+    }
+    
+    public function execsp()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = '';
+        $count = 0;
+        foreach ($data as $key => $value) {
+            if($count > 1):
+                $sql = $sql . ", ";
+            endif; 
+            if($key == 'sp'):
+                $sql = "Exec {$value} ";
+            elseif(gettype($value) == 'string'):
+                $val = "'{$value}'";
+                $sql = $sql . $val;
+            else: 
+                $sql = $sql . $value;
+            endif;
+            $count++;
+        }
+        //echo $sql;
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
     }
 }

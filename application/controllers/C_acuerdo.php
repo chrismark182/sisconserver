@@ -109,6 +109,13 @@ class C_acuerdo extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('acuerdos', 'refresh');       
     }  
+    public function eliminar_periodo($empresa,$acuerdo, $periodo)
+    {
+        $sql = "Exec ALQUILER_DETALLE_DEL {$empresa}, {$acuerdo}, {$periodo}";                                         
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('acuerdos', 'refresh');       
+    }  
     public function cerrar($empresa,$acuerdo)
     {
 

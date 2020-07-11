@@ -7,93 +7,86 @@
       </div>
     </div>
 </nav>
+
 <div class="section container center">
     <form action="<?= base_url() ?>ordenservicio/crear" method="post">
         <div class="row">
         
-            <div class="input-field col s12 m6 l6">
-                <select id="sede" name="sede">
-                    <option value="" disabled selected>Escoge una sede</option>
-                    
-                    <?php if($sedes): ?>
-                        <?php foreach($sedes as $sede): ?> 
-                            <tr>
-                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                    <label>$sedes</label>
-                </select>
-            </div>
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l8">
                 <select id="cliente" name="cliente">
-                    <option value="" disabled selected>Escoge una cliente</option>
-                    
+                    <option value="" disabled selected>Seleccionar Cliente</option>
                     <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
-                            <tr>
                             <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$clientes</label>
                 </select>
+                <label>Clientes</label>
+            </div>
+            <div class="input-field col s12 m6 l4">
+                <select id="sede" name="sede">
+                    <option value="" disabled selected>Seleccionar Sede</option>
+                    <?php if($sedes): ?>
+                        <?php foreach($sedes as $sede): ?> 
+                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                        <?php endforeach; ?> 
+                    <?php endif; ?>
+                </select>
+                <label>Sedes</label>
             </div>
 
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l5">
                 <select id="servicio" name="servicio">
-                    <option value="" disabled selected>Escoge un servicio</option>
-                    
+                    <option value="" disabled selected>Seleccionar Servicio</option>
                     <?php if($servicios): ?>
                         <?php foreach($servicios as $servicio): ?> 
-                            <tr>
                             <option value="<?= $servicio->SERVIC_N_ID ?>"><?= $servicio->SERVIC_C_DESCRIPCION ?></option>
                         <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$servicios</label>
                 </select>
+                <label>Servicios</label>
             </div>
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l3">
                 <input id="solicitante" maxlength="100" type="text" name="solicitante" class="validate">
                 <label class="active" for="solicitante">Solicitante</label> 
             </div>
-
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l2">
                 <input id="numerofisico" maxlength="10" type="text" name="numerofisico" class="validate">
-                <label class="active" for="numerofisico">Número OS Físico</label> 
+                <label class="active" for="numerofisico">Núm. O.S. Físico</label> 
             </div>
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l2">
                 <input id="codproyecto" maxlength="20" type="text" name="codproyecto" class="validate">
                 <label class="active" for="codproyecto">Código Proyecto</label> 
             </div>
 
-            <div class="input-field col s12 m6 l6">
+
+            <div class="input-field col s12 m6 l2">
                 <input id="tarifa" maxlength="100" type="text" name="tarifa" readonly="false" class="validate">
                 <label class="active" for="tarifa">Tarifa</label> 
             </div>
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l3">
                 <input id="horas" type="number" min="1" maxlength="2" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="horas" class="validate">
                 <label class="active" for="horas">Horas</label> 
             </div>
-
-            <div class="input-field col s12 m6 l6">
+            <div class="input-field col s12 m6 l3">
                 <select id="moneda" name="moneda" enabled="false">
-                    <option value="" disabled selected>Escoge una moneda</option>
-                    
+                    <option value="" disabled selected>Seleccionar Moneda</option>
                     <?php if($monedas): ?>
                         <?php foreach($monedas as $moneda): ?> 
-                            <tr>
                             <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_DESCRIPCION ?></option>
                         <?php endforeach; ?> 
                     <?php endif; ?>
-                    <label>$monedas</label>
                 </select>
+                <label>Monedas</label>
             </div>
-            <div class="input-field col s12 m6 l6">
-                <input id="preciounitario" type="number" readonly="false" placeholder="1.00" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="preciounitario" class="validate">
-                <label class="active" for="preciounitario">Precio Unitario</label> 
+            <div class="input-field col s12 m6 l4">
+                <input id="preciounitario" type="number" readonly="false" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="preciounitario" class="validate">
+                <label class="active" for="preciounitario">Precio x Hora</label> 
             </div>
 
             <div class="input-field col s12">
-                <input class="btn-small" type="submit" value="Guardar">
+                <div class="btn-small" id="btn_guardar" >Guardar
+                </div>
             </div>
         </div>
     </form>
@@ -101,10 +94,65 @@
         
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-       document.getElementById('sede').addEventListener('change', obtenerTarifa)
-       document.getElementById('cliente').addEventListener('change', obtenerTarifa)
-       document.getElementById('servicio').addEventListener('change', obtenerTarifa)
+        document.getElementById('sede').addEventListener('change', obtenerTarifa)
+        document.getElementById('cliente').addEventListener('change', obtenerTarifa)
+        document.getElementById('servicio').addEventListener('change', obtenerTarifa)
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", crear, false); 
     });
+
+    function crear()
+    {
+        if(  
+            document.getElementById("sede").value != '' &&
+            document.getElementById("servicio").value != '' &&
+            document.getElementById("horas").value != '' &&
+            document.getElementById("solicitante").value != '' &&
+            document.getElementById("tarifa").value != '')
+        {
+            $('.preloader-background').css({'display': 'block'});
+            var url =  '<?= base_url() ?>ordenservicio/crear';
+            var data = {
+                        empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                        sede: document.getElementById("sede").value,
+                        cliente: document.getElementById("cliente").value,
+                        servicio: document.getElementById("servicio").value,
+                        numerofisico: document.getElementById("numerofisico").value,
+                        solicitante: document.getElementById("solicitante").value,
+                        codproyecto: document.getElementById("codproyecto").value,
+                        horas: document.getElementById("horas").value,
+                        tarifa: document.getElementById("tarifa").value,
+                        moneda: document.getElementById("moneda").value,
+                        preciounitario: document.getElementById("preciounitario").value,
+                        usuario: <?= $this->data['session']->USUARI_N_ID ?>
+                        };
+
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log('terminó de ejecutar');
+            }).catch(function(error) {
+                console.log('Hubo un problema con la petición Fetch:' + error.message);
+            });
+
+            M.toast({html: 'Orden Servicio generada correctamente', classes: 'rounded'});
+            $('.preloader-background').css({'display': 'none'});    
+            window.location.href = "<?= base_url() ?>ordenes";
+        }
+        else{
+            M.toast({html: 'No puede guardar vacio', classes: 'rounded'});   
+        }
+    }
+
     function obtenerTarifa()
     {
         var empresa = <?= $this->session->userdata('id') ?>,
@@ -125,11 +173,22 @@
             })
             .then(function(data) 
             {
-                if(data!=""){
+                console.log(data.length)
+                if(data.length>0){
                     M.toast({html: 'Tarifa encontrada'});
-                    $('#tarifa').val(data.TARIFA_N_ID)
-                    $('#moneda').val(data.MONEDA_N_ID)
-                    $('#preciounitario').val(data.TARIFA_N_PRECIO_UNIT)
+                    $('#tarifa').val(data[0].TARIFA_N_ID)
+                    $('#moneda').val(data[0].MONEDA_N_ID)
+                    $('#preciounitario').val(data[0].TARIFA_N_PRECIO_UNIT)
+                    M.updateTextFields();
+                    $('select').formSelect();
+                    console.log(data);
+                }
+                else
+                {
+                    M.toast({html: 'Tarifa NO encontrada'});
+                    $('#tarifa').val("")
+                    $('#moneda').val("")
+                    $('#preciounitario').val("")
                     M.updateTextFields();
                     $('select').formSelect();
                     console.log(data);

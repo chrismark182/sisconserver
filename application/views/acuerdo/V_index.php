@@ -82,12 +82,15 @@
     <div class="modal-content">
       <h4>Eliminar</h4>
       <p>¿Está seguro que desea elimniar el registro?</p>
+      <input type="hidden" id="eliminar_tipo">
+      <input type="hidden" id="eliminar_registro">
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn" onclick="confirmarEliminar()">ACEPTAR</a>
     </div>
 </div>
+
 <!-- Confirmar Cerrar -->
 <div id="confirmarCerrar" class="modal">
     <div class="modal-content">
@@ -115,7 +118,8 @@
                         <th class="right-align">AREA</th>
                         <th class="right-align">PRECIO</th>
                         <th class="right-align">TOTAL</th>
-                        <th class="center-align">SITUALCION</th>
+                        <th class="center-align">SITUACIÓN</th>
+                        <th class="center-align">ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody id="periodos">            
@@ -134,24 +138,37 @@
         <div class="section">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder=" " id="nuevo_area" type="text" class="right-align">
-                    <label for="first_name">Area</label>
+                    <input placeholder=" " id="np_fecha_inicio" type="text" class="right-align" readonly>
+                    <label for="np_fecha_inicio">Fecha Inicio</label>
                 </div>
                 <div class="input-field col s6">
-                    <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align">
-                    <label for="first_name">Precio</label>
+                    <input placeholder=" " id="np_fecha_fin" type="text" class="right-align" readonly>
+                    <label for="np_fecha_fin">Fecha Final</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder=" " id="nuevo_area" type="text" class="right-align">
+                    <label for="nuevo_area">Area</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align" onkeydown="recalcular()" onchange="recalcular()">
+                    <label for="nuevo_precio">Precio</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder=" " id="np_total" type="text" class="right-align" readonly>
+                    <label for="total">Total</label>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
+        <a href="#!" class="waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
     </div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
+        buscar()
     });
     function buscar()
     {
@@ -204,61 +221,101 @@
         .then(function(data) 
         {
             $('#total').html(data.length);
-         
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-               
-                $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
+            if(data.length > 0)
+            {
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                
+                    $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
 
-                if(element.ALQUIL_C_ESTA_CERRADO==1){
-                    $cerrado = '<i class="material-icons">lock</i>'
-                }else if(element.ALQUIL_C_ESTA_CERRADO==0){
-                    if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
-                    {
-                        $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
+                    if(element.ALQUIL_C_ESTA_CERRADO==1){
+                        $cerrado = '<i class="material-icons">lock</i>'
+                    }else if(element.ALQUIL_C_ESTA_CERRADO==0){
+                        if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
+                        {
+                            $cerrado=`<i class="material-icons" style="cursor: pointer" onclick="confirmarCerrar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">lock_open</i>`;
+                        }
                     }
-                }
 
-                $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
-                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
-                {
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                    $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
+                    if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                    {
+                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                    }
+                
+                    $('#resultados').append(`   <tr>
+                                                    <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                    <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
+                                                    <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
+                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+                                                    <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
+                                                    <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
+                                                    <td class="center-align">${$cerrado}</td>
+                                                    <td class="center-align">
+                                                        <a href="#">
+                                                            <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="center-align">
+                                                        <a href="#">
+                                                            <i class="material-icons" >edit</i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="center-align">
+                                                        ${$eliminar}                
+                                                    </td>
+                                                    </div>
+                                                </tr>
+                                        `);
                 }
-               
-                $('#resultados').append(`   <tr>
-                                                <td class="left-align">${element.ALQUIL_N_ID}</td>
-                                                <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
-                                                <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-                                                <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
-                                                <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
-                                                <td class="center-align">${$cerrado}</td>
-                                                <td class="center-align">
-                                                    <a href="#">
-                                                        <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
-                                                    </a>
-                                                </td>
-                                                <td class="center-align">
-                                                    <a href="#">
-                                                        <i class="material-icons" >edit</i>
-                                                    </a>
-                                                </td>
-                                                <td class="center-align">
-                                                    ${$eliminar}                
-                                                </td>
-                                                </div>
-                                            </tr>
-                                    `);
+            }
+            else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                            
         });
         
     }
-    function confirmarEliminar($empresa,$acuerdo)
+    function recalcular()
+    {
+        $('#np_total').val(parseInt($('#nuevo_area').val()) * parseInt($('#nuevo_precio').val()))        
+    }
+    function modalEliminar($tipo, $registro)
     {
         console.log('confirmar eliminar')
+        $('.modal').modal('close');
+        $('#eliminar_tipo').val($tipo);
+        $('#eliminar_registro').val($registro);
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/eliminar')
+    }
+    function confirmarEliminar()
+    {
+        $('.preloader-background').css({'display': 'block'});
+        let registro = $('#eliminar_registro').val();
+        registro = registro.split('-');
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_DEL';
+        let empresa = registro[0];
+        let acuerdo = registro[1];
+        let periodo = registro[2];
+        data = {sp, empresa, acuerdo, periodo};
+        
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('.preloader-background').css({'display': 'none'});     
+            verPeriodos(empresa, acuerdo);
+        });
+
     }
     function confirmarCerrar($empresa,$acuerdo)
     {
@@ -266,6 +323,7 @@
         $('#confirmarCerrar').modal('open');
         $('#btnConfirmarCerrar').attr('href', 'acuerdo/'+$empresa+'/'+$acuerdo+'/cerrar')
     }
+    
     function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -275,11 +333,14 @@
     function verPeriodos($empresa,$acuerdo)
     {
         console.log('Estoy buscando.. ')
+        
         $('.preloader-background').css({'display': 'block'});
         $('#acuerdo_id_periodo').val($acuerdo)
-        var url = 'api/acuerdos/periodos';
-        var data = {empresa: $empresa,
-                    acuerdo: $acuerdo};
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_LIS';
+        let empresa = $empresa;
+        let acuerdo = $acuerdo;
+        data = {sp, empresa, acuerdo};
         
         $('#periodos').html('');
         fetch(url, {
@@ -299,24 +360,30 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
 
-                $situacion = ``
-                if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                let $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
+                let $situacion = ``
+                if(element.ALQDET_C_SITUACION == '0')
                 {
+                    $eliminar = `<i class="material-icons" style="cursor: pointer;" onclick="modalEliminar('2', '${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}')">delete</i>`
+                }else if(element.ALQDET_C_SITUACION == '1'){
                     $situacion = `<i class="material-icons">assignment_turned_in</i>`
                 }
                 
-               
-                $('#periodos').append(`   <tr>
-                                                <td class="center-align">${element.ALQDET_N_ID}</td>
-                                                <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
-                                                <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
-                                                <td class="right-align">${element.ALQDET_N_AREA}</td>
-                                                <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
-                                                <td class="right-align">${element.TOTAL}</td>
-                                                <td class="center-align">
-                                                   ${$situacion} 
-                                                </td>
-                                            </tr>
+                $('#periodos').append(`   
+                                        <tr>
+                                            <td class="center-align">${element.ALQDET_N_ID}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
+                                            <td class="right-align">${element.ALQDET_N_AREA}</td>
+                                            <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
+                                            <td class="right-align">${element.TOTAL}</td>
+                                            <td class="center-align">
+                                                ${$situacion}  
+                                            </td>
+                                            <td class="center-align">
+                                                ${$eliminar} 
+                                            </td>
+                                        </tr>
                                     `);
             }
             $('#modalPeriodos').modal('open');
@@ -329,22 +396,12 @@
         console.log('Estoy buscando.. ')
         $('.modal').modal('close');
         $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id_periodo').val();
 
-        var url = 'acuerdo/buscar';
-        $fecha_desde = $('#desde').val();
-        $fecha_desde = $fecha_desde.split('/');
-        
-        $fecha_hasta = $('#hasta').val();
-        $fecha_hasta = $fecha_hasta.split('/');
-        var data = {
-                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    acuerdo: $acuerdo,
-                    cliente: '%',
-                    sede: '%',
-                    fecha_desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
-                    fecha_hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
-                    };
+        let url = 'api/execsp';
+        let sp = 'ALQUILER_DETALLE_PROXIMO_LIS';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        let acuerdo = $('#acuerdo_id_periodo').val();
+        var data = {sp, empresa, acuerdo};
         
         $('#periodos').html('');
         fetch(url, {
@@ -360,8 +417,11 @@
         .then(function(data) 
         {
             console.log(data);
-            $('#nuevo_area').val(data[0].ALQUIL_N_AREA)
-            $('#nuevo_precio').val(data[0].ALQUIL_N_PRECIO_UNIT)
+            $('#np_fecha_inicio').val(data[0].FECHA_INICIO)
+            $('#np_fecha_fin').val(data[0].FECHA_FINAL)
+            $('#nuevo_area').val(data[0].ALQDET_N_AREA)
+            $('#nuevo_precio').val(data[0].ALQDET_N_PRECIO_UNIT)
+            $('#np_total').val(data[0].ALQDET_N_AREA * data[0].ALQDET_N_PRECIO_UNIT)
             if(data[0].TIPALM_N_ID == 1)
             {
                 console.log('techado')
@@ -379,38 +439,41 @@
     function guardarNuevoPeriodo()
     {
         console.log('Estoy buscando.. ')
-        $('.modal').modal('close');
-        $('.preloader-background').css({'display': 'block'});
-        $acuerdo = $('#acuerdo_id_periodo').val();
-
-        var url = 'api/acuerdos/periodo/guardar';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>,
-                    acuerdo: $acuerdo,
-                    area: $('#nuevo_area').val(),
-                    precio: $('#nuevo_precio').val(),
-                    usuario: <?= $session->USUARI_N_ID ?>
-                    };
-
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            console.log(data.success)
-            $('.preloader-background').css({'display': 'none'});                            
-        });
-        setTimeout(() => {
-            verPeriodos(<?= $empresa->EMPRES_N_ID ?>, $acuerdo);            
-        }, 1000);
-
         
+        let url = 'api/acuerdos/periodo/guardar';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        let acuerdo = $('#acuerdo_id_periodo').val();
+        let area = $('#nuevo_area').val();
+        let precio =  $('#nuevo_precio').val();
+        let usuario =  <?= $session->USUARI_N_ID ?>;
+
+        let data = {empresa, acuerdo, area, precio, usuario};
+
+        if(area != '' && precio != '')
+        {
+            $('.modal').modal('close');
+            $('.preloader-background').css({'display': 'block'});
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                M.toast({html: 'Periodo creado correctamente', classes: 'rounded'});    
+                $('.preloader-background').css({'display': 'none'});                            
+                verPeriodos(empresa, acuerdo);            
+            });
+        }else{
+            M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+            return false; 
+        }
+
     }
 
 </script>

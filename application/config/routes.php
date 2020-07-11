@@ -22,6 +22,7 @@ $route['acuerdo/buscar'] = function (){return 'C_acuerdo/buscar'; };
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
 $route['acuerdo/crear'] = 'C_acuerdo/crear';
 $route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
+$route['acuerdo/periodo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar_periodo/'.$empresa.'/'.$id.'/'.$periodo;};
 $route['acuerdo/(:num)/(:num)/cerrar'] = function ($empresa,$id){return 'C_acuerdo/cerrar/'.$empresa.'/'.$id;};
 //Menu
 $route['menus'] = 'C_menu';
@@ -48,29 +49,27 @@ $route['ubicacion/(:num)/(:num)/(:num)/eliminar'] = function ($empresa , $sede ,
 
 //Orden Servicio
 $route['ordenes'] = 'C_ordenservicio';
+$route['ordenservicio/reporte/(:num)'] = function ($id){return 'C_ordenservicio/reporte/'.$id;};;
 $route['ordenservicio/nuevo'] = 'C_ordenservicio/nuevo';
 $route['ordenservicio/crear'] = 'C_ordenservicio/crear';
-$route['ordenservicio/(:num)/(:num)/editar'] = function ($empresa , $id){return 'C_ordenservicio/editar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/actualizar'] = function ($empresa , $id ){return 'C_ordenservicio/actualizar/'.$empresa.'/'.$id;};
 $route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_ordenservicio/eliminar/'.$empresa.'/'.$id;};
 
 //Liquidacion de Servicio
 $route['liq_servicios'] = 'C_liquidacion_servicios';
 $route['liq_servicios/buscar'] = 'C_liquidacion_servicios/buscar';
-
 $route['liq_servicios/reporte/(:num)'] = function ($id){return 'C_liquidacion_servicios/reporte/'.$id;};;
-
 $route['liq_servicios/nuevo'] = 'C_liquidacion_servicios/nuevo';
 $route['liq_servicios/nuevo/buscar'] = 'C_liquidacion_servicios/nuevo_buscar';
 $route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_cabecera';
 $route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
-
 $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
 $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
 
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';
 $route['navasoft_servicios/buscar'] = 'C_navasoft_servicios/buscar';
+$route['navasoft_servicios/generar_dbf'] = 'C_navasoft_servicios/generar_dbf';
 
 //Clientes
 $route['clientes'] = 'C_cliente';
@@ -141,7 +140,6 @@ $route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C
 
 //API
 $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $cliente, $servicio){return 'C_api/tarifa/'.$empresa.'/'.$sede.'/'.$cliente.'/'.$servicio;};
-$route['api/clientes'] = function (){return 'C_api/clientes'; };
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
@@ -151,3 +149,12 @@ $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_peri
 
 $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };
 $route['api/tarifas'] = function (){return 'C_api/tarifas'; };
+$route['api/ordenservicio'] = function (){return 'C_api/ordenservicio'; };
+$route['api/execsp'] = function (){return 'C_api/execsp'; };
+
+$route['sistema/sync'] = function (){return 'C_system/sync'; };
+$route['sistema/log'] = function (){return 'C_system/log'; };
+$route['sistema/revisar'] = function (){return 'C_system/revisar'; };
+
+$route['ind_ser_cliente'] = function (){return 'C_ind_ser_cliente'; };
+$route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };

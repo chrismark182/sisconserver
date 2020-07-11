@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifas</a>
+        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifario</a>
         <a href="#!" class="breadcrumb">Editar</a>
       </div>
     </div>
@@ -14,7 +14,7 @@
             <label class="active" for="cliente">Cliente</label> 
         </div>
         <div class="input-field col s6 m6 l4">
-        <input disabled id="sede" type="text" name="sede" value ="<?= $tarifa->SEDE_C_DESCRIPCION ?>" class="validate">
+            <input disabled id="sede" type="text" name="sede" value ="<?= $tarifa->SEDE_C_DESCRIPCION ?>" class="validate">
             <label class="active" for="sede">Sede</label> 
         </div>
         <div class="input-field col s6 m6 l5">
@@ -39,20 +39,20 @@
                     <?php endforeach; ?> 
                     <?php endif; ?>
                     
-            </select>
-            <label>Monedas</label>
-        </div>
+                </select>
+                <label>Monedas</label>
+            </div>
                                     
-        <div class="input-field col s12 m6 l4">
-            <input id="precio" type="number" min="1" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" value ="<?= $tarifa->TARIFA_N_PRECIO_UNIT ?>" class="validate">
-            <label class="active" for="precio">Precio Unitario</label> 
-        </div>
-        
-                                        <div class="input-field col s12">
-                                            <input class="btn-small" type="submit" value="Guardar">
-                                        </div>
-                                    </div>
-                                </form>
+            <div class="input-field col s12 m6 l4">
+                <input id="precio" type="number" step="0.01" min="1" maxlength="6" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="precio" value ="<?= $tarifa->TARIFA_N_PRECIO_UNIT ?>" class="validate">
+                <label class="active" for="precio">Precio Unitario</label> 
+            </div>
+    
+            <div class="input-field col s12">
+                <input class="btn-small" type="submit" value="Guardar">
+            </div>
+            </div>
+        </form>
     </div>
 </div>
         
