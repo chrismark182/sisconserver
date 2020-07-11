@@ -22,6 +22,7 @@
         </ul>
     </div>
 </nav>
+
 <!-- Buscador -->
  <div class="section container center">
     <div class="row" style="margin-bottom: 0px">
@@ -46,7 +47,7 @@
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            <div class="input-field col s2">
+            <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
             </div>
         </form>
@@ -164,12 +165,21 @@
         <a href="#!" class="waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
-        buscar()
+        
+        acuerdo_id = getParameterByName('aca')
+        if(acuerdo_id != '')
+        {
+            $('#acuerdo_id').val(acuerdo_id)
+            M.updateTextFields();
+            buscar()
+        }
     });
+
     function buscar()
     {
         console.log('Estoy buscando.. ')
@@ -274,12 +284,13 @@
             }
             $('.preloader-background').css({'display': 'none'});                            
         });
-        
     }
+
     function recalcular()
     {
         $('#np_total').val(parseInt($('#nuevo_area').val()) * parseInt($('#nuevo_precio').val()))        
     }
+
     function modalEliminar($tipo, $registro)
     {
         console.log('confirmar eliminar')
@@ -288,6 +299,7 @@
         $('#eliminar_registro').val($registro);
         $('#modalEliminar').modal('open');
     }
+
     function confirmarEliminar()
     {
         $('.preloader-background').css({'display': 'block'});
@@ -315,8 +327,8 @@
             $('.preloader-background').css({'display': 'none'});     
             verPeriodos(empresa, acuerdo);
         });
-
     }
+
     function confirmarCerrar($empresa,$acuerdo)
     {
         console.log('confirmar cerrar')
@@ -330,6 +342,7 @@
 		results = regex.exec(location.search);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
+
     function verPeriodos($empresa,$acuerdo)
     {
         console.log('Estoy buscando.. ')
@@ -436,6 +449,7 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
     }
+
     function guardarNuevoPeriodo()
     {
         console.log('Estoy buscando.. ')
@@ -473,9 +487,7 @@
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
             return false; 
         }
-
     }
-
 </script>
 
 
