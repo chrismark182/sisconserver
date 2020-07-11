@@ -124,4 +124,14 @@ class C_usuario extends CI_Controller {
 								        			'{$_SERVER['REMOTE_ADDR']}'
 								        ");	 
 	}
+
+	public function eliminar($id)
+    {
+	   $sql = "Exec USUARIO_DEL {$id}";        
+	   
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('usuarios', 'refresh');       
+    }
+
 }

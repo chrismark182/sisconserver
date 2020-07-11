@@ -95,6 +95,8 @@ $route['usuario/crear'] = 'C_usuario/crear';
 $route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
 $route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
 
+$route['usuario/(:num)/eliminar'] = function ($id){return 'C_usuario/eliminar/'.$id;};
+
 //Categorias
 $route['categorias'] = 'C_categoria';
 $route['categoria/nuevo'] = 'C_categoria/nuevo';
