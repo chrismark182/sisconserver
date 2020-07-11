@@ -58,7 +58,7 @@ class C_categoria extends CI_Controller {
             $sql = "Exec CATEGORIA_UPD  {$id},
                                         '{$this->input->post('descripcion')}',
                                         '{$this->session->userdata('id')}'";
-            echo $sql;
+           // echo $sql;
             $this->M_crud->sql($sql);      
             $this->session->set_flashdata('message','Datos actualizados correctamente');
             redirect('categorias', 'refresh');       
