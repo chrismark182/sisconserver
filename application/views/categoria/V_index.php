@@ -23,18 +23,28 @@
                         <td><?=$row->CATEGO_N_ID?></td>
                         <td><?=$row->CATEGO_C_DESCRIPCION?></td>
                         <td>
-
                             <a href="<?= base_url() ?>categoria/<?= $row->CATEGO_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
+					
+					<?php if ($row->CATIDAD_USUARIOS <= 0 ): ?>
                         <td>
                             <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $row->CATEGO_N_ID ?>)">delete</i>                        
                         </td>
+					<?php endif; ?>
+					<?php if ($row->CATIDAD_USUARIOS > 0 ): ?>
+                        <td>
+                            <i class="material-icons" style="color:grey">delete</i>                        
+                        </td>
+					<?php endif; ?>
             
                     </tr>
                 <?php endforeach; ?>  
             <?php endif; ?>
+
+
+
         </tbody>
     </table>
 </div>
