@@ -1,9 +1,9 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once("./vendor/dompdf/dompdf/autoload.inc.php");
 use XBase\Table;
 use XBase\WritableTable;
 
-class M_DBF
+class M_dbf
 {
 	public function __construct(){
 

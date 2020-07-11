@@ -8,7 +8,8 @@ class C_navasoft_servicios extends CI_Controller {
     {
         parent::__construct();
 		if($this->session->userdata('logged_in')):
-			$this->load->library('EsandexAccesos');  
+            $this->load->library('EsandexAccesos');  
+            $this->load->model('M_dbf');
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
             $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
@@ -52,10 +53,10 @@ class C_navasoft_servicios extends CI_Controller {
         $sql = "Exec LIQUIDACIONES_LIS_PARANAVASOFT 1, {$data['empresa']}, {$data['liquidacion']}, {$data['usuario']}";
         $resultSet = $this->M_crud->sql($sql);
         
-        $cabecera = array($sql, $resultSet);
+        $cabecera = array($resultSet);
         $result = (object) null;
         
-        ////$this->m_dbf->create('docterminal', $cabecera, 0);
+        $this->M_dbf->create('docterminal', $cabecera, 0);
 
         $rutaLocal = realpath(__DIR__ . '/..') . '\\dbf\\generado\\';
         //$rutaServer = '\\\\10.0.0.22\\DataCarga\\DBFCOURIER\\';

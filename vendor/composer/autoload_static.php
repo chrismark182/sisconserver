@@ -17,6 +17,10 @@ class ComposerStaticInit436ff08cd1ed89bb7191a78ae827a74c
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'X' => 
+        array (
+            'XBase\\' => 6,
+        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -51,6 +55,10 @@ class ComposerStaticInit436ff08cd1ed89bb7191a78ae827a74c
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'XBase\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hisamu/php-xbase/src/XBase',
         ),
         'Webmozart\\Assert\\' => 
         array (
