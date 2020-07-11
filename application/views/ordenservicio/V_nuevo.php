@@ -155,7 +155,7 @@
 
     function obtenerTarifa()
     {
-        var empresa = <?= $this->session->userdata('id') ?>,
+        var empresa = <?= $empresa->EMPRES_N_ID ?>,
                 sede =  $('#sede').val(), 
                 cliente = $('#cliente').val(), 
                 servicio = $('#servicio').val();

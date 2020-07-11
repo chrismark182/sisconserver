@@ -17,16 +17,19 @@ class C_acuerdo extends CI_Controller {
 			redirect(base_url(),'refresh');
 		endif;
     }
+
     private function _init()
 	{
 		$this->output->set_template('siscon');
-	}
+    }
+    
     //Vistas
     public function index() 
 	{              
         $this->_init();
         $this->load->view('acuerdo/V_index', $this->data);
     }
+
     public function nuevo()
     {
         $this->_init();
@@ -37,6 +40,7 @@ class C_acuerdo extends CI_Controller {
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('acuerdo/V_nuevo', $this->data);        
     }
+
     //Procesos
     public function buscar()
     {
@@ -45,9 +49,9 @@ class C_acuerdo extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
     public function editar($empresa,$cliente)
     {  
-        
         $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
                                     .$cliente ;
         
@@ -57,6 +61,7 @@ class C_acuerdo extends CI_Controller {
        
         $this->load->view('cliente/V_editar',$this->data);
     }
+
     public function crear()
     {
         $facturable = '0';
@@ -76,8 +81,10 @@ class C_acuerdo extends CI_Controller {
                                     {$this->input->post('precio')}, 
                                     {$this->data['session']->USUARI_N_ID}";
         $this->M_crud->sql($sql);
-        redirect('acuerdos','refresh');   
+        $url = 'acuerdos?aca=' . $this->input->post('id'); 
+        redirect($url,'refresh');   
     }
+
     public function actualizar($empresa,$cliente)
     {
         $sql = "Exec CLIENTE_UPD "      . $empresa. ","
@@ -97,9 +104,9 @@ class C_acuerdo extends CI_Controller {
         $url = 'clientes?n=' . $this->input->post('ndocumento');
         redirect($url, 'refresh');     
     }
+
     public function eliminar($empresa,$acuerdo)
     {
-
         $sql = "Exec ALQUILER_DEL "     . $empresa .","
                                         . $acuerdo; 
                                       /*   .","
@@ -109,6 +116,7 @@ class C_acuerdo extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('acuerdos', 'refresh');       
     }  
+
     public function eliminar_periodo($empresa,$acuerdo, $periodo)
     {
         $sql = "Exec ALQUILER_DETALLE_DEL {$empresa}, {$acuerdo}, {$periodo}";                                         
@@ -116,9 +124,9 @@ class C_acuerdo extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('acuerdos', 'refresh');       
     }  
+
     public function cerrar($empresa,$acuerdo)
     {
-
         $sql = "Exec ALQUILER_CERRAR "      . $empresa .","
                                             . $acuerdo; 
                                       /*   .","
@@ -128,7 +136,5 @@ class C_acuerdo extends CI_Controller {
         $this->session->set_flashdata('message','Registro cerrado correctamente');
         redirect('acuerdos', 'refresh');       
     }  
-
-
 }
 
