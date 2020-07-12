@@ -10,6 +10,7 @@
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 	<script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/materialize.js"></script>
+	<script src="<?= base_url() ?>assets/js/main.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			$('select').formSelect();
@@ -147,9 +148,8 @@
 			<a href="<?= base_url() ?>" class="brand-logo">SISCON</a>
 			<!-- Dropdown Structure -->
 			<ul id="dropUsuario" class="dropdown-content">
-				<li><a href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
 				<li><a href="<?= base_url() ?>usuario/cambio_pass">Cambiar Contraseña</a></li>
-		
+				<li><a href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
 			</ul>
 		
 			
