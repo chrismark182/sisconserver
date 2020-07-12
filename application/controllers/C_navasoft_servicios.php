@@ -51,9 +51,57 @@ class C_navasoft_servicios extends CI_Controller {
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $sql = "Exec LIQUIDACIONES_LIS_PARANAVASOFT 1, {$data['empresa']}, {$data['liquidacion']}, {$data['usuario']}";
-        $resultSet = $this->M_crud->sql($sql);
-        
-        $cabecera = array($resultSet);
+        $resultQuery = $this->M_crud->sql($sql);
+        $resultSet = (array) $resultQuery[0];
+        $cabecera = array(
+            'numerodocu'    => $resultSet['NUMERODOCU'], 
+            'guiahija'      => $resultSet['GUIAHIJA'], 
+            'peso'          => $resultSet['PESO'],
+            'bultos'        => $resultSet['BULTOS'],
+            'manifiesto'    => $resultSet['MANIFIESTO'],
+            'numseriado'    => $resultSet['NUMSERIADO'],
+            'idtipodocu'    => $resultSet['IDTIPODOCU'],
+            'fecemision'    => $resultSet['FECEMISION'],
+            'idmoneda'      => $resultSet['IDMONEDA'],
+            'idcliente'     => $resultSet['IDCLIENTE'],
+            'idaduana'      => $resultSet['IDADUANA'],
+            'numcheque'     => $resultSet['NUMCHEQUE'],
+            'idbancoseg'    => $resultSet['IDBANCOSEG'],
+            'conversion'    => $resultSet['CONVERSION'],
+            'montoafect'    => $resultSet['MONTOAFECT'],
+            'montoexone'    => $resultSet['MONTOEXONE'],
+            'montoigv'      => $resultSet['MONTOIGV'],
+            'total'         => $resultSet['TOTAL'],
+            'usuario'       => $resultSet['USUARIO'],
+            'status'        => $resultSet['STATUSS'],
+            'flag'          => $resultSet['FLAG'],
+            'fectra'        => $resultSet['FECTRA'],
+            'iddespacha'    => $resultSet['IDDESPACHA'],
+            'tipocambio'    => $resultSet['TIPOCAMBIO'],
+            'guiaremisi'    => $resultSet['GUIAREMISI'],
+            'observacio'    => $resultSet['OBSERVACIO'],
+            'numdoc'        => $resultSet['NUMDOC'],
+            'seriedoc'      => $resultSet['SERIEDOC'],
+            'fechadoc'      => $resultSet['FECHADOC'],
+            'impexp'        => $resultSet['IMPEXP'],
+            'facespecie'    => $resultSet['FACESPECIE'],
+            'contenido'     => $resultSet['CONTENIDO'],
+            'idtipdocnc'    => $resultSet['IDT'],
+            'facturadoa'    => $resultSet['FACTURADOA'],
+            'tipopago'      => $resultSet['TIPOPAGO'],
+            'idagenciac'    => $resultSet['IDAGENCIAC'],
+            'feccalculo'    => $resultSet['FECCALCULO'],
+            'diasestadi'    => $resultSet['DIASESTADI'],
+            'numvolante'    => $resultSet['NUMVOLANTE'],
+            'posicion'      => $resultSet['POSICION'],
+            'dua'           => $resultSet['DUA'],
+            'fecllegada'    => $resultSet['FECLLEGADA'],
+            'nomdespach'    => $resultSet['NOMDESPACH'],
+            'codd'          => $resultSet['CODD'],
+            'nrod'          => $resultSet['NROD'],
+            'origen'        => $resultSet['ORIGEN']
+        );
+        var_dump($cabecera);
         $result = (object) null;
         
         $this->M_dbf->create('docterminal', $cabecera, 0);
