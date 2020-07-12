@@ -92,6 +92,7 @@ $route['usuarios'] = 'C_usuario';
 $route['usuario/nuevo'] = 'C_usuario/nuevo';
 $route['usuario/crear'] = 'C_usuario/crear';
 $route['usuario/cambio_pass'] = 'C_usuario/cambio_pass';
+$route['usuario/(:num)/change_pass'] = function ($id){return 'C_usuario/cambio_pass_usuario/'.$id;};
 $route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
 $route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
 

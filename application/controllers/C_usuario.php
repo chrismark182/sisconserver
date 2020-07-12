@@ -139,5 +139,10 @@ class C_usuario extends CI_Controller {
     public function cambio_pass(){
 		$this->load->view('usuario/V_cambio_pass', $this->data);
 	}
+	public function cambio_pass_usuario($id)
+	{
+		$this->data['user_id'] = $id;
+		$this->load->view('usuario/V_cambio_pass_usuario', $this->data);
+	}
 
 }

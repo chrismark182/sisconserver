@@ -13,6 +13,7 @@
 				<th>ID</th>
 				<th>Usuario</th>
                 <th>Categoria</th>
+                <th>Contraseña</th>
                 <th>Editar</th>
 				<th>Eliminar</th>
             </tr>
@@ -24,6 +25,12 @@
                         <td><?=$row->USUARI_N_ID?></td>
 						<td><?=$row->USUARI_C_USERNAME?></td>
                         <td><?=$row->CATEGO_C_DESCRIPCION?></td>
+                        <td>
+                        ********
+                            <a href="<?= base_url() ?>usuario/<?= $row->USUARI_N_ID ?>/change_pass">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </td>
                         <td>
                             <a href="<?= base_url() ?>usuario/<?= $row->USUARI_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>

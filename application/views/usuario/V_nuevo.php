@@ -24,15 +24,6 @@
                 <input id="username" type="text" name="username" class="validate">
                 <label class="active" for="username">Nombre de usuario</label> 
             </div>
-
-			<div class="input-field col s12 m6 l4">
-                <input id="password" type="password" name="password" class="validate">
-                <label class="active" for="password">Contraseña</label> 
-            </div>
-			<div class="input-field col s12 m6 l4">
-                <input id="repassword" type="password" name="repassword" class="validate">
-                <label class="active" for="repassword">Confirmar Contraseña</label> 
-            </div>
             <div class="input-field col s12 m6 l4">
                 <select name="categoria">
                     <option value="0" disabled>Escoge una opción</option>
