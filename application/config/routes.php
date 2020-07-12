@@ -91,6 +91,7 @@ $route['servicio/(:num)/(:num)/eliminar'] = function ($empresa , $servicio){retu
 $route['usuarios'] = 'C_usuario';
 $route['usuario/nuevo'] = 'C_usuario/nuevo';
 $route['usuario/crear'] = 'C_usuario/crear';
+$route['usuario/cambioPass'] = 'C_usuario/cambioPass';
 $route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
 $route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
 

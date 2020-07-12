@@ -132,6 +132,11 @@ class C_usuario extends CI_Controller {
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('usuarios', 'refresh');       
-    }
+	}
+	
+    public function cambioPass(){
+		echo "Se cambiara la contraseña";
+		$this->load->view('usuario/V_cambioPass', $this->data);
+	}
 
 }
