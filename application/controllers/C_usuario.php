@@ -135,7 +135,6 @@ class C_usuario extends CI_Controller {
 	}
 	
     public function cambio_pass(){
-		echo "Se cambiara la contraseña";
 		$this->load->view('usuario/V_cambio_pass', $this->data);
 	}
 

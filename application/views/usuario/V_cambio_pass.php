@@ -7,19 +7,17 @@
     </div>
 </nav>
 <div class="section container center">
-			
-			<div class="input-field col s12 m6 l4">
-                <input id="password" type="password" name="password" class="validate">
-                <label class="active" for="password"> Contraseña Actual</label> 
-            </div>
-
-			<div class="input-field col s12 m6 l4">
-                <input id="newPassword" type="password" name="newPassword" class="validate">
-                <label class="active" for="newPassword"> Nueva Contraseña</label> 
-            </div>
-
-			<div class="input-field col s12 m6 l4">
-                <input id="repassword" type="password" name="repassword" class="validate">
-                <label class="active" for="repassword">Confirmar Contraseña</label> 
-            </div>
+    <div class="input-field col s12 m6 l4">
+        <input id="password" type="password" name="password" class="validate">
+        <label class="active" for="password"> Contraseña Actual</label> 
+    </div>
+    <div class="input-field col s12 m6 l4">
+        <input id="newPassword" type="password" name="newPassword" class="validate">
+        <label class="active" for="newPassword"> Nueva Contraseña</label> 
+    </div>
+    <div class="input-field col s12 m6 l4">
+        <input id="repassword" type="password" name="repassword" class="validate">
+        <label class="active" for="repassword">Confirmar Contraseña</label> 
+    </div>
+    
 </div>
