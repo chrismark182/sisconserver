@@ -12,7 +12,9 @@ class C_usuario extends CI_Controller {
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
-            $this->data['accesos'] = $this->esandexaccesos->accesos();
+			$this->data['accesos'] = $this->esandexaccesos->accesos();
+			$empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
+            $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -136,9 +138,6 @@ class C_usuario extends CI_Controller {
 	
     public function cambio_pass(){
 		$this->load->view('usuario/V_cambio_pass', $this->data);
-
-		$pass = $this->input->post('password');
-
 	}
 
 }
