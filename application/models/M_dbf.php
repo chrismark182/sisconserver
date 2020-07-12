@@ -11,11 +11,14 @@ class M_dbf
 
 	/* Guardar */
 	public function create($tabla, $datos, $limpiar){
-		$plantilla = './../dbf/plantilla/'.$tabla.'.dbf';
-		$generado = './../dbf/generado/'.$tabla.'.dbf';
-
-		try {
-			$table = new WritableTable(dirname(__FILE__).'../../dbf/generado/'.$tabla.'.dbf');
+		$plantilla = dirname(dirname(__FILE__)) .'../../assets/dbf/plantilla/'.$tabla.'.dbf';
+		$generado = dirname(dirname(__FILE__)) .'../../assets/dbf/generado/'.$tabla.'.dbf';
+		if (file_exists($generado)) {
+			// echo 'Archivo existe';
+			// foreach ($datos as $key => $value):
+			//  	echo $key . ":" . $value . "<br>";
+			// endforeach;	
+			$table = new WritableTable($generado);
 			$table->openWrite();
 			$record = $table->appendRecord();
 			foreach ($datos as $key => $value):
@@ -25,10 +28,28 @@ class M_dbf
 			$table->writeRecord();
 			$table->close();
 			return true;
-		} catch (\Throwable $th) {
-			throw $th;
+		}else
+		{
+			echo 'Archivo no encontrado';
 			return false;
 		}
+
+		// try {
+		// 	//$table = new WritableTable(dirname(__FILE__).'../../dbf/generado/'.$tabla.'.dbf');
+		// 	$table = new WritableTable($generado);
+		// 	$table->openWrite();
+		// 	$record = $table->appendRecord();
+		// 	foreach ($datos as $key => $value):
+		// 		$record->$key = $value;
+		// 		//echo $key . ":" . $value . "<br>";
+		// 	endforeach;			
+		// 	$table->writeRecord();
+		// 	$table->close();
+		// 	return true;
+		// } catch (\Throwable $th) {
+		// 	throw $th;
+		// 	return false;
+		// }
 	}
 
 	public function multiCreate($file, $data)
