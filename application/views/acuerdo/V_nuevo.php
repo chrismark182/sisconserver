@@ -180,7 +180,7 @@
         .then(function(data) 
         {
             console.log(data)
-            document.getElementById('tipo_almacen').value = data[0].TIPALM_C_DESCRIPCION + ' (' +  data[0].UBICAC_N_M2 + ') m2'
+            document.getElementById('tipo_almacen').value = data[0].TIPALM_C_DESCRIPCION + ' (' +  data[0].UBICAC_N_SALDO + ') m2'
             if(data[0].TIPALM_N_ID == 1)
             {
                 console.log('techado')
@@ -191,8 +191,8 @@
                 console.log('patio')
                 document.getElementById("area").readOnly = false;
             }
-            document.getElementById("area").max = data[0].UBICAC_N_M2;
-            document.getElementById('area').value = data[0].UBICAC_N_M2
+            document.getElementById("area").max = data[0].UBICAC_N_SALDO;
+            document.getElementById('area').value = data[0].UBICAC_N_SALDO
 
             M.updateTextFields();
         });

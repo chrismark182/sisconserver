@@ -233,7 +233,7 @@
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
                         $situacion = 'En Navasoft';
-                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, esta en Navasoft">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
                     }
 
                     if(element.CLIENT_C_REQUIERE_OC == 1)

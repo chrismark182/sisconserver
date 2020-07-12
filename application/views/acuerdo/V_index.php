@@ -236,7 +236,7 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                 
-                    $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
+                    $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tienen periodos pendientes">lock_open</i>';
 
                     if(element.ALQUIL_C_ESTA_CERRADO==1){
                         $cerrado = '<i class="material-icons">lock</i>'
@@ -247,11 +247,13 @@
                         }
                     }
 
-                    $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
+                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tienen periodos liquidados">delete</i>`
                     if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
                     }
+
+                    $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">event_note</i>`
                 
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.ALQUIL_N_ID}</td>
@@ -262,9 +264,7 @@
                                                     <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
                                                     <td class="center-align">${$cerrado}</td>
                                                     <td class="center-align">
-                                                        <a href="#">
-                                                            <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
-                                                        </a>
+                                                        ${$ver_periodos}                
                                                     </td>
                                                     <td class="center-align">
                                                         <a href="#">
@@ -282,7 +282,8 @@
             else{
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
-            $('.preloader-background').css({'display': 'none'});                            
+            $('.preloader-background').css({'display': 'none'}); 
+            $('.tooltipped').tooltip();                           
         });
     }
 

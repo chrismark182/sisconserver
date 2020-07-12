@@ -133,8 +133,9 @@ class C_acuerdo extends CI_Controller {
                                         .$this->data['session']->USUARI_N_ID ;  */
                                         
         $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Registro cerrado correctamente');
-        redirect('acuerdos', 'refresh');       
+        $this->session->set_flashdata('message','Acuerdo cerrado correctamente');
+        $url = 'acuerdos?aca=' . $acuerdo;
+        redirect($url, 'refresh');       
     }  
 }
 
