@@ -19,18 +19,18 @@
                     <?php endforeach; ?>
 
                 </select>
-                <label>Menú padre</label>
+                <label>Menú Padre</label>
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="descripcion" type="text" name="descripcion" value="<?= $menu->MENU_DESCRIPCION ?>" class="validate">
-                <label class="active" for="descripcion">Descripción</label> 
+                <input id="descripcion" maxlength="50" type="text" name="descripcion" value="<?= $menu->MENU_DESCRIPCION ?>" class="validate">
+                <label class="active" for="descripcion">Opción del menú</label> 
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="ruta" type="text" name="ruta" value="<?= $menu->MENU_RUTA ?>" class="validate">
+                <input id="ruta" maxlength="50" type="text" name="ruta" value="<?= $menu->MENU_RUTA ?>" class="validate">
                 <label class="active" for="ruta">Ruta</label> 
             </div>
             <div class="input-field col s12">
-                <input class="btn-large" type="submit" value="Guardar">
+                <input class="btn-small" type="submit" value="Guardar">
             </div>
         </div>
     </form>
