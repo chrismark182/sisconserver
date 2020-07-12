@@ -67,12 +67,12 @@
 <!-- Modal Structure -->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
-      <h4>Eliminar</h4>
-      <p>¿Está seguro que desea elimniar el registro?</p>
+        <h4>Eliminar</h4>
+        <p>¿Está seguro que desea elimniar el registro?</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
 
