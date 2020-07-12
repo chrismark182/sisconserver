@@ -148,7 +148,7 @@
 			<!-- Dropdown Structure -->
 			<ul id="dropUsuario" class="dropdown-content">
 				<li><a href="<?= base_url() ?>logout">Cerrar Sesión</a></li>
-				<li><a href="<?= base_url() ?>usuario/cambioPass">Cambiar Contraseña</a></li>
+				<li><a href="<?= base_url() ?>usuario/cambio_pass">Cambiar Contraseña</a></li>
 		
 			</ul>
 		

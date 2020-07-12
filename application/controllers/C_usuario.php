@@ -134,9 +134,9 @@ class C_usuario extends CI_Controller {
         redirect('usuarios', 'refresh');       
 	}
 	
-    public function cambioPass(){
+    public function cambio_pass(){
 		echo "Se cambiara la contraseña";
-		$this->load->view('usuario/V_cambioPass', $this->data);
+		$this->load->view('usuario/V_cambio_pass', $this->data);
 	}
 
 }
