@@ -1,55 +1,69 @@
 <nav  class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="#!" class="breadcrumb">Seguridad </a>
-        <a href="#!" class="breadcrumb">Categorias </a>
-      </div>
+        <div class="col s4" style="display: inline-block">
+            <a href="#!" class="breadcrumb">Seguridad </a>
+            <a href="#!" class="breadcrumb">Categorías </a>
+        </div>
+        <ul id="nav-mobile" class="right">
+            <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
+                <div>
+                    <b>
+                        Total Registros: 
+                        &nbsp;&nbsp;&nbsp;
+                        <span id="total" class="btn blue-grey darken-2"><?php echo count($results);?></span>
+                    </b>
+                </div>
+            </div>
+        </ul>
     </div>
 </nav>
+
 <div class="container">
-    <table>
-        <thead>
+    <div>
+        &nbsp;
+    </div>
+
+    <table class="striped" style="font-size: 12px;">
+        <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th>ID</th>
-                <th>Descripcion</th>
-                <th></th>
-                <th></th>
+                <th class="center-align">ID</th>
+                <th class="left-align">DESCRIPCIÓN DE LA CATEGORÍA</th>
+                <th class="center-align">EDITAR</th>
+                <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
         <tbody>
             <?php if($results): ?>
                 <?php foreach($results as $row): ?> 
                     <tr>
-                        <td><?=$row->CATEGO_N_ID?></td>
-                        <td><?=$row->CATEGO_C_DESCRIPCION?></td>
-                        <td>
+                        <td class="center-align"><?=$row->CATEGO_N_ID?></td>
+                        <td class="left-align"><?=$row->CATEGO_C_DESCRIPCION?></td>
+                        <td class="center-align">
                             <a href="<?= base_url() ?>categoria/<?= $row->CATEGO_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
 					
-					<?php if ($row->CATIDAD_USUARIOS <= 0 ): ?>
-                        <td>
-                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $row->CATEGO_N_ID ?>)">delete</i>                        
-                        </td>
-					<?php endif; ?>
-					<?php if ($row->CATIDAD_USUARIOS > 0 ): ?>
-                        <td>
-                            <i class="material-icons" style="color:grey">delete</i>                        
-                        </td>
-					<?php endif; ?>
-            
+                        <?php if ($row->CATIDAD_USUARIOS <= 0 ): ?>
+                            <td class="center-align">
+                                <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $row->CATEGO_N_ID ?>)">delete</i>                        
+                            </td>
+                        <?php endif; ?>
+                        <?php if ($row->CATIDAD_USUARIOS > 0 ): ?>
+                            <td class="center-align">
+                                <i class="material-icons" style="color: #999999" data-tooltip="No puede eliminar, tiene usuarios asignados">delete</i>                        
+                            </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>  
             <?php endif; ?>
-
-
-
         </tbody>
     </table>
 </div>
+
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>categoria/nuevo"><i class="material-icons">add</i></a>
+
 <!-- Modal Structure -->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
@@ -61,6 +75,7 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
 <script>
     function confirmarEliminar($id)
     {
