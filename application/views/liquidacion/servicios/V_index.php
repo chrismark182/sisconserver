@@ -222,17 +222,14 @@
                     $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
                     if(element.LIQCAB_C_SITUACION == 0)
                     {
-                        $situacion = 'Pendiente O/C';
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
                     }else
                     if(element.LIQCAB_C_SITUACION == 1)
                     {
-                        $situacion = 'Liquidado';
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
                     }else
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
-                        $situacion = 'En Navasoft';
                         $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
                     }
 
@@ -258,7 +255,7 @@
                             <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
                             <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                             <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
-                            <td class="center-align">${$situacion}</td>
+                            <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
                             <td class="center-align">
                                 <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                     <i class="material-icons">monetization_on</i>

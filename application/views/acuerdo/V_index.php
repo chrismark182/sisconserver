@@ -236,10 +236,10 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                 
-                    $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tienen periodos pendientes">lock_open</i>';
+                    $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tiene periodos pendientes">lock_open</i>';
 
                     if(element.ALQUIL_C_ESTA_CERRADO==1){
-                        $cerrado = '<i class="material-icons">lock</i>'
+                        $cerrado = '<i class="material-icons tooltipped" data-tooltip="Cerrado">lock</i>'
                     }else if(element.ALQUIL_C_ESTA_CERRADO==0){
                         if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
                         {
@@ -247,7 +247,7 @@
                         }
                     }
 
-                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tienen periodos liquidados">delete</i>`
+                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tiene periodos liquidados">delete</i>`
                     if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
@@ -375,7 +375,6 @@
                 const element = data[index];
 
                 let $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
-                let $situacion = ``
                 if(element.ALQDET_C_SITUACION == '0')
                 {
                     $eliminar = `<i class="material-icons" style="cursor: pointer;" onclick="modalEliminar('2', '${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}')">delete</i>`
@@ -391,9 +390,7 @@
                                             <td class="right-align">${element.ALQDET_N_AREA}</td>
                                             <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                             <td class="right-align">${element.TOTAL}</td>
-                                            <td class="center-align">
-                                                ${$situacion}  
-                                            </td>
+                                            <td class="center-align">${element.ALQDET_C_SITUACION_DES}</td>
                                             <td class="center-align">
                                                 ${$eliminar} 
                                             </td>

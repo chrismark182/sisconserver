@@ -162,17 +162,14 @@
                 $situacion = '';
                 if(element.LIQCAB_C_SITUACION == 0)
                 {
-                    $situacion = 'Pendiente O/C';
                     $traslado = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="Está pendiente la orden de compra">cloud_download</i>`
                 }else
                 if(element.LIQCAB_C_SITUACION == 1)
                 {
-                    $situacion = 'Liquidado';
                     $traslado = `<i class="material-icons" style="cursor: pointer" onclick="generar_dbf(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">cloud_download</i>`
                 }else
                 if(element.LIQCAB_C_SITUACION == 2)
                 {
-                    $situacion = 'En Navasoft';
                     $traslado = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="Ya fue trasladado anteriormente">cloud_download</i>`
                 }
 
@@ -185,7 +182,7 @@
                         <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
                         <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                         <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
-                        <td class="center-align">${$situacion}</td>
+                        <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
                         <td class="center-align">
                             <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                 <i class="material-icons">monetization_on</i>
