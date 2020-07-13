@@ -24,7 +24,7 @@
 </nav>
 
 <!-- Buscador -->
- <div class="section container center">
+ <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
             <div class="input-field col s12 m6 l4">
@@ -54,7 +54,7 @@
     </div>    
 </div> 
 
-<div class="section container">
+<div class="container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
@@ -148,7 +148,7 @@
                 </div>
                 <div class="input-field col s6">
                     <input placeholder=" " id="nuevo_area" type="text" class="right-align">
-                    <label for="nuevo_area">Area</label>
+                    <label for="nuevo_area">Area M2</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align" onkeydown="recalcular()" onchange="recalcular()">
@@ -237,7 +237,6 @@
                     const element = data[index];
                 
                     $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tiene periodos pendientes">lock_open</i>';
-
                     if(element.ALQUIL_C_ESTA_CERRADO==1){
                         $cerrado = '<i class="material-icons tooltipped" data-tooltip="Cerrado">lock</i>'
                     }else if(element.ALQUIL_C_ESTA_CERRADO==0){
@@ -248,13 +247,19 @@
                     }
 
                     $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tiene periodos liquidados">delete</i>`
-                    if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                    if(element.ALQUIL_C_ESTA_CERRADO==1)
                     {
-                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}')">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, está cerrado">delete</i>`    
+                    }
+                    else{
+                        if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                        {
+                            $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}')">delete</i>`
+                        }
                     }
 
                     $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID}, ${element.ALQUIL_C_ESTA_CERRADO})">event_note</i>`
-                
+
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.ALQUIL_N_ID}</td>
                                                     <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
