@@ -80,9 +80,10 @@ class C_acuerdo extends CI_Controller {
                                     {$this->input->post('moneda')}, 
                                     {$this->input->post('precio')}, 
                                     {$this->data['session']->USUARI_N_ID}";
-        $this->M_crud->sql($sql);
-        $url = 'acuerdos?aca=' . $this->input->post('id'); 
-        redirect($url,'refresh');   
+        $id = $this->M_crud->sql($sql);
+        var_dump($id);
+        $url = 'acuerdos?aca=' . $id->ALQUIL_N_ID; 
+        //redirect($url,'refresh');   
     }
 
     public function actualizar($empresa,$cliente)

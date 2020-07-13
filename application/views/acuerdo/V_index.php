@@ -250,7 +250,7 @@
                     $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tiene periodos liquidados">delete</i>`
                     if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
                     {
-                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}')">delete</i>`
                     }
 
                     $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">event_note</i>`
@@ -304,14 +304,27 @@
     function confirmarEliminar()
     {
         $('.preloader-background').css({'display': 'block'});
+        let tipo = $('#eliminar_tipo').val();
+
         let registro = $('#eliminar_registro').val();
         registro = registro.split('-');
+
         let url = 'api/execsp';
-        let sp = 'ALQUILER_DETALLE_DEL';
         let empresa = registro[0];
         let acuerdo = registro[1];
-        let periodo = registro[2];
-        data = {sp, empresa, acuerdo, periodo};
+        let sp = '';
+        let data = '';
+        if(tipo == '1')
+        {
+            sp = 'ALQUILER_DEL';
+            data = {sp, empresa, acuerdo};
+        }else if(tipo == '2')
+        {
+            sp = 'ALQUILER_DETALLE_DEL';
+            let periodo = registro[2];            
+            data = {sp, empresa, acuerdo, periodo};
+        }
+
         
         fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -326,7 +339,13 @@
         .then(function(data) 
         {
             $('.preloader-background').css({'display': 'none'});     
-            verPeriodos(empresa, acuerdo);
+            if(tipo == '1')
+            {
+                buscar();
+            }else if(tipo == '2')
+            {
+                verPeriodos(empresa, acuerdo);        
+            }
         });
     }
 
