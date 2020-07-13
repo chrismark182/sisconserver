@@ -30,6 +30,7 @@ $route['menu/nuevo'] = 'C_menu/nuevo';
 $route['menu/crear'] = 'C_menu/crear';
 $route['menu/(:num)/editar'] = function ($id){return 'C_menu/editar/'.strtolower($id);};
 $route['menu/(:num)/actualizar'] = function ($id){return 'C_menu/actualizar/'.strtolower($id);};
+$route['menu/(:num)/eliminar'] = function ($id){return 'C_menu/eliminar/'.$id;};
 
 //Sedes
 $route['sedes'] = 'C_sede';
