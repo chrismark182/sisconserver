@@ -16,7 +16,7 @@ $route['login/create'] = 'C_login/create';
 $route['login/login'] = 'C_login/userpass';
 $route['logout'] = 'C_login/logout';
 
-//Clientes
+//Acuerdos
 $route['acuerdos'] = 'C_acuerdo';
 $route['acuerdo/buscar'] = function (){return 'C_acuerdo/buscar'; };
 $route['acuerdo/nuevo'] = 'C_acuerdo/nuevo';
@@ -24,6 +24,8 @@ $route['acuerdo/crear'] = 'C_acuerdo/crear';
 $route['acuerdo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar/'.$empresa.'/'.$id;};
 $route['acuerdo/periodo/(:num)/(:num)/eliminar'] = function ($empresa,$id){return 'C_acuerdo/eliminar_periodo/'.$empresa.'/'.$id.'/'.$periodo;};
 $route['acuerdo/(:num)/(:num)/cerrar'] = function ($empresa,$id){return 'C_acuerdo/cerrar/'.$empresa.'/'.$id;};
+$route['acuerdo/reporte/(:num)'] = function ($id){return 'C_acuerdo/reporte/'.$id;};;
+
 //Menu
 $route['menus'] = 'C_menu';
 $route['menu/nuevo'] = 'C_menu/nuevo';
@@ -96,7 +98,6 @@ $route['usuario/cambio_pass'] = 'C_usuario/cambio_pass';
 $route['usuario/(:num)/change_pass'] = function ($id){return 'C_usuario/cambio_pass_usuario/'.$id;};
 $route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
 $route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
-
 $route['usuario/(:num)/eliminar'] = function ($id){return 'C_usuario/eliminar/'.$id;};
 
 //Categorias
@@ -132,7 +133,6 @@ $route['tarifa/(:num)/(:num)/actualizar'] = function ($empresa ,$tarifa){return 
 $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C_tarifario/eliminar/'.$empresa.'/'.$tarifa;};
 
 //Tipo de Cambio
-
 $route['cambios'] = 'C_tipo_cambio';
 $route['cambio/nuevo'] = 'C_tipo_cambio/nuevo';
 $route['cambio/crear'] = 'C_tipo_cambio/crear';

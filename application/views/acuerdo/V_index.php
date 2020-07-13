@@ -40,11 +40,11 @@
                 <label class="active" for="sede">Sede</label> 
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('d/m/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('d/m/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
             <div class="input-field col s4">
@@ -66,7 +66,7 @@
                 <th class="center-align">F. TERMINO</th>
                 <th class="center-align">CERRADO</th>
                 <th class="center-align">PERIODOS</th>
-                <th class="center-align">EDITAR</th>
+                <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -272,10 +272,10 @@
                                                         ${$ver_periodos}                
                                                     </td>
                                                     <td class="center-align">
-                                                        <a href="#">
-                                                            <i class="material-icons" >edit</i>
+                                                        <a href="acuerdo/reporte/${element.ALQUIL_N_ID}" target="_blank">
+                                                            <i class="material-icons">layers</i>
                                                         </a>
-                                                    </td>
+                                                    </td> 
                                                     <td class="center-align">
                                                         ${$eliminar}                
                                                     </td>

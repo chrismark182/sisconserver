@@ -13,6 +13,7 @@ class C_acuerdo extends CI_Controller {
             $this->data['accesos'] = $this->esandexaccesos->accesos();
             $empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
             $this->data['empresa']=$empresa[0];
+            $this->load->library('pdfgenerator');   
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -136,5 +137,15 @@ class C_acuerdo extends CI_Controller {
         $url = 'acuerdos?aca=' . $acuerdo;
         redirect($url, 'refresh');       
     }  
+
+    public function reporte($id)
+    {
+        $sql= "Exec ALQUILER_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $result = $this->M_crud->sql($sql);
+        ob_start();        
+        require_once(APPPATH.'views/acuerdo/reporte/index.php');
+        $html = ob_get_clean();
+        $this->pdfgenerator->generate($html, "reporte.pdf");
+    }
 }
 

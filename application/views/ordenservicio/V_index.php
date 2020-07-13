@@ -69,11 +69,11 @@
                 <label>Servicios</label>
             </div>
             <div class="input-field col s12 m6 l3">
-                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('d/m/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
             </div>
             <div class="input-field col s12 m6 l3">
-                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('d/m/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
 
