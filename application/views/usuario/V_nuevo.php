@@ -31,20 +31,16 @@
                 </select>
                 <label>Categoría</label>
             </div>
-
             <div class="input-field col s12 m6 l4">
-                <input id="username" maxlength="20" type="text" name="username" class="validate">
-                <label class="active" for="username">Nombre de Usuario</label> 
+                <select name="categoria">
+                    <option value="0" disabled>Escoge una opción</option>
+                    <?php foreach ($categorias as $categoria): ?>
+                        <option value="<?= $categoria->CATEGO_N_ID ?>"><?= $categoria->CATEGO_C_DESCRIPCION ?></option>
+                    <?php endforeach; ?>
+
+                </select>
+                <label>Categoria</label>
             </div>
-			<div class="input-field col s12 m6 l4">
-                <input id="password" maxlength="10" type="password" name="password" class="validate">
-                <label class="active" for="password">Contraseña</label> 
-            </div>
-			<div class="input-field col s12 m6 l4">
-                <input id="repassword" maxlength="10" type="password" name="repassword" class="validate">
-                <label class="active" for="repassword">Confirmar Contraseña</label> 
-            </div>
-            
             <div class="input-field col s12">
                 <input class="btn-small" type="submit" value="Guardar">
             </div>

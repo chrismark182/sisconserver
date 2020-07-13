@@ -30,6 +30,7 @@ $route['menu/nuevo'] = 'C_menu/nuevo';
 $route['menu/crear'] = 'C_menu/crear';
 $route['menu/(:num)/editar'] = function ($id){return 'C_menu/editar/'.strtolower($id);};
 $route['menu/(:num)/actualizar'] = function ($id){return 'C_menu/actualizar/'.strtolower($id);};
+$route['menu/(:num)/eliminar'] = function ($id){return 'C_menu/eliminar/'.$id;};
 
 //Sedes
 $route['sedes'] = 'C_sede';
@@ -92,6 +93,7 @@ $route['usuarios'] = 'C_usuario';
 $route['usuario/nuevo'] = 'C_usuario/nuevo';
 $route['usuario/crear'] = 'C_usuario/crear';
 $route['usuario/cambio_pass'] = 'C_usuario/cambio_pass';
+$route['usuario/(:num)/change_pass'] = function ($id){return 'C_usuario/cambio_pass_usuario/'.$id;};
 $route['usuario/(:num)/editar'] = function ($id){return 'C_usuario/edit/'.$id;};
 $route['usuario/(:num)/actualizar'] = function ($id){return 'C_usuario/update/'.$id;};
 
