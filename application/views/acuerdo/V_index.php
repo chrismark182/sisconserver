@@ -59,9 +59,9 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="right-align">ID</th>
+                <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="left-align">UBICACIÓN</th>
-                <th class="left-align">CLIENTE</th>
                 <th class="center-align">F. INICIO</th>
                 <th class="center-align">F. TERMINO</th>
                 <th class="center-align">CERRADO</th>
@@ -262,9 +262,9 @@
 
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                                                     <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
-                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
                                                     <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
                                                     <td class="center-align">${$cerrado}</td>
