@@ -22,11 +22,11 @@
                 <label>Menú Padre</label>
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="descripcion" maxlength="50" type="text" name="descripcion" value="<?= $menu->MENU_DESCRIPCION ?>" class="validate">
+                <input id="descripcion" maxlength="50" type="text" name="descripcion" value="<?= $menu->MENU_DESCRIPCION ?>" class="validate" required>
                 <label class="active" for="descripcion">Opción del menú</label> 
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="ruta" maxlength="50" type="text" name="ruta" value="<?= $menu->MENU_RUTA ?>" class="validate">
+                <input id="ruta" maxlength="50" type="text" name="ruta" value="<?= $menu->MENU_RUTA ?>" class="validate" required>
                 <label class="active" for="ruta">Ruta</label> 
             </div>
             <div class="input-field col s12">
