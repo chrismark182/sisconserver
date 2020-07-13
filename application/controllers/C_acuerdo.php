@@ -81,9 +81,8 @@ class C_acuerdo extends CI_Controller {
                                     {$this->input->post('precio')}, 
                                     {$this->data['session']->USUARI_N_ID}";
         $id = $this->M_crud->sql($sql);
-        var_dump($id);
-        $url = 'acuerdos?aca=' . $id->ALQUIL_N_ID; 
-        //redirect($url,'refresh');   
+        $url = 'acuerdos?aca=' . $id[0]->ALQUIL_N_ID; 
+        redirect($url,'refresh');   
     }
 
     public function actualizar($empresa,$cliente)
@@ -120,7 +119,7 @@ class C_acuerdo extends CI_Controller {
 
     public function eliminar_periodo($empresa,$acuerdo, $periodo)
     {
-        $sql = "Exec ALQUILER_DETALLE_DEL {$empresa}, {$acuerdo}, {$periodo}";                                         
+        $sql = "Exec ALQUILER_DETALLE_DEL {$empresa}, {$acuerdo}, {$periodo}, {$this->data['session']->USUARI_N_ID}";                                         
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('acuerdos', 'refresh');       
@@ -129,9 +128,8 @@ class C_acuerdo extends CI_Controller {
     public function cerrar($empresa,$acuerdo)
     {
         $sql = "Exec ALQUILER_CERRAR "      . $empresa .","
-                                            . $acuerdo; 
-                                      /*   .","
-                                        .$this->data['session']->USUARI_N_ID ;  */
+                                            . $acuerdo .","
+                                        .$this->data['session']->USUARI_N_ID ;  
                                         
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Acuerdo cerrado correctamente');

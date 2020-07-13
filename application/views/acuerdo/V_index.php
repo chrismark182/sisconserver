@@ -108,7 +108,7 @@
     <div class="modal-content">
         <h4 class="left">Periodos</h4>
         <input type="hidden" id="acuerdo_id_periodo" >
-        <div class="btn right" onclick="agregarPeriodo()">Agregar Periodo</div>
+        <div id="btnAgregarPeriodo" class="btn right" onclick="agregarPeriodo()">Agregar Periodo</div>
         <div class="section">
             <table class="striped" style="font-size: 12px;">
                 <thead class="blue-grey darken-1" style="color: white">
@@ -253,7 +253,7 @@
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}')">delete</i>`
                     }
 
-                    $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">event_note</i>`
+                    $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID}, ${element.ALQUIL_C_ESTA_CERRADO})">event_note</i>`
                 
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.ALQUIL_N_ID}</td>
@@ -321,8 +321,9 @@
         }else if(tipo == '2')
         {
             sp = 'ALQUILER_DETALLE_DEL';
-            let periodo = registro[2];            
-            data = {sp, empresa, acuerdo, periodo};
+            let periodo = registro[2];    
+            let usuario = <?= $session->USUARI_N_ID ?>;        
+            data = {sp, empresa, acuerdo, periodo, usuario};
         }
 
         
@@ -363,9 +364,16 @@
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 
-    function verPeriodos($empresa,$acuerdo)
+    function verPeriodos($empresa,$acuerdo, $cerrado = 0)
     {
         console.log('Estoy buscando.. ')
+
+        if($cerrado > 0)
+        {
+            $('#btnAgregarPeriodo').css({'display': 'none'});
+        }else{
+            $('#btnAgregarPeriodo').css({'display': 'block'});
+        }
         
         $('.preloader-background').css({'display': 'block'});
         $('#acuerdo_id_periodo').val($acuerdo)
