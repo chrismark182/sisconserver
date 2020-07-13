@@ -124,7 +124,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         console.log("pagina")
 
-        numero = getParameterByName('aca')
+        numero = getParameterByName('os')
         if(numero != '')
         {
             $('#numero').val(numero)

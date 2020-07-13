@@ -31,7 +31,7 @@ class C_menu extends CI_Controller {
     }
     public function nuevo()
     {
-        $this->data['menus_padre'] = $this->M_crud->read('menu', array('MENU_PADRE_ID' => 0));  
+        $this->data['menus_padre'] = $this->M_crud->read('menu', array('MENU_PADRE_ID' => 0, 'MENU_ESTADO' => 1));  
         $this->load->view('menu/V_nuevo', $this->data);
     }
     public function editar($id)

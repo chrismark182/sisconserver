@@ -7,7 +7,7 @@ class C_ordenservicio extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-		$this->_init();
+		
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
@@ -26,7 +26,8 @@ class C_ordenservicio extends CI_Controller {
 	}
 
     public function index() 
-	{         
+	{    
+        $this->_init();     
         $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
         $sedes = 'Exec SEDE_LIS 0,0';
         $servicios = 'Exec SERVICIO_LIS_ORDEN_SERVICIO 0,0';   
@@ -50,6 +51,7 @@ class C_ordenservicio extends CI_Controller {
 
     public function nuevo()
     {
+        $this->_init();
         $this->data['sedes'] = $this->M_crud->read('sede','SEDE_C_ESTADO = 1', array());
         $this->data['clientes'] = $this->M_crud->read('cliente','CLIENT_C_ESCLIENTE = 1 and CLIENT_C_ESTADO = 1', array());
         $this->data['servicios'] = $this->M_crud->read('servicio','SERVIC_C_REQUIERE_OS = 1 AND SERVIC_C_ESTADO = 1', array());

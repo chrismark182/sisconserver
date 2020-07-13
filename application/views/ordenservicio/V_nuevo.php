@@ -140,13 +140,13 @@
             .then(function(data) 
             {
                 console.log('terminó de ejecutar');
+                M.toast({html: 'Orden Servicio generada correctamente', classes: 'rounded'});
+                window.location.href = "<?= base_url() ?>ordenes?os=" + data[0].ORDSER_N_ID;
             }).catch(function(error) {
                 console.log('Hubo un problema con la petición Fetch:' + error.message);
             });
 
-            M.toast({html: 'Orden Servicio generada correctamente', classes: 'rounded'});
             $('.preloader-background').css({'display': 'none'});    
-            window.location.href = "<?= base_url() ?>ordenes";
         }
         else{
             M.toast({html: 'No puede guardar vacio', classes: 'rounded'});   
