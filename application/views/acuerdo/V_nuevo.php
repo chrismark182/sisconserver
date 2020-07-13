@@ -40,7 +40,7 @@
                 <label>Sede</label>
             </div> 
             <div class="input-field col s4 m4">
-                <input id="fecha" type="text" name="fecha" class="left-align" value="<?= $fecha->format('m/d/Y') ?>" readonly>
+                <input id="fecha" type="text" name="fecha" class="left-align" value="<?= $fecha->format('d/m/Y') ?>" readonly>
                 <label class="active" for="fecha">Fecha Registro</label> 
             </div> 
 
@@ -56,11 +56,11 @@
             </div>
 
             <div class="input-field col s4 m4">
-                <input id="fecha_inicio" maxlength="15" type="text" name="fecha_inicio" class="left-align datepicker validate" value="<?= $fecha->format('m/d/Y') ?>" required>
+                <input id="fecha_inicio" maxlength="15" type="text" name="fecha_inicio" class="left-align datepicker validate" value="<?= $fecha->format('d/m/Y') ?>" required>
                 <label class="active" for="fecha_inicio">Fecha Inicio</label> 
             </div>    
             <div class="input-field col s4 m4">
-                <input id="fecha_termino" maxlength="15" type="text" name="fecha_termino" class="left-align datepicker validate" value="<?= $fechaFinal->format('m/d/Y') ?>" required>
+                <input id="fecha_termino" maxlength="15" type="text" name="fecha_termino" class="left-align datepicker validate" value="<?= $fechaFinal->format('d/m/Y') ?>" required>
                 <label class="active" for="fecha_termino">Fecha Final</label> 
             </div>
             <div class="input-field col s4 m4">
