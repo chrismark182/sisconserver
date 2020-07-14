@@ -42,13 +42,24 @@
                     <label>Sedes</label>
                 </div>
 
-                <div class="input-field col s12 m6 l4">
+                <div class="input-field col s12 m6 l2">
                     <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                     <label class="active" for="desde">Desde</label> 
                 </div>
-                <div class="input-field col s12 m6 l4">
+                <div class="input-field col s12 m6 l2">
                     <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                     <label class="active" for="hasta">Hasta</label> 
+                </div>
+                <div class="input-field col s6 m6 l4">
+                    <select id="moneda" name="moneda">
+                        <option value="" disabled selected>Seleccionar Moneda</option>
+                        <?php if($monedas): ?>
+                            <?php foreach($monedas as $moneda): ?> 
+                                <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_DESCRIPCION ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Monedas</label>
                 </div>
                 
                 <div class="input-field col s4">
@@ -70,10 +81,11 @@
                 <th class="left-align">NUM. FISICO</th>
                 <th class="center-align">FECHA</th>
                 <th class="left-align">SOLICITANTE</th>
-                <th class="center-align">PROYECTO</th>
+                <th class="left-align">PROYECTO</th>
                 <th class="center-align">HORAS</th>
                 <th class="center-align">MON</th>
                 <th class="right-align">PRECIO X HORA</th>
+                <th class="right-align">TOTAL</th>
             </tr>
         </thead>
         <tbody id="resultados">
@@ -106,16 +118,18 @@
         $('#resultados').html('');
         var cliente = document.getElementById("cliente").value;
         var sede = document.getElementById("sede").value;
+        var moneda = document.getElementById("moneda").value;
 
-            if(cliente != '' && sede != '')
+            if(cliente != '' && sede != '' && moneda != '')
             {
                 $('.preloader-background').css({'display': 'block'});
                 cliente = cliente.split('-');
 
                 var url =  '<?= base_url() ?>liq_servicios/nuevo/buscar';
                 var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                            sede: sede,
                             cliente: cliente[0],
+                            sede: sede,
+                            moneda: moneda,
                             desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
                             hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                             };        
@@ -158,6 +172,7 @@
                                                         <td class="center-align">${element.ORDSER_N_HORAS}</td>
                                                         <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                                                         <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
+                                                        <td class="right-align">${element.ORDSER_N_PRECIO_TOTAL}</td>
                                                     </tr>
                                                 `);
                         }
@@ -171,7 +186,8 @@
 
                 });
             }else{
-                M.toast({html: 'Debe elegir un cliente y una sede', classes: 'rounded'});
+                M.toast({html: 'Debe elegir un cliente, sede y moneda', classes: 'rounded'});
+                $('.preloader-background').css({'display': 'none'});    
             }
     }
 
