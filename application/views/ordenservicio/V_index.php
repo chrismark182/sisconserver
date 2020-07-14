@@ -225,7 +225,7 @@
                             <td class="center-align">${element.ORDSER_C_SITUACION_DESCRIPCION}</td>
                             <td class="center-align">
                                 <a href="ordenservicio/reporte/${element.ORDSER_N_ID}" target="_blank">
-                                    <i class="material-icons">description</i>
+                                    <i class="material-icons">print</i>
                                 </a>
                             </td>    
                             <td class="center-align">

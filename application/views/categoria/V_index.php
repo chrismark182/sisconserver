@@ -41,7 +41,7 @@
                         <td class="left-align"><?=$row->CATEGO_C_DESCRIPCION?></td>
                         <td class="center-align">
                             <a href="<?= base_url() ?>categoria/<?= $row->CATEGO_N_ID ?>/permisos">
-                                <i class="material-icons">edit</i>
+                                <i class="material-icons">assignment_ind</i>
                             </a>
                         </td>
                         <td class="center-align">
