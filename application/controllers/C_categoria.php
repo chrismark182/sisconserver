@@ -33,6 +33,16 @@ class C_categoria extends CI_Controller {
     {
         $this->load->view('categoria/V_nuevo', $this->data);
     }
+    public function permisos($id)
+    {
+        $sql= "Exec CATEGORIA_LIS {$id}" ;
+        $categorias = $this->M_crud->sql($sql);  
+        $this->data['categoria'] = $categorias[0];
+
+        $this->data['menus'] = $this->M_crud->sql("Exec CATEGORIA_MENUS {$id}");  
+
+        $this->load->view('categoria/V_permisos', $this->data);
+    }
 
     public function crear(){
     

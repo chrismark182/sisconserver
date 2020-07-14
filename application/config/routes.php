@@ -105,6 +105,7 @@ $route['categorias'] = 'C_categoria';
 $route['categoria/nuevo'] = 'C_categoria/nuevo';
 $route['categoria/crear'] = 'C_categoria/crear';
 $route['categoria/(:num)/editar'] = function ($id){return 'C_categoria/editar/'.$id;};
+$route['categoria/(:num)/permisos'] = function ($id){return 'C_categoria/permisos/'.$id;};
 $route['categoria/(:num)/actualizar'] = function ($id){return 'C_categoria/actualizar/'.$id;};
 $route['categoria/(:num)/eliminar'] = function ($id){return 'C_categoria/eliminar/'.$id;};
 

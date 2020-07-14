@@ -28,6 +28,7 @@
             <tr>          
                 <th class="center-align">ID</th>
                 <th class="left-align">DESCRIPCIÓN DE LA CATEGORÍA</th>
+                <th class="center-align">PERMISOS</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -38,6 +39,11 @@
                     <tr>
                         <td class="center-align"><?=$row->CATEGO_N_ID?></td>
                         <td class="left-align"><?=$row->CATEGO_C_DESCRIPCION?></td>
+                        <td class="center-align">
+                            <a href="<?= base_url() ?>categoria/<?= $row->CATEGO_N_ID ?>/permisos">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </td>
                         <td class="center-align">
                             <a href="<?= base_url() ?>categoria/<?= $row->CATEGO_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
