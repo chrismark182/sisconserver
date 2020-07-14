@@ -17,7 +17,8 @@
     <table>
         <thead>
           <tr>
-              <th>Menú</th>
+                <th>Menú Principal</th>
+              <th>Opción de Menú</th>
               <th>Permiso</th>
           </tr>
         </thead>
@@ -28,6 +29,7 @@
             if($row->PERMISO > 0): $checked = 'checked'; endif;    
         ?>
             <tr>
+                <td><?= $row->MENU_PADRE_DESCRIPCION ?></td>
                 <td><?= $row->MENU_DESCRIPCION ?></td>
                 <td> 
                     <div class="switch">
