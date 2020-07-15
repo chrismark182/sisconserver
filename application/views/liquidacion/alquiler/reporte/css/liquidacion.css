@@ -82,10 +82,10 @@
 }
 
 .col_1{
-    text-align: center;
+    text-align: left;
     padding: 4px 0px;
     font-weight: bold;
-    width: 8%;
+    width: 25%;
     display: inline-block;
 }
 
@@ -98,18 +98,10 @@
 }
 
 .col_3{
-    text-align: left;
+    text-align: center;
     padding: 4px 0px;
     font-weight: bold;
-    width: 25%;
-    display: inline-block;
-}
-
-.col_4{
-    text-align: left;
-    padding: 4px 0px;
-    font-weight: bold;
-    width: 15%;
+    width: 10%;
     display: inline-block;
 }
 
@@ -190,9 +182,9 @@
 }
 
 .fila2_1{
-    text-align: center;
+    text-align: left;
     padding: 4px 0px;
-    width: 8%;
+    width: 25%;
     display: inline-block;
 }
 
@@ -204,16 +196,9 @@
 }
 
 .fila2_3{
-    text-align: left;
+    text-align: center;
     padding: 4px 0px;
-    width: 25%;
-    display: inline-block;
-}
-
-.fila2_4{
-    text-align: left;
-    padding: 4px 0px;
-    width: 15%;
+    width: 20%;
     display: inline-block;
 }
 

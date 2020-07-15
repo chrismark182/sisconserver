@@ -62,15 +62,16 @@ $route['ordenservicio/(:num)/(:num)/eliminar'] = function ($empresa , $id ){retu
 $route['liq_servicios'] = 'C_liquidacion_servicios';
 $route['liq_servicios/buscar'] = 'C_liquidacion_servicios/buscar';
 $route['liq_servicios/reporte/(:num)'] = function ($id){return 'C_liquidacion_servicios/reporte/'.$id;};;
-$route['liq_servicios/reporteAlquiler/(:num)'] = function ($id){return 'C_liquidacion_servicios/reporteAlquiler/'.$id;};;
 $route['liq_servicios/nuevo'] = 'C_liquidacion_servicios/nuevo';
 $route['liq_servicios/nuevo/buscar'] = 'C_liquidacion_servicios/nuevo_buscar';
 $route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_cabecera';
 $route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
 $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
 $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
+
 //Liquidación de Alquiler 
 $route['liq_alquiler'] = 'C_liquidacion_alquiler';
+$route['liq_alquiler/reporte/(:num)'] = function ($id){return 'C_liquidacion_alquiler/reporte/'.$id;};;
 
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';
