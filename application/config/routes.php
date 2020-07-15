@@ -69,6 +69,8 @@ $route['liq_servicios/nuevo/grabar_cabecera'] = 'C_liquidacion_servicios/grabar_
 $route['liq_servicios/nuevo/grabar_detalle'] = 'C_liquidacion_servicios/grabar_detalle';
 $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_servicios/eliminar/'.$empresa.'/'.$id;};
 $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
+//Liquidación de Alquiler 
+$route['liq_alquiler'] = 'C_liquidacion_alquiler';
 
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';
