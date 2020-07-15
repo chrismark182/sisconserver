@@ -70,6 +70,7 @@ $route['liq_servicios/(:num)/(:num)/eliminar'] = function ($empresa , $id ){retu
 $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/updateoc/';};
 //Liquidación de Alquiler 
 $route['liq_alquiler'] = 'C_liquidacion_alquiler';
+$route['liq_alquiler/nuevo'] = 'C_liquidacion_alquiler/nuevo';
 
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';

@@ -107,7 +107,7 @@
 </div>
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" 
-    href="<?= base_url()?>liq_servicios/nuevo"><i class="material-icons">add</i></a>
+    href="<?= base_url()?>liq_alquiler/nuevo"><i class="material-icons">add</i></a>
 
 <!-- Confirmar Eliminar -->
 <div id="modalEliminar" class="modal">

@@ -43,7 +43,7 @@ class C_liquidacion_alquiler extends CI_Controller {
         $this->data['servicios'] = $this->M_crud->read('servicio','SERVIC_C_REQUIERE_OS = 1 AND SERVIC_C_ESTADO = 1', array());
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
 
-        $this->load->view('liquidacion/servicios/V_nuevo', $this->data);        
+        $this->load->view('liquidacion/alquiler/V_nuevo', $this->data);        
     }
     //Reporte 
     public function reporte($id)
@@ -58,21 +58,7 @@ class C_liquidacion_alquiler extends CI_Controller {
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
     //Procesos
-    public function buscar()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['liquidacion']}', '{$data['situacion']}', '{$data['tipo']}'";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
-
-    public function nuevo_buscar()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}', '{$data['moneda']}', '{$data['desde']}', '{$data['hasta']}'";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
+    
     public function grabar_cabecera()
     {
         $data = json_decode(file_get_contents('php://input'), true);
