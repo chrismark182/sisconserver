@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
        
-        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifas</a>
+        <a href="<?= base_url() ?>tarifas" class="breadcrumb">Tarifario</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>
@@ -78,32 +78,42 @@
 
     function validar()
     {
-        var url =  '<?= base_url() ?>api/tarifavalidar';
-        var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    sede: document.getElementById("sede").value,
-                    cliente: document.getElementById("cliente").value,
-                    servicio: document.getElementById("servicio").value,
-                    moneda: document.getElementById("moneda").value};
-        
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
+        if(  
+            document.getElementById("sede").value != '' &&
+            document.getElementById("servicio").value != '' &&
+            document.getElementById("precio").value != '' &&
+            document.getElementById("moneda").value != '')
         {
-            console.log(data.length)
-            if(data.length>0){
-                M.toast({html: 'Tarifa Duplicada', classes: 'rounded'});
-            }
-            else{
-               document.getElementById('form').submit();
-            }
-        });
+            var url =  '<?= base_url() ?>api/tarifavalidar';
+            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                        sede: document.getElementById("sede").value,
+                        cliente: document.getElementById("cliente").value,
+                        servicio: document.getElementById("servicio").value,
+                        moneda: document.getElementById("moneda").value};
+            
+            fetch(url, {
+                        method: 'POST', // or 'PUT'
+                        body: JSON.stringify(data), // data can be `string` or {object}!
+                        headers:{
+                            'Content-Type': 'application/json'
+                            }
+                        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) 
+            {
+                console.log(data.length)
+                if(data.length>0){
+                    M.toast({html: 'Tarifa Duplicada', classes: 'rounded'});
+                }
+                else{
+                    document.getElementById('form').submit();
+                }
+            });
+        }
+        else{
+            M.toast({html: 'No puede guardar vacio', classes: 'rounded'});   
+        }
     }
 </script>

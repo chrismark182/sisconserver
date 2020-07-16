@@ -43,8 +43,8 @@
                 <label class="active" for="liquidacion">Liquidación</label> 
             </div>
             <div class="input-field col s12 m6 l3">
-                <input id="orden_compra" type="number" min="1" maxlength="9" name="orden_compra" class="validate">
-                <label class="active" for="numero">Orden de Compra</label> 
+                <input id="orden_compra" type="text" maxlength="20" name="orden_compra" class="validate">
+                <label class="active" for="orden_compra">Orden de Compra</label> 
             </div>
 
             <div class="input-field col s12 m6 l3">
@@ -77,7 +77,8 @@
             </div>
 
             <div class="input-field col l12">
-                <div id="btnBuscar" class="btn">Buscar</div>
+                <div class="btn-small" id="btnBuscar">Buscar
+                </div>
             </div>
         </form>
     </div>    
@@ -91,12 +92,12 @@
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="center-align">FECHA</th>
-                <th class="center-align">SITUACION</th>
                 <th class="center-align">O/C</th>
                 <th class="center-align">ORDENES</th>
                 <th class="center-align">MON</th>
                 <th class="right-align">TOTAL</th>
-                <th class="center-align">REPORTE</th>
+                <th class="center-align">SITUACION</th>
+                <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -141,6 +142,35 @@
     </form>
 </div>
 
+ <!-- Ver ordenes -->
+ <div id="modalOrdenes" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4 class="left">Ordenes liquidadas</h4>
+        <input type="hidden" id="liquidacion" >
+        <div class="section">
+            <table class="striped" style="font-size: 12px;">
+                <thead class="blue-grey darken-1" style="color: white">
+                    <tr>
+                        <th class="center-align">ORDEN</th>          
+                        <th class="center-align">FECHA</th>
+                        <th class="left-align">SERVICIO</th>
+                        <th class="left-align">PROYECTO</th>
+                        <th class="center-align">HORAS</th>
+                        <th class="center-align">MON</th>
+                        <th class="right-align">PRECIO X HORA</th>
+                        <th class="right-align">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody id="ordenes">            
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
@@ -174,7 +204,7 @@
         var orden_compra = '%'; 
         if($('#orden_compra').val() != '')
         {
-            orden_compra = $('#orden_compra').val() + '%';
+            orden_compra = '%' + $('#orden_compra').val() + '%';
         }
 
         var liquidacion = '0'; 
@@ -221,31 +251,30 @@
                     $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
                     if(element.LIQCAB_C_SITUACION == 0)
                     {
-                        $situacion = 'Pendiente O/C';
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
                     }else
                     if(element.LIQCAB_C_SITUACION == 1)
                     {
-                        $situacion = 'Liquidado';
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
                     }else
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
-                        $situacion = 'En Navasoft';
-                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No se puede eliminar">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
                     }
 
                     if(element.CLIENT_C_REQUIERE_OC == 1)
                     {
                         if(element.LIQCAB_C_SITUACION < 2)
                         {
-                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
+                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">speaker_notes</i>`
                         }else{
-                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">speaker_notes</i>`
                         }
                     }else{
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">event_note</i>`
+                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">speaker_notes</i>`
                     }
+
+                    $ver_ordenes = `${element.SERVIC_N_CANTIDAD} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verOrdenes(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
                 
                     $('#resultados').append(`   
                         <tr>
@@ -253,14 +282,16 @@
                             <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                             <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                             <td class="center-align">${element.LIQCAB_C_FECHA}</td>
-                            <td class="center-align">${$situacion}</td>
                             <td class="right-align">${$orden_compra}</td>
-                            <td class="center-align">${element.SERVIC_N_CANTIDAD}</td>
+                            <td class="center-align">
+                                ${$ver_ordenes}                
+                            </td>
                             <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                             <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
+                            <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
                             <td class="center-align">
                                 <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
-                                    <i class="material-icons">description</i>
+                                    <i class="material-icons">monetization_on</i>
                                 </a>
                             </td>                        
                             <td class="center-align">
@@ -299,4 +330,50 @@
 		results = regex.exec(location.search);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
+
+    function verOrdenes($empresa,$liquidacion)
+    {
+        console.log('Estoy buscando.. ')
+
+        $('.preloader-background').css({'display': 'block'});
+        $('#liquidacion').val($liquidacion)
+        let url = 'api/execsp';
+        let sp = 'LIQUIDACION_SERVICIOS_LIS_REPORTE';
+        let empresa = $empresa;
+        let liquidacion = $liquidacion;
+        data = {sp, empresa, liquidacion};
+        
+        $('#ordenes').html('');
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+
+                $('#ordenes').append(`   
+                                        <tr>
+                                            <td class="center-align">${element.ORDSER_N_ID}</td>
+                                            <td class="center-align">${element.ORDSER_D_FECHA}</td>
+                                            <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
+                                            <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
+                                            <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                                            <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
+                                            <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
+                                            <td class="right-align">${element.ORDSER_N_PRECIO_TOTAL}</td>
+                                        </tr>
+                                    `);
+            }
+            $('#modalOrdenes').modal('open');
+            $('.preloader-background').css({'display': 'none'});                            
+        });
+    }
 </script>

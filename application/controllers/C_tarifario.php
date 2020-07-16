@@ -100,7 +100,7 @@ class C_tarifario extends CI_Controller {
         
         else:
             $this->session->set_flashdata('message','No puede guardar en vacio');
-            header("Location: nuevo");
+            //header("Location: nuevo");
         endif;   
     }
 

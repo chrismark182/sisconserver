@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=5.3.7",
 		"dompdf/dompdf": "^0.8.5",
-		"symfony/process": "^5.1"
+		"symfony/process": "^5.1",
+		"hisamu/php-xbase": "^1.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

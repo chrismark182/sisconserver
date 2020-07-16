@@ -12,7 +12,9 @@ class C_usuario extends CI_Controller {
 		if($this->session->userdata('logged_in')):
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
-            $this->data['accesos'] = $this->esandexaccesos->accesos();
+			$this->data['accesos'] = $this->esandexaccesos->accesos();
+			$empresa = $this->M_crud->read('empresa', array('EMPRES_N_ID' => $this->session->userdata('empresa_id')));
+            $this->data['empresa']=$empresa[0];
 		else:
 			redirect(base_url(),'refresh');
 		endif;
@@ -124,4 +126,23 @@ class C_usuario extends CI_Controller {
 								        			'{$_SERVER['REMOTE_ADDR']}'
 								        ");	 
 	}
+
+	public function eliminar($id)
+    {
+	   $sql = "Exec USUARIO_DEL {$id}";        
+	   
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('usuarios', 'refresh');       
+	}
+	
+    public function cambio_pass(){
+		$this->load->view('usuario/V_cambio_pass', $this->data);
+	}
+	public function cambio_pass_usuario($id)
+	{
+		$this->data['user_id'] = $id;
+		$this->load->view('usuario/V_cambio_pass_usuario', $this->data);
+	}
+
 }

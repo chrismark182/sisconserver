@@ -46,16 +46,20 @@ class C_liquidacion_servicios extends CI_Controller {
 
         $this->load->view('liquidacion/servicios/V_nuevo', $this->data);        
     }
+    
     //Reporte 
     public function reporte($id)
     {
-        $sql= "Exec LIQUIDACION_SERVICIOS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $sql= "Exec LIQUIDACION_LIS_REPORTE_SERVICIOS {$this->session->userdata('empresa_id')},{$id}";
         $result = $this->M_crud->sql($sql);
+        $sql= "Exec LIQUIDACION_LIS_REPORTE_SERVICIOS_RESUMEN {$this->session->userdata('empresa_id')},{$id}";
+        $result2 = $this->M_crud->sql($sql);
         ob_start();        
         require_once(APPPATH.'views/liquidacion/servicios/reporte/index.php');
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
+    
     //Procesos
     public function buscar()
     {
@@ -68,14 +72,14 @@ class C_liquidacion_servicios extends CI_Controller {
     public function nuevo_buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}'";
+        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}', '{$data['moneda']}', '{$data['desde']}', '{$data['hasta']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
     public function grabar_cabecera()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_INS {$data['empresa']}, {$data['cliente']}, {$data['sede']}, {$data['situacion']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_INS {$data['empresa']}, {$data['cliente']}, {$data['sede']}, 'S', {$data['situacion']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -83,7 +87,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function grabar_detalle()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_DETALLE_INS {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_DETALLE_INS 'S', {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }

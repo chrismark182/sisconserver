@@ -23,3 +23,12 @@ body
     right: 16px!important;
     bottom: 40px!important;
 }
+table
+{
+    font-size: 12px;
+}
+thead
+{
+    background-color: #546e7a !important;
+    color: white;
+}

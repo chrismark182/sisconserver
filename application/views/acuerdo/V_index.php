@@ -22,8 +22,9 @@
         </ul>
     </div>
 </nav>
+
 <!-- Buscador -->
- <div class="section container center">
+ <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
             <div class="input-field col s12 m6 l4">
@@ -46,26 +47,26 @@
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            <div class="input-field col s2">
+            <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
             </div>
         </form>
     </div>    
 </div> 
 
-<div class="section container">
+<div class="container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="right-align">ID</th>
+                <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
                 <th class="left-align">UBICACIÓN</th>
-                <th class="left-align">CLIENTE</th>
                 <th class="center-align">F. INICIO</th>
                 <th class="center-align">F. TERMINO</th>
                 <th class="center-align">CERRADO</th>
                 <th class="center-align">PERIODOS</th>
-                <th class="center-align">EDITAR</th>
+                <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
@@ -107,7 +108,7 @@
     <div class="modal-content">
         <h4 class="left">Periodos</h4>
         <input type="hidden" id="acuerdo_id_periodo" >
-        <div class="btn right" onclick="agregarPeriodo()">Agregar Periodo</div>
+        <div id="btnAgregarPeriodo" class="btn right" onclick="agregarPeriodo()">Agregar Periodo</div>
         <div class="section">
             <table class="striped" style="font-size: 12px;">
                 <thead class="blue-grey darken-1" style="color: white">
@@ -147,7 +148,7 @@
                 </div>
                 <div class="input-field col s6">
                     <input placeholder=" " id="nuevo_area" type="text" class="right-align">
-                    <label for="nuevo_area">Area</label>
+                    <label for="nuevo_area">Area M2</label>
                 </div>
                 <div class="input-field col s6">
                     <input placeholder=" " id="nuevo_precio" type="text" class="validate right-align" onkeydown="recalcular()" onchange="recalcular()">
@@ -164,12 +165,21 @@
         <a href="#!" class="waves-effect waves-green btn" onclick="guardarNuevoPeriodo()">GUARDAR NUEVO PERIODO</a>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
-        buscar()
+        
+        acuerdo_id = getParameterByName('aca')
+        if(acuerdo_id != '')
+        {
+            $('#acuerdo_id').val(acuerdo_id)
+            M.updateTextFields();
+            buscar()
+        }
     });
+
     function buscar()
     {
         console.log('Estoy buscando.. ')
@@ -226,10 +236,9 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                 
-                    $cerrado='<i class="material-icons" style="color: #999">lock_open</i>';
-
+                    $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tiene periodos pendientes">lock_open</i>';
                     if(element.ALQUIL_C_ESTA_CERRADO==1){
-                        $cerrado = '<i class="material-icons">lock</i>'
+                        $cerrado = '<i class="material-icons tooltipped" data-tooltip="Cerrado">lock</i>'
                     }else if(element.ALQUIL_C_ESTA_CERRADO==0){
                         if(element.CANTIDAD_DETALLES == element.SITUACION_MAYOR_CERO)
                         {
@@ -237,30 +246,36 @@
                         }
                     }
 
-                    $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
-                    if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                    $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, tiene periodos liquidados">delete</i>`
+                    if(element.ALQUIL_C_ESTA_CERRADO==1)
                     {
-                        $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">delete</i>`
+                        $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-tooltip="No puede eliminar, está cerrado">delete</i>`    
                     }
-                
+                    else{
+                        if(element.CANTIDAD_DETALLES == element.SITUACION_CERO)
+                        {
+                            $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}')">delete</i>`
+                        }
+                    }
+
+                    $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID}, ${element.ALQUIL_C_ESTA_CERRADO})">event_note</i>`
+
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                                                     <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
-                                                    <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="center-align">${element.ALQUIL_C_FECHA_INICIO}</td>
                                                     <td class="center-align">${element.ALQUIL_C_FECHA_FINAL}</td>
                                                     <td class="center-align">${$cerrado}</td>
                                                     <td class="center-align">
-                                                        <a href="#">
-                                                            <i class="material-icons" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID})">assignment</i>
-                                                        </a>
+                                                        ${$ver_periodos}                
                                                     </td>
                                                     <td class="center-align">
-                                                        <a href="#">
-                                                            <i class="material-icons" >edit</i>
+                                                        <a href="acuerdo/reporte/${element.ALQUIL_N_ID}" target="_blank">
+                                                            <i class="material-icons">layers</i>
                                                         </a>
-                                                    </td>
+                                                    </td> 
                                                     <td class="center-align">
                                                         ${$eliminar}                
                                                     </td>
@@ -272,14 +287,16 @@
             else{
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
-            $('.preloader-background').css({'display': 'none'});                            
+            $('.preloader-background').css({'display': 'none'}); 
+            $('.tooltipped').tooltip();                           
         });
-        
     }
+
     function recalcular()
     {
         $('#np_total').val(parseInt($('#nuevo_area').val()) * parseInt($('#nuevo_precio').val()))        
     }
+
     function modalEliminar($tipo, $registro)
     {
         console.log('confirmar eliminar')
@@ -288,17 +305,32 @@
         $('#eliminar_registro').val($registro);
         $('#modalEliminar').modal('open');
     }
+
     function confirmarEliminar()
     {
         $('.preloader-background').css({'display': 'block'});
+        let tipo = $('#eliminar_tipo').val();
+
         let registro = $('#eliminar_registro').val();
         registro = registro.split('-');
+
         let url = 'api/execsp';
-        let sp = 'ALQUILER_DETALLE_DEL';
         let empresa = registro[0];
         let acuerdo = registro[1];
-        let periodo = registro[2];
-        data = {sp, empresa, acuerdo, periodo};
+        let sp = '';
+        let data = '';
+        if(tipo == '1')
+        {
+            sp = 'ALQUILER_DEL';
+            data = {sp, empresa, acuerdo};
+        }else if(tipo == '2')
+        {
+            sp = 'ALQUILER_DETALLE_DEL';
+            let periodo = registro[2];    
+            let usuario = <?= $session->USUARI_N_ID ?>;        
+            data = {sp, empresa, acuerdo, periodo, usuario};
+        }
+
         
         fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -313,10 +345,16 @@
         .then(function(data) 
         {
             $('.preloader-background').css({'display': 'none'});     
-            verPeriodos(empresa, acuerdo);
+            if(tipo == '1')
+            {
+                buscar();
+            }else if(tipo == '2')
+            {
+                verPeriodos(empresa, acuerdo);        
+            }
         });
-
     }
+
     function confirmarCerrar($empresa,$acuerdo)
     {
         console.log('confirmar cerrar')
@@ -330,9 +368,17 @@
 		results = regex.exec(location.search);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
-    function verPeriodos($empresa,$acuerdo)
+
+    function verPeriodos($empresa,$acuerdo, $cerrado = 0)
     {
         console.log('Estoy buscando.. ')
+
+        if($cerrado > 0)
+        {
+            $('#btnAgregarPeriodo').css({'display': 'none'});
+        }else{
+            $('#btnAgregarPeriodo').css({'display': 'block'});
+        }
         
         $('.preloader-background').css({'display': 'block'});
         $('#acuerdo_id_periodo').val($acuerdo)
@@ -361,7 +407,6 @@
                 const element = data[index];
 
                 let $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
-                let $situacion = ``
                 if(element.ALQDET_C_SITUACION == '0')
                 {
                     $eliminar = `<i class="material-icons" style="cursor: pointer;" onclick="modalEliminar('2', '${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}')">delete</i>`
@@ -377,9 +422,7 @@
                                             <td class="right-align">${element.ALQDET_N_AREA}</td>
                                             <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                             <td class="right-align">${element.TOTAL}</td>
-                                            <td class="center-align">
-                                                ${$situacion}  
-                                            </td>
+                                            <td class="center-align">${element.ALQDET_C_SITUACION_DES}</td>
                                             <td class="center-align">
                                                 ${$eliminar} 
                                             </td>
@@ -436,6 +479,7 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
     }
+
     function guardarNuevoPeriodo()
     {
         console.log('Estoy buscando.. ')
@@ -473,9 +517,7 @@
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
             return false; 
         }
-
     }
-
 </script>
 
 

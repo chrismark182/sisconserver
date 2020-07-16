@@ -12,10 +12,10 @@
         bottom: 30px;
         overflow-y: scroll;
     }
-    .column-result
+    .lista-detalles
     {
-        position:absolute; 
-        left: 34%!important;
+        height: 150px;
+        overflow-y: scroll;
     }
     h5
     {
@@ -27,20 +27,9 @@
         <div class="col s4" style="display: inline-block">
             <a href="#!" class="breadcrumb">Indicador por Cliente</a>
         </div>
-        <ul id="nav-mobile" class="right">
-            <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
-                <div>
-                    <b>
-                        Total Registros: 
-                        &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2">0</span>
-                    </b>
-                </div>
-            </div>
-        </ul>
     </div>
 </nav>
-<div class="row">
+<div class="section container row">
     <div class="col s12">
         <div class="section row">
             <div class="input-field col s12 m6 l4">
@@ -62,15 +51,45 @@
             </div>  
             <div class="col s12 m6 l4 section">
                 <h5>Sedes</h5>
-                <div id="sedes"></div>
+                <div id="sedes" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="sede" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col s12 m6 l4 section">
                 <h5>Clientes</h5>
-                <div id="clientes"></div>
+                <div id="clientes" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="cliente" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col s12 m6 l4 section">
                 <h5>Servicios</h5>
-                <div id="servicios"></div>
+                <div id="servicios" class="lista-detalles">
+                    <div class="input-field col s12">
+                        <div class="switch">
+                            <label>
+                                <input id="checktotos" type="checkbox" class="servicio" value="0" checked onclick="seleccionarTodos(this)">
+                                <span class="lever"></span>
+                                    Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
@@ -81,18 +100,17 @@
         <div id="chart_div"></div>
     </div>
 </div>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
         sedes()
-        
-        
-        
         google.charts.load('current', {packages: ['corechart', 'bar']});
         
     });
+    
     async function sedes()
     {
         $('.preloader-background').css({'display': 'block'});         
@@ -115,7 +133,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -149,6 +166,10 @@
         }
         return sedes;
     }
+    function seleccionarTodos()
+    {
+
+    }
     async function clientes()
     {
         $('.preloader-background').css({'display': 'block'});         
@@ -171,7 +192,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -187,7 +207,6 @@
                     </div>
                     `)
             }
-            console.log('Clientes cargados');
             servicios()
             $('.preloader-background').css({'display': 'none'});                
         });
@@ -228,7 +247,6 @@
         })
         .then(function(data) 
         {
-            console.log(data)
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                 
@@ -244,8 +262,7 @@
                     </div>
                     `)
             }
-            console.log('Servicios Cargados');
-            buscar();
+            //buscar();
             $('.preloader-background').css({'display': 'none'});                
         });
     }
@@ -263,6 +280,24 @@
         }
         return servicios;
     }
+    function seleccionarTodos(e)
+    {
+        /*
+        var checados = $('#resultados').find('input:checkbox:checked');
+        checados.length;
+        */
+        var checks = $('.' +$(e)[0].className);
+        if($(e)[0].checked){
+            for (let index = 0; index < checks.length; index++) {
+                checks[index].checked = true;               
+            }
+        }else{
+            for (let index = 0; index < checks.length; index++) {
+                checks[index].checked = false;               
+            }
+        }
+        //$('#resultados').find('input:checkbox')[0].checked = true
+    }
     function buscar()
     {
         $('.preloader-background').css({'display': 'block'});    
@@ -275,7 +310,7 @@
         fecha_hasta = fecha_hasta[2] + fecha_hasta[1] + fecha_hasta[0];
 
         let url = 'api/execsp';
-        let sp = 'INDICADOR_SERVICIOS_LIS';
+        let sp = 'INDICADOR_LIS_SERVICIOS';
         let tipo = 'C';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
         let cliente = clientes_checkados();
@@ -296,8 +331,6 @@
         })
         .then(function(data) 
         {
-            console.log('encontré resultados')
-            console.log(data)
             //google.charts.setOnLoadCallback(drawGrafic);
             drawGrafic(data)
             $('.preloader-background').css({'display': 'none'});                
@@ -309,12 +342,9 @@
                         ['Cliente', 'Precio Total', { role: 'style' }, { role: 'annotation' } ]
                     ]
         for (let index = 0; index < data.length; index++) {
-            console.log('vuelta ' + (index + 1));
-            console.log(array);
             const element = data[index];
             const cliente = [element.CLIENT_C_RAZON_SOCIAL, parseFloat(element.ORDSER_N_PRECIO_TOTAL), '#b87333', parseFloat(element.ORDSER_N_PRECIO_TOTAL)]
             array.push(cliente);
-            console.log(array);
         }
         var data = google.visualization.arrayToDataTable(array);
         var chart = new google.visualization.ColumnChart(

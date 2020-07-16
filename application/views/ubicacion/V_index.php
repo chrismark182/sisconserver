@@ -27,7 +27,9 @@
                 <th class="left-align">SEDE</th>
                 <th class="left-align">TIPO DE ALMACEN</th>
                 <th class="left-align">UBICACIÓN</th>
-                <th class="rigth-align">AREA M2</th>
+                <th class="right-align">AREA M2</th>
+                <th class="right-align">AREA EN USO</th>
+                <th class="right-align">AREA SALDO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -39,7 +41,9 @@
                         <td class="left-align"><?=$ubicacion->SEDE_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$ubicacion->TIPALM_C_DESCRIPCION?></td>
                         <td class="left-align"><?=$ubicacion->UBICAC_C_DESCRIPCION?></td>
-                        <td class="rigth-align"><?=number_format($ubicacion->UBICAC_N_M2, 2)?></td>
+                        <td class="right-align"><?=number_format($ubicacion->UBICAC_N_M2, 2)?></td>
+                        <td class="right-align"><?=number_format($ubicacion->UBICAC_N_USADO, 2)?></td>
+                        <td class="right-align"><?=number_format($ubicacion->UBICAC_N_SALDO, 2)?></td>
                         <td class="center-align">
                             <a href="<?= base_url() ?>ubicacion/<?= $ubicacion->EMPRES_N_ID ?>/<?= $ubicacion->SEDE_N_ID ?>/<?= $ubicacion->UBICAC_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>

@@ -16,6 +16,7 @@ class C_categoria extends CI_Controller {
 			redirect(base_url(),'refresh');
 		endif;
     }
+
     private function _init()
 	{
 		$this->output->set_template('siscon');
@@ -27,10 +28,22 @@ class C_categoria extends CI_Controller {
         $this->data['results'] = $this->M_crud->sql($sql);  
         $this->load->view('categoria/V_index', $this->data);
     }
+
     public function nuevo()
     {
         $this->load->view('categoria/V_nuevo', $this->data);
     }
+    public function permisos($id)
+    {
+        $sql= "Exec CATEGORIA_LIS {$id}" ;
+        $categorias = $this->M_crud->sql($sql);  
+        $this->data['categoria'] = $categorias[0];
+
+        $this->data['menus'] = $this->M_crud->sql("Exec CATEGORIA_MENUS {$id}");  
+
+        $this->load->view('categoria/V_permisos', $this->data);
+    }
+
     public function crear(){
     
         if($this->input->post('descripcion') != ''):
@@ -44,6 +57,7 @@ class C_categoria extends CI_Controller {
             redirect('categoria/nuevo','refresh');   
         endif;
     }
+
     public function editar($id)
     {  
         $sql = "Exec CATEGORIA_LIS " .$id;
@@ -58,7 +72,7 @@ class C_categoria extends CI_Controller {
             $sql = "Exec CATEGORIA_UPD  {$id},
                                         '{$this->input->post('descripcion')}',
                                         '{$this->session->userdata('id')}'";
-            echo $sql;
+           // echo $sql;
             $this->M_crud->sql($sql);      
             $this->session->set_flashdata('message','Datos actualizados correctamente');
             redirect('categorias', 'refresh');       
@@ -67,6 +81,7 @@ class C_categoria extends CI_Controller {
             redirect('categoria/'.$id.'/editar','refresh');   
         endif;
     }  
+
     public function eliminar($id)
     {
        $sql = "Exec CATEGORIA_DEL {$id}";        
@@ -75,6 +90,4 @@ class C_categoria extends CI_Controller {
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('categorias', 'refresh');       
     }  
-
-
 }

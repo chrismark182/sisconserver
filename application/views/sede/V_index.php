@@ -20,7 +20,7 @@
     <div>
         &nbsp;
     </div>
-
+	
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          

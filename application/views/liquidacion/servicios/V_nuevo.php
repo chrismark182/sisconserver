@@ -1,3 +1,9 @@
+<?php 
+    $fechaDesde = new DateTime();
+    $fechaDesde->modify('first day of this month');    
+    $fechaHasta = new DateTime();
+?>
+
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
       <div class="col s12">
@@ -10,40 +16,62 @@
 
 <!-- Buscardor -->
 <div class="section container center" style="padding-bottom: 0px">
-    <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
-        <div class="row" style="margin-bottom: 0px">
-            <div class="input-field col s12 m6 l8">
-                <select id="cliente" name="cliente">
-                    <option value="" disabled selected>Seleccionar Cliente</option>
-                    <?php if($clientes): ?>
-                        <?php foreach($clientes as $cliente): ?> 
-                            <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Clientes</label>
-            </div>
-            <div class="input-field col s6 m6 l4">
-                <select id="sede" name="sede">
-                    <option value="" disabled selected>Seleccionar Sede</option>
-                    <?php if($sedes): ?>
-                        <?php foreach($sedes as $sede): ?> 
-                            <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
-                        <?php endforeach; ?> 
-                    <?php endif; ?>
-                </select>
-                <label>Sedes</label>
-            </div>
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>tarifa/crear" method="post" id="form">
+            <div class="row" style="margin-bottom: 0px">
+                <div class="input-field col s12 m6 l8">
+                    <select id="cliente" name="cliente">
+                        <option value="" disabled selected>Seleccionar Cliente</option>
+                        <?php if($clientes): ?>
+                            <?php foreach($clientes as $cliente): ?> 
+                                <option value="<?= $cliente->CLIENT_N_ID ?>-<?= $cliente->CLIENT_C_REQUIERE_OC ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Clientes</label>
+                </div>
+                <div class="input-field col s6 m6 l4">
+                    <select id="sede" name="sede">
+                        <option value="" disabled selected>Seleccionar Sede</option>
+                        <?php if($sedes): ?>
+                            <?php foreach($sedes as $sede): ?> 
+                                <option value="<?= $sede->SEDE_N_ID ?>"><?= $sede->SEDE_C_DESCRIPCION ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Sedes</label>
+                </div>
 
-            <div class="input-field col s12">
-                <div class="btn-small" id="btnBuscar" >Buscar</div>
+                <div class="input-field col s12 m6 l2">
+                    <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="desde">Desde</label> 
+                </div>
+                <div class="input-field col s12 m6 l2">
+                    <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                    <label class="active" for="hasta">Hasta</label> 
+                </div>
+                <div class="input-field col s6 m6 l4">
+                    <select id="moneda" name="moneda">
+                        <option value="" disabled selected>Seleccionar Moneda</option>
+                        <?php if($monedas): ?>
+                            <?php foreach($monedas as $moneda): ?> 
+                                <option value="<?= $moneda->MONEDA_N_ID ?>"><?= $moneda->MONEDA_C_DESCRIPCION ?></option>
+                            <?php endforeach; ?> 
+                        <?php endif; ?>
+                    </select>
+                    <label>Monedas</label>
+                </div>
+                
+                <div class="input-field col s4">
+                    <div class="btn-small" id="btnBuscar" >Buscar</div>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <!-- Resultados -->
-<div class="section container">
+<div class="container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
@@ -53,10 +81,11 @@
                 <th class="left-align">NUM. FISICO</th>
                 <th class="center-align">FECHA</th>
                 <th class="left-align">SOLICITANTE</th>
-                <th class="center-align">PROYECTO</th>
+                <th class="left-align">PROYECTO</th>
                 <th class="center-align">HORAS</th>
                 <th class="center-align">MON</th>
-                <th class="right-align">PREC. UNIT</th>
+                <th class="right-align">PRECIO X HORA</th>
+                <th class="right-align">TOTAL</th>
             </tr>
         </thead>
         <tbody id="resultados">
@@ -66,6 +95,7 @@
         <div class="btn-small" style="display: none" id="btnLiquidar" >Liquidar</div>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
@@ -76,19 +106,32 @@
 
     function buscar()
     {
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
+
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
+        
         $('#resultados').html('');
         var cliente = document.getElementById("cliente").value;
         var sede = document.getElementById("sede").value;
+        var moneda = document.getElementById("moneda").value;
 
-            if(cliente != '' && sede != '')
+            if(cliente != '' && sede != '' && moneda != '')
             {
                 $('.preloader-background').css({'display': 'block'});
                 cliente = cliente.split('-');
 
                 var url =  '<?= base_url() ?>liq_servicios/nuevo/buscar';
                 var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                            sede: sede,
                             cliente: cliente[0],
+                            sede: sede,
+                            moneda: moneda,
+                            desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+                            hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
                             };        
                 
                 fetch(url, {
@@ -129,6 +172,7 @@
                                                         <td class="center-align">${element.ORDSER_N_HORAS}</td>
                                                         <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                                                         <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
+                                                        <td class="right-align">${element.ORDSER_N_PRECIO_TOTAL}</td>
                                                     </tr>
                                                 `);
                         }
@@ -142,7 +186,8 @@
 
                 });
             }else{
-                M.toast({html: 'Debe elegir un cliente y una sede', classes: 'rounded'});
+                M.toast({html: 'Debe elegir un cliente, sede y moneda', classes: 'rounded'});
+                $('.preloader-background').css({'display': 'none'});    
             }
     }
 
