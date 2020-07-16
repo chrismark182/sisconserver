@@ -303,7 +303,7 @@
         fecha_hasta = fecha_hasta[2] + fecha_hasta[1] + fecha_hasta[0];
 
         let url = 'api/execsp';
-        let sp = 'INDICADOR_SERVICIOS_LIS';
+        let sp = 'INDICADOR_LIS_SERVICIOS';
         let tipo = 'M';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
         let cliente = clientes_checkados();

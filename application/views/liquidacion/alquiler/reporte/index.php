@@ -60,10 +60,10 @@
                 UBICACION
             </div> 
             <div class = "col_2">
-                FECHA INICIO
+                F.INICIO
             </div> 
             <div class = "col_3">
-                FECHA FINAL
+                F.FINAL
             </div> 
             <div class = "col_5">
                 AREA M2
@@ -115,11 +115,11 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th>
-                    <td width="250px">
+                    <td width="450px">
                     </td>
                 </th>
                 <th>
-                    <div class="fila3" style="border-top: 0px;">
+                    <div class="fila3" >
                         <br>
                         <div class="fila_final">
                             <div class = "col_sub_totales_titulos">
