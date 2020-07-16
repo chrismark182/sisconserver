@@ -15,7 +15,7 @@
                 <label class="active" for="fecha">Fecha</label> 
             </div>
             <div class="input-field col s12 m6">
-                <input id="monto" maxlength="15" type="number" name="monto" class="right-align validate" onchange="calcularTotal()">
+                <input id="monto" maxlength="15" type="number" name="monto" class="right-align validate">
                 <label class="active" for="monto">Monto</label> 
             </div>
             <div class="input-field col s12">
@@ -54,10 +54,9 @@
             document.getElementById('monto').value.trim()  != '' 
             )
             {
-            var url =  '<?= base_url() ?>api/clientevalidar';
-            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-            tdocumento: document.getElementById("tdocumento").value,            
-            ndocumento: document.getElementById("ndocumento").value
+            var url =  '<?= base_url() ?>api/validartipocambio';
+            var data = { empresa: <?= $empresa->EMPRES_N_ID ?>, 
+            fecha: document.getElementById("fecha").value
                     };
             fetch(url, {
             method: 'POST', // or 'PUT'

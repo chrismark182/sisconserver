@@ -83,7 +83,14 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
-    
+
+    public function validartipocambio()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = "Exec TIPO_CAMBIO_VAL {$data['empresa']},'{$data['fecha']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
     public function execsp()
     {
         $data = json_decode(file_get_contents('php://input'), true);

@@ -26,7 +26,6 @@
             <tr>          
                 <th class="left-align">FECHA</th>
                 <th class="left-align">TIPO DE CAMBIO</th>
-                <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
                 
             </tr>
@@ -37,11 +36,7 @@
                     <tr>
                         <td class="left-align"><?=$cambio->TIPCAM_C_FECHA?></td>
                         <td class="rigth-align"><?=$cambio->TIPCAM_N_VALOR_VENTA?></td>
-                        <td class="center-align">
-                            <a href="<?= base_url() ?>cambio/<?= $cambio->EMPRES_N_ID ?>/<?= $cambio->TIPCAM_N_ID ?>/editar">
-                                <i class="material-icons">edit</i>
-                            </a>
-                        </td>
+                        
                         <td class="center-align">
                             <a class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cambio->EMPRES_N_ID ?>,<?= $cambio->TIPCAM_N_ID ?>)">delete</i>
                                </a>
