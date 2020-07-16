@@ -56,10 +56,10 @@
             </div>
         </div> 
         <div class="fila2" style="border-top: 0px;">
-            <div class = "col_2">
+            <div class = "col_1">
                 UBICACION
             </div> 
-            <div class = "col_1">
+            <div class = "col_2">
                 FECHA INICIO
             </div> 
             <div class = "col_3">
@@ -81,10 +81,10 @@
         
             <?php $i = 0;?>
                 <?php foreach ($result as $item): ?>
-                    <div class = "fila2_2">
+                    <div class = "fila2_1">
                         <?= $result[$i]->UBICAC_C_DESCRIPCION ?>
                     </div> 
-                    <div class = "fila2_1">
+                    <div class = "fila2_2">
                         <?= $result[$i]->ALQDET_C_FECHA_INICIO ?>
                     </div> 
                     <div class = "fila2_3">

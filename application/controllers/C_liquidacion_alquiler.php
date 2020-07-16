@@ -51,15 +51,14 @@ class C_liquidacion_alquiler extends CI_Controller {
         $this->data['ordenes'] = $ordenes[0];
         $this->load->view('ordenservicio/V_editar',$this->data);
     }
+
     //Reporte 
     public function reporte($id)
     {
-        $sql= "Exec LIQUIDACION_SERVICIOS_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $sql= "Exec LIQUIDACION_LIS_REPORTE_ALQUILER {$this->session->userdata('empresa_id')},{$id}";
         $result = $this->M_crud->sql($sql);
-        $sql= "Exec LIQUIDACION_SERVICIOS_LIS_REPORTE_RESUMEN {$this->session->userdata('empresa_id')},{$id}";
-        $result2 = $this->M_crud->sql($sql);
         ob_start();        
-        require_once(APPPATH.'views/liquidacion/servicios/reporte/index.php');
+        require_once(APPPATH.'views/liquidacion/alquiler/reporte/index.php');
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }

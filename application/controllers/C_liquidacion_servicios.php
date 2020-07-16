@@ -59,16 +59,6 @@ class C_liquidacion_servicios extends CI_Controller {
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
-
-    public function reporteAlquiler($id)
-    {
-        $sql= "Exec LIQUIDACION_LIS_REPORTE_ALQUILER {$this->session->userdata('empresa_id')},{$id}";
-        $result = $this->M_crud->sql($sql);
-        ob_start();        
-        require_once(APPPATH.'views/liquidacion/alquiler/reporte/index.php');
-        $html = ob_get_clean();
-        $this->pdfgenerator->generate($html, "reporte.pdf");
-    }
     
     //Procesos
     public function buscar()
