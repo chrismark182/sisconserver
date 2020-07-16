@@ -196,7 +196,7 @@
             cliente = cliente.split('-');
         
         var situacion = 1;
-        if(cliente[1] == 1){ situacion = 0 }
+        //if(cliente[1] == 1){ situacion = 0 }
 
         var checados = $('.check:checked')
         console.log('Checados:' + checados.length);
@@ -206,12 +206,12 @@
             let url =  '<?= base_url() ?>api/execsp';
             let sp = 'LIQUIDACION_INS';
             let empresa = <?= $empresa->EMPRES_N_ID ?>;
-            let cliente = cliente[0];
+            let cliente_id = cliente[0];
             let sede = document.getElementById("sede").value;
             let tipo = 'A';
             let usuario = <?= $this->data['session']->USUARI_N_ID ?>;
 
-            let data = {sp, empresa, cliente, sede, tipo, situacion, usuario};            
+            let data = {sp, empresa, cliente_id, sede, tipo, situacion, usuario};            
             
             fetch(url, {
                         method: 'POST', // or 'PUT'
@@ -277,7 +277,7 @@
         }
         M.toast({html: 'Liquidación generada correctamente', classes: 'rounded'});
         $('.preloader-background').css({'display': 'none'});    
-        window.location.href = "<?= base_url() ?>liq_servicios?li=" + liquidacion;
+        window.location.href = "<?= base_url() ?>liq_alquiler?li=" + liquidacion;
     }
 </script>
 
