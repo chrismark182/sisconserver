@@ -76,15 +76,14 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="center-align"></th>
-                <th class="center-align">ORDEN SERV.</th>
-                <th class="left-align">SERVICIO</th>
-                <th class="left-align">NUM. FISICO</th>
-                <th class="center-align">FECHA</th>
-                <th class="left-align">SOLICITANTE</th>
-                <th class="left-align">PROYECTO</th>
-                <th class="center-align">HORAS</th>
-                <th class="center-align">MON</th>
-                <th class="right-align">PRECIO X HORA</th>
+                <th class="center-align">ALQUILER</th>
+                <th class="center-align">ITEM</th>
+                <th class="left-align">UBICACIÓN</th>
+                <th class="center-align">FECHA INICIO</th>
+                <th class="center-align">FECHA FINAL</th>
+                <th class="right-align">AREAR</th>
+                <th class="left-align">MONEDA</th>
+                <th class="right-align">PRECIO X M2</th>
                 <th class="right-align">TOTAL</th>
             </tr>
         </thead>
@@ -124,11 +123,11 @@
             {
                 $('.preloader-background').css({'display': 'block'});
                 cliente = cliente.split('-');
+                cliente = cliente[0];
 
                 let url =  '<?= base_url() ?>api/execsp';
                 let sp = 'LIQUIDACION_ALQUILER_NUEVO';
                 let empresa = <?= $empresa->EMPRES_N_ID ?>;
-                let cliente = cliente[0];
                 let desde = $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0];
                 let hasta = $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0];
 
@@ -158,21 +157,20 @@
                                                         <td class="center-align">
                                                             <p>
                                                                 <label>
-                                                                    <input type="checkbox" class="check" value="${element.ORDSER_N_ID}"/>
+                                                                    <input type="checkbox" class="check" value="${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}"/>
                                                                     <span></span>
                                                                 </label>
                                                             </p>
                                                         </td>
-                                                        <td class="center-align">${element.ORDSER_N_ID}</td>
-                                                        <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                                                        <td class="left-align">${element.ORDSER_C_NUMERO_FISICO}</td>
-                                                        <td class="center-align">${element.ORDSER_C_FECHA}</td>
-                                                        <td class="left-align">${element.ORDSER_C_SOLICITANTE}</td>
-                                                        <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
-                                                        <td class="center-align">${element.ORDSER_N_HORAS}</td>
-                                                        <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
-                                                        <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
-                                                        <td class="right-align">${element.ORDSER_N_PRECIO_TOTAL}</td>
+                                                        <td class="center-align">${element.ALQUIL_N_ID}</td>
+                                                        <td class="center-align">${element.ALQDET_N_ID}</td>
+                                                        <td class="left-align">${element.SEDE_C_DESCRIPCION} - ${element.UBICAC_C_DESCRIPCION}</td>
+                                                        <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
+                                                        <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
+                                                        <td class="right-align">${element.ALQDET_N_AREA}</td>
+                                                        <td class="left-align">${element.MONEDA_C_DESCRIPCION}</td>
+                                                        <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
+                                                        <td class="right-align">${element.TOTAL}</td>
                                                     </tr>
                                                 `);
                         }
@@ -205,15 +203,15 @@
         if(checados.length > 0)
         {
             $('.preloader-background').css({'display': 'block'});
-            var url =  '<?= base_url() ?>liq_servicios/nuevo/grabar_cabecera';
-            var data = {
-                        empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                        cliente: cliente[0],
-                        sede: document.getElementById("sede").value,
-                        situacion: situacion, 
-                        usuario: <?= $this->data['session']->USUARI_N_ID ?>
-                        };
-            
+            let url =  '<?= base_url() ?>api/execsp';
+            let sp = 'LIQUIDACION_INS';
+            let empresa = <?= $empresa->EMPRES_N_ID ?>;
+            let cliente = cliente[0];
+            let sede = document.getElementById("sede").value;
+            let tipo = 'A';
+            let usuario = <?= $this->data['session']->USUARI_N_ID ?>;
+
+            let data = {sp, empresa, cliente, sede, tipo, situacion, usuario};            
             
             fetch(url, {
                         method: 'POST', // or 'PUT'
@@ -246,17 +244,18 @@
         
         var situacion = 1;
         
-        var url =  '<?= base_url() ?>liq_servicios/nuevo/grabar_detalle';
+        var url =  '<?= base_url() ?>api/execsp';
+
         for (let index = 0; index < checados.length; index++) {
             console.log('ejecutando vuelta ' + (index+1))
             const element = checados[index];
-
-            var data = {
-                        empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                        liquidacion: liquidacion,
-                        orden: element.value,
-                        usuario: <?= $this->data['session']->USUARI_N_ID ?>
-                        };
+            let alquiler = element.value.split('-');
+            let sp = 'LIQUIDACION_ALQUILER_DETALLE_INS';
+            let empresa = <?= $empresa->EMPRES_N_ID ?>;
+            let alquiler_id = alquiler[0];
+            let alquiler_item = alquiler[1];
+            let usuario = <?= $this->data['session']->USUARI_N_ID ?>;
+            let data = {sp, empresa, liquidacion, alquiler_id, alquiler_item, usuario};
                     
             await fetch(url, {
                         method: 'POST', // or 'PUT'

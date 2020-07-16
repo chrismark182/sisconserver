@@ -26,13 +26,10 @@ class C_liquidacion_alquiler extends CI_Controller {
     public function index() 
 	{         
         $this->_init();
-
         $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
-        $this->data['clientes'] =$this->M_crud->sql($clientes);
-        
+        $this->data['clientes'] =$this->M_crud->sql($clientes);        
         $sedes = 'Exec SEDE_LIS 0,0';
         $this->data['sedes'] = $this->M_crud->sql($sedes);
-
         $this->load->view('liquidacion/alquiler/V_index', $this->data);
     }
     public function nuevo()
@@ -44,6 +41,15 @@ class C_liquidacion_alquiler extends CI_Controller {
         $this->data['monedas'] = $this->M_crud->read('moneda', array());
 
         $this->load->view('liquidacion/alquiler/V_nuevo', $this->data);        
+    }
+    public function editar($empresa,$id)
+    {  
+        $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
+                                            .$id;
+         
+        $ordenes = $this->M_crud->sql($sql);
+        $this->data['ordenes'] = $ordenes[0];
+        $this->load->view('ordenservicio/V_editar',$this->data);
     }
     //Reporte 
     public function reporte($id)
@@ -57,102 +63,6 @@ class C_liquidacion_alquiler extends CI_Controller {
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
-    //Procesos
     
-    public function grabar_cabecera()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_INS {$data['empresa']}, {$data['cliente']}, {$data['sede']}, {$data['situacion']}, {$data['usuario']}";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
-
-    public function grabar_detalle()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_DETALLE_INS {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
-
-    public function editar($empresa,$id)
-    {  
-        $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
-                                            .$id;
-         
-        $ordenes = $this->M_crud->sql($sql);
-        $this->data['ordenes'] = $ordenes[0];
-        $this->load->view('ordenservicio/V_editar',$this->data);
-    }
-    public function crear()
-    {
-        if( trim($this->input->post('sede')) != ''&&
-            trim($this->input->post('cliente')) != ''&&
-            trim($this->input->post('servicio')) != ''&&
-            trim($this->input->post('horas')) != ''&&
-            trim($this->input->post('tarifa')) != ''):
-
-            $sql = "Exec ORDEN_SERVICIO_INS " . $this->data['empresa']->EMPRES_N_ID . ","
-                                            . $this->input->post('sede') . "," 
-                                            . $this->input->post('cliente') . "," 
-                                            . $this->input->post('servicio') . ",'" 
-                                            . $this->input->post('numerofisico') . "','" 
-                                            . $this->input->post('solicitante') . "','" 
-                                            . $this->input->post('codproyecto') . "'," 
-                                            . $this->input->post('horas') . "," 
-                                            . $this->input->post('tarifa') . "," 
-                                            . $this->input->post('moneda') . "," 
-                                            . $this->input->post('preciounitario') . "," 
-                                            . $this->data['session']->USUARI_N_ID;
-                                        
-
-            $this->M_crud->sql($sql);
-            redirect('ordenes','refresh');   
-        else:
-            $this->session->set_flashdata('message','No puede guardar en vacio ');
-            header("Location: nuevo");
-        endif;
-    }
-    public function actualizar($empresa,$id)
-    {
-
-        if( trim($this->input->post('descripcion')) != ''&&
-            trim($this->input->post('metro')) != '' ):
-
-        $sql = "Exec UBICACION_UPD "    . $empresa . ","
-                                        . $sede . "," 
-                                        . $id . ",'"  
-                                        . $this->input->post('descripcion') . "'," 
-                                        . $this->input->post('metro').","
-                                        . $this->data['session']->USUARI_N_ID; 
-            
-                    
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('ordenes', 'refresh'); 
-        
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: editar");    
-
-    endif;
-    }  
-    public function eliminar($empresa,$id)
-    {
-        $sql = "Exec LIQUIDACION_DEL "    . $empresa .","
-                                        . $id.","
-                                        . $this->data['session']->USUARI_N_ID; 
-            
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('liq_servicios', 'refresh');       
-    }  
-    public function updateoc()
-    {
-        $sql = "Exec LIQUIDACION_UPD_OC {$this->input->post('ocempresa')}, {$this->input->post('ocliquidacion')}, '{$this->input->post('orden_compra')}', {$this->data['session']->USUARI_N_ID}"; 
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('liq_servicios', 'refresh');       
-    }  
 }
 

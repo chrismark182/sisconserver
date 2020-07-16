@@ -89,7 +89,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function grabar_cabecera()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_INS {$data['empresa']}, {$data['cliente']}, {$data['sede']}, {$data['situacion']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_INS {$data['empresa']}, {$data['cliente']}, {$data['sede']}, 'S', {$data['situacion']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -97,7 +97,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function grabar_detalle()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_DETALLE_INS {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_DETALLE_INS 'S', {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
