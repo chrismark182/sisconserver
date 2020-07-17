@@ -38,15 +38,10 @@
                 </select>
                 <label>Clientes</label>
             </div>
-            <div class="input-field col s12 m6 l3">
+            <div class="input-field col s12 m6 l6">
                 <input id="liquidacion" type="number" min="1" maxlength="9" name="liquidacion" class="validate">
                 <label class="active" for="liquidacion">Liquidación</label> 
             </div>
-            <div class="input-field col s12 m6 l3">
-                <input id="orden_compra" type="text" maxlength="20" name="orden_compra" class="validate">
-                <label class="active" for="orden_compra">Orden de Compra</label> 
-            </div>
-
             <div class="input-field col s12 m6 l3">
                 <select id="sede" name="sede">
                     <option value="0" selected>Todas las Sedes</option>
@@ -91,10 +86,8 @@
                 <th class="center-align">LIQUID.</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
-                <th class="center-align">FECHA</th>
-                <th class="center-align">O/C</th>
-                <th class="center-align">ORDENES</th>
-                <th class="center-align">MON</th>
+                <th class="left-align">PERIODOS</th>
+                <th class="center-align">MONEDA</th>
                 <th class="right-align">TOTAL</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">IMPRIMIR</th>
@@ -121,47 +114,23 @@
     </div>
 </div>
 
-<!-- Agregar OC -->
-<div id="modalAgregarOC" class="modal">
-    <form id="frmAgregarOC" action="<?= base_url() ?>liq_servicios/updateoc" method="post">
-        <div class="modal-content">
-            <h4>Asignar Orden de Compra</h4>
-            <div class="row">
-                <input id="ocempresa" type="hidden" name="ocempresa">
-                <input id="ocliquidacion" type="hidden" name="ocliquidacion">
-                <div class="input-field col s12">
-                    <input id="orden_compra" type="text" name="orden_compra" placeholder=" " class="validate">
-                    <label for="orden_compra">Orden de Compra del Cliente</label>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-            <input type="submit" class="modal-close btn" value="ACEPTAR">
-        </div>
-    </form>
-</div>
-
- <!-- Ver ordenes -->
- <div id="modalOrdenes" class="modal modal-fixed-footer">
+<!-- Ver periodos -->
+<div id="modalPeriodos" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h4 class="left">Ordenes liquidadas</h4>
-        <input type="hidden" id="liquidacion" >
+        <h4 class="left">Periodos</h4>
         <div class="section">
             <table class="striped" style="font-size: 12px;">
                 <thead class="blue-grey darken-1" style="color: white">
                     <tr>
-                        <th class="center-align">ORDEN</th>          
-                        <th class="center-align">FECHA</th>
-                        <th class="left-align">SERVICIO</th>
-                        <th class="left-align">PROYECTO</th>
-                        <th class="center-align">HORAS</th>
-                        <th class="center-align">MON</th>
-                        <th class="right-align">PRECIO X HORA</th>
+                        <th class="center-align">F. INICIO</th>
+                        <th class="center-align">F. TERMINO</th>
+                        <th class="right-align">AREA</th>
+                        <th class="center-align">MONEDA</th>
+                        <th class="right-align">PRECIO</th>
                         <th class="right-align">TOTAL</th>
                     </tr>
                 </thead>
-                <tbody id="ordenes">            
+                <tbody id="periodos">            
                 </tbody>
             </table>
         </div>
@@ -191,43 +160,31 @@
         console.log('Estoy buscando.. ')
         M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
+        $('#resultados').html('');
 
-        var url = 'liq_servicios/buscar';
+        let url = '<?= base_url() ?>api/execsp';
+        let sp = 'LIQUIDACION_ALQUILER_LIS';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+
         $fecha_desde = $('#desde').val();
         $fecha_desde = $fecha_desde.split('/');
+        let desde = $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0];
         
         $fecha_hasta = $('#hasta').val();
         $fecha_hasta = $fecha_hasta.split('/');
-        var cliente = $('#cliente').val();
-        var sede = $('#sede').val();
+        let hasta = $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0];
 
-        var orden_compra = '%'; 
-        if($('#orden_compra').val() != '')
-        {
-            orden_compra = '%' + $('#orden_compra').val() + '%';
-        }
+        let cliente = $('#cliente').val();
+        let sede = $('#sede').val();
 
-        var liquidacion = '0'; 
-        if($('#liquidacion').val() != '')
-        {
+        let liquidacion = '0'; 
+        if($('#liquidacion').val() != ''){
             liquidacion = $('#liquidacion').val();
         }
         
-        var situacion = $('#situacion').val();
+        let situacion = $('#situacion').val();        
+        let data = {sp, empresa, desde, hasta, cliente, sede, liquidacion, situacion};        
         
-        var data = {
-                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
-                    hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
-                    cliente: cliente,
-                    sede: sede,
-                    orden_compra: orden_compra,
-                    liquidacion: liquidacion,
-                    situacion: situacion,                    
-                    tipo: 'S'
-                    };
-        
-        $('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
                     body: JSON.stringify(data), // data can be `string` or {object}!
@@ -247,6 +204,7 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                 
+                    console.log(element)
                     $situacion = '';
                     $eliminar = `<i class="material-icons" style="cursor: pointer; color: #999999">delete</i>`
                     if(element.LIQCAB_C_SITUACION == 0)
@@ -262,35 +220,21 @@
                         $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
                     }
 
-                    if(element.CLIENT_C_REQUIERE_OC == 1)
-                    {
-                        if(element.LIQCAB_C_SITUACION < 2)
-                        {
-                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="agregarOC(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">speaker_notes</i>`
-                        }else{
-                            $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons" style="vertical-align: middle; cursor: pointer; color: #999999">speaker_notes</i>`
-                        }
-                    }else{
-                        $orden_compra = `${element.LIQCAB_C_ORDEN_COMPRA} <i class="material-icons tooltipped"  data-position="bottom" data-tooltip="No requiere O/C" style="vertical-align: middle; cursor: pointer; color: #999999">speaker_notes</i>`
-                    }
-
-                    $ver_ordenes = `${element.SERVIC_N_CANTIDAD} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verOrdenes(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
+                    $ver_ordenes = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.LIQCAB_N_ID})">event_note</i>`
                 
                     $('#resultados').append(`   
                         <tr>
                             <td class="center-align">${element.LIQCAB_N_ID}</td>
                             <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                             <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
-                            <td class="center-align">${element.LIQCAB_C_FECHA}</td>
-                            <td class="right-align">${$orden_compra}</td>
                             <td class="center-align">
                                 ${$ver_ordenes}                
                             </td>
-                            <td class="center-align">${element.SERVIC_C_MONEDA}</td>
-                            <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
+                            <td class="center-align">${element.MONEDA_C_DESCRIPCION}</td>
+                            <td class="right-align">${element.TOTAL}</td>
                             <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
                             <td class="center-align">
-                                <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
+                                <a href="liq_alquiler/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                     <i class="material-icons">monetization_on</i>
                                 </a>
                             </td>                        
@@ -315,15 +259,7 @@
         $('#btnConfirmar').attr('href', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/eliminar')
     }
 
-    function agregarOC($empresa,$liquidacion)
-    {
-        console.log('confirmar eliminar')
-        $('#modalAgregarOC').modal('open');
-        $('#ocempresa').val($empresa)
-        $('#ocliquidacion').val($liquidacion)
-        //$('#frmAgregarOC').attr('action', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/updateoc')
-    }
-
+  
     function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -331,19 +267,18 @@
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 
-    function verOrdenes($empresa,$liquidacion)
+    function verPeriodos(liquidacion)
     {
         console.log('Estoy buscando.. ')
 
         $('.preloader-background').css({'display': 'block'});
-        $('#liquidacion').val($liquidacion)
+        
         let url = 'api/execsp';
-        let sp = 'LIQUIDACION_SERVICIOS_LIS_REPORTE';
-        let empresa = $empresa;
-        let liquidacion = $liquidacion;
+        let sp = 'LIQUIDACION_LIS_REPORTE_ALQUILER';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
         data = {sp, empresa, liquidacion};
         
-        $('#ordenes').html('');
+        $('#periodos').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
                     body: JSON.stringify(data), // data can be `string` or {object}!
@@ -356,24 +291,25 @@
         })
         .then(function(data) 
         {
+            $('#total').html(data.length);
+         
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
 
-                $('#ordenes').append(`   
+                $('#periodos').append(`   
                                         <tr>
-                                            <td class="center-align">${element.ORDSER_N_ID}</td>
-                                            <td class="center-align">${element.ORDSER_D_FECHA}</td>
-                                            <td class="left-align">${element.SERVIC_C_DESCRIPCION}</td>
-                                            <td class="left-align">${element.ORDSER_C_COD_PROYECTO}</td>
-                                            <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
+                                            <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
+                                            <td class="right-align">${element.ALQDET_N_AREA}</td>
                                             <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
-                                            <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
-                                            <td class="right-align">${element.ORDSER_N_PRECIO_TOTAL}</td>
+                                            <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
+                                            <td class="right-align">${element.ALQDET_N_PRECIO_TOTAL}</td>
                                         </tr>
                                     `);
             }
-            $('#modalOrdenes').modal('open');
+            $('#modalPeriodos').modal('open');
             $('.preloader-background').css({'display': 'none'});                            
         });
     }
+    
 </script>

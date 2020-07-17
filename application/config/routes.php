@@ -168,3 +168,7 @@ $route['sistema/revisar'] = function (){return 'C_system/revisar'; };
 
 $route['ind_ser_cliente'] = function (){return 'C_ind_ser_cliente'; };
 $route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };
+
+$route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente'; };
+$route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
+
