@@ -64,7 +64,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_LIS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['liquidacion']}', '{$data['situacion']}', '{$data['tipo']}'";
+        $sql= "Exec LIQUIDACION_LIS_SERVICIOS {$data['empresa']}, '{$data['desde']}', '{$data['hasta']}', {$data['cliente']}, {$data['sede']}, '{$data['orden_compra']}', '{$data['liquidacion']}', '{$data['situacion']}', '{$data['tipo']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -72,7 +72,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function nuevo_buscar()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_NUEVO_LIS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}', '{$data['moneda']}', '{$data['desde']}', '{$data['hasta']}'";
+        $sql= "Exec LIQUIDACION_LIS_NUEVO_SERVICIOS {$data['empresa']}, '{$data['cliente']}', '{$data['sede']}', '{$data['moneda']}', '{$data['desde']}', '{$data['hasta']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -87,7 +87,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function grabar_detalle()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_DETALLE_INS 'S', {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_INS_SERVICIOS_DETALLE 'S', {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }

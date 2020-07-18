@@ -14,12 +14,12 @@
     </div>
 </div>
 <div class="section container">
-    <table>
-        <thead>
+    <table class="striped" style="font-size: 12px;">
+        <thead class="blue-grey darken-1" style="color: white">
           <tr>
-                <th>Menú Principal</th>
-              <th>Opción de Menú</th>
-              <th>Permiso</th>
+              <th>MENÚ PRINCIPAL</th>
+              <th>OPCIÓN DEL SISTEMA</th>
+              <th>PERMISO</th>
           </tr>
         </thead>
 
@@ -46,6 +46,7 @@
         </tbody>
     </table>
 </div>
+
 <script>
     function updatePermiso(e)
     {

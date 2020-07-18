@@ -126,7 +126,7 @@
                 cliente = cliente[0];
 
                 let url =  '<?= base_url() ?>api/execsp';
-                let sp = 'LIQUIDACION_ALQUILER_NUEVO';
+                let sp = 'LIQUIDACION_LIS_NUEVO_ALQUILER';
                 let empresa = <?= $empresa->EMPRES_N_ID ?>;
                 let desde = $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0];
                 let hasta = $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0];
@@ -250,7 +250,7 @@
             console.log('ejecutando vuelta ' + (index+1))
             const element = checados[index];
             let alquiler = element.value.split('-');
-            let sp = 'LIQUIDACION_ALQUILER_DETALLE_INS';
+            let sp = 'LIQUIDACION_INS_ALQUILER_DETALLE';
             let empresa = <?= $empresa->EMPRES_N_ID ?>;
             let alquiler_id = alquiler[0];
             let alquiler_item = alquiler[1];

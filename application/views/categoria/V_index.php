@@ -18,7 +18,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="section container">
     <div>
         &nbsp;
     </div>
@@ -27,7 +27,7 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="center-align">ID</th>
-                <th class="left-align">DESCRIPCIÓN DE LA CATEGORÍA</th>
+                <th class="left-align">CATEGORÍA</th>
                 <th class="center-align">PERMISOS</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
@@ -50,7 +50,7 @@
                             </a>
                         </td>
 					
-                        <?php if ($row->CATIDAD_USUARIOS > 0 ): ?>
+                        <?php if ($row->CATIDAD_USUARIOS == 0 ): ?>
                             <td class="center-align">
                                 <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $row->CATEGO_N_ID ?>)">delete</i>                        
                             </td>

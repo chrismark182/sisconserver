@@ -16,7 +16,8 @@
         </ul>
     </div>
 </nav>
-<div class="container">
+
+<div class="section container">
         <div>
             &nbsp;
         </div>
@@ -24,8 +25,8 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">FECHA</th>
-                <th class="left-align">TIPO DE CAMBIO</th>
+                <th class="center-align">FECHA</th>
+                <th class="center-align">TIPO DE CAMBIO</th>
                 <th class="center-align">ELIMINAR</th>
                 
             </tr>
@@ -34,8 +35,8 @@
             <?php if($cambios): ?>
                 <?php foreach($cambios as $cambio): ?> 
                     <tr>
-                        <td class="left-align"><?=$cambio->TIPCAM_C_FECHA?></td>
-                        <td class="rigth-align"><?=$cambio->TIPCAM_N_VALOR_VENTA?></td>
+                        <td class="center-align"><?=$cambio->TIPCAM_C_FECHA?></td>
+                        <td class="center-align"><?=number_format($cambio->TIPCAM_N_VALOR_VENTA, 2)?></td>
                         
                         <td class="center-align">
                             <a class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cambio->EMPRES_N_ID ?>,<?= $cambio->TIPCAM_N_ID ?>)">delete</i>

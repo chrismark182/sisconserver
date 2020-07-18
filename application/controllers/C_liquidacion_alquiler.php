@@ -21,7 +21,8 @@ class C_liquidacion_alquiler extends CI_Controller {
     private function _init()
 	{
 		$this->output->set_template('siscon');
-	}
+    }
+    
     //Vistas
     public function index() 
 	{         
@@ -32,6 +33,7 @@ class C_liquidacion_alquiler extends CI_Controller {
         $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->load->view('liquidacion/alquiler/V_index', $this->data);
     }
+
     public function nuevo()
     {
         $this->_init();
@@ -42,6 +44,7 @@ class C_liquidacion_alquiler extends CI_Controller {
 
         $this->load->view('liquidacion/alquiler/V_nuevo', $this->data);        
     }
+    
     public function editar($empresa,$id)
     {  
         $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
