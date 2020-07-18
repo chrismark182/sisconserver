@@ -25,7 +25,8 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Indicador por Cliente</a>
+            <a href="#!" class="breadcrumb">Valorizaciones</a>
+            <a href="#!" class="breadcrumb">Indicador Ventas por Cliente</a>
         </div>
     </div>
 </nav>
@@ -42,7 +43,7 @@
             </div>
             <div class="input-field col s12 m6 l4">
                 <select id="moneda" name="moneda" required>
-                    <option value="" disabled>Escoge una opción</option>
+                    <option value="" disabled>Seleccionar Moneda</option>
                     <?php foreach ($monedas as $row): ?>
                         <option value="<?= $row->MONEDA_N_ID ?>"><?= $row->MONEDA_C_DESCRIPCION ?> (<?= $row->MONEDA_C_SIMBOLO ?>)</option>
                     <?php endforeach; ?>
@@ -264,10 +265,17 @@
         {
             console.log(data);
             //google.charts.setOnLoadCallback(drawGrafic);
-            drawGrafic(data)
+            if(data.length > 0)
+            {
+                drawGrafic(data)
+            }
+            else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+            }
             $('.preloader-background').css({'display': 'none'});                
         });
     }
+
     function drawGrafic(data)
     {
         var array = [

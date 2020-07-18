@@ -87,7 +87,7 @@ class C_liquidacion_servicios extends CI_Controller {
     public function grabar_detalle()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec LIQUIDACION_INS_SERVICIOS_DETALLE 'S', {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
+        $sql= "Exec LIQUIDACION_INS_SERVICIOS_DETALLE {$data['empresa']}, {$data['liquidacion']}, {$data['orden']}, {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -156,7 +156,7 @@ class C_liquidacion_servicios extends CI_Controller {
     }  
     public function eliminar($empresa,$id)
     {
-        $sql = "Exec LIQUIDACION_DEL "    . $empresa .","
+        $sql = "Exec LIQUIDACION_DEL_SERVICIOS "    . $empresa .","
                                         . $id.","
                                         . $this->data['session']->USUARI_N_ID; 
             

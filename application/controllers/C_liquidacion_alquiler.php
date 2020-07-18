@@ -65,6 +65,16 @@ class C_liquidacion_alquiler extends CI_Controller {
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
-    
+
+    public function eliminar($empresa,$id)
+    {
+        $sql = "Exec LIQUIDACION_DEL_ALQUILER "    . $empresa .","
+                                        . $id.","
+                                        . $this->data['session']->USUARI_N_ID; 
+            
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('liq_alquiler', 'refresh');       
+    }  
 }
 

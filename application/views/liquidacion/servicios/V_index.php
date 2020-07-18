@@ -275,7 +275,7 @@
                     }
 
                     $ver_ordenes = `${element.SERVIC_N_CANTIDAD} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verOrdenes(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">event_note</i>`
-                
+
                     $('#resultados').append(`   
                         <tr>
                             <td class="center-align">${element.LIQCAB_N_ID}</td>
@@ -338,7 +338,7 @@
         $('.preloader-background').css({'display': 'block'});
         $('#liquidacion').val($liquidacion)
         let url = 'api/execsp';
-        let sp = 'LIQUIDACION_SERVICIOS_LIS_REPORTE';
+        let sp = 'LIQUIDACION_LIS_REPORTE_SERVICIOS';
         let empresa = $empresa;
         let liquidacion = $liquidacion;
         data = {sp, empresa, liquidacion};

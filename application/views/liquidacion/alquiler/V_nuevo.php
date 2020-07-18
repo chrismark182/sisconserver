@@ -79,10 +79,10 @@
                 <th class="center-align">ALQUILER</th>
                 <th class="center-align">ITEM</th>
                 <th class="left-align">UBICACIÓN</th>
-                <th class="center-align">FECHA INICIO</th>
-                <th class="center-align">FECHA FINAL</th>
-                <th class="right-align">AREAR</th>
-                <th class="left-align">MONEDA</th>
+                <th class="center-align">F.INICIO</th>
+                <th class="center-align">F.FINAL</th>
+                <th class="right-align">AREA</th>
+                <th class="center-align">MONEDA</th>
                 <th class="right-align">PRECIO X M2</th>
                 <th class="right-align">TOTAL</th>
             </tr>
@@ -168,7 +168,7 @@
                                                         <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
                                                         <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
                                                         <td class="right-align">${element.ALQDET_N_AREA}</td>
-                                                        <td class="left-align">${element.MONEDA_C_DESCRIPCION}</td>
+                                                        <td class="center-align">${element.MONEDA_C_DESCRIPCION}</td>
                                                         <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                                         <td class="right-align">${element.TOTAL}</td>
                                                     </tr>

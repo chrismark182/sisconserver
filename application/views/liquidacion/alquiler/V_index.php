@@ -256,7 +256,7 @@
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/eliminar')
+        $('#btnConfirmar').attr('href', 'liq_alquiler/'+$empresa+'/'+$liquidacion+'/eliminar')
     }
 
   
