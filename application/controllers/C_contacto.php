@@ -32,14 +32,20 @@ class C_contacto extends CI_Controller {
         $this->data['contactos'] = $this->M_crud->sql($sql); 
         $this->load->view('contacto/V_index', $this->data);
         
-	}
+    }
+    
 	public function nuevo(){
         $this->_init();
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $this->data['clientes'] = $this->M_crud->read('cliente', array());
+        
+        $tipodocumento = "Exec TIPO_DOCUMENTO_PERSONAS_LIS";        
+        $this->data['tdocumentos'] = $this->M_crud->sql($tipodocumento); 
+        
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
+        $this->data['clientes'] = $this->M_crud->sql($clientes); 
+
 		$this->load->view('contacto/V_nuevo',$this->data);
-	
-	}
+    }
+    
 	public function editar($empresa,$cliente,$contacto)
     {  
         $this->_init();
@@ -55,6 +61,7 @@ class C_contacto extends CI_Controller {
         $this->data['contacto'] = $contactos[0];
         $this->load->view('contacto/V_editar',$this->data);
     }
+
     public function crear(){
   
             $data = json_decode(file_get_contents('php://input'), true);
@@ -62,8 +69,8 @@ class C_contacto extends CI_Controller {
             //echo $sql;
             $query = $this->M_crud->sql($sql);
             echo json_encode($query, true);
-          
     }
+
     public function actualizar($empresa,$cliente,$contacto)
     {
 
@@ -90,8 +97,8 @@ class C_contacto extends CI_Controller {
             header("Location: editar");
             //redirect('visita/'.$empresa.'/'.$visita.'/editar','refresh');
         endif;
-
     }  
+
     public function eliminar($empresa,$cliente,$contacto)
     {
         $sql = "Exec CONTACTO_DEL "     . $empresa .","

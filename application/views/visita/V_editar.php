@@ -12,7 +12,7 @@
         <div class="row">
             <div class="input-field col s12 m6 l12">
                 <input id="descripcion" maxlength="100" type="text" name="descripcion" value="<?= $visita->MOTVIS_C_DESCRIPCION ?>" class="validate">
-                <label class="active" for="descripcion">Descripción</label> 
+                <label class="active" for="descripcion">Motivo de Visita</label> 
             </div>
 
             <div class="input-field col s12">

@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
         
-        <a href="<?= base_url() ?>contactos" class="breadcrumb">Contactos</a>
+        <a href="<?= base_url() ?>contactos" class="breadcrumb">Contáctos</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>
@@ -12,24 +12,24 @@
         <div class="row">
             <div class="input-field col s12 m6 l4">
                     <select id="cliente" name="cliente">
-                        <option value="" disabled selected>Cliente</option>
+                        <option value="" disabled selected>Seleccionar Cliente</option>
                         
                         <?php if($clientes): ?>
-                        <?php foreach($clientes as $cliente): ?> 
-                        <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
-                        <?php endforeach; ?> 
+                            <?php foreach($clientes as $cliente): ?> 
+                                <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <?php endforeach; ?> 
                         <?php endif; ?>
                     </select>
-                        <label>clientes</label>
+                    <label>Clientes</label>
             </div>
 
             <div class="input-field col s12 m6 l4">
                     <select id="t_documento" name="t_documento">
-                        <option value="" disabled selected>Tipo de documento</option>
+                        <option value="" disabled selected>Seleccionar Tipo de Documento</option>
                         
                         <?php if($tdocumentos): ?>
                         <?php foreach($tdocumentos as $tdocumento): ?> 
-                        <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
+                        <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
                         <?php endforeach; ?> 
                         <?php endif; ?>
                     </select>
@@ -37,11 +37,11 @@
             </div>
             <div class="input-field col s12 m6 l4">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
-                <label class="active" for="ndocumento">Numero de Documento</label> 
+                <label class="active" for="ndocumento">Número de Documento</label> 
             </div>
             <div class="input-field col s12 m6 l12">
                 <input id="nombres" maxlength="100" type="text" name="nombres" class="validate">
-                <label class="active" for="nombres">Nombres</label> 
+                <label class="active" for="nombres">Nombres y Apellidos</label> 
             </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btn_guardar">
@@ -59,6 +59,7 @@
         btn_guardar.addEventListener("click", validar, false); 
         
     });
+
     function validar()
     {
         console.log("Validar");

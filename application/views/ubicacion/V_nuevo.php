@@ -27,7 +27,7 @@
 
             <div class="input-field col s12 m6 l6">
             <select id="talmacen" name="talmacen">
-                    <option value="" disabled selected>EscoSeleccionar Tipo de Almacén</option>
+                    <option value="" disabled selected>Seleccionar Tipo de Almacén</option>
                     
                     <?php if($talmacenes): ?>
                     <?php foreach($talmacenes as $talmacen): ?> 
