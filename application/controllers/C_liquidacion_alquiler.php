@@ -27,7 +27,7 @@ class C_liquidacion_alquiler extends CI_Controller {
     public function index() 
 	{         
         $this->_init();
-        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID},'1'";
         $this->data['clientes'] =$this->M_crud->sql($clientes);        
         $sedes = 'Exec SEDE_LIS 0,0';
         $this->data['sedes'] = $this->M_crud->sql($sedes);
