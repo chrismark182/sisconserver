@@ -97,7 +97,8 @@
             </div>
         </div>        
     </div>
-    <div class="col s12">
+    <div id="grafico" class="col s12" style="display: none">
+        <h4 class="center-align">Venta de Servicios por Cliente</h4>
         <div id="chart_div"></div>
     </div>
 </div>
@@ -336,9 +337,11 @@
             //google.charts.setOnLoadCallback(drawGrafic);
             if(data.length > 0)
             {
+                document.getElementById('grafico').style.display = 'block';
                 drawGrafic(data)
             }
             else{
+                document.getElementById('grafico').style.display = 'none';
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                
