@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Contáctos</a>
+            <a href="#!" class="breadcrumb">Contáctos del Cliente</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -47,9 +47,7 @@
                             </a>
                         </td>
                         <td class="center-align">                        
-                        <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $contacto->EMPRES_N_ID ?>,<?= $contacto->CLIENT_N_ID ?>,<?= $contacto->CLICON_N_ID ?>)">delete</i>                        
-                      
-                            </a>
+                            <i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $contacto->EMPRES_N_ID ?>,<?= $contacto->CLIENT_N_ID ?>,<?= $contacto->CLICON_N_ID ?>)">delete</i>                                     
                         </td>
                     </tr>
                 <?php endforeach; ?>  
@@ -60,14 +58,15 @@
 
 <a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
     href="<?= base_url()?>contacto/nuevo"><i class="material-icons">add</i></a>
-    <div id="modalEliminar" class="modal">
+
+<div id="modalEliminar" class="modal">
     <div class="modal-content">
-      <h4>Eliminar</h4>
-      <p>¿Está seguro que desea elimniar el registro?</p>
+        <h4>Eliminar</h4>
+        <p>¿Está seguro que desea elimniar el registro?</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
-      <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
 

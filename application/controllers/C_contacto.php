@@ -19,7 +19,8 @@ class C_contacto extends CI_Controller {
 		else:
 			redirect(base_url(),'refresh');
 		endif;
-	}
+    }
+    
 	private function _init()
 	{
 		$this->output->set_template('siscon');
@@ -31,7 +32,6 @@ class C_contacto extends CI_Controller {
         $sql = "Exec CONTACTO_LIS 0,0,0";        
         $this->data['contactos'] = $this->M_crud->sql($sql); 
         $this->load->view('contacto/V_index', $this->data);
-        
     }
     
 	public function nuevo(){
@@ -54,43 +54,41 @@ class C_contacto extends CI_Controller {
                                         .$contacto ;
                                         
         
-         
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $this->data['clientes'] = $this->M_crud->read('cliente', array());
+        $tipodocumento = "Exec TIPO_DOCUMENTO_PERSONAS_LIS";
+        $this->data['tdocumentos'] = $this->M_crud->sql($tipodocumento); 
+
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
+        $this->data['clientes'] = $this->M_crud->sql($clientes);
+
         $contactos = $this->M_crud->sql($sql);
         $this->data['contacto'] = $contactos[0];
         $this->load->view('contacto/V_editar',$this->data);
     }
 
     public function crear(){
-  
-            $data = json_decode(file_get_contents('php://input'), true);
-            $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', {$data['usuario']}";
-            //echo $sql;
-            $query = $this->M_crud->sql($sql);
-            echo json_encode($query, true);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', {$data['usuario']}";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
     }
 
     public function actualizar($empresa,$cliente,$contacto)
     {
-
         if(
             trim($this->input->post('ndocumento')) != '' &&
             trim($this->input->post('nombres')) != ''
         ):
-
-        $sql = "Exec CONTACTO_UPD "     . $empresa . ","
-                                        . $cliente   . ","
-                                        . $contacto . ",'"
-                                        .$this->input->post('ndocumento') . "','" 
-                                        .$this->input->post('nombres') . "'," 
-                                       . $this->data['session']->USUARI_N_ID ;
-                                        
-
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('contactos', 'refresh'); 
-       
+            $sql = "Exec CONTACTO_UPD "     . $empresa . ","
+                                            . $cliente   . ","
+                                            . $contacto . ",'"
+                                            .$this->input->post('ndocumento') . "','" 
+                                            .$this->input->post('nombres') . "'," 
+                                        . $this->data['session']->USUARI_N_ID ;
+                                            
+            $this->M_crud->sql($sql);      
+            $this->session->set_flashdata('message','Datos actualizados correctamente');
+            redirect('contactos', 'refresh'); 
+        
         else:
 
             $this->session->set_flashdata('message','No puede guardar en vacio');
@@ -104,8 +102,7 @@ class C_contacto extends CI_Controller {
         $sql = "Exec CONTACTO_DEL "     . $empresa .","
                                         . $cliente. ","
                                         . $contacto. ","
-                                        . $this->data['session']->USUARI_N_ID ;
-                                       
+                                        . $this->data['session']->USUARI_N_ID ;                                       
             
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

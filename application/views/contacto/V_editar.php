@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s12">
-            <a href="<?= base_url() ?>contactos" class="breadcrumb">Contáctos</a>
+            <a href="<?= base_url() ?>contactos" class="breadcrumb">Contáctos del Cliente</a>
             <a href="#!" class="breadcrumb">Editar</a>
         </div>
     </div>

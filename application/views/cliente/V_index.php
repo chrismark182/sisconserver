@@ -38,8 +38,8 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">DOCUMENTO</th>
-                <th class="center-align">NRO. DOCUMENTO</th>
+                <th class="left-align">TIPO DOC.</th>
+                <th class="center-align">DOCUMENTO</th>
                 <th class="left-align">RAZÓN SOCIAL</th>
                 <th class="left-align">DIRECCIÓN</th>
                 <th class="center-align">CLIENTE</th>
