@@ -173,3 +173,12 @@ $route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };
 $route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente'; };
 $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
 
+//bloqueo
+
+$route['bloqueo'] = 'C_bloqueo';
+$route['bloqueo/nuevo'] = 'C_bloqueo/nuevo';
+$route['cambio/crear'] = 'C_tipo_cambio/crear';
+$route['cambio/(:num)/(:num)/editar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/editar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/actualizar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/actualizar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/eliminar/'.$empresa.'/'.$cambio;};
+
