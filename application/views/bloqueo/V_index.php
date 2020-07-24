@@ -17,4 +17,6 @@
         </ul>
     </div>
 </nav>
+<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="http://siscon.esx/bloqueos/nuevo"><i class="material-icons">add</i></a>
+
 

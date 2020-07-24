@@ -45,7 +45,8 @@ class C_sede extends CI_Controller {
         $this->data['sede'] = $sedes[0];
         $this->load->view('sede/V_editar',$this->data);
     }
-    public function crear(){
+	public function crear()
+	{
 
         $data = json_decode(file_get_contents('php://input'), true);
         $sql= "Exec SEDE_INS {$data['empresa']}, '{$data['descripcion']}', '{$data['direccion']}', '{$data['abreviatura']}', {$data['usuario']}";

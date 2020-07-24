@@ -72,6 +72,7 @@
         </thead>
         <tbody id="resultados">            
         </tbody>
+
     </table>
 </div>
 
@@ -91,6 +92,8 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn" onclick="confirmarEliminar()">ACEPTAR</a>
     </div>
 </div>
+
+
 
 <!-- Confirmar Cerrar -->
 <div id="confirmarCerrar" class="modal">
@@ -155,7 +158,7 @@
                     <label for="nuevo_precio">Precio</label>
                 </div>
                 <div class="input-field col s12">
-                    <input placeholder=" " id="np_total" type="text" class="right-align" readonly>
+                    <input placeholder="" id="np_total" type="text" class="right-align" readonly>
                     <label for="total">Total</label>
                 </div>
             </div>
@@ -175,15 +178,15 @@
         if(acuerdo_id != '')
         {
             $('#acuerdo_id').val(acuerdo_id)
-            M.updateTextFields();
+            M.updateTextFields(); //este metodo sale de materialize
             buscar()
         }
     });
 
     function buscar()
     {
-        console.log('Estoy buscando.. ')
-        $('.preloader-background').css({'display': 'block'});
+        console.log('Estoy buscando..  ')
+    //    $('.preloader-background').css({'display': 'block'});
 
         var url = 'acuerdo/buscar';
 
@@ -231,10 +234,15 @@
         .then(function(data) 
         {
             $('#total').html(data.length);
+            console.log("Abajo se encontrara la funcion data")
+            console.log(data);
             if(data.length > 0)
             {
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
+                    
+					console.log("Abajo estara la variable element");
+					console.log( element);
                 
                     $cerrado='<i class="material-icons tooltipped" style="color: #999" data-tooltip="No puede cerrar el Acuerdo, tiene periodos pendientes">lock_open</i>';
                     if(element.ALQUIL_C_ESTA_CERRADO==1){

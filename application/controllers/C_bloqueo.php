@@ -34,12 +34,30 @@ class C_bloqueo extends CI_Controller {
 
 	public function nuevo()
     {
-        $documento ="Exec TIPO_DOCUMENTO_PERSONAS_LIS";
+		//var_dump($this->data);
+		$doc ="Exec TIPO_DOCUMENTO_PERSONAS_LIS";
+		$listPersonas = "EXEC LISTADO_USUARIOS";
 
-		$this->data['tdocumentos'] = $this->M_crud->sql($documento);
+		$this->data['misdoc'] = $this->M_crud->sql($doc);
+		//$this->data['listPersonas'] = $this->M_crud->sql($listPersonas);
 		
-		$this->load->view('bloqueo/V_nuevo', $this->data);
+		$this->load->view('bloqueo/V_nuevo', $this->data);		
+	}
 	
-    }
-    
+	public function crea_bloqueo(){
+
+		echo "<script> alert('Hola Mundo desde php') </script>";
+
+		
+		$this->M_crud->sql("EXEC INSERCION_BLOQUEO_USUARIO 0, 0, '{$this->input->post('username')}',''");
+		
+
+			
+	
+
+
+
+
+		$this->load->view('bloqueo/V_nuevo',$this->data);		
+ 	}
 }
