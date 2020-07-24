@@ -34,13 +34,7 @@ class C_bloqueo extends CI_Controller {
 
 	public function nuevo()
     {
-		//var_dump($this->data);
-		$doc ="Exec TIPO_DOCUMENTO_PERSONAS_LIS";
-		$listPersonas = "EXEC LISTADO_USUARIOS";
-
-		$this->data['misdoc'] = $this->M_crud->sql($doc);
-		//$this->data['listPersonas'] = $this->M_crud->sql($listPersonas);
-		
+	    $this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
 		$this->load->view('bloqueo/V_nuevo', $this->data);		
 	}
 	
