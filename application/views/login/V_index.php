@@ -1,11 +1,12 @@
 <div class="section container center">
-    <h5>Iniciar Sesión</h5>
+    <h5>Bienvenido al Sistema</h5>
+    <br>
     <form id="form" action="<?= base_url() ?>login/login" method="post">
         <div class="row">
             <div class="input-field col s12">
                 <select id="empresa" name="empresa">
                     <?php if($empresas): ?>
-                        <option value="" disabled>Escoge una empresa</option>
+                        <option value="" disabled>Seleccionar Empresa</option>
                         <?php foreach($empresas as $empresa): ?> 
                             <option value="<?= $empresa->EMPRES_N_ID ?>"><?= $empresa->EMPRES_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?>  
@@ -27,6 +28,7 @@
         </div>        
     </form>
 </div>
+
 <script>
     elegirEmpresa();
     function elegirEmpresa()

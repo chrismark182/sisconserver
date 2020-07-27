@@ -26,7 +26,7 @@
             </div>
             <div class="input-field col s5">
                 <input id="razon_social" maxlength="200" type="text" name="razon_social"  class="validate">
-                <label class="active" for="razon_social">Razon_social</label> 
+                <label class="active" for="razon_social">Razón Social</label> 
             </div>
             <div class="input-field col s2">
                 <div class="btn-small" id="btnBuscar">Buscar</div>
@@ -38,13 +38,13 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">DOCUMENTO</th>
-                <th class="center-align">NUMERO</th>
+                <th class="left-align">TIPO DOC.</th>
+                <th class="center-align">DOCUMENTO</th>
                 <th class="left-align">RAZÓN SOCIAL</th>
                 <th class="left-align">DIRECCIÓN</th>
                 <th class="center-align">CLIENTE</th>
-                <th class="center-align">PROVEEDOR</th>
-                <th class="center-align">TRANSPORTISTA</th>
+                <th class="center-align">PROVE.</th>
+                <th class="center-align">TRANSP.</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
 
@@ -70,6 +70,7 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         numero = getParameterByName('n')
@@ -82,6 +83,7 @@
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
     });
+
     function buscar()
     {
         console.log('Estoy buscando.. ')
@@ -152,8 +154,8 @@
             }
             $('.preloader-background').css({'display': 'none'});                            
         });
-        
     }
+
     function confirmarEliminar($empresa,$cliente)
     {
         console.log('confirmar eliminar')
@@ -161,15 +163,12 @@
         $('#btnConfirmar').attr('href', 'cliente/'+$empresa+'/'+$cliente+'/eliminar')
     }
 
-
     function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 		results = regex.exec(location.search);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
-
-
 </script>
 
 

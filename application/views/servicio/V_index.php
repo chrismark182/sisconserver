@@ -16,7 +16,8 @@
         </ul>      
     </div>
 </nav>
-<div class="container">
+
+<div class="section container">
     <div>
         &nbsp;
     </div>

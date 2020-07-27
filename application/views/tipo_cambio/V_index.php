@@ -21,6 +21,7 @@
         </ul>
     </div>
 </nav>
+
 <!-- Buscador -->
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
@@ -33,10 +34,9 @@
             <div class="input-field col s12 m6 l6">
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
-                <div class="input-field col l1">
-                <div class="btn-small" id="btn_buscar">Buscar
-                </div>
-            </div>
+                    <div class="input-field col l1">
+                        <div class="btn-small" id="btn_buscar">Buscar</div>
+                    </div>
             </div>
         </form>
     </div>    
@@ -47,6 +47,8 @@
 
 
 <div class="container">
+    <div class="section container">
+
         <div>
             &nbsp;
         </div>
@@ -54,8 +56,8 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">FECHA</th>
-                <th class="left-align">TIPO DE CAMBIO</th>
+                <th class="center-align">FECHA</th>
+                <th class="center-align">TIPO DE CAMBIO</th>
                 <th class="center-align">ELIMINAR</th>
                 
             </tr>

@@ -1,42 +1,42 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
-      <div class="col s12">
-       
-        <a href="<?= base_url() ?>clientes" class="breadcrumb">Entidades</a>
-        <a href="#!" class="breadcrumb">Nuevo</a>
-      </div>
+        <div class="col s12">
+            <a href="<?= base_url() ?>clientes" class="breadcrumb">Entidades</a>
+            <a href="#!" class="breadcrumb">Nuevo</a>
+        </div>
     </div>
 </nav>
+
 <div class="section container center">
     <form action="<?= base_url() ?>cliente/crear" method="post" id="form">
         <div class="row">
         
-        <div class="input-field col s12 m6 l3">
+            <div class="input-field col s12 m6 l4">
                 <select id="tdocumento" name="tdocumento">
-                    <option value="" disabled selected>Escoge un tipo de documento</option>
+                    <option value="" disabled selected>Seleccionar Tipo de Documento</option>
                     
                     <?php if($tdocumentos): ?>
                     <?php foreach($tdocumentos as $tdocumento): ?> 
                     <tr>
-                    <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
+                    <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
                     <?php endforeach; ?> 
                     <?php endif; ?>
                     
                 </select>
                 <label>Tipo de Documento</label>
-        </div>
+            </div>
             
-            <div class="input-field col s12 m6 l3">
+            <div class="input-field col s12 m6 l2">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
-                <label class="active" for="ndocumento">Numero de Documento</label> 
+                <label class="active" for="ndocumento">Nro. Documento</label> 
             </div>
             <div class="input-field col s12 m6 l6">
                 <input id="razon_social" maxlength="250" type="text" name="razon_social" class="validate">
-                <label class="active" for="razon_social">Razon Social</label> 
+                <label class="active" for="razon_social">Razón Social</label> 
             </div>
             <div class="input-field col s12 m6 l12">
                 <input id="direccion" maxlength="250" type="text" name="direccion" class="validate">
-                <label class="active" for="direccion">Direccion</label> 
+                <label class="active" for="direccion">Dirección</label> 
             </div>
             <div class="input-field col s12 m6 l4 left-align">       
                 <p>
@@ -91,32 +91,41 @@
             document.getElementById('direccion').value.trim() != ''
         )
         {
-            var url =  '<?= base_url() ?>api/clientevalidar';
-            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-            tdocumento: document.getElementById("tdocumento").value,            
-            ndocumento: document.getElementById("ndocumento").value
-                    };
-            fetch(url, {
-                        method: 'POST', // or 'PUT'
-                        body: JSON.stringify(data), // data can be `string` or {object}!
-                        headers:{
-                        'Content-Type': 'application/json'
-               }
-            })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            console.log(data)
-            if(data.length>0){
-                M.toast({html: 'Documento Duplicada', classes: 'rounded'});
+            if( 
+                document.getElementById('tdocumento').value.trim() == '4' &&
+                document.getElementById('ndocumento').value.trim().length != 11
+            )   
+            {
+                M.toast({html: 'Formato del RUC es inválido', classes: 'rounded'});    
             }
-            else{
-                document.getElementById('form').submit();
+            else
+            {
+                var url =  '<?= base_url() ?>api/clientevalidar';
+                var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                            tdocumento: document.getElementById("tdocumento").value,            
+                            ndocumento: document.getElementById("ndocumento").value
+                        };
+                fetch(url, {
+                            method: 'POST', // or 'PUT'
+                            body: JSON.stringify(data), // data can be `string` or {object}!
+                            headers:{
+                                'Content-Type': 'application/json'
+                            }
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) 
+                {
+                    console.log(data)
+                    if(data.length>0){
+                        M.toast({html: 'Documento Duplicado', classes: 'rounded'});
+                    }
+                    else{
+                        document.getElementById('form').submit();
+                    }
+                });
             }
-        });
-
         }
         else
         {

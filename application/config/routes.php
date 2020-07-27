@@ -73,6 +73,7 @@ $route['liq_servicios/updateoc'] = function (){return 'C_liquidacion_servicios/u
 $route['liq_alquiler'] = 'C_liquidacion_alquiler';
 $route['liq_alquiler/nuevo'] = 'C_liquidacion_alquiler/nuevo';
 $route['liq_alquiler/reporte/(:num)'] = function ($id){return 'C_liquidacion_alquiler/reporte/'.$id;};;
+$route['liq_alquiler/(:num)/(:num)/eliminar'] = function ($empresa , $id ){return 'C_liquidacion_alquiler/eliminar/'.$empresa.'/'.$id;};
 
 //Traslado Navasoft - Servicio
 $route['navasoft_servicios'] = 'C_navasoft_servicios';
@@ -124,6 +125,7 @@ $route['visita/(:num)/(:num)/eliminar'] = function ($empresa , $visita){return '
 
 //Contactos
 $route['contactos'] = 'C_contacto';
+$route['contacto/buscar'] = 'C_contacto/buscar';
 $route['contacto/nuevo'] = 'C_contacto/nuevo';
 $route['contacto/crear'] = 'C_contacto/crear';
 $route['contacto/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};
@@ -172,4 +174,13 @@ $route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };
 
 $route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente'; };
 $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
+
+//bloqueo
+
+$route['bloqueos'] = 'C_bloqueo';
+$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
+$route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
+$route['cambio/(:num)/(:num)/editar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/editar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/actualizar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/actualizar/'.$empresa.'/'.$cambio;};
+$route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/eliminar/'.$empresa.'/'.$cambio;};
 

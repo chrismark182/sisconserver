@@ -11,7 +11,7 @@
 <div class="section container center">
     <form action="<?= base_url() ?>usuario/crear" method="post">
         <div class="row">
-            <div class="input-field col s12 m6 l8">
+            <div class="input-field col s12 m6 l12">
                 <select name="empresa">
                     <option value="0" disabled>Seleccionar Empresa</option>
                     <?php foreach ($empresas as $empresa): ?>
@@ -21,7 +21,7 @@
                 </select>
                 <label>Empresa</label>
             </div>
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l6">
                 <select name="categoria">
                     <option value="0" disabled>Seleccionar Categoría</option>
                     <?php foreach ($categorias as $categoria): ?>
@@ -31,15 +31,9 @@
                 </select>
                 <label>Categoría</label>
             </div>
-            <div class="input-field col s12 m6 l4">
-                <select name="categoria">
-                    <option value="0" disabled>Escoge una opción</option>
-                    <?php foreach ($categorias as $categoria): ?>
-                        <option value="<?= $categoria->CATEGO_N_ID ?>"><?= $categoria->CATEGO_C_DESCRIPCION ?></option>
-                    <?php endforeach; ?>
-
-                </select>
-                <label>Categoria</label>
+            <div class="input-field col s12 m6 l6">
+                <input id="username" maxlength="20" type="text" name="username" class="validate">
+                <label class="active" for="username">Nombre de Usuario</label> 
             </div>
             <div class="input-field col s12">
                 <input class="btn-small" type="submit" value="Guardar">

@@ -15,8 +15,8 @@
                 <label class="active" for="fecha">Fecha</label> 
             </div>
             <div class="input-field col s12 m6">
-                <input id="monto" maxlength="15" type="number" name="monto" class="right-align validate">
-                <label class="active" for="monto">Monto</label> 
+                <input id="monto" maxlength="6" type="number" name="monto" class="right-align validate">
+                <label class="active" for="monto">Tipo de Cambio</label> 
             </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btn_guardar" >Guardar
@@ -72,7 +72,7 @@
         {
             console.log(data)
             if(data.length>0){
-                M.toast({html: 'Documento Duplicada', classes: 'rounded'});
+                M.toast({html: 'Tipo de Cambio ya existe', classes: 'rounded'});
             }
             else{
                 document.getElementById('form').submit();
@@ -84,13 +84,7 @@
         else
         {
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
-        }
-
-
-        
-        
-        
-        
+        }       
     }
 </script>
         

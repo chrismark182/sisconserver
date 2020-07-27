@@ -18,7 +18,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="section container">
     <div>
         &nbsp;
     </div>
@@ -26,28 +26,28 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-				<th>ID</th>
-				<th>Usuario</th>
-                <th>Categoria</th>
-                <th>Contraseña</th>
-                <th>Editar</th>
-				<th>Eliminar</th>
+				<th class="center-align">ID</th>
+				<th class="left-align">USUARIO</th>
+                <th class="left-align">CATEGORÍA</th>
+                <th class="center-align">ASIGNAR CONTRASEÑA</th>
+                <th class="center-align">EDITAR</th>
+				<th class="center-align">ELIMINAR</th>
             </tr>
         </thead>
         <tbody>
             <?php if($results): ?>
                 <?php foreach($results as $row): ?> 
                     <tr>
-                        <td><?=$row->USUARI_N_ID?></td>
-						<td><?=$row->USUARI_C_USERNAME?></td>
-                        <td><?=$row->CATEGO_C_DESCRIPCION?></td>
-                        <td>
+                        <td class="center-align"><?=$row->USUARI_N_ID?></td>
+						<td class="left-align"><?=$row->USUARI_C_USERNAME?></td>
+                        <td class="left-align"><?=$row->CATEGO_C_DESCRIPCION?></td>
+                        <td class="center-align">
                         ********
                             <a href="<?= base_url() ?>usuario/<?= $row->USUARI_N_ID ?>/change_pass">
-                                <i class="material-icons">edit</i>
+                                <i class="material-icons">security</i>
                             </a>
                         </td>
-                        <td>
+                        <td class="center-align">
                             <a href="<?= base_url() ?>usuario/<?= $row->USUARI_N_ID ?>/editar">
                                 <i class="material-icons">edit</i>
                             </a>

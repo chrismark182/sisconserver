@@ -21,7 +21,7 @@
         <label class="active" for="confirmNewPassword">Confirmar Contraseña</label> 
     </div>
     <div class="input-field col s12">
-        <div class="btn-large" onclick="validar()">Guardar</div>
+        <div class="btn-small" onclick="validar()">Guardar</div>
     </div>		
 
 </div>

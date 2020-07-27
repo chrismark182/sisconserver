@@ -2,46 +2,52 @@
     <div class="nav-wrapper">
       <div class="col s12">
         
-        <a href="<?= base_url() ?>contactos" class="breadcrumb">Contactos</a>
+        <a href="<?= base_url() ?>contactos" class="breadcrumb">Contáctos del Cliente</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>
 </nav>
+
 <div class="section container center">
     <form action="<?= base_url() ?>contacto/crear" id="form" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
-                    <select id="cliente" name="cliente">
-                        <option value="" disabled selected>Cliente</option>
+                <select id="cliente" name="cliente">
+                    <option value="" disabled selected>Seleccionar Cliente</option>
                         
-                        <?php if($clientes): ?>
+                    <?php if($clientes): ?>
                         <?php foreach($clientes as $cliente): ?> 
-                        <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
+                            <option value="<?= $cliente->CLIENT_N_ID ?>"><?= $cliente->CLIENT_C_RAZON_SOCIAL ?></option>
                         <?php endforeach; ?> 
-                        <?php endif; ?>
-                    </select>
-                        <label>clientes</label>
+                    <?php endif; ?>
+                </select>
+                <label>Clientes</label>
             </div>
 
             <div class="input-field col s12 m6 l4">
-                    <select id="t_documento" name="t_documento">
-                        <option value="" disabled selected>Tipo de documento</option>
-                        
-                        <?php if($tdocumentos): ?>
+                <select id="t_documento" name="t_documento">
+                    <option value="" disabled selected>Seleccionar Tipo de Documento</option>
+                    
+                    <?php if($tdocumentos): ?>
                         <?php foreach($tdocumentos as $tdocumento): ?> 
-                        <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_ABREVIATURA ?></option>
+                            <option value="<?= $tdocumento->TIPDOC_N_ID ?>"><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
                         <?php endforeach; ?> 
-                        <?php endif; ?>
-                    </select>
-                        <label>Tipo de Documento</label>
+                    <?php endif; ?>
+                </select>
+                <label>Tipo de Documento</label>
             </div>
+
             <div class="input-field col s12 m6 l4">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
-                <label class="active" for="ndocumento">Numero de Documento</label> 
+                <label class="active" for="ndocumento">Número de Documento</label> 
             </div>
-            <div class="input-field col s12 m6 l12">
+            <div class="input-field col s12 m6 l4">
                 <input id="nombres" maxlength="100" type="text" name="nombres" class="validate">
                 <label class="active" for="nombres">Nombres</label> 
+            </div>
+            <div class="input-field col s12 m6 l8">
+                <input id="apellidos" maxlength="100" type="text" name="apellidos" class="validate">
+                <label class="active" for="apellidos">Apellidos</label> 
             </div>
             <div class="input-field col s12">
                 <div class="btn-small" id="btn_guardar">
@@ -59,6 +65,7 @@
         btn_guardar.addEventListener("click", validar, false); 
         
     });
+
     function validar()
     {
         console.log("Validar");
@@ -66,7 +73,8 @@
             document.getElementById('cliente').value.trim() != '' &&
             document.getElementById('t_documento').value.trim()  != '' &&
             document.getElementById('ndocumento').value.trim() != '' &&
-            document.getElementById('nombres').value.trim() != ''
+            document.getElementById('nombres').value.trim() != '' &&
+            document.getElementById('apellidos').value.trim() != ''
         )
         {
             var url =  '<?= base_url() ?>contacto/crear';
@@ -75,6 +83,7 @@
             t_documento: document.getElementById("t_documento").value,
             ndocumento: document.getElementById("ndocumento").value,
             nombres: document.getElementById("nombres").value,
+            apellidos: document.getElementById("apellidos").value,
             usuario: <?= $session->USUARI_N_ID ?>
                     };
 

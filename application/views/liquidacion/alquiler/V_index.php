@@ -86,7 +86,7 @@
                 <th class="center-align">LIQUID.</th>
                 <th class="left-align">CLIENTE</th>
                 <th class="left-align">SEDE</th>
-                <th class="left-align">PERIODOS</th>
+                <th class="center-align">PERIODOS</th>
                 <th class="center-align">MONEDA</th>
                 <th class="right-align">TOTAL</th>
                 <th class="center-align">SITUACION</th>
@@ -163,7 +163,7 @@
         $('#resultados').html('');
 
         let url = '<?= base_url() ?>api/execsp';
-        let sp = 'LIQUIDACION_ALQUILER_LIS';
+        let sp = 'LIQUIDACION_LIS_ALQUILER';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
 
         $fecha_desde = $('#desde').val();
@@ -256,7 +256,7 @@
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'liq_servicios/'+$empresa+'/'+$liquidacion+'/eliminar')
+        $('#btnConfirmar').attr('href', 'liq_alquiler/'+$empresa+'/'+$liquidacion+'/eliminar')
     }
 
   

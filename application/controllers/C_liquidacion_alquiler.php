@@ -21,17 +21,19 @@ class C_liquidacion_alquiler extends CI_Controller {
     private function _init()
 	{
 		$this->output->set_template('siscon');
-	}
+    }
+    
     //Vistas
     public function index() 
 	{         
         $this->_init();
-        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS 1,'1'";
+        $clientes = "Exec  CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID},'1'";
         $this->data['clientes'] =$this->M_crud->sql($clientes);        
         $sedes = 'Exec SEDE_LIS 0,0';
         $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->load->view('liquidacion/alquiler/V_index', $this->data);
     }
+
     public function nuevo()
     {
         $this->_init();
@@ -42,6 +44,7 @@ class C_liquidacion_alquiler extends CI_Controller {
 
         $this->load->view('liquidacion/alquiler/V_nuevo', $this->data);        
     }
+    
     public function editar($empresa,$id)
     {  
         $sql = "Exec ORDEN_SERVICIO_LIS "    .$empresa . ","
@@ -62,6 +65,16 @@ class C_liquidacion_alquiler extends CI_Controller {
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
     }
-    
+
+    public function eliminar($empresa,$id)
+    {
+        $sql = "Exec LIQUIDACION_DEL_ALQUILER "    . $empresa .","
+                                        . $id.","
+                                        . $this->data['session']->USUARI_N_ID; 
+            
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('liq_alquiler', 'refresh');       
+    }  
 }
 
