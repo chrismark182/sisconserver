@@ -38,6 +38,7 @@
                 <th class="left-align">Nro. Documento</th>
                 <th class="left-align">Apellidos</th>
                 <th class="left-align">Nombres</th>
+				<th class="left-align">Razon social</th>
                 <th class="center-align">Bloquear</th>
             </tr>
         </thead>
@@ -58,14 +59,15 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class=" waves-effect waves-green btn-flat">Aceptar</a>
+        <a href="#!" class=" waves-effect waves-green btn-flat" onclick="bloquear()">Aceptar</a>
     </div>
 </div>
 <script>
     function buscar()
     {
         $('.preloader-background').css({'display': 'block'});
-        let url = '<?= base_url() ?>api/execsp';
+		let url = '<?= base_url() ?>api/execsp';
+		console.log(url);
         let sp = 'PERSONA_LIS';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
         let tipo_documento = parseInt(document.getElementById('tipo_documento').value);
@@ -93,7 +95,8 @@
                                         <tr>
                                             <td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
                                             <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
-                                            <td class="left-align">${element.PERSON_C_NOMBRE}</td>
+											<td class="left-align">${element.PERSON_C_NOMBRE}</td>
+											<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                             <td class="center-align"><i class="material-icons" style="cursor: pointer;" onclick="modalBloquear(${element.PERSON_N_ID})">lock</i></td>
                                         </tr>
                                     `);
@@ -108,6 +111,33 @@
     }
     function bloquear()
     {
-        
+
+		let url = '<?= base_url() ?>api/execsp';
+		let sp = 'PERSONA_BLOQUEO_INS';				
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		let motivo = document.getElementById('motivo').value;
+		let persona = parseInt(document.getElementById('persona_id').value);
+		let usuario = <?= $session->USUARI_N_ID ?>;
+		data = {sp, empresa, persona, motivo, usuario};
+
+		fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+			console.log('Persona bloqueada correctamente');
+			
+			window.location.href= "<?= base_url() ?>bloqueos";
+            $('.preloader-background').css({'display': 'none'});                            
+		}).catch(error => console.log(error));
+		
+
     }
 </script>
