@@ -153,6 +153,7 @@ $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
 $route['api/validartipocambio'] = function (){return 'C_api/validartipocambio'; };
+$route['api/listar_tipo_cambio'] = function (){return 'C_api/listar_tipo_cambio'; };
 
 $route['api/acuerdos/periodos'] = function (){return 'C_api/acuerdos_periodos'; };
 $route['api/acuerdos/periodo/guardar'] = function (){return 'C_api/acuerdos_periodos_guardar'; };

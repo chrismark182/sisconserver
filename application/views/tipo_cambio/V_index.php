@@ -1,3 +1,8 @@
+<?php 
+    $fechaDesde = new DateTime();
+    $fechaDesde->modify('first day of this month');    
+    $fechaHasta = new DateTime();
+?>
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
@@ -9,13 +14,38 @@
                     <b>
                         Total Registros: 
                         &nbsp;&nbsp;&nbsp;
-                        <span id="total" class="btn blue-grey darken-2"><?php echo count($cambios);?></span>
+                        <span id="total" class="btn blue-grey darken-2">0</span>
                     </b>
                 </div>
             </div>
         </ul>
     </div>
 </nav>
+<!-- Buscador -->
+<div class="section container center" style="padding-top: 0px">
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>ordenes" method="post" id="form">
+            
+            <div class="input-field col s12 m6 l6">
+                <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="desde">Desde</label> 
+            </div>
+            <div class="input-field col s12 m6 l6">
+                <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
+                <label class="active" for="hasta">Hasta</label> 
+                <div class="input-field col l1">
+                <div class="btn-small" id="btn_buscar">Buscar
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>    
+</div>
+
+
+
+
+
 <div class="container">
         <div>
             &nbsp;
@@ -30,20 +60,7 @@
                 
             </tr>
         </thead>
-        <tbody>
-            <?php if($cambios): ?>
-                <?php foreach($cambios as $cambio): ?> 
-                    <tr>
-                        <td class="left-align"><?=$cambio->TIPCAM_C_FECHA?></td>
-                        <td class="rigth-align"><?=$cambio->TIPCAM_N_VALOR_VENTA?></td>
-                        
-                        <td class="center-align">
-                            <a class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(<?= $cambio->EMPRES_N_ID ?>,<?= $cambio->TIPCAM_N_ID ?>)">delete</i>
-                               </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>  
-            <?php endif; ?>
+        <tbody id="resultados">
         </tbody>
     </table>
 </div>
@@ -63,11 +80,72 @@
     </div>
 </div>
 <script>
-    function confirmarEliminar($empresa,$cambio)
-    {
-        console.log('confirmar eliminar')
-        $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'cambio/'+$empresa+'/'+$cambio+'/eliminar')
+    
+        function buscar()
+        {
+            let empresa = <?= $empresa->EMPRES_N_ID ?>;
+            $fecha_desde = $('#desde').val();
+            $fecha_desde = $fecha_desde.split('/');
+            
+            $fecha_hasta = $('#hasta').val();
+            $fecha_hasta = $fecha_hasta.split('/');
+
+        console.log("Buscando")
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
+        var url = 'api/listar_tipo_cambio';
+        var data = {
+            empresa: <?= $empresa->EMPRES_N_ID ?>,
+            desde: $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0],
+            hasta: $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0],
+        };
+
+        $('#resultados').html('');
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+            $('#total').html(data.length);
+            if(data.length > 0)
+            {
+                M.toast({html: 'Cargando Ordenes de Servicio', classes: 'rounded'});
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                    
+                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.TIPCAM_N_ID})">delete</i>`
+                    
+                    $('#resultados').append(`   
+                        <tr>
+                        <td class="left-align">${element.TIPCAM_C_FECHA}</td>
+                        <td class="rigth-align">${element.TIPCAM_N_VALOR_VENTA}</td>
+                            <td class="center-align">
+                                ${$eliminar}
+                            </td>
+                        </tr>
+                    `);
+                }
+            }else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+            }
+            $('.preloader-background').css({'display': 'none'});                            
+            $('.tooltipped').tooltip();
+        });
+
     }
+    function confirmarEliminar($empresa,$cambio)
+        {
+            console.log('confirmar eliminar')
+            $('#modalEliminar').modal('open');
+            $('#btnConfirmar').attr('href', 'cambio/'+$empresa+'/'+$cambio+'/eliminar')
+        }
+
 </script>
 

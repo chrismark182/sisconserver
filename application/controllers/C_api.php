@@ -114,4 +114,12 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
+    public function listar_tipo_cambio()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql = "Exec TIPO_CAMBIO_LIS_FECHA {$data['empresa']},'{$data['desde']}','{$data['hasta']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
 }
