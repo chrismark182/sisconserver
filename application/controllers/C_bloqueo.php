@@ -29,12 +29,15 @@ class C_bloqueo extends CI_Controller {
 	public function index(){
 
 		$this->output->set_template('siscon');
-        $this->load->view('bloqueo/V_index', $this->data);
+		$this->data['datos_bloqueo'] = $this->M_crud->sql("Exec PERSONA_BLOQUEO_LIS '%','%','%','%'");
+		$this->load->view('bloqueo/V_index', $this->data);
+		
 	}
 
 	public function nuevo()
     {
-	    $this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
+		$this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
+		$this->data['datos_bloqueo'] = $this->M_crud->sql("Exec PERSONA_BLOQUEO_LIS '%','%','%','%'");
 		$this->load->view('bloqueo/V_nuevo', $this->data);		
 	}
 	

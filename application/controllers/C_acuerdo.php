@@ -45,7 +45,7 @@ class C_acuerdo extends CI_Controller {
     //Procesos
     public function buscar()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+	    $data = json_decode(file_get_contents('php://input'), true);
         $sql= "Exec ALQUILER_LIS {$data['empresa']}, {$data['acuerdo']}, '{$data['cliente']}', '{$data['sede']}', '{$data['fecha_desde']}', '{$data['fecha_hasta']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
