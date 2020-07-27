@@ -29,11 +29,19 @@ class C_contacto extends CI_Controller {
 	public function index()
 	{
         $this->_init();
-        $sql = "Exec CONTACTO_LIS 0,0,0";        
+        $sql = "Exec CONTACTO_LIS 0,0,0,'%','%','%','%'";        
         $this->data['contactos'] = $this->M_crud->sql($sql); 
         $this->load->view('contacto/V_index', $this->data);
     }
-    
+
+    public function buscar()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec CONTACTO_LIS {$data['empresa']}, {$data['idcliente']}, {$data['contacto']}, '{$data['cliente']}', '{$data['ndocumento']}', '{$data['nombres']}', '{$data['apellidos']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
+
 	public function nuevo(){
         $this->_init();
         
@@ -67,7 +75,7 @@ class C_contacto extends CI_Controller {
 
     public function crear(){
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', {$data['usuario']}";
+        $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', '{$data['apellidos']}', {$data['usuario']}";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
@@ -76,13 +84,15 @@ class C_contacto extends CI_Controller {
     {
         if(
             trim($this->input->post('ndocumento')) != '' &&
-            trim($this->input->post('nombres')) != ''
+            trim($this->input->post('nombres')) != '' &&
+            trim($this->input->post('apellidos')) != ''
         ):
             $sql = "Exec CONTACTO_UPD "     . $empresa . ","
                                             . $cliente   . ","
                                             . $contacto . ",'"
                                             .$this->input->post('ndocumento') . "','" 
                                             .$this->input->post('nombres') . "'," 
+                                            .$this->input->post('apellidos') . "'," 
                                         . $this->data['session']->USUARI_N_ID ;
                                             
             $this->M_crud->sql($sql);      

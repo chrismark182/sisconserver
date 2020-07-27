@@ -125,6 +125,7 @@ $route['visita/(:num)/(:num)/eliminar'] = function ($empresa , $visita){return '
 
 //Contactos
 $route['contactos'] = 'C_contacto';
+$route['contacto/buscar'] = 'C_contacto/buscar';
 $route['contacto/nuevo'] = 'C_contacto/nuevo';
 $route['contacto/crear'] = 'C_contacto/crear';
 $route['contacto/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};

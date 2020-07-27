@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="btn-small col s12" onclick="validar()">Iniciar Sesión</div>
+            <div class="btn-large col s12" onclick="validar()">Iniciar Sesión</div>
         </div>        
     </form>
 </div>
