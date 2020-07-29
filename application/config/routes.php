@@ -128,6 +128,7 @@ $route['contactos'] = 'C_contacto';
 $route['contacto/buscar'] = 'C_contacto/buscar';
 $route['contacto/nuevo'] = 'C_contacto/nuevo';
 $route['contacto/crear'] = 'C_contacto/crear';
+$route['contacto/contactoValidar'] = function (){return 'C_contacto/contactoValidar'; };
 $route['contacto/(:num)/(:num)/(:num)/editar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/editar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['contacto/(:num)/(:num)/(:num)/actualizar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/actualizar/'.$empresa.'/'.$cliente.'/'.$contacto;};
 $route['contacto/(:num)/(:num)/(:num)/eliminar'] = function ($empresa ,$cliente, $contacto){return 'C_contacto/eliminar/'.$empresa.'/'.$cliente.'/'.$contacto;};
