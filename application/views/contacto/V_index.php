@@ -94,7 +94,8 @@
     function buscar()
     {
         console.log('Estoy buscando..  ')
-
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
         var url = 'contacto/buscar';
 
         var cliente = '%'; 
@@ -141,6 +142,7 @@
             $('#total').html(data.length);
             if(data.length > 0)
             {
+                M.toast({html: 'Cargando Contactos', classes: 'rounded'});
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
 
@@ -152,7 +154,6 @@
                                                     <td class="center-align">${element.CLICON_C_DOCUMENTO}</td>
                                                     <td class="left-align">${element.CLICON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.CLICON_C_APELLIDOS}</td>
-                                                    <td class="left-align">${element.ALQUIL_C_FECHA_FINAL}</td>
                                                     <td class="center-align">
                                                         <a  href="<?= base_url() ?>contacto/${data[index].EMPRES_N_ID}/${data[index].CLICON_N_ID}/${data[index].CLIENT_N_ID}/editar">
                                                             <i class="material-icons">edit</i>

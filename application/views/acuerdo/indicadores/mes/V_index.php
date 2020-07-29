@@ -96,11 +96,11 @@
         btnBuscar.addEventListener("click", buscar, false);
         sedes()
         google.charts.load('current', {packages: ['corechart', 'bar']});
-        
     });
     
     async function sedes()
     {
+        M.toast({html: 'Cargando Sedes...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});         
 
         let url = 'api/execsp';
@@ -140,6 +140,7 @@
             $('.preloader-background').css({'display': 'none'});                
         });
     }
+
     function sedes_checkados()
     {
         let checados = $('.sede:checked')
@@ -154,12 +155,15 @@
         }
         return sedes;
     }
+
     function seleccionarTodos()
     {
 
     }
+
     async function clientes()
     {
+        M.toast({html: 'Cargando Clientes...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});         
 
         let url = 'api/execsp';
@@ -199,6 +203,7 @@
             $('.preloader-background').css({'display': 'none'});                
         });
     }
+
     function clientes_checkados()
     {
         let checados = $('.cliente:checked')
@@ -232,9 +237,12 @@
         }
         //$('#resultados').find('input:checkbox')[0].checked = true
     }
+
     function buscar()
     {
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});    
+
         let fecha_desde = $('#desde').val();
         fecha_desde = fecha_desde.split('/');
         fecha_desde = fecha_desde[2] + fecha_desde[1] + fecha_desde[0];
@@ -278,6 +286,7 @@
             $('.preloader-background').css({'display': 'none'});                
         });
     }
+    
     function drawGrafic(data)
     {
         var array = [

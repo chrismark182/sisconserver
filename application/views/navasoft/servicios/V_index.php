@@ -95,7 +95,6 @@
         btnBuscar.addEventListener("click", buscar, false);
 
         liquidacion = getParameterByName('li')
-        buscar();
         if(liquidacion != '')
         {
             $('#liquidacion').val(liquidacion)

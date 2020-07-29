@@ -154,6 +154,7 @@
         }
 
         console.log("Buscando")
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
         var url = 'api/tarifas';
         var data= { empresa, numero, sede, cliente, servicio }

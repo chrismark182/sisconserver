@@ -87,7 +87,9 @@
     function buscar()
     {
         console.log('Estoy buscando.. ')
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
+        
         let url = 'api/execsp';
         let sp = 'CLIENTE_LIS';
         let empresa =  parseInt(<?= $empresa->EMPRES_N_ID ?>);
@@ -112,7 +114,8 @@
         .then(function(data) 
         {
             $('#total').html(data.length);
-         
+            M.toast({html: 'Cargando Clientes...', classes: 'rounded'});
+
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
                

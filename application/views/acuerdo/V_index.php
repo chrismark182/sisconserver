@@ -106,6 +106,7 @@
     <a id="btnConfirmarCerrar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
  <!-- Ver periodos -->
 <div id="modalPeriodos" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -135,6 +136,7 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
 </div>
+
  <!-- Agregar periodo -->
  <div id="modalAgregarPeriodo" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -186,7 +188,8 @@
     function buscar()
     {
         console.log('Estoy buscando..  ')
-    //    $('.preloader-background').css({'display': 'block'});
+        M.toast({html: 'Buscando resultado...', classes: 'rounded'});
+        $('.preloader-background').css({'display': 'block'});
 
         var url = 'acuerdo/buscar';
 
@@ -238,6 +241,7 @@
             console.log(data);
             if(data.length > 0)
             {
+                M.toast({html: 'Cargando Acuerdos', classes: 'rounded'});
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                     
