@@ -26,15 +26,9 @@ class C_bloqueo extends CI_Controller {
 	}
 
 	
-	public function index(){
-		$this->output->set_template('siscon');
-		$this->data['datos_bloqueo'] = $this->M_crud->sql("Exec PERSONA_BLOQUEO_LIS '%','%','%','%'");
-		$this->data['BuscarDetalle'] = $this->M_crud->sql("LIST_INFO_BLOQUEO_PERSONA 0");
-
-		
-		
-		$this->load->view('bloqueo/V_index', $this->data);
-		
+	public function index()
+	{
+		$this->load->view('bloqueo/V_index', $this->data);		
 	}
 
 	public function nuevo()

@@ -71,33 +71,14 @@
 
 <div id="modalInfoBloqueos" class="modal modal-fixed-footer">
     <div class="modal-content" >
-        <table class="striped" style="font-size: 12px;">
-			<thead class="blue-grey darken-1" >
-				<tr>
-					<th>Motivo </th>
-					<th>Usuario que registra</th>
-					<th>Fecha Bloqueo</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($BuscarDetalle as $row): ?>
-					<tr>
-						<th>  
-							<?= $row->PERBLO_C_MOTIVO_BLOQUEO ?>
-						</th>
-						<th>
-							<?= $row->USUARI_C_USERNAME?>
-						</th>
-						<th>
-							<?= $row->PERBLO_D_FECHA_REG?>		
-						</th>
-					</tr>
-					<?php endforeach;?>
-			</tbody>
-			<div class="modal-footer">
-				<a href="#!" class="modal-close waves-effect waves-green btn-flat">ACEPTAR</a>
-			</div>
-		 <table>
+		<h4>Datos del bloqueo</h4>
+		<div class="divider"></div>
+		<p>Motivo bloqueo: <span id="bloqueo_motivo"></span></p>
+		<p>Usuario bloqueo: <span id="bloqueo_usuario"></span></p>
+		<p>Fecha bloqueo: <span id="bloqueo_fecha"></span></p>
+    </div>
+	<div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
 </div> 
 
@@ -156,8 +137,6 @@
 			{
 					for (let index = 0; index < data.length; index++) {
 					const element = data[index];  
-					
-					console.log(element);
 					$('#resultados').append(`   		
 							<tr>
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
@@ -185,7 +164,6 @@
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
 		data = {sp, empresa, id, item};
 
-		$('#resultados').html('');
 		fetch(url, {
 					method: 'POST', // or 'PUT'
 					body: JSON.stringify(data), // data can be `string` or {object}!
@@ -199,6 +177,11 @@
 		.then(function(data) 
 		{
 			console.log(data);
+			let element = data[0];
+			document.getElementById('bloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_BLOQUEO;
+			document.getElementById('bloqueo_usuario').innerHTML = element.USUARI_C_USERNAME;
+			document.getElementById('bloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_REG;
+			$('#modalInfoBloqueos').modal('open');
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
