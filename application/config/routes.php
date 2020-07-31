@@ -182,7 +182,9 @@ $route['bloqueos'] = 'C_bloqueo';
 $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
 $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
 $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
-$route['cambio/(:num)/(:num)/editar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/editar/'.$empresa.'/'.$cambio;};
-$route['cambio/(:num)/(:num)/actualizar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/actualizar/'.$empresa.'/'.$cambio;};
-$route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/eliminar/'.$empresa.'/'.$cambio;};
 
+
+//ingreso
+$route['ingreso'] = 'C_ingreso';
+$route['ingreso/nuevo'] = 'C_ingreso/nuevo';
+$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
