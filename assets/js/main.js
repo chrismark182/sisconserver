@@ -1,4 +1,4 @@
-console.log("Aqui realizare la logica del cambio del password");
+
 function getParameterByName(name) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
