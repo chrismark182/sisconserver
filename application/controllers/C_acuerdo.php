@@ -128,8 +128,8 @@ class C_acuerdo extends CI_Controller {
 
     public function cerrar($empresa,$acuerdo)
     {
-        $sql = "Exec ALQUILER_CERRAR "      . $empresa .","
-                                            . $acuerdo .","
+        $sql = "Exec ALQUILER_CERRAR "  . $empresa .","
+                                        . $acuerdo .","
                                         .$this->data['session']->USUARI_N_ID ;  
                                         
         $this->M_crud->sql($sql);      

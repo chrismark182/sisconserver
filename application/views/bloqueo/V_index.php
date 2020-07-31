@@ -17,7 +17,6 @@
         </ul>
     </div>
 </nav>
-
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
@@ -58,8 +57,7 @@
 				<th class="left-align">Empresa</th>
 				<th class="left-align" style="text-align: center">Info Bloqueo</th>
 				<th class="left-align">Usuario</th>
-				<th class="left-align">Fecha Bloqueo</th>
-                
+				<th class="left-align">Fecha Bloqueo</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -69,30 +67,40 @@
 <a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="http://siscon.esx/bloqueos/nuevo"><i class="material-icons">add</i></a>
 
 
+<!-- Modal Structure -->
+
 <div id="modalInfoBloqueos" class="modal modal-fixed-footer">
-    <div class="modal-content">
+    <div class="modal-content" >
         <table class="striped" style="font-size: 12px;">
 			<thead class="blue-grey darken-1" >
 				<tr>
 					<th>Motivo </th>
-					<th>Usuario</th>
 					<th>Usuario que registra</th>
 					<th>Fecha Bloqueo</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th>	<?php foreach ($datos_bloqueo as $row): ?><?= $row->CLIENT_C_RAZON_SOCIAL ?><?php endforeach; ?> </th>
-					<th>	<?php foreach ($datos_bloqueo as $row): ?><?= $row->CLIENT_C_RAZON_SOCIAL ?><?php endforeach; ?></th>
-					<th> 	<?php foreach ($datos_bloqueo as $row): ?><?= $row->CLIENT_C_RAZON_SOCIAL ?><?php endforeach; ?> </th>
-					<th>	<?php foreach ($datos_bloqueo as $row): ?><?= $row->CLIENT_C_RAZON_SOCIAL ?><?php endforeach; ?></th>
-				</tr>
-			
+				<?php foreach ($BuscarDetalle as $row): ?>
+					<tr>
+						<th>  
+							<?= $row->PERBLO_C_MOTIVO_BLOQUEO ?>
+						</th>
+						<th>
+							<?= $row->USUARI_C_USERNAME?>
+						</th>
+						<th>
+							<?= $row->PERBLO_D_FECHA_REG?>		
+						</th>
+					</tr>
+					<?php endforeach;?>
 			</tbody>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">ACEPTAR</a>
+			</div>
 		 <table>
-		
     </div>
 </div> 
+
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -156,7 +164,7 @@
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
 								<td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
 								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-								<td style="text-align:center"> <i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERBLO_N_ITEM})" >lock</i></td> 
+								<td style="text-align:center"> <i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})" >lock</i></td> 
 								<td class="left-align">${element.USUARI_C_USERNAME}</td>
 								<td class="left-align">${element.PERBLO_D_FECHA_REG}</td>
 							</tr>
@@ -170,60 +178,29 @@
         });
 	}
 
-
-	function muestraInfoBloqueo ($id){
-
-		
+	function muestraInfoBloqueo(id, item)
+	{			
 		let url = '<?= base_url() ?>api/execsp';
-		let sp = 'LIST_INFO_BLOQUEO_PERSONA';				
-		let persona = `${element.PERBLO_N_ITEM}`;
-	
-		data = {sp, persona};
-
-
+		let sp = 'PERSONA_BLOQUEO_ITEM_LIS';				
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		data = {sp, empresa, id, item};
 
 		$('#resultados').html('');
-        fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-            $('#total').html(data.length);
-         
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];                
-                $('#resultados').append(`<div id="modalInfoBloqueos" class="modal modal-fixed-footer">
-   					 <div class="modal-content">
-        			 <table class="striped" style="font-size: 12px;">
-						<thead class="blue-grey darken-1" >
-							<tr>
-								<th>Motivo </th>
-								<th>Usuario que registra</th>
-								<th>Fecha Bloqueo</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>${element.PERBLO_C_MOTIVO_BLOQUEO}</th>
-								<th>${element.USUARI_C_USERNAME}</th>
-								<th>${element.PERBLO_D_FECHA_REG}</th>
-							</tr>
-						</tbody>
-		 			<table>
-    			</div>
-			</div> 
-  `)}
-  $('.preloader-background').css({'display': 'none'});                            
- });
-
-
+		fetch(url, {
+					method: 'POST', // or 'PUT'
+					body: JSON.stringify(data), // data can be `string` or {object}!
+					headers:{
+						'Content-Type': 'application/json'
+						}
+					})
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) 
+		{
+			console.log(data);
+			$('.preloader-background').css({'display': 'none'});                            
+		});
 	}
 
 
