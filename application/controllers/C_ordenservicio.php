@@ -35,7 +35,6 @@ class C_ordenservicio extends CI_Controller {
         $this->data['clientes'] =$this->M_crud->sql($clientes);
         $this->data['sedes'] = $this->M_crud->sql($sedes);
         $this->data['servicios'] = $this->M_crud->sql($servicios);
-
         $this->load->view('ordenservicio/V_index', $this->data);
     }
 

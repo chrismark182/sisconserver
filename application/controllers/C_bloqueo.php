@@ -27,16 +27,19 @@ class C_bloqueo extends CI_Controller {
 
 	
 	public function index(){
-
 		$this->output->set_template('siscon');
 		$this->data['datos_bloqueo'] = $this->M_crud->sql("Exec PERSONA_BLOQUEO_LIS '%','%','%','%'");
+		$this->data['BuscarDetalle'] = $this->M_crud->sql("LIST_INFO_BLOQUEO_PERSONA 0");
+
+		
+		
 		$this->load->view('bloqueo/V_index', $this->data);
 		
 	}
 
 	public function nuevo()
     {
-		$this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
+		$this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS 1");
 		$this->data['datos_bloqueo'] = $this->M_crud->sql("Exec PERSONA_BLOQUEO_LIS '%','%','%','%'");
 		$this->load->view('bloqueo/V_nuevo', $this->data);		
 	}
@@ -47,13 +50,6 @@ class C_bloqueo extends CI_Controller {
 
 		
 		$this->M_crud->sql("EXEC INSERCION_BLOQUEO_USUARIO 0, 0, '{$this->input->post('username')}',''");
-		
-
-			
-	
-
-
-
 
 		$this->load->view('bloqueo/V_nuevo',$this->data);		
  	}
