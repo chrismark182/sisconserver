@@ -76,12 +76,49 @@
 		<p>Motivo bloqueo: <span id="bloqueo_motivo"></span></p>
 		<p>Usuario bloqueo: <span id="bloqueo_usuario"></span></p>
 		<p>Fecha bloqueo: <span id="bloqueo_fecha"></span></p>
+		<div class="btn" onclick="modalDesbloquear()">DESBLOQUEAR</div>
     </div>
 	<div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
 </div> 
 
+<div id="modalInfoDesbloqueado" class="modal modal-fixed-footer">
+    <div class="modal-content" >
+		<h4>Datos del bloqueo</h4>
+		<div class="divider"></div>
+		<p>Motivo bloqueo: <span id="des_bloqueo_motivo"></span></p>
+		<p>Usuario bloqueo: <span id="des_bloqueo_usuario"></span></p>
+		<p>Fecha bloqueo: <span id="des_bloqueo_fecha"></span></p>
+		<br>
+		<h4>Datos del desbloqueo</h4>
+		<div class="divider"></div>
+		<p>Motivo desbloqueo: <span id="desbloqueo_motivo"></span></p>
+		<p>Usuario desbloqueo: <span id="desbloqueo_usuario"></span></p>
+		<p>Fecha desbloqueo: <span id="desbloqueo_fecha"></span></p>
+		
+    </div>
+	<div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    </div>
+</div> 
+
+<div id="modalBloqueos" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4 class="left">Desbloquear persona</h4>
+        <div class="section row">
+            <input type="hidden" id="persona_id" >
+			<input type="hidden" id="bloqueo_item" >
+            <div class="input-field col s12">
+                <textarea id="motivo" class="materialize-textarea"></textarea>
+                <label for="motivo">Motivo del desbloqueo</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" waves-effect waves-green btn-flat" onclick="desbloquear()">Aceptar</a>
+    </div>
+</div>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -135,19 +172,24 @@
 			
 			if(data.length > 0)
 			{
-					for (let index = 0; index < data.length; index++) {
-					const element = data[index];  
+				for (let index = 0; index < data.length; index++) {
+					const element = data[index]; 
+					let bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})" >lock</i>`;
+					if(element.PERBLO_C_BLOQUEADO == '0')
+					{
+						bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoDesbloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})">lock_open</i>`;
+					}
 					$('#resultados').append(`   		
 							<tr>
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
 								<td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
 								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-								<td style="text-align:center"> <i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})" >lock</i></td> 
+								<td style="text-align:center">${bloqueo}</td> 
 								<td class="left-align">${element.USUARI_C_USERNAME}</td>
 								<td class="left-align">${element.PERBLO_D_FECHA_REG}</td>
 							</tr>
-				 `);
+					`);
 				}
 			}
 			else{
@@ -158,7 +200,10 @@
 	}
 
 	function muestraInfoBloqueo(id, item)
-	{			
+	{		
+		document.getElementById('persona_id').value = id;
+		document.getElementById('bloqueo_item').value = item;
+
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = 'PERSONA_BLOQUEO_ITEM_LIS';				
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -185,6 +230,78 @@
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
+	function muestraInfoDesbloqueo(id, item)
+	{		
+		document.getElementById('persona_id').value = id;
+		document.getElementById('bloqueo_item').value = item;
 
+		let url = '<?= base_url() ?>api/execsp';
+		let sp = 'PERSONA_BLOQUEO_ITEM_LIS';				
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		data = {sp, empresa, id, item};
 
+		fetch(url, {
+					method: 'POST', // or 'PUT'
+					body: JSON.stringify(data), // data can be `string` or {object}!
+					headers:{
+						'Content-Type': 'application/json'
+						}
+					})
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) 
+		{
+			console.log(data);
+			let element = data[0];
+			document.getElementById('des_bloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_BLOQUEO;
+			document.getElementById('des_bloqueo_usuario').innerHTML = element.USUARI_C_USERNAME;
+			document.getElementById('des_bloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_REG;
+
+			document.getElementById('desbloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_DESBLOQUEO;
+			document.getElementById('desbloqueo_usuario').innerHTML = element.USUARIO_DESBLOQUEA;
+			document.getElementById('desbloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_UPD;
+
+			$('#modalInfoDesbloqueado').modal('open');
+			$('.preloader-background').css({'display': 'none'});                            
+		});
+	}
+	function modalDesbloquear()
+    {
+		$('.modal').modal('close');
+        $('#modalBloqueos').modal('open');
+    }
+	function desbloquear()
+    {
+
+		let url = '<?= base_url() ?>api/execsp';
+		let sp = 'PERSONA_BLOQUEO_UPD';				
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		let persona = parseInt(document.getElementById('persona_id').value);
+		let item = parseInt(document.getElementById('bloqueo_item').value);
+		let motivo = document.getElementById('motivo').value;
+		let usuario = <?= $session->USUARI_N_ID ?>;
+		data = {sp, empresa, persona, item, motivo, usuario};
+
+		fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+			M.toast({html: 'Persona desbloqueada correctamente!', classes: 'rounded'});
+            $('.preloader-background').css({'display': 'none'});                            
+			setTimeout(() => {
+			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
+            }, 1000);
+		}).catch(error => console.log(error));
+		
+
+    }
 </script>
