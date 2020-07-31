@@ -25,7 +25,7 @@
             </div>
 
             <div class="input-field col s12 m6 l4">
-                <select id="t_documento" name="t_documento">
+                <select id="tdocumento" name="tdocumento">
                     <option value="" disabled selected>Seleccionar Tipo de Documento</option>
                     
                     <?php if($tdocumentos): ?>
@@ -63,7 +63,6 @@
         console.log("cargo pantalla")
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validar, false); 
-        
     });
 
     function validar()
@@ -71,46 +70,51 @@
         console.log("Validar");
         if( 
             document.getElementById('cliente').value.trim() != '' &&
-            document.getElementById('t_documento').value.trim()  != '' &&
+            document.getElementById('tdocumento').value.trim()  != '' &&
             document.getElementById('ndocumento').value.trim() != '' &&
             document.getElementById('nombres').value.trim() != '' &&
             document.getElementById('apellidos').value.trim() != ''
         )
         {
-            var url =  '<?= base_url() ?>contacto/crear';
-            var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
-            cliente: document.getElementById("cliente").value,            
-            t_documento: document.getElementById("t_documento").value,
-            ndocumento: document.getElementById("ndocumento").value,
-            nombres: document.getElementById("nombres").value,
-            apellidos: document.getElementById("apellidos").value,
-            usuario: <?= $session->USUARI_N_ID ?>
-                    };
-
-            fetch(url, {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(data), // data can be `string` or {object}!
-                headers:{
-                    'Content-Type': 'application/json'
-                    }
-                })
-            .then(function(response) {
-            return response.json();
-            })
-            .then(function(data) 
+            if( 
+                document.getElementById('tdocumento').value.trim() == '2' &&
+                document.getElementById('ndocumento').value.trim().length != 8
+            )   
             {
-                console.log(data)
-                M.toast({html: 'Datos Guardados correctamente', classes: 'rounded'});
-                setTimeout(() => {
-                    window.location.href='<?= base_url() ?>contactos';
-                }, 2000);
-             });
-
+                M.toast({html: 'Formato del DNI es inválido', classes: 'rounded'});    
+            }
+            else
+            {
+                var url =  '<?= base_url() ?>contacto/contactoValidar';
+                var data = {empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                            tdocumento: document.getElementById("tdocumento").value,            
+                            ndocumento: document.getElementById("ndocumento").value
+                        };
+                fetch(url, {
+                            method: 'POST', // or 'PUT'
+                            body: JSON.stringify(data), // data can be `string` or {object}!
+                            headers:{
+                                'Content-Type': 'application/json'
+                            }
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) 
+                {
+                    console.log(data)
+                    if(data.length>0){
+                        M.toast({html: 'Documento Duplicado', classes: 'rounded'});
+                    }
+                    else{
+                        document.getElementById('form').submit();
+                    }
+                });
+            }
         }
         else
         {
             M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
         }
-
     }
 </script>

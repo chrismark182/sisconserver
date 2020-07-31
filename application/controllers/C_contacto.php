@@ -59,8 +59,7 @@ class C_contacto extends CI_Controller {
         $this->_init();
         $sql = "Exec CONTACTO_LIS "    .$empresa . ","
                                         .$cliente. ","
-                                        .$contacto ;
-                                        
+                                        .$contacto. ",'%','%','%','%'" ;
         
         $tipodocumento = "Exec TIPO_DOCUMENTO_PERSONAS_LIS";
         $this->data['tdocumentos'] = $this->M_crud->sql($tipodocumento); 
@@ -73,11 +72,37 @@ class C_contacto extends CI_Controller {
         $this->load->view('contacto/V_editar',$this->data);
     }
 
-    public function crear(){
+    public function contactoValidar()
+    {
         $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec CONTACTO_INS {$data['empresa']}, {$data['cliente']}, {$data['t_documento']}, '{$data['ndocumento']}', '{$data['nombres']}', '{$data['apellidos']}', {$data['usuario']}";
+        $sql= "Exec CONTACTO_VAL {$data['empresa']} ,{$data['tdocumento']},'{$data['ndocumento']}'";
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
+    }
+
+    public function crear(){
+        if(
+            trim($this->input->post('cliente')) != '' &&
+            trim($this->input->post('tdocumento'))  != '' &&
+            trim($this->input->post('ndocumento')) != '' &&
+            trim($this->input->post('nombres')) != '' &&
+            trim($this->input->post('apellidos')) != ''
+         ):
+                $sql = "Exec CONTACTO_INS "     . $this->data['empresa']->EMPRES_N_ID . ","
+                                                . $this->input->post('cliente') . ","                                 
+                                                . $this->input->post('tdocumento') . ",'" 
+                                                . $this->input->post('ndocumento') . "','" 
+                                                . $this->input->post('nombres') . "','" 
+                                                . $this->input->post('apellidos') . "'," 
+                                                . $this->data['session']->USUARI_N_ID ;
+                
+                                                $this->M_crud->sql($sql);
+                                                $url = 'contactos?nu=' . $this->input->post('ndocumento'); 
+                                                redirect($url,'refresh');
+         else:
+            $this->session->set_flashdata('message','No puede guardar en vacio ');
+            header("Location: nuevo");
+        endif;
     }
 
     public function actualizar($empresa,$cliente,$contacto)
@@ -91,14 +116,14 @@ class C_contacto extends CI_Controller {
                                             . $cliente   . ","
                                             . $contacto . ",'"
                                             .$this->input->post('ndocumento') . "','" 
-                                            .$this->input->post('nombres') . "'," 
+                                            .$this->input->post('nombres') . "','" 
                                             .$this->input->post('apellidos') . "'," 
                                         . $this->data['session']->USUARI_N_ID ;
                                             
             $this->M_crud->sql($sql);      
             $this->session->set_flashdata('message','Datos actualizados correctamente');
-            redirect('contactos', 'refresh'); 
-        
+            $url = 'contactos?nu=' . $this->input->post('ndocumento');
+            redirect($url, 'refresh');
         else:
 
             $this->session->set_flashdata('message','No puede guardar en vacio');

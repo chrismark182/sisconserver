@@ -18,6 +18,7 @@ class C_cliente extends CI_Controller {
 			redirect(base_url(),'refresh');
 		endif;
     }
+
     private function _init()
 	{
 		$this->output->set_template('siscon');
@@ -27,17 +28,17 @@ class C_cliente extends CI_Controller {
 	{              
         $this->load->view('cliente/V_index', $this->data);
     }
+
     public function nuevo()
     {
         $documento ="Exec TIPO_DOCUMENTO_EMPRESAS_LIS";
 
         $this->data['tdocumentos'] = $this->M_crud->sql($documento);
         $this->load->view('cliente/V_nuevo', $this->data);
-
     }
+
     public function editar($empresa,$cliente)
     {  
-        
         $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
                                     .$cliente ;
         
@@ -47,24 +48,25 @@ class C_cliente extends CI_Controller {
        
         $this->load->view('cliente/V_editar',$this->data);
     }
+
     public function crear(){
-        
-$esclient='0';
-$esproveedor='0';
-$estransportista='0';
-$ordencompra='0';
-if($this->input->post('escliente')=='on'):
-    $esclient='1';
-endif;
-if($this->input->post('esproveedor')=='on'):
-    $esproveedor='1';
-endif;
-if($this->input->post('estransportista')=='on'):
-    $estransportista='1';
-endif;
-if($this->input->post('ordencompra')=='on'):
-    $ordencompra='1';
-endif;
+        $esclient='0';
+        $esproveedor='0';
+        $estransportista='0';
+        $ordencompra='0';
+
+        if($this->input->post('escliente')=='on'):
+            $esclient='1';
+        endif;
+        if($this->input->post('esproveedor')=='on'):
+            $esproveedor='1';
+        endif;
+        if($this->input->post('estransportista')=='on'):
+            $estransportista='1';
+        endif;
+        if($this->input->post('ordencompra')=='on'):
+            $ordencompra='1';
+        endif;
 
         if(
             trim($this->input->post('tdocumento')) != '' &&
@@ -90,66 +92,62 @@ endif;
                                                 
          
          else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        
-        header("Location: nuevo");
+            $this->session->set_flashdata('message','No puede guardar en vacio ');
+            header("Location: nuevo");
         endif;
-    
     }
+
     public function actualizar($empresa,$cliente)
     {
+        $esclient='0';
+        $esproveedor='0';
+        $estransportista='0';
+        $ordencompra='0';
 
-$esclient='0';
-$esproveedor='0';
-$estransportista='0';
-$ordencompra='0';
-if($this->input->post('escliente')=='on'):
-    $esclient='1';
-endif;
-if($this->input->post('esproveedor')=='on'):
-    $esproveedor='1';
-endif;
-if($this->input->post('estransportista')=='on'):
-    $estransportista='1';
-endif;
-if($this->input->post('ordencompra')=='on'):
-    $ordencompra='1';
-endif;
-
-        if( trim($this->input->post('t_documento')) != '' &&
-         trim($this->input->post('ndocumento'))  != '' &&
-         trim($this->input->post('razon_social')) != '' &&
-         trim($this->input->post('direccion')) != ''
-         ):
-        $sql = "Exec CLIENTE_UPD "      . $empresa. ","
-                                        . $cliente. ",'" 
-                                        .$this->input->post('t_documento')."','"
-                                        .$this->input->post('ndocumento') . "','" 
-                                        .$this->input->post('razon_social') ."','"
-                                        .$this->input->post('direccion')."','"
-                                        . $esclient . "','"
-                                        . $ordencompra . "','"
-                                        . $esproveedor . "','"
-                                        . $estransportista . "',"
-                                        .$this->data['session']->USUARI_N_ID ; 
-        
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        $url = 'clientes?n=' . $this->input->post('ndocumento');
-        redirect($url, 'refresh');      
-
-
-    else:
-        $this->session->set_flashdata('message','No puede guardar en vacio ');
-        header("Location: editar");
-
-        
+        if($this->input->post('escliente')=='on'):
+            $esclient='1';
+        endif;
+        if($this->input->post('esproveedor')=='on'):
+            $esproveedor='1';
+        endif;
+        if($this->input->post('estransportista')=='on'):
+            $estransportista='1';
+        endif;
+        if($this->input->post('ordencompra')=='on'):
+            $ordencompra='1';
         endif;
 
+        if( trim($this->input->post('t_documento')) != '' &&
+            trim($this->input->post('ndocumento'))  != '' &&
+            trim($this->input->post('razon_social')) != '' &&
+            trim($this->input->post('direccion')) != ''
+            ):
+            $sql = "Exec CLIENTE_UPD "      . $empresa. ","
+                                            . $cliente. ",'" 
+                                            .$this->input->post('t_documento')."','"
+                                            .$this->input->post('ndocumento') . "','" 
+                                            .$this->input->post('razon_social') ."','"
+                                            .$this->input->post('direccion')."','"
+                                            . $esclient . "','"
+                                            . $ordencompra . "','"
+                                            . $esproveedor . "','"
+                                            . $estransportista . "',"
+                                            .$this->data['session']->USUARI_N_ID ; 
+            
+            $this->M_crud->sql($sql);      
+            $this->session->set_flashdata('message','Datos actualizados correctamente');
+            $url = 'clientes?n=' . $this->input->post('ndocumento');
+            redirect($url, 'refresh');      
+
+
+        else:
+            $this->session->set_flashdata('message','No puede guardar en vacio ');
+            header("Location: editar");
+        endif;
     }
+
     public function eliminar($empresa,$cliente)
     {
-
         $sql = "Exec CLIENTE_DEL "     . $empresa .","
                                         . $cliente.","
                                         .$this->data['session']->USUARI_N_ID ; 
@@ -158,7 +156,5 @@ endif;
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('clientes', 'refresh');       
     }  
-
-
 }
 

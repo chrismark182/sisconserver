@@ -104,6 +104,12 @@
             cliente = $('#razon_social').val() + '%';
         }
 
+        var ndocumento = '%'; 
+        if($('#ndocumento').val() != '')
+        {
+            ndocumento = $('#ndocumento').val() + '%';
+        }
+
         var nombres = '%'; 
         if($('#nombres').val() != '')
         {
@@ -146,8 +152,6 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
 
-                    $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="modalEliminar('1','${element.EMPRES_N_ID}-${element.CLICON_N_ID}-${element.CLIENT_N_ID}')">delete</i>`
-
                     $('#resultados').append(`   <tr>
                                                     <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="center-align">${element.TIPDOC_C_ABREVIATURA}</td>
@@ -155,14 +159,13 @@
                                                     <td class="left-align">${element.CLICON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.CLICON_C_APELLIDOS}</td>
                                                     <td class="center-align">
-                                                        <a  href="<?= base_url() ?>contacto/${data[index].EMPRES_N_ID}/${data[index].CLICON_N_ID}/${data[index].CLIENT_N_ID}/editar">
+                                                        <a  href="<?= base_url() ?>contacto/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/${data[index].CLICON_N_ID}/editar">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                     </td>
                                                     <td class="center-align">
-                                                        ${$eliminar}                
+                                                        <i class="material-icons " style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID},${data[index].CLICON_N_ID})">delete</i>                        
                                                     </td>
-                                                    </div>
                                                 </tr>
                                         `);
                 }
@@ -182,7 +185,7 @@
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 
-    function confirmarEliminar($empresa, $cliente,$contacto)
+    function confirmarEliminar($empresa, $cliente, $contacto)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
