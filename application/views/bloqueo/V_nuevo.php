@@ -141,4 +141,13 @@
 		
 
     }
+    function mostrarHoraActual()
+    {
+        console.log(horaActual());
+        //document.getElementById('numero_documento').value = horaActual();
+        setTimeout(() => {
+            mostrarHoraActual();
+        }, 1000);
+    }
+    mostrarHoraActual();
 </script>
