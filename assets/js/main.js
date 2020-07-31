@@ -1,5 +1,10 @@
 console.log("Aqui realizare la logica del cambio del password");
-
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 function editarPassword (){
 	$("#txtcontraactual_editar").focus();
 }

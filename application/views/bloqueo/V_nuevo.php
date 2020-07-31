@@ -12,7 +12,7 @@
         <div class="row">
             <div class="input-field col s12 m6">
                 <select id="tipo_documento" required>
-                    <option value="" disabled selected>Escoge una opción</option>
+                    <option value="0">Todos</option>
                     <?php foreach ($misdoc as $row): ?>
                         <option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
                     <?php endforeach; ?>
@@ -132,10 +132,11 @@
         })
         .then(function(data) 
         {
-			console.log('Persona bloqueada correctamente');
-			
-			window.location.href= "<?= base_url() ?>bloqueos";
+			M.toast({html: 'Persona bloqueada correctamente!', classes: 'rounded'});
             $('.preloader-background').css({'display': 'none'});                            
+			setTimeout(() => {
+			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
+            }, 1000);
 		}).catch(error => console.log(error));
 		
 

@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Bloqueo</a>
+            <a href="#!" class="breadcrumb">Bloqueo de visitante</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -95,36 +95,39 @@
 </div> 
 
 <script>
-
+	document.addEventListener('DOMContentLoaded', function() {
+		let n = getParameterByName('n');
+		if(n != '')
+		{
+			document.getElementById('n_documento').value = n;
+			M.updateTextFields();
+			buscar()
+		}
+	});
 	function buscar(){
 
 		$('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 
-		let sp = 'PERSONA_BLOQUEO_LIS ';
+		let sp = 'PERSONA_BLOQUEO_LIS';
 		
 		let nombre = '%';
 		if(document.getElementById('nombre').value != ''){
 			nombre = document.getElementById('nombre').value + '%';
 		}
-
 		let apellido = '%';
 		if(document.getElementById('apellido').value != ''){
 			apellido = document.getElementById('apellido').value + '%';
 		}
-
-		let tipo_documento = '%';
+		let numero_documento = '%';
 		if(document.getElementById('n_documento').value != ''){
-			tipo_documento = document.getElementById('n_documento').value + '%';
+			numero_documento = document.getElementById('n_documento').value + '%';
 		}
-
-
 		let nombre_empresa = '%';
 		if(document.getElementById('nombre_empresa').value != ''){
 			nombre_empresa = document.getElementById('nombre_empresa').value + '%';
 		}
-		
-        data = {sp, nombre, apellido, tipo_documento, nombre_empresa };
+        data = {sp, nombre, apellido, numero_documento, nombre_empresa };
         
         $('#resultados').html('');
         fetch(url, {
@@ -153,7 +156,7 @@
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
 								<td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
 								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-								<td style="text-align:center"> <i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #999; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERBLO_N_ITEM})" >lock</i></td> 
+								<td style="text-align:center"> <i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERBLO_N_ITEM})" >lock</i></td> 
 								<td class="left-align">${element.USUARI_C_USERNAME}</td>
 								<td class="left-align">${element.PERBLO_D_FECHA_REG}</td>
 							</tr>
