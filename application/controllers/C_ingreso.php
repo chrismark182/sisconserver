@@ -27,7 +27,7 @@ class C_ingreso extends CI_Controller {
     //Vistas
     public function index() 
 	{              
-        $this->_init();
+		$this->_init();
         $this->load->view('ingreso/V_index', $this->data);
     }
 

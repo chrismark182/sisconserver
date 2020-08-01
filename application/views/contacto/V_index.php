@@ -129,7 +129,8 @@
                     cliente: cliente,
                     ndocumento: ndocumento,
                     nombres: nombres,
-                    apellidos: apellidos
+					apellidos: apellidos
+					
                     };
         
         $('#resultados').html('');
