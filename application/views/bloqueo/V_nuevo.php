@@ -68,7 +68,7 @@
         $('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 		console.log(url);
-        let sp = 'PERSONA_LIS';
+        let sp = 'PERSONA_BLOQUEO_NUEVO_LIS';
         let empresa = <?= $empresa->EMPRES_N_ID ?>;
         let tipo_documento = parseInt(document.getElementById('tipo_documento').value);
         let numero_documento = document.getElementById('numero_documento').value + '%';

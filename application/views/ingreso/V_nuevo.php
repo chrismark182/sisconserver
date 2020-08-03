@@ -7,7 +7,6 @@
       </div>
     </div>
 </nav>
-
 <div class="section container">
 	<div class="row">
 		<div class="input-field col s6">
@@ -27,8 +26,7 @@
 				<?php endforeach; ?>
 			</select>
 			<label for="tipo_doc">Tipo de documentos</label>
-		</div>
-		
+		</div>	
 		<div class="input-field col s6">
 			<input placeholder="Placeholder" id="documento" type="text" class="validate" onchange="buscar()">
 			<label for="documento">Documento</label>
@@ -51,8 +49,8 @@
 			<div class="input-field col s12">
 				<select id="tipo_ingreso" required>
 					<option value="0">Tipo Ingreso</option>
-					<?php foreach ($misdoc as $row): ?>
-						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
+					<?php foreach ($tipo_ingreso as $row): ?>
+						<option value="<?= $row->EMPRES_N_ID?>">  <?= $row->TIPING_C_DESCRIPCION ?> </option>
 					<?php endforeach; ?>
 				</select>
 				<label class="active" for="tipo_ingreso"> Ingreso </label>
@@ -61,8 +59,8 @@
 			<div class="input-field col s12  ">
 				<select id="ingreso_como" required>
 					<option value="0">Ingreso Como</option>
-					<?php foreach ($misdoc as $row): ?>
-						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
+					<?php foreach ($motivo_visita as $row): ?>
+						<option value="<?= $row->EMPRES_N_ID ?>"><?= $row->MOTVIS_C_DESCRIPCION ?></option>
 					<?php endforeach; ?>
 				</select>
 				<label class="active" for="ingreso_como">Ingreso Como </label>
@@ -72,8 +70,8 @@
 			<div class="input-field col s12 ">
 				<select id="contacto" required>
 					<option value="0">Contacto</option>
-					<?php foreach ($misdoc as $row): ?>
-						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
+					<?php foreach ($contacto as $row): ?>
+						<option value="<?= $row->EMPRES_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL?> </option>
 					<?php endforeach; ?>
 				</select>
 				<label class="active" for="contacto">Ingreso Como </label>
@@ -188,8 +186,6 @@ function mostrarHoraActual()
 				$('.preloader-background').css({'display': 'none'});                            
 			});	
     }	
-
-
 </script>
 
 

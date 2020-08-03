@@ -188,3 +188,9 @@ $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
 $route['ingreso'] = 'C_ingreso';
 $route['ingreso/nuevo'] = 'C_ingreso/nuevo';
 $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
+
+
+//persona
+$route['personas'] = 'C_persona';
+$route['personas/nuevo'] = 'C_persona/nuevo';
+$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';

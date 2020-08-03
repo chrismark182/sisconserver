@@ -6,12 +6,7 @@
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
-                <div>
-                    <b>
-                       
-                        <span id="total" class="btn blue-grey darken-2">Ingreso</span>
-                    </b>
-                </div>
+              
             </div>
         </ul>
     </div>

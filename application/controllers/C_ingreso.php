@@ -35,6 +35,9 @@ class C_ingreso extends CI_Controller {
     {
 		$this->_init();
 		$this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
+		$this->data['tipo_ingreso'] = $this->M_crud->sql("SELECT * FROM TIPO_INGRESO");
+		$this->data['motivo_visita'] = $this->M_crud->sql("SELECT * FROM MOTIVO_VISITA");
+		$this->data['contacto'] = $this->M_crud->sql("SELECT * FROM CLIENTE");
         $this->load->view('ingreso/V_nuevo', $this->data);        
     }
 
