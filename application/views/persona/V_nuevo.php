@@ -122,16 +122,16 @@
 				let url = '<?= base_url() ?>api/execsp';
 				sp = 'PERSONA_INS'
                 var data = {
-							sp,
-							empresa: <?= $empresa->EMPRES_N_ID ?>, 
-							cliente: document.getElementById("cliente").value,
-                            tdocumento: document.getElementById("tdocumento").value,            
-							ndocumento: document.getElementById("ndocumento").value,
-							nombres: document.getElementById("nombres").value,
-							apellidos: document.getElementById("apellidos").value,
-							foto: document.getElementById("foto").value,
-							persona: <?= $empresa->USUARI_N_ID ?>		
-                        };
+                    sp,
+                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
+                    cliente: document.getElementById("cliente").value,
+                    tdocumento: document.getElementById("tdocumento").value,            
+                    ndocumento: document.getElementById("ndocumento").value,
+                    nombres: document.getElementById("nombres").value,
+                    apellidos: document.getElementById("apellidos").value,
+                    foto: document.getElementById("foto").value,
+                    persona: <?= $empresa->USUARI_N_ID ?>		
+                };
                 fetch(url, {
                             method: 'POST', // or 'PUT'
                             body: JSON.stringify(data), // data can be `string` or {object}!
