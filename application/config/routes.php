@@ -181,16 +181,14 @@ $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
 $route['bloqueos'] = 'C_bloqueo';
 $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
 $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
-$route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
-
 
 //ingreso
 $route['ingreso'] = 'C_ingreso';
 $route['ingreso/nuevo'] = 'C_ingreso/nuevo';
 $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
 
-
 //persona
 $route['personas'] = 'C_persona';
+$route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'.$id;};
 $route['personas/nuevo'] = 'C_persona/nuevo';
-$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
+

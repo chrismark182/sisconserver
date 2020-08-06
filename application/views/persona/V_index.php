@@ -50,8 +50,8 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="left-align">CLIENTE</th>
-                <th class="center-align">DOCUMENTO</th>
-                <th class="center-align">NRO. DOCUMENTO</th>
+                <th class="left-align">DOCUMENTO</th>
+                <th class="left-align">NRO. DOCUMENTO</th>
                 <th class="left-align">NOMBRES</th>
                 <th class="left-align">APELLIDOS</th>
                 <th class="center-align">EDITAR</th>
@@ -82,7 +82,7 @@
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
         
-        ndocumento = getParameterByName('nu')
+        ndocumento = getParameterByName('n')
         if(ndocumento != '')
         {
             $('#ndocumento').val(ndocumento)
@@ -97,43 +97,32 @@
         M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
-		
 
 		let sp = 'PERSONA_LIS';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
 
-        var cliente = '%'; 
-        if($('#razon_social').val() != '')
-        {
-            cliente = $('#razon_social').val() + '%';
-        }
+        let cliente = '%'; 
+        if($('#razon_social').val() != ''){cliente = $('#razon_social').val() + '%';}
 
-        var ndocumento = '%'; 
+        let ndocumento = '%'; 
         if($('#ndocumento').val() != '')
         {
             ndocumento = $('#ndocumento').val() + '%';
         }
 
-        var nombres = '%'; 
+        let nombres = '%'; 
         if($('#nombres').val() != '')
         {
             nombres = $('#nombres').val() + '%';
         }
 
-        var apellidos = '%'; 
+        let apellidos = '%'; 
         if($('#apellidos').val() != '')
         {
             apellidos = $('#apellidos').val() + '%';
         }
 
-        var data = {
-					sp,
-                    empresa: <?= $empresa->EMPRES_N_ID ?>, 
-                    cliente: cliente,
-                    ndocumento: ndocumento,
-                    nombres: nombres,
-					apellidos: apellidos
-					
-                    };
+        var data = {sp, empresa, cliente, ndocumento, nombres, apellidos};
         
         $('#resultados').html('');
         fetch(url, {
@@ -158,8 +147,8 @@
                     $('#resultados').append(`   <tr>
 													<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
 													<td class="left-align">${element.TIPDOC_C_DESCRIPCION}</td>
-                                                    <td class="center-align">${element.PERSON_C_DOCUMENTO}</td>
-                                                    <td class="center-align">${element.PERSON_C_NOMBRE}</td>
+                                                    <td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
+                                                    <td class="left-align">${element.PERSON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
                                                     <td class="center-align">
                                                         <a  href="<?= base_url() ?>contacto/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/${data[index].CLICON_N_ID}/editar">
@@ -167,7 +156,7 @@
                                                         </a>
                                                     </td>
                                                     <td class="center-align">
-                                                        <i class="material-icons " style="cursor: pointer" onclick="confirmarEliminar(${data[index].EMPRES_N_ID},${data[index].CLIENT_N_ID},${data[index].CLICON_N_ID})">delete</i>                        
+                                                        <i class="material-icons " style="cursor: pointer" onclick="confirmarEliminar(${data[index].PERSON_N_ID})">delete</i>                        
                                                     </td>
                                                 </tr>
                                         `);
@@ -188,10 +177,10 @@
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 
-    function confirmarEliminar($empresa, $cliente, $contacto)
+    function confirmarEliminar($persona)
     {
         console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'contacto/'+$empresa+'/'+$cliente+'/'+$contacto+'/eliminar')
+        $('#btnConfirmar').attr('href', 'personas/'+$persona+'/eliminar')
     }
 </script>

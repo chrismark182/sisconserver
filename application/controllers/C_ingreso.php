@@ -7,7 +7,8 @@ class C_ingreso extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-		if($this->session->userdata('logged_in')):
+        if($this->session->userdata('logged_in')):
+            $this->_init();
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
@@ -27,17 +28,15 @@ class C_ingreso extends CI_Controller {
     //Vistas
     public function index() 
 	{              
-		$this->_init();
         $this->load->view('ingreso/V_index', $this->data);
     }
 
     public function nuevo()
     {
-		$this->_init();
 		$this->data['misdoc'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_PERSONAS_LIS");
 		$this->data['tipo_ingreso'] = $this->M_crud->sql("SELECT * FROM TIPO_INGRESO");
-		$this->data['motivo_visita'] = $this->M_crud->sql("SELECT * FROM MOTIVO_VISITA");
-		$this->data['contacto'] = $this->M_crud->sql("SELECT * FROM CLIENTE");
+		$this->data['motivo_visita'] = $this->M_crud->sql("SELECT * FROM MOTIVO_VISITA WHERE MOTVIS_C_ESTADO = '1'");
+		$this->data['clientes'] = $this->M_crud->sql("Exec  CLIENTE_ESCLIENTE_LIS 1,'1'");
         $this->load->view('ingreso/V_nuevo', $this->data);        
     }
 

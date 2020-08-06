@@ -7,6 +7,7 @@ class C_Persona extends CI_Controller {
     {
         parent::__construct();
 		if($this->session->userdata('logged_in')):
+			$this->_init();
 			$this->load->library('EsandexAccesos');  
 			$this->data['session'] = $this->esandexaccesos->session();
             $this->data['accesos'] = $this->esandexaccesos->accesos();
@@ -23,13 +24,10 @@ class C_Persona extends CI_Controller {
     //Vistas
     public function index() 
 	{              
-        $this->_init();
 		$this->load->view('persona/V_index', $this->data);
-	}
-	
+	}	
 	public function nuevo() 
 	{              
-		$this->_init();
 		$tipodocumento = "Exec TIPO_DOCUMENTO_PERSONAS_LIS";        
         $this->data['tdocumentos'] = $this->M_crud->sql($tipodocumento); 
         
@@ -39,6 +37,12 @@ class C_Persona extends CI_Controller {
 		$this->load->view('persona/V_nuevo', $this->data);
 
     }
-
+	public function eliminar($id)
+    {
+		$sql = "Exec PERSONA_DEL {$id}, {$this->data['session']->USUARI_N_ID}";				
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('personas', 'refresh');       
+    }  
 }
 
