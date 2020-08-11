@@ -37,6 +37,7 @@ class C_ingreso extends CI_Controller {
 		$this->data['tipo_ingreso'] = $this->M_crud->sql("SELECT * FROM TIPO_INGRESO");
 		$this->data['motivo_visita'] = $this->M_crud->sql("SELECT * FROM MOTIVO_VISITA WHERE MOTVIS_C_ESTADO = '1'");
 		$this->data['clientes'] = $this->M_crud->sql("Exec  CLIENTE_ESCLIENTE_LIS 1,'1'");
+		$this->data['persona_contacto'] = $this->M_crud->sql("Exec  CLIENTE_ESCLIENTE_LIS 1,'1'");
         $this->load->view('ingreso/V_nuevo', $this->data);        
     }
 

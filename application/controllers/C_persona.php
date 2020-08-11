@@ -39,7 +39,8 @@ class C_Persona extends CI_Controller {
     }
 	public function eliminar($id)
     {
-		$sql = "Exec PERSONA_DEL {$id}, {$this->data['session']->USUARI_N_ID}";				
+		$sql = "Exec  PERSONA_DEL {$this->data['empresa']->EMPRES_N_ID} , {$id}, {$this->data['session']->USUARI_N_ID}";
+		var_dump($sql);				
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('personas', 'refresh');       
