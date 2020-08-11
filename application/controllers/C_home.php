@@ -27,5 +27,6 @@ class C_home extends CI_Controller {
 		else:
 			$this->load->view('empresa/index');
 		endif; 
+		
     }
 }

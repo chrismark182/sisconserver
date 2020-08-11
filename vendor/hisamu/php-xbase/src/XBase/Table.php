@@ -2,8 +2,17 @@
 
 namespace XBase;
 
+use XBase\Column\ColumnFactory;
+use XBase\Column\ColumnInterface;
+use XBase\Column\DBase7Column;
+use XBase\Enum\Codepage;
 use XBase\Enum\TableType;
 use XBase\Exception\TableException;
+use XBase\Memo\MemoFactory;
+use XBase\Memo\MemoInterface;
+use XBase\Record\RecordFactory;
+use XBase\Record\RecordInterface;
+use XBase\Stream\Stream;
 
 class Table
 {
@@ -16,10 +25,10 @@ class Table
     const VFP_BACKLIST_LENGTH = 263;
 
     /** @var string Table filepath. */
-    protected $tableName;
+    protected $filepath;
     /** @var array|null */
     protected $availableColumns;
-    /** @var resource */
+    /** @var Stream */
     protected $fp;
     /** @var int */
     protected $filePos = 0;
@@ -46,12 +55,16 @@ class Table
     public $encrypted;
     /** @var string */
     public $mdxFlag;
+
     /**
      * @var string Language codepage.
      * @see https://blog.codetitans.pl/post/dbf-and-language-code-page/
+     *
+     * @deprecated in 1.2 and will be protected in 1.3. Use getLanguageCode() method.
      */
     public $languageCode;
-    /** @var Column[] */
+
+    /** @var ColumnInterface[] */
     public $columns;
     /** @var int */
     public $headerLength;
@@ -61,110 +74,76 @@ class Table
      * @deprecated since 1.1 and will be removed in 2.0. Use isFoxpro method instead.
      */
     public $foxpro;
-    /** @var Memo */
-    public $memoFile;
+    /** @var MemoInterface */
+    public $memo;
 
     /**
      * Table constructor.
      *
-     * @param string      $tableName
+     * @param string      $filepath
      * @param array|null  $availableColumns
-     * @param string|null $convertFrom Encoding of file
+     * @param string|null $convertFrom      Encoding of file
      *
      * @throws \Exception
      */
-    public function __construct($tableName, $availableColumns = null, $convertFrom = null)
+    public function __construct($filepath, $availableColumns = null, $convertFrom = null)
     {
-        $this->tableName = $tableName;
+        $this->filepath = $filepath;
         $this->availableColumns = $availableColumns;
         $this->convertFrom = $convertFrom; //todo autodetect from languageCode
-        $this->memoFile = new Memo($this, $this->tableName);
         $this->open();
+
+        if (TableType::hasMemo($this->getVersion())) {
+            $this->memo = MemoFactory::create($this);
+        }
     }
 
-    /**
-     * @return bool open successful
-     */
-    protected function open()
+    protected function open(): void
     {
-        if (!file_exists($this->tableName)) {
-            throw new \Exception(sprintf('File %s cannot be found', $this->tableName));
+        if (!file_exists($this->filepath)) {
+            throw new \Exception(sprintf('File %s cannot be found', $this->filepath));
         }
 
-        $this->fp = fopen($this->tableName, 'rb');
+        if ($this->fp) {
+            $this->fp->close();
+        }
+
+        $this->fp = Stream::createFromFile($this->filepath);
         $this->readHeader();
-
-        return $this->fp != false;
     }
 
-    protected function readHeader()
+    public function close(): void
     {
-        $this->version = $this->readChar();
+        $this->fp->close();
+    }
+
+    protected function readHeader(): void
+    {
+        $this->version = $this->fp->readUChar();
         $this->foxpro = TableType::isFoxpro($this->version);
-        $this->modifyDate = $this->read3ByteDate();
-        $this->recordCount = $this->readInt();
-        $this->headerLength = $this->readShort();
-        $this->recordByteLength = $this->readShort();
-        $this->readBytes(2); //reserved
-        $this->inTransaction = $this->readByte() != 0;
-        $this->encrypted = $this->readByte() != 0;
-        $this->readBytes(4); //Free record thread
-        $this->readBytes(8); //Reserved for multi-user dBASE
-        $this->mdxFlag = $this->readByte();
-        $this->languageCode = $this->readByte();
-        $this->readBytes(2); //reserved
-
-        $fieldCount = ($this->headerLength - ((self::HEADER_LENGTH + 1) + (TableType::isVisualFoxpro($this->version) ? self::VFP_BACKLIST_LENGTH : 0))) / self::FIELD_LENGTH;
-        if (is_float($fieldCount)) {
-            trigger_error('Wrong fieldCount calculation', E_USER_WARNING);
+        $this->modifyDate = $this->fp->read3ByteDate();
+        $this->recordCount = $this->fp->readUInt();
+        $this->headerLength = $this->fp->readUShort();
+        $this->recordByteLength = $this->fp->readUShort();
+        $this->fp->read(2); //reserved
+        $this->inTransaction = 0 != $this->fp->read();
+        $this->encrypted = 0 != $this->fp->read();
+        $this->fp->read(4); //Free record thread
+        $this->fp->read(8); //Reserved for multi-user dBASE
+        $this->mdxFlag = $this->fp->read();
+        $this->languageCode = $this->fp->read();
+        $this->fp->read(2); //reserved
+        if (in_array($this->getVersion(), [TableType::DBASE_7_MEMO, TableType::DBASE_7_NOMEMO])) {
+            $languageName = rtrim($this->fp->read(32), chr(0));
+            $this->fp->read(4);
         }
 
-        /* some checking */
-        clearstatcache();
-        if ($this->headerLength > filesize($this->tableName)) {
-            throw new TableException(sprintf('File %s is not DBF', $this->tableName));
-        }
-
-        if ($this->headerLength + ($this->recordCount * $this->recordByteLength) - 500 > filesize($this->tableName)) {
-            throw new TableException(sprintf('File %s is not DBF', $this->tableName));
-        }
-
-        /* columns */
-        $this->columns = [];
-        $bytepos = 1;
-        $j = 0;
-
-        for ($i = 0; $i < $fieldCount; $i++) {
-            $column = new Column(
-                strtolower($this->readString(11)), // name
-                $this->readByte(),      // type
-                $this->readInt(),       // memAddress
-                $this->readChar(),      // length
-                $this->readChar(),      // decimalCount
-                $this->readBytes(2),    // reserved1
-                $this->readChar(),      // workAreaID
-                $this->readBytes(2),    // reserved2
-                $this->readByte() != 0,   // setFields
-                $this->readBytes(7),    // reserved3
-                $this->readByte() != 0,   // indexed
-                $j,                     // colIndex
-                $bytepos                // bytePos
-            );
-
-            $bytepos += $column->getLength();
-
-            if (!$this->availableColumns || ($this->availableColumns && in_array($column->name, $this->availableColumns))) {
-                $this->addColumn($column);
-                $j++;
-            }
-        }
-
-        if (chr(0x0D) !== $this->readByte()) {
-            throw new TableException('Expected header terminator not present at position ' . ftell($this->fp));
-        }
+        [$columnsCount, $terminatorLength] = $this->pickColumnsCount();
+        $this->readColumns($columnsCount);
+        $this->checkHeaderTerminator($terminatorLength);
 
         if (TableType::isVisualFoxpro($this->version)) {
-            $this->backlist = $this->readBytes(self::VFP_BACKLIST_LENGTH);
+            $this->backlist = $this->fp->read(self::VFP_BACKLIST_LENGTH);
         }
 
 //        $this->setFilePos($this->headerLength);
@@ -173,15 +152,66 @@ class Table
         $this->deleteCount = 0;
     }
 
-    public function close()
+    /**
+     * @return array [$fieldCount, $terminatorLength]
+     */
+    protected function pickColumnsCount(): array
     {
-        fclose($this->fp);
+        // some files has headers with 2byte-terminator 0xOD00
+        foreach ([1, 2] as $terminatorLength) {
+            $fieldCount = $this->getLogicalFieldCount($terminatorLength);
+            if (is_int($fieldCount)) {
+                return [$fieldCount, $terminatorLength];
+            }
+        }
+
+        throw new \LogicException('Wrong fieldCount calculation');
+    }
+
+    protected function readColumns(int $columnsCount): void
+    {
+        /* some checking */
+        clearstatcache();
+        if ($this->headerLength > filesize($this->filepath)) {
+            throw new TableException(sprintf('File %s is not DBF', $this->filepath));
+        }
+
+        if ($this->headerLength + ($this->recordCount * $this->recordByteLength) - 500 > filesize($this->filepath)) {
+            throw new TableException(sprintf('File %s is not DBF', $this->filepath));
+        }
+
+        /* columns */
+        $this->columns = [];
+        $bytePos = 1;
+
+        $class = ColumnFactory::getClass($this->getVersion());
+        $index = 0;
+        for ($i = 0; $i < $columnsCount; $i++) {
+            /** @var ColumnInterface $column */
+            $column = $class::create($this->fp->read(call_user_func([$class, 'getHeaderLength'])), $index++, $bytePos);
+            $bytePos += $column->getLength();
+            $this->addColumn($column);
+        }
     }
 
     /**
-     * @return bool|Record
+     * @return float|int
      */
-    public function nextRecord()
+    protected function getLogicalFieldCount(int $terminatorLength = 1)
+    {
+        $headerLength = self::HEADER_LENGTH + $terminatorLength; // [Terminator](1)
+        $fieldLength = self::FIELD_LENGTH;
+        if (in_array($this->getVersion(), [TableType::DBASE_7_MEMO, TableType::DBASE_7_NOMEMO])) {
+            $headerLength += 36; // [Language driver name](32) + [Reserved](4) +
+            $fieldLength = DBase7Column::getHeaderLength();
+        }
+        $backlist = TableType::isVisualFoxpro($this->version) ? self::VFP_BACKLIST_LENGTH : 0;
+        $extraSize = $this->headerLength - ($headerLength + $backlist);
+
+        return $extraSize / $fieldLength;
+    }
+
+    public function nextRecord(): ?RecordInterface
     {
         if (!$this->isOpen()) {
             $this->open();
@@ -196,11 +226,11 @@ class Table
 
         do {
             if (($this->recordPos + 1) >= $this->recordCount) {
-                return false;
+                return null;
             }
 
             $this->recordPos++;
-            $this->record = new Record($this, $this->recordPos, $this->readBytes($this->recordByteLength));
+            $this->record = RecordFactory::create($this, $this->recordPos, $this->fp->read($this->recordByteLength));
 
             if ($this->record->isDeleted()) {
                 $this->deleteCount++;
@@ -217,29 +247,26 @@ class Table
      *
      * @param int $position Zero based position
      */
-    public function pickRecord(int $position): Record
+    public function pickRecord(int $position): ?RecordInterface
     {
         if ($position >= $this->recordCount) {
             throw new TableException("Row with index {$position} does not exists");
         }
 
-        $curPos = ftell($this->fp);
+        $curPos = $this->fp->tell();
         $seekPos = $this->headerLength + $position * $this->recordByteLength;
-        if (0 !== fseek($this->fp, $seekPos)) {
+        if (0 !== $this->fp->seek($seekPos)) {
             throw new TableException("Failed to pick row at position {$position}");
         }
 
-        $record = new Record($this, $position, $this->readBytes($this->recordByteLength));
+        $record = RecordFactory::create($this, $position, $this->fp->read($this->recordByteLength));
         // revert pointer
-        fseek($this->fp, $curPos);
+        $this->fp->seek($curPos);
 
         return $record;
     }
 
-    /**
-     * @return bool|Record
-     */
-    public function previousRecord()
+    public function previousRecord(): ?RecordInterface
     {
         if (!$this->isOpen()) {
             $this->open();
@@ -254,14 +281,14 @@ class Table
 
         do {
             if (($this->recordPos - 1) < 0) {
-                return false;
+                return null;
             }
 
             $this->recordPos--;
 
-            fseek($this->fp, $this->headerLength + ($this->recordPos * $this->recordByteLength));
+            $this->fp->seek($this->headerLength + ($this->recordPos * $this->recordByteLength));
 
-            $this->record = new Record($this, $this->recordPos, $this->readBytes($this->recordByteLength));
+            $this->record = RecordFactory::create($this, $this->recordPos, $this->fp->read($this->recordByteLength));
 
             if ($this->record->isDeleted()) {
                 $this->deleteCount++;
@@ -273,12 +300,7 @@ class Table
         return $this->record;
     }
 
-    /**
-     * @param int $index
-     *
-     * @return Record|null
-     */
-    public function moveTo($index)
+    public function moveTo(int $index): ?RecordInterface
     {
         $this->recordPos = $index;
 
@@ -286,9 +308,9 @@ class Table
             return null;
         }
 
-        fseek($this->fp, $this->headerLength + ($index * $this->recordByteLength));
+        $this->fp->seek($this->headerLength + ($index * $this->recordByteLength));
 
-        $this->record = new Record($this, $this->recordPos, $this->readBytes($this->recordByteLength));
+        $this->record = RecordFactory::create($this, $this->recordPos, $this->fp->read($this->recordByteLength));
 
         return $this->record;
     }
@@ -299,7 +321,7 @@ class Table
     private function setFilePos($offset)
     {
         $this->filePos = $offset;
-        fseek($this->fp, $this->filePos);
+        $this->fp->seek($this->filePos);
     }
 
     /**
@@ -310,10 +332,12 @@ class Table
         return $this->record;
     }
 
-    /**
-     * @param Column $column
-     */
-    public function addColumn($column)
+    public function getCodepage(): int
+    {
+        return ord($this->languageCode);
+    }
+
+    public function addColumn(ColumnInterface $column)
     {
         $name = $nameBase = $column->getName();
         $index = 0;
@@ -322,13 +346,11 @@ class Table
             $name = $nameBase.++$index;
         }
 
-        $column->name = $name;
-
         $this->columns[$name] = $column;
     }
 
     /**
-     * @return Column[]
+     * @return ColumnInterface[]
      */
     public function getColumns()
     {
@@ -338,12 +360,12 @@ class Table
     /**
      * @param $name
      *
-     * @return Column
+     * @return ColumnInterface
      */
     public function getColumn($name)
     {
         foreach ($this->columns as $column) {
-            if ($column->name === $name) {
+            if ($column->getName() === $name) {
                 return $column;
             }
         }
@@ -375,9 +397,6 @@ class Table
         return $this->recordPos;
     }
 
-    /**
-     * @return mixed
-     */
     public function getRecordByteLength()
     {
         return $this->recordByteLength;
@@ -386,9 +405,27 @@ class Table
     /**
      * @return string
      */
-    public function getName()
+    public function getFilepath()
     {
-        return $this->tableName;
+        return $this->filepath;
+    }
+
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @see Codepage
+     */
+    public function getLanguageCode(): int
+    {
+        return ord($this->languageCode);
+    }
+
+    public function getMemo(): ?MemoInterface
+    {
+        return $this->memo;
     }
 
     /**
@@ -421,200 +458,24 @@ class Table
     }
 
     /**
-     * @param int $length
-     *
-     * @return bool|string
+     * @throws TableException
      */
-    protected function readBytes($length)
+    private function checkHeaderTerminator(int $terminatorLength): void
     {
-        $this->filePos += $length;
+        $terminator = $this->fp->read($terminatorLength);
+        switch ($terminatorLength) {
+            case 1:
+                if (chr(0x0D) !== $terminator) {
+                    throw new TableException('Expected header terminator not present at position '.$this->fp->tell());
+                }
+                break;
 
-        return fread($this->fp, $length);
-    }
-
-    /**
-     * @param string $buf
-     *
-     * @return bool|int
-     */
-    protected function writeBytes($buf)
-    {
-        return fwrite($this->fp, $buf);
-    }
-
-    /**
-     * Read first byte
-     *
-     * @return bool|string
-     */
-    protected function readByte()
-    {
-        $this->filePos++;
-
-        return fread($this->fp, 1);
-    }
-
-    /**
-     * @param string $buf
-     *
-     * @return bool|int
-     */
-    protected function writeByte($buf)
-    {
-        return fwrite($this->fp, $buf);
-    }
-
-    /**
-     * @param int $length
-     *
-     * @return bool|string
-     */
-    protected function readString($length)
-    {
-        return $this->readBytes($length);
-    }
-
-    /**
-     * @param string $string
-     *
-     * @return bool|int
-     */
-    protected function writeString($string)
-    {
-        return $this->writeBytes($string);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function readChar()
-    {
-        $buf = unpack('C', $this->readBytes(1));
-
-        return $buf[1];
-    }
-
-    /**
-     * @param $c
-     *
-     * @return bool|int
-     */
-    protected function writeChar($c)
-    {
-        $buf = pack('C', $c);
-
-        return $this->writeBytes($buf);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function readShort()
-    {
-        $buf = unpack('S', $this->readBytes(2));
-
-        return $buf[1];
-    }
-
-    /**
-     * @param $s
-     *
-     * @return bool|int
-     */
-    protected function writeShort($s)
-    {
-        $buf = pack('S', $s);
-
-        return $this->writeBytes($buf);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function readInt()
-    {
-        $buf = unpack('I', $this->readBytes(4));
-
-        return $buf[1];
-    }
-
-    /**
-     * @param $i
-     *
-     * @return bool|int
-     */
-    protected function writeInt($i)
-    {
-        $buf = pack('I', $i);
-
-        return $this->writeBytes($buf);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function readLong()
-    {
-        $buf = unpack('L', $this->readBytes(8));
-
-        return $buf[1];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function writeLong($l)
-    {
-        $buf = pack('L', $l);
-
-        return $this->writeBytes($buf);
-    }
-
-    /**
-     * @return int unixtime
-     */
-    protected function read3ByteDate()
-    {
-        $y = unpack('c', $this->readByte());
-        $m = unpack('c', $this->readByte());
-        $d = unpack('c', $this->readByte());
-
-        return mktime(0, 0, 0, $m[1], $d[1], $y[1] > 70 ? 1900 + $y[1] : 2000 + $y[1]);
-    }
-
-    /**
-     * @param $d
-     *
-     * @return bool|int
-     */
-    protected function write3ByteDate($d)
-    {
-        $t = getdate($d);
-
-        return $this->writeChar($t['year'] % 1000) + $this->writeChar($t['mon']) + $this->writeChar($t['mday']);
-    }
-
-    /**
-     * @return false|int
-     */
-    protected function read4ByteDate()
-    {
-        $y = $this->readShort();
-        $m = unpack('c', $this->readByte());
-        $d = unpack('c', $this->readByte());
-
-        return mktime(0, 0, 0, $m[1], $d[1], $y);
-    }
-
-    /**
-     * @param $d
-     *
-     * @return bool|int
-     */
-    protected function write4ByteDate($d)
-    {
-        $t = getdate($d);
-
-        return $this->writeShort($t['year']) + $this->writeChar($t['mon']) + $this->writeChar($t['mday']);
+            case 2:
+                $unpack = unpack('n', $terminator);
+                if (0x0D00 !== $unpack[1]) {
+                    throw new TableException('Expected header terminator not present at position '.$this->fp->tell());
+                }
+                break;
+        }
     }
 }
