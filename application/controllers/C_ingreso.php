@@ -27,7 +27,7 @@ class C_ingreso extends CI_Controller {
     
     //Vistas
     public function index() 
-	{              
+	{   $this->data['tipo_ingreso'] = $this->M_crud->sql("SELECT * FROM TIPO_INGRESO");
         $this->load->view('ingreso/V_index', $this->data);
     }
 

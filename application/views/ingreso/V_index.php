@@ -66,10 +66,16 @@
                 <label for="tipo_documento">Situacion</label>
             </div>
 
-			<div class="input-field col s12 m6 l4">
-                <input id="tipo_ingreso" maxlength="200" type="text" name="tipo_ingreso"  class="validate">
-                <label class="active" for="tipo_ingreso">Tipo Ingreso</label> 
-            </div>
+			<div class="input-field col s12 m6">
+				<select id="tipo_ingreso" required>
+					<?php foreach ($tipo_ingreso as $row):?>
+						<option value="<?= $row->TIPING_N_ID?>"> <?= $row->TIPING_C_DESCRIPCION ?> </option>
+					<?php endforeach; ?>
+				</select>
+				<label for="tipo_ingreso">Tipo de ingreso</label>
+			</div>
+
+
 
 
 
@@ -202,8 +208,10 @@
 		$fecha_hasta = $('#hasta').val();
 		$fecha_hasta = $fecha_hasta.split('/');
 		let fecha_hasta= $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
-		let  situacion = document.getElementById('situacion').value;
-	 	let	data = {sp, empresa, id, empresa_visita,apellido,empresa_visitante,fecha_desde,fecha_hasta,situacion};
+		let situacion = document.getElementById('situacion').value;
+		let tipo_ingreso = parseInt(document.getElementById('tipo_ingreso').value);
+
+	 	let	data = {sp, empresa, id, empresa_visita,apellido,empresa_visitante,fecha_desde,fecha_hasta,situacion,tipo_ingreso};
 			
         $('#resultados').html('');
         fetch(url, {
