@@ -122,7 +122,7 @@
                         <th class="center-align">F. TERMINO</th>
                         <th class="right-align">AREA</th>
                         <th class="right-align">PRECIO</th>
-                        <th class="right-align">TOTAL</th>
+                        <th class="right-align">SUB TOTAL</th>
                         <th class="center-align">SITUACIÓN</th>
                         <th class="center-align">ELIMINAR</th>
                     </tr>
@@ -273,7 +273,7 @@
                     $ver_periodos = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.EMPRES_N_ID},${element.ALQUIL_N_ID}, ${element.ALQUIL_C_ESTA_CERRADO})">event_note</i>`
 
                     $('#resultados').append(`   <tr>
-                                                    <td class="left-align">${element.ALQUIL_N_ID}</td>
+                                                    <td class="center-align">${element.ALQUIL_N_ID}</td>
                                                     <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                                                     <td class="left-align">${element.SEDE_C_DESCRIPCION}</td>
                                                     <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
@@ -411,12 +411,19 @@
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
 
+                $situacion = '';
                 let $eliminar = `<i class="material-icons" style="color: #999999">delete</i>`
                 if(element.ALQDET_C_SITUACION == '0')
                 {
                     $eliminar = `<i class="material-icons" style="cursor: pointer;" onclick="modalEliminar('2', '${element.EMPRES_N_ID}-${element.ALQUIL_N_ID}-${element.ALQDET_N_ID}')">delete</i>`
+                    $situacion = `<p style="color: #EE9A08;"><b>${element.ALQDET_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+                
                 }else if(element.ALQDET_C_SITUACION == '1'){
-                    $situacion = `<i class="material-icons">assignment_turned_in</i>`
+                
+                    $situacion = `<p style="color: #1EB635;"><b>${element.ALQDET_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+                }
+                else{
+                    $situacion = `<p style="color: #4690F5;"><b>${element.ALQDET_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                 }
                 
                 $('#periodos').append(`   
@@ -427,7 +434,7 @@
                                             <td class="right-align">${element.ALQDET_N_AREA}</td>
                                             <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                             <td class="right-align">${element.TOTAL}</td>
-                                            <td class="center-align">${element.ALQDET_C_SITUACION_DES}</td>
+                                            <td class="center-align">${$situacion}</td>
                                             <td class="center-align">
                                                 ${$eliminar} 
                                             </td>

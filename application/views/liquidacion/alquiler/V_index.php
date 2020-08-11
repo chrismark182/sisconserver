@@ -88,7 +88,7 @@
                 <th class="left-align">SEDE</th>
                 <th class="center-align">PERIODOS</th>
                 <th class="center-align">MONEDA</th>
-                <th class="right-align">TOTAL</th>
+                <th class="right-align">SUB TOTAL</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
@@ -122,12 +122,14 @@
             <table class="striped" style="font-size: 12px;">
                 <thead class="blue-grey darken-1" style="color: white">
                     <tr>
+                        <th class="center-align">ACUERDO</th>
+                        <th class="left-align">UBICACION</th>
                         <th class="center-align">F. INICIO</th>
                         <th class="center-align">F. TERMINO</th>
                         <th class="right-align">AREA</th>
-                        <th class="center-align">MONEDA</th>
+                        <th class="center-align">MON</th>
                         <th class="right-align">PRECIO</th>
-                        <th class="right-align">TOTAL</th>
+                        <th class="right-align">SUB TOTAL</th>
                     </tr>
                 </thead>
                 <tbody id="periodos">            
@@ -210,14 +212,17 @@
                     if(element.LIQCAB_C_SITUACION == 0)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                        $situacion = `<p style="color: #EE9A08;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                     }else
                     if(element.LIQCAB_C_SITUACION == 1)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                        $situacion = `<p style="color: #1EB635;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;                    
                     }else
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
                         $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
+                        $situacion = `<p style="color: #4690F5;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                     }
 
                     $ver_ordenes = `${element.CANTIDAD_DETALLES} <i class="material-icons" style="vertical-align: middle; cursor: pointer" onclick="verPeriodos(${element.LIQCAB_N_ID})">event_note</i>`
@@ -230,9 +235,9 @@
                             <td class="center-align">
                                 ${$ver_ordenes}                
                             </td>
-                            <td class="center-align">${element.MONEDA_C_DESCRIPCION}</td>
+                            <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                             <td class="right-align">${element.TOTAL}</td>
-                            <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
+                            <td class="center-align">${$situacion}</td>
                             <td class="center-align">
                                 <a href="liq_alquiler/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                     <i class="material-icons">monetization_on</i>
@@ -298,6 +303,8 @@
 
                 $('#periodos').append(`   
                                         <tr>
+                                            <td class="center-align">${element.ALQUIL_N_ID}</td>
+                                            <td class="left-align">${element.UBICAC_C_DESCRIPCION}</td>
                                             <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
                                             <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
                                             <td class="right-align">${element.ALQDET_N_AREA}</td>

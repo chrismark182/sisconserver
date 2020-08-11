@@ -84,7 +84,7 @@
                 <th class="right-align">AREA</th>
                 <th class="center-align">MONEDA</th>
                 <th class="right-align">PRECIO X M2</th>
-                <th class="right-align">TOTAL</th>
+                <th class="right-align">SUB TOTAL</th>
             </tr>
         </thead>
         <tbody id="resultados">
@@ -168,7 +168,7 @@
                                                         <td class="center-align">${element.ALQDET_C_FECHA_INICIO}</td>
                                                         <td class="center-align">${element.ALQDET_C_FECHA_FINAL}</td>
                                                         <td class="right-align">${element.ALQDET_N_AREA}</td>
-                                                        <td class="center-align">${element.MONEDA_C_DESCRIPCION}</td>
+                                                        <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                                                         <td class="right-align">${element.ALQDET_N_PRECIO_UNIT}</td>
                                                         <td class="right-align">${element.TOTAL}</td>
                                                     </tr>

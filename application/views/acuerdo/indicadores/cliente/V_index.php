@@ -94,6 +94,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         var btnBuscar = document.getElementById("btnBuscar"); 
         btnBuscar.addEventListener("click", buscar, false);
+        $('#moneda').val("2")
+        $('select').formSelect();
         sedes()
         google.charts.load('current', {packages: ['corechart', 'bar']});
     });
@@ -290,7 +292,7 @@
     function drawGrafic(data)
     {
         var array = [
-                        ['Cliente', 'Precio Total', { role: 'style' }, { role: 'annotation' } ]
+                        ['Cliente', 'Sub Total', { role: 'style' }, { role: 'annotation' } ]
                     ]
         for (let index = 0; index < data.length; index++) {
             const element = data[index];

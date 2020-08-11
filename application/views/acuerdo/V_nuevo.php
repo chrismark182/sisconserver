@@ -83,7 +83,7 @@
             </div>
             <div class="input-field col s4 m4" required>
                 <input id="total" maxlength="9" type="text" name="total" disabled>
-                <label class="active" for="total">Total</label> 
+                <label class="active" for="total">Sub Total</label> 
             </div>
 
             <div class="input-field col s8">

@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Bloqueo de visitante</a>
+            <a href="#!" class="breadcrumb">Bloqueo de Personas</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -20,25 +20,22 @@
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
-          
             <div class="input-field col s12 m6 l4">
                 <input id="nombre" maxlength="200" type="text" name="nombre"  class="validate">
-                <label class="active" for="nombre">Nombre</label> 
+                <label class="active" for="nombre">Nombres</label> 
             </div>
-
 			<div class="input-field col s12 m6 l4">
                 <input id="apellido" maxlength="200" type="text" name="apellido"  class="validate">
-                <label class="active" for="apellido">Apellido</label> 
+                <label class="active" for="apellido">Apellidos</label> 
             </div>
-
 			<div class="input-field col s12 m6 l4">
                 <input id="n_documento" maxlength="11" type="text" class="validate">
-                <label class="active" for="n_documento">Numero de documento</label> 
+                <label class="active" for="n_documento">Número de Documento</label> 
             </div>	
 
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l8">
                 <input id="nombre_empresa" maxlength="100" type="text"  class="validate">
-                <label class="active" for="nombre_empresa">Nombre de empresa</label> 
+                <label class="active" for="nombre_empresa">Nombre de Empresa</label> 
             </div>
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
@@ -51,21 +48,22 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">Nombre </th>
-                <th class="left-align">Apellido</th>
-                <th class="left-align">N Documento</th>
-				<th class="left-align">Empresa</th>
-				<th class="left-align" style="text-align: center">Info Bloqueo</th>
-				<th class="left-align">Usuario</th>
-				<th class="left-align">Fecha Bloqueo</th>          
+                <th class="left-align">NOMBRES</th>
+                <th class="left-align">APELLIDOS</th>
+                <th class="left-align">NRO. DOCUMENTO</th>
+				<th class="left-align">EMPRESA</th>
+				<th class="center-align">INF. BLOQUEO</th>
+				<th class="left-align">USUARIO</th>
+				<th class="center-align">FECHA BLOQUEO</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
         </tbody>
     </table>
 </div>
-<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="http://siscon.esx/bloqueos/nuevo"><i class="material-icons">add</i></a>
 
+<a  class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:absolute;" 
+    href="<?= base_url()?>bloqueos/nuevo"><i class="material-icons">add</i></a>
 
 <!-- Modal Structure -->
 
@@ -79,7 +77,7 @@
 		<div class="btn" onclick="modalDesbloquear()">DESBLOQUEAR</div>
     </div>
 	<div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+      	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
 </div> 
 
@@ -96,10 +94,9 @@
 		<p>Motivo desbloqueo: <span id="desbloqueo_motivo"></span></p>
 		<p>Usuario desbloqueo: <span id="desbloqueo_usuario"></span></p>
 		<p>Fecha desbloqueo: <span id="desbloqueo_fecha"></span></p>
-		
     </div>
 	<div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+      	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
 </div> 
 
@@ -130,8 +127,9 @@
 			buscar()
 		}
 	});
-	function buscar(){
 
+	function buscar(){
+		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
 		$('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 
@@ -172,13 +170,16 @@
 			
 			if(data.length > 0)
 			{
+				M.toast({html: 'Cargando Bloqueos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
-					let bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoBloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})" >lock</i>`;
+
+					let bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped=" style="color: #039be5; cursor: pointer" data-tooltip="Pulse clic para desbloquear" onclick="muestraInfoBloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})" >lock</i>`;
 					if(element.PERBLO_C_BLOQUEADO == '0')
 					{
-						bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="" onclick="muestraInfoDesbloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})">lock_open</i>`;
+						bloqueo = `<i id="id_perbloqueo" class="material-icons  tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="Ver Detalles" onclick="muestraInfoDesbloqueo(${element.PERSON_N_ID},${element.PERBLO_N_ITEM})">lock_open</i>`;
 					}
+
 					$('#resultados').append(`   		
 							<tr>
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
@@ -187,7 +188,7 @@
 								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
 								<td style="text-align:center">${bloqueo}</td> 
 								<td class="left-align">${element.USUARI_C_USERNAME}</td>
-								<td class="left-align">${element.PERBLO_D_FECHA_REG}</td>
+								<td class="center-align">${element.PERBLO_D_FECHA_REG}</td>
 							</tr>
 					`);
 				}
@@ -195,7 +196,8 @@
 			else{
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
-            $('.preloader-background').css({'display': 'none'});                            
+            $('.preloader-background').css({'display': 'none'});      
+			$('.tooltipped').tooltip();                                                 
         });
 	}
 
@@ -230,6 +232,7 @@
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
+
 	function muestraInfoDesbloqueo(id, item)
 	{		
 		document.getElementById('persona_id').value = id;
@@ -266,14 +269,15 @@
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
+
 	function modalDesbloquear()
     {
 		$('.modal').modal('close');
         $('#modalBloqueos').modal('open');
     }
+
 	function desbloquear()
     {
-
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = 'PERSONA_BLOQUEO_UPD';				
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -301,7 +305,5 @@
 			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
             }, 1000);
 		}).catch(error => console.log(error));
-		
-
     }
 </script>

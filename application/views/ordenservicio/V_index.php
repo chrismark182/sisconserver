@@ -95,6 +95,7 @@
                 <th class="left-align">CLIENTE</th>
                 <th class="center-align">FECHA</th>
                 <th class="center-align">HORAS</th>
+                <th class="center-align">MON</th>
                 <th class="right-align">PRECIO X HORA</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">IMPRIMIR</th>
@@ -230,6 +231,7 @@
                             <td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
                             <td class="center-align">${element.ORDSER_D_FECHA}</td>
                             <td class="center-align">${element.ORDSER_N_HORAS}</td>
+                            <td class="center-align">${element.MONEDA_C_SIMBOLO}</td>
                             <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
                             <td class="center-align">
                                 ${$situacion}
