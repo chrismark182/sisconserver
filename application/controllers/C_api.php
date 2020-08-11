@@ -122,4 +122,12 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+    public function uploadfile()
+    {
+        $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        $file_name = time().'.'.$ext;
+        $file_tmp =$_FILES['file']['tmp_name'];
+        move_uploaded_file($file_tmp,__DIR__."/../../uploads/".$file_name);
+        echo $file_name;
+    }
 }

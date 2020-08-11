@@ -165,6 +165,7 @@ $route['api/sedes_guardar'] = function (){return 'C_api/sedes_guardar'; };
 $route['api/tarifas'] = function (){return 'C_api/tarifas'; };
 $route['api/ordenservicio'] = function (){return 'C_api/ordenservicio'; };
 $route['api/execsp'] = function (){return 'C_api/execsp'; };
+$route['api/uploadfile'] = function (){return 'C_api/uploadfile'; };
 
 $route['sistema/sync'] = function (){return 'C_system/sync'; };
 $route['sistema/log'] = function (){return 'C_system/log'; };
@@ -191,4 +192,10 @@ $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
 $route['personas'] = 'C_persona';
 $route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'.$id;};
 $route['personas/nuevo'] = 'C_persona/nuevo';
+//Mesa de partes 
+//Recepción de documentos
+$route['recepcion_doc'] = 'C_recepcion_doc';
+$route['recepcion_doc/nuevo'] = 'C_recepcion_doc/nuevo';
+
+
 
