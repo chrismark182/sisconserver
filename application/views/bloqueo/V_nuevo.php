@@ -1,35 +1,37 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="#!" class="breadcrumb">Visitantes</a>
-        <a href="<?= base_url() ?>bloqueos" class="breadcrumb">Bloqueo de Personas</a>
-        <a href="#!" class="breadcrumb">Nuevo</a>
-      </div>
+        <div class="col s12">
+            <a href="#!" class="breadcrumb">Visitantes</a>
+            <a href="<?= base_url() ?>bloqueos" class="breadcrumb">Bloqueo de Personas</a>
+            <a href="#!" class="breadcrumb">Nuevo</a>
+        </div>
     </div>
 </nav>
 
-<div class="section container center">
-    <form action="<?= base_url() ?>bloqueos/nuevo" method="post">
-        <div class="row">
-            <div class="input-field col s12 m6">
-                <select id="tipo_documento" required>
-                    <option value="0">Todos</option>
-                    <?php foreach ($misdoc as $row): ?>
-                        <option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
-                    <?php endforeach; ?>
-                </select>
-                <label for="tipo_documento">Tipo de Documento</label>
-            </div>
+<div class="section container center" style="padding-bottom: 0px">
+    <div class="row" style="margin-bottom: 0px">
+        <form action="<?= base_url() ?>bloqueos/nuevo" method="post">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select id="tipo_documento" required>
+                        <option value="0">Todos</option>
+                        <?php foreach ($misdoc as $row): ?>
+                            <option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="tipo_documento">Tipo de Documento</label>
+                </div>
 
-            <div class="input-field col s12 m6">
-                <input id="numero_documento" maxlength="100" type="text" name="numero_documento" class="validate">
-                <label class="active" for="numero_documento">Número de Documento</label> 
+                <div class="input-field col s12 m6">
+                    <input id="numero_documento" maxlength="100" type="text" name="numero_documento" class="validate">
+                    <label class="active" for="numero_documento">Número de Documento</label> 
+                </div>
+                <div class="input-field col s12">
+                    <div class="btn-small" onclick="buscar()">Buscar</div>
+                </div>
             </div>
-			<div class="input-field col s12">
-                <div class="btn-small" onclick="buscar()">Buscar</div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <div class="container">
