@@ -117,14 +117,13 @@ class C_cliente extends CI_Controller {
             $ordencompra='1';
         endif;
 
-        if( trim($this->input->post('t_documento')) != '' &&
-            trim($this->input->post('ndocumento'))  != '' &&
+        if( trim($this->input->post('ndocumento'))  != '' &&
             trim($this->input->post('razon_social')) != '' &&
             trim($this->input->post('direccion')) != ''
             ):
             $sql = "Exec CLIENTE_UPD "      . $empresa. ","
                                             . $cliente. ",'" 
-                                            .$this->input->post('t_documento')."','"
+                                            .$this->input->post('tdocumento')."','"
                                             .$this->input->post('ndocumento') . "','" 
                                             .$this->input->post('razon_social') ."','"
                                             .$this->input->post('direccion')."','"

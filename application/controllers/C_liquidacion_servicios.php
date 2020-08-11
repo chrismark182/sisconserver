@@ -168,7 +168,7 @@ class C_liquidacion_servicios extends CI_Controller {
     {
         $sql = "Exec LIQUIDACION_UPD_OC {$this->input->post('ocempresa')}, {$this->input->post('ocliquidacion')}, '{$this->input->post('orden_compra')}', {$this->data['session']->USUARI_N_ID}"; 
         $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        $this->session->set_flashdata('message','Orden de Compra actualizada correctamente');
         redirect('liq_servicios', 'refresh');       
     }  
 }

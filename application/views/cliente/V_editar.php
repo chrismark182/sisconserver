@@ -11,7 +11,7 @@
     <form action="<?= base_url() ?>cliente/<?= $cliente->EMPRES_N_ID ?>/<?= $cliente->CLIENT_N_ID ?>/actualizar" method="post">
         <div class="row">
             <div class="input-field col s12 m6 l4">
-                <select id="t_documento" name="t_documento" disabled>
+                <select id="tdocumento" name="tdocumento" disabled>
                     <option value="" disabled>Tipo de Documento </option>
                     
                     <?php if($tdocumentos): ?>

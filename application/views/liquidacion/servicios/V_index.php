@@ -61,7 +61,7 @@
             <div class="input-field col s6 m6 l3">
                 <select id="situacion">
                     <option value="" selected>Cualquier Situación</option>
-                    <option value="0">Pendiente de O/C</option>
+                    <option value="0">Pendiente O/C</option>
                     <option value="1">Liquidado</option>
                     <option value="2">En Navasoft</option>
                 </select>
@@ -95,7 +95,7 @@
                 <th class="center-align">O/C</th>
                 <th class="center-align">ORDENES</th>
                 <th class="center-align">MON</th>
-                <th class="right-align">TOTAL</th>
+                <th class="right-align">SUB TOTAL</th>
                 <th class="center-align">SITUACION</th>
                 <th class="center-align">IMPRIMIR</th>
                 <th class="center-align">ELIMINAR</th>
@@ -158,7 +158,7 @@
                         <th class="center-align">HORAS</th>
                         <th class="center-align">MON</th>
                         <th class="right-align">PRECIO X HORA</th>
-                        <th class="right-align">TOTAL</th>
+                        <th class="right-align">SUB TOTAL</th>
                     </tr>
                 </thead>
                 <tbody id="ordenes">            
@@ -252,14 +252,17 @@
                     if(element.LIQCAB_C_SITUACION == 0)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                        $situacion = `<p style="color: #EE9A08;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                     }else
                     if(element.LIQCAB_C_SITUACION == 1)
                     {
                         $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.LIQCAB_N_ID})">delete</i>`
+                        $situacion = `<p style="color: #1EB635;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                     }else
                     if(element.LIQCAB_C_SITUACION == 2)
                     {
                         $eliminar = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No puede eliminar, ya está en Navasoft">delete</i>`
+                        $situacion = `<p style="color: #4690F5;"><b>${element.LIQCAB_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
                     }
 
                     if(element.CLIENT_C_REQUIERE_OC == 1)
@@ -288,7 +291,7 @@
                             </td>
                             <td class="center-align">${element.SERVIC_C_MONEDA}</td>
                             <td class="right-align">${element.SERVIC_N_IMPORTE}</td>
-                            <td class="center-align">${element.LIQCAB_C_SITUACION_DES}</td>
+                            <td class="center-align">${$situacion}</td>
                             <td class="center-align">
                                 <a href="liq_servicios/reporte/${element.LIQCAB_N_ID}" target="_blank">
                                     <i class="material-icons">monetization_on</i>

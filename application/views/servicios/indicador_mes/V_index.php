@@ -357,7 +357,7 @@
     function drawGrafic(data)
     {
         var array = [
-                        ['Cliente', 'Precio Total', { role: 'style' }, { role: 'annotation' } ]
+                        ['Cliente', 'Sub Total', { role: 'style' }, { role: 'annotation' } ]
                     ]
         for (let index = 0; index < data.length; index++) {
             const element = data[index];

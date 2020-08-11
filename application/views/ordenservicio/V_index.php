@@ -207,6 +207,15 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                     
+                    if(element.ORDSER_C_SITUACION == 0)
+                    {
+                        $situacion = `<p style="color: #EE9A08;"><b>${element.ORDSER_C_SITUACION_DESCRIPCION}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+                    }
+                    if(element.ORDSER_C_SITUACION == 1)
+                    {
+                        $situacion = `<p style="color: #1EB635;"><b>${element.ORDSER_C_SITUACION_DESCRIPCION}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+                    }
+
                     $eliminar = `<i class="material-icons" style="cursor: pointer" onclick="confirmarEliminar(${element.EMPRES_N_ID},${element.ORDSER_N_ID})">delete</i>`
                     if(element.ORDSER_C_SITUACION == 1)
                     {
@@ -222,7 +231,9 @@
                             <td class="center-align">${element.ORDSER_D_FECHA}</td>
                             <td class="center-align">${element.ORDSER_N_HORAS}</td>
                             <td class="right-align">${element.ORDSER_N_PRECIO_UNIT}</td>
-                            <td class="center-align">${element.ORDSER_C_SITUACION_DESCRIPCION}</td>
+                            <td class="center-align">
+                                ${$situacion}
+                            </td>
                             <td class="center-align">
                                 <a href="ordenservicio/reporte/${element.ORDSER_N_ID}" target="_blank">
                                     <i class="material-icons">print</i>
