@@ -59,6 +59,14 @@ class C_api extends CI_Controller {
         $query = $this->M_crud->sql($sql);
         echo json_encode($query, true);
     }
+
+    public function personaValidar()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $sql= "Exec PERSONA_VAL {$data['empresa']} ,{$data['tdocumento']},'{$data['ndocumento']}'";
+        $query = $this->M_crud->sql($sql);
+        echo json_encode($query, true);
+    }
     
     public function acuerdos_periodos()
     {

@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Persona</a>
+            <a href="#!" class="breadcrumb">Persona Visitante</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -23,7 +23,7 @@
         <form action="<?= base_url() ?>contacto" method="post">
             <div class="input-field col s12 m6 l9">
                 <input id="razon_social" maxlength="200" type="text" name="razon_social"  class="validate">
-                <label class="active" for="razon_social">Cliente</label> 
+                <label class="active" for="razon_social">Empresa</label> 
             </div>
             <div class="input-field col s12 m6 l3">
                 <input id="ndocumento" maxlength="15" type="text" name="ndocumento" class="validate">
@@ -49,7 +49,7 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">CLIENTE</th>
+                <th class="left-align">EMPRESA</th>
                 <th class="left-align">DOCUMENTO</th>
                 <th class="left-align">NRO. DOCUMENTO</th>
                 <th class="left-align">NOMBRES</th>
@@ -140,7 +140,7 @@
             $('#total').html(data.length);
             if(data.length > 0)
             {
-                M.toast({html: 'Cargando Contactos', classes: 'rounded'});
+                M.toast({html: 'Cargando Personas Visitante', classes: 'rounded'});
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
 
@@ -151,7 +151,7 @@
                                                     <td class="left-align">${element.PERSON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
                                                     <td class="center-align">
-                                                        <a  href="<?= base_url() ?>contacto/${data[index].EMPRES_N_ID}/${data[index].CLIENT_N_ID}/${data[index].CLICON_N_ID}/editar">
+                                                        <a  href="<?= base_url() ?>persona/${data[index].EMPRES_N_ID}/${data[index].PERSONA_N_ID}/editar">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                     </td>

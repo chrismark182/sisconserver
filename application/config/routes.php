@@ -155,6 +155,7 @@ $route['api/tarifa/(:num)/(:num)/(:num)/(:num)'] = function ($empresa, $sede, $c
 $route['api/ubicacion'] = function (){return 'C_api/ubicacion'; };
 $route['api/tarifavalidar'] = function (){return 'C_api/tarifaValidar'; };
 $route['api/clientevalidar'] = function (){return 'C_api/clienteValidar'; };
+$route['api/personavalidar'] = function (){return 'C_api/personaValidar'; };
 $route['api/validartipocambio'] = function (){return 'C_api/validartipocambio'; };
 $route['api/listar_tipo_cambio'] = function (){return 'C_api/listar_tipo_cambio'; };
 
@@ -190,8 +191,12 @@ $route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
 
 //persona
 $route['personas'] = 'C_persona';
-$route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'.$id;};
 $route['personas/nuevo'] = 'C_persona/nuevo';
+$route['personas/crear'] = 'C_persona/crear';
+$route['personas/(:num)/(:num)/editar'] = function ($empresa , $persona){return 'C_persona/editar/'.$empresa.'/'.$persona;};
+$route['personas/(:num)/(:num)/actualizar'] = function ($empresa , $persona){return 'C_cliente/actualizar/'.$empresa.'/'.$persona;};
+$route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'.$id;};
+
 //Mesa de partes 
 //Recepción de documentos
 $route['recepcion_doc'] = 'C_recepcion_doc';
