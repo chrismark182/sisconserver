@@ -94,7 +94,7 @@
         </tbody>
     </table>
 </div>
-<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="http://siscon.esx/bloqueos/nuevo"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="<?= base_url()?>/ingreso/nuevo"><i class="material-icons">add</i></a>
 
 
 <!-- Modal Structure -->
@@ -162,6 +162,27 @@
     </div>
 </div>
 
+<div id="modalIngreso" class="modal">
+    <div class="modal-content">
+        <h4>Ingreso</h4>
+        <p>¿Está seguro que desea confirmar el ingreso ?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="botonConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+<div id="modalSalida" class="modal">
+    <div class="modal-content">
+        <h4>Salida</h4>
+        <p>¿Está seguro que desea confirmar la salida?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="botonConfirmarSalida" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -229,12 +250,12 @@
 					let ingreso = ``;
 					if(element.HORA_INGRESO == '')
 					{
-						ingreso = `<span style="cursor:pointer" class="material-icons">assignment</span>`;
+						ingreso = `<span onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">assignment</span>`;
 					}
 					let salida = ``;
 					if(element.FECHA_HORA_SALIDA == '')
 					{
-						salida = `<span style="cursor-pointer" class="material-icons">assignment</span>`;
+						salida = `<span confirmarSalida(${element.MOVPER_N_ID}) style="cursor-pointer" class="material-icons">assignment</span>`;
 					}
 
 					 let $eliminar ;
@@ -255,7 +276,7 @@
 								<td class="left-align">${element.MOTVIS_C_DESCRIPCION}</td>
 								<td class="left-align">${element.FECHA_INGRESO}</td>
 								<td class="left-align">${element.HORA_LLEGADA}</td>
-								<td class="left-align">${element.HORA_INGRESO} ${ingreso}</td>
+								<td class="left-align">${element.HORA_INGRESO} </td>
 								<td class="left-align">${element.FECHA_HORA_SALIDA}${salida} </td>
 								<td class="left-align">${$eliminar} </td> 
 							</tr>
@@ -407,7 +428,23 @@
 		
 	}
 
-	function eliminar(id)
+	function confirmarIngreso($id)
+	{
+		console.log('confirmar ingreso')
+		$('#modalIngreso').modal('open');
+		$('#botonConfirmar').attr('href', 'ingreso/'+$id+'/confirmar_ingreso')
+	}
+
+	function confirmarSalida($id)
+	{
+		console.log('confirmar ingreso')
+		$('#modalSalida').modal('open');
+		$('#botonConfirmarSalida').attr('href', 'salida/'+$id+'/confirmar_salida')
+	}
+
+	
+
+	function eliminar($id)
 	{
 		console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');

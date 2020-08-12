@@ -47,7 +47,7 @@
 				<select id="tipo_ingreso" required>
 					<option value="0">Elige una opción</option>
 					<?php foreach ($tipo_ingreso as $row): ?>
-						<option value="<?= $row->EMPRES_N_ID?>">  <?= $row->TIPING_C_DESCRIPCION ?> </option>
+						<option value="<?= $row->TIPING_N_ID?>"> <  <?= $row->TIPING_C_DESCRIPCION ?> </option>
 					<?php endforeach; ?>
 				</select>
 				<label>Tipo Ingreso </label>
@@ -57,7 +57,7 @@
 				<select id="motivo" required>
 				<option value="0">Elige una opción</option>
 					<?php foreach ($motivo_visita as $row): ?>
-						<option value="<?= $row->EMPRES_N_ID ?>"><?= $row->MOTVIS_C_DESCRIPCION ?></option>
+						<option value="<?= $row->MOTVIS_N_ID?>"><?= $row->MOTVIS_C_DESCRIPCION ?></option>
 					<?php endforeach; ?>
 				</select>
 				<label>Ingreso Como </label>
@@ -216,6 +216,8 @@
 		let persona_id = parseInt(document.getElementById("persona_id").value);
 		let tipo_ingreso = parseInt(document.getElementById("tipo_ingreso").value);
 		let motivo = parseInt(document.getElementById("motivo").value);
+
+		alert(motivo);
 		let cliente = parseInt(document.getElementById("cliente").value);
 		let contacto = parseInt(document.getElementById("contacto").value);
 		let remision = document.getElementById("remision").value;
