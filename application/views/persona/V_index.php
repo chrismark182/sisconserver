@@ -54,6 +54,7 @@
                 <th class="left-align">NRO. DOCUMENTO</th>
                 <th class="left-align">NOMBRES</th>
                 <th class="left-align">APELLIDOS</th>
+                <th class="center-align">FOTO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
             </tr>
@@ -144,12 +145,23 @@
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
 
+                    if(element.PERSON_C_FOTO == "")
+                    {
+                        $foto = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="No tienen foto">photo_camera</i>`
+                    }else
+                    {
+                        $foto = `<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Tienen foto">photo_camera</i>`
+                    }
+
                     $('#resultados').append(`   <tr>
 													<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
 													<td class="left-align">${element.TIPDOC_C_DESCRIPCION}</td>
                                                     <td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
                                                     <td class="left-align">${element.PERSON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
+                                                    <td class="center-align">
+                                                        ${$foto}
+                                                    </td>
                                                     <td class="center-align">
                                                         <a  href="<?= base_url() ?>personas/${data[index].EMPRES_N_ID}/${data[index].PERSON_N_ID}/editar">
                                                             <i class="material-icons">edit</i>
