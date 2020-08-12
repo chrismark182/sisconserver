@@ -82,8 +82,9 @@
 		</div>
 		<div class="col s4">
 			<img id="foto" style="width:100%"  src="<?= base_url()?>assets/images/sin-imagen.jpg"/>
-			<p id="sctr" ></p>
-			<p style="font-weight:bold"  class="center red-text text-darken-4"  id="bloqueado" ></p>
+			<p id="bloqueado" class="center"></p>
+			<p id="sctr" class="center"></p>
+			<p id="ingreso" class="center"></p>
 		</div>
 	</div>
 	<div class="row">
@@ -105,7 +106,7 @@
         </div>
 	</div>
 	<div class="input-field col s4">
-        <div class="btn-small" id="btnBuscar" onclick="guardar()" >Guardar</div>
+        <div class="btn-small" style="display: none" id="btnBuscar" onclick="guardar()" >Guardar</div>
     </div>
 </div>
 
@@ -142,20 +143,39 @@
 		})
 		.then(function(data){
 			if(data.length > 0 ){
-
+				let bloqueado = `<span class="green-text text-darken-4">SIN BLOQUEO</span>`;
 				if(data[0].CANTIDAD_BLOQUEOS > 0){
-					document.getElementById('bloqueado').innerHTML = 'BLOQUEADO';
+					bloqueado = `<span class="red-text text-darken-4">BLOQUEADO</span>`;
 				}
 				let foto = `<?= base_url()?>assets/images/sin-imagen.jpg`;
 				if(data[0].PERSON_C_FOTO != '')
 				{
 					foto = `<?= base_url()?>uploads/${data[0].PERSON_C_FOTO}`;
 				}
+
+				let sctr = `<span class="green-text text-darken-4">SCRT VIGENTE</span>`;
+				if(data[0].SCTR_SITUACION == 0){
+					sctr = `<span class="red-text text-darken-4">SCRT VENCIDO</span>`;
+				}
+				let ingreso = ``;
+				if(data[0].INGRESO_VIGENTE > 0){
+					ingreso = `<span class="red-text text-darken-4">PERSONA YA INGRESÓ</span>`;
+				}
+
+				if(data[0].CANTIDAD_BLOQUEOS == 0 && data[0].SCTR_SITUACION == 1 && data[0].INGRESO_VIGENTE == 0)
+				{
+					document.getElementById('btnBuscar').style.display = 'block';
+				}else{
+					document.getElementById('btnBuscar').style.display = 'none';
+				}
 				document.getElementById('cliente_visita_id').value = data[0].CLIENT_N_ID;					
 				document.getElementById('persona_id').value = data[0].PERSON_N_ID;	
 				document.getElementById('nombre').value = data[0].PERSON_C_NOMBRE;
 				document.getElementById('apellido').value = data[0].PERSON_C_APELLIDOS;
 				document.getElementById('foto').src = foto;
+				document.getElementById('bloqueado').innerHTML = bloqueado;
+				document.getElementById('sctr').innerHTML = sctr;
+				document.getElementById('ingreso').innerHTML = ingreso;
 				document.getElementById('empresa').value = data[0].CLIENT_C_RAZON_SOCIAL;
 				M.updateTextFields();
 			}else{
