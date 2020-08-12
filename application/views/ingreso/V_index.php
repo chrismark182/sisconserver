@@ -27,28 +27,22 @@
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
-          
             <div class="input-field col s12 m6 l4">
                 <input id="id" maxlength="200" type="text" name="id"  class="validate">
                 <label class="active" for="id">ID Visita</label> 
             </div>
-
 			<div class="input-field col s12 m6 l4">
                 <input id="empresa_visita" maxlength="11" type="text" class="validate">
                 <label class="active" for="empresa_visita">Empresa visita</label> 
             </div>
-
 			<div class="input-field col s12 m6 l4">
                 <input id="apellido_visitante" maxlength="11" type="text" class="validate">
                 <label class="active" for="apellido_visitante">Apellido </label> 
-            </div>
-
-			
+            </div>			
 			<div class="input-field col s12 m6 l4">
                 <input id="empresa_visitante" maxlength="200" type="text" name="empresa_visitante"  class="validate">
                 <label class="active" for="empresa_visitante">Empresa Visitante</label> 
             </div>	
-
 			<div class="input-field col s12 m6 l4">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
@@ -57,7 +51,6 @@
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            
 			<div class="input-field col s12 m6">
                 <select id="situacion" required>
                     <option value="0">Todos</option>
@@ -65,7 +58,6 @@
                 </select>
                 <label for="tipo_documento">Situacion</label>
             </div>
-
 			<div class="input-field col s12 m6">
 				<select id="tipo_ingreso" required>
 					<?php foreach ($tipo_ingreso as $row):?>
@@ -74,13 +66,6 @@
 				</select>
 				<label for="tipo_ingreso">Tipo de ingreso</label>
 			</div>
-
-
-
-
-
-			
-
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
             </div>
@@ -101,7 +86,8 @@
 				<th class="left-align">Fecha Ingreso</th>
 				<th class="left-align">Hora llegada</th>
 				<th class="left-align">Hora Ingreso</th>
-				<th class="left-align">Fecha hora salida</th>     
+				<th class="left-align">Fecha hora salida</th>
+				<th class="left-align">Eliminar</th>     
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -164,6 +150,19 @@
     </div>
 </div>
 
+
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+        <h4>Eliminar</h4>
+        <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		let n = getParameterByName('n');
@@ -194,14 +193,10 @@
 		if(document.getElementById('apellido_visitante').value != ''){
 			apellido = document.getElementById('apellido_visitante').value + '%';
 		}
-
 		let empresa_visitante = '%';
 		if(document.getElementById('empresa_visitante').value != ''){
 			empresa_visitante = document.getElementById('empresa_visitante').value + '%';
-		}
-
-
-		
+		}		
 		$fecha_desde = $('#desde').val();
 		$fecha_desde = $fecha_desde.split('/');
 		let fecha_desde=  $fecha_desde[2] + $fecha_desde[1] + $fecha_desde[0];
@@ -210,9 +205,7 @@
 		let fecha_hasta= $fecha_hasta[2] + $fecha_hasta[1] + $fecha_hasta[0]
 		let situacion = document.getElementById('situacion').value;
 		let tipo_ingreso = parseInt(document.getElementById('tipo_ingreso').value);
-
-	 	let	data = {sp, empresa, id, empresa_visita,apellido,empresa_visitante,fecha_desde,fecha_hasta,situacion,tipo_ingreso};
-			
+	 	let	data = {sp, empresa, id, empresa_visita,apellido,empresa_visitante,fecha_desde,fecha_hasta,situacion,tipo_ingreso};	
         $('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
@@ -226,8 +219,7 @@
         })
         .then(function(data) 
         {
-			$('#total').html(data.length);
-			
+			$('#total').html(data.length);			
 			console.log(data);
 			if(data.length > 0)
 			{
@@ -237,12 +229,21 @@
 					let ingreso = ``;
 					if(element.HORA_INGRESO == '')
 					{
-						ingreso = `<span class="material-icons">assignment</span>`;
+						ingreso = `<span style="cursor:pointer" class="material-icons">assignment</span>`;
 					}
 					let salida = ``;
 					if(element.FECHA_HORA_SALIDA == '')
 					{
-						salida = `<span class="material-icons">assignment</span>`;
+						salida = `<span style="cursor-pointer" class="material-icons">assignment</span>`;
+					}
+
+					 let $eliminar ;
+					
+					console.log(element.MOVPER_C_SITUACION);
+					if( element.MOVPER_C_SITUACION  == '0'){
+						$eliminar = `<span style="cursor:pointer; color:blue" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
+					}else{
+						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
 					}
 					$('#resultados').append(`   		
 							<tr>
@@ -255,7 +256,8 @@
 								<td class="left-align">${element.FECHA_INGRESO}</td>
 								<td class="left-align">${element.HORA_LLEGADA}</td>
 								<td class="left-align">${element.HORA_INGRESO} ${ingreso}</td>
-								<td class="left-align">${element.FECHA_HORA_SALIDA}${salida} </td> 
+								<td class="left-align">${element.FECHA_HORA_SALIDA}${salida} </td>
+								<td class="left-align">${$eliminar} </td> 
 							</tr>
 					`);
 				}
@@ -371,5 +373,47 @@
 		}).catch(error => console.log(error));
 		
 
-    }
+	}
+	
+	function insertarFechaHora (){
+		let url = '<?= base_url() ?>api/execsp';
+		let sp = 'PERSONA_BLOQUEO_UPD';				
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		
+		
+		let motivo = document.getElementById('motivo').value;
+		let usuario = <?= $session->USUARI_N_ID ?>;
+		data = {sp, empresa, persona, item, motivo, usuario};
+
+		fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+			M.toast({html: 'Persona desbloqueada correctamente!', classes: 'rounded'});
+            $('.preloader-background').css({'display': 'none'});                            
+			setTimeout(() => {
+			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
+            }, 1000);
+		}).catch(error => console.log(error));
+
+		
+	}
+
+	function eliminar(id)
+	{
+		console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'ingreso/'+$id+'/eliminar')
+		
+	}
+
+
 </script>

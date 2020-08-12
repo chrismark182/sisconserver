@@ -186,7 +186,7 @@ $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
 //ingreso
 $route['ingreso'] = 'C_ingreso';
 $route['ingreso/nuevo'] = 'C_ingreso/nuevo';
-$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
+$route['ingreso/(:num)/eliminar'] = function ($id){return 'C_ingreso/eliminar/'.$id;};
 
 //persona
 $route['personas'] = 'C_persona';
