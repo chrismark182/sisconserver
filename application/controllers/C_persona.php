@@ -41,13 +41,17 @@ class C_Persona extends CI_Controller {
 	}
 	
 	public function editar($empresa,$persona)
-    {  
-        $sql = "Exec PERSONA_LIS2 "  .$empresa. ","
+    {  		
+		$tipodocumento = "Exec TIPO_DOCUMENTO_PERSONAS_LIS";        
+		$this->data['tdocumentos'] = $this->M_crud->sql($tipodocumento); 
+
+		$clientes = "Exec CLIENTE_ESTODOS_LIS {$this->data['empresa']->EMPRES_N_ID},'1'";
+		$this->data['clientes'] = $this->M_crud->sql($clientes); 
+		
+		$sql = "Exec PERSONA_LIS2 "  .$empresa. ","
                                     .$persona ;
-        
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
         $personas = $this->M_crud->sql($sql);
-        $this->data['persona'] = $personas[0];
+        $this->data['personas'] = $personas[0];
        
         $this->load->view('persona/V_editar',$this->data);
 	}

@@ -151,7 +151,7 @@
                                                     <td class="left-align">${element.PERSON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
                                                     <td class="center-align">
-                                                        <a  href="<?= base_url() ?>persona/${data[index].EMPRES_N_ID}/${data[index].PERSONA_N_ID}/editar">
+                                                        <a  href="<?= base_url() ?>personas/${data[index].EMPRES_N_ID}/${data[index].PERSON_N_ID}/editar">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                     </td>

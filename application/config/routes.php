@@ -196,7 +196,7 @@ $route['personas'] = 'C_persona';
 $route['personas/nuevo'] = 'C_persona/nuevo';
 $route['personas/crear'] = 'C_persona/crear';
 $route['personas/(:num)/(:num)/editar'] = function ($empresa , $persona){return 'C_persona/editar/'.$empresa.'/'.$persona;};
-$route['personas/(:num)/(:num)/actualizar'] = function ($empresa , $persona){return 'C_cliente/actualizar/'.$empresa.'/'.$persona;};
+$route['personas/(:num)/(:num)/actualizar'] = function ($empresa , $persona){return 'C_persona/actualizar/'.$empresa.'/'.$persona;};
 $route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'.$id;};
 
 //Mesa de partes 
