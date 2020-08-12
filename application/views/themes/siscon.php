@@ -11,7 +11,7 @@
 	<script src="<?= base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/materialize.js"></script>
 	<script>var base_url = '<?php echo base_url() ?>';</script>
-	<script src="<?= base_url() ?>assets/js/main.js?v=<? time() ?>"></script>
+	<script src="<?= base_url() ?>assets/js/main.js?v=<?= time() ?>"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			$('select').formSelect();
