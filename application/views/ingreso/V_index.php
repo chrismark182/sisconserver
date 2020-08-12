@@ -51,14 +51,14 @@
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-			<div class="input-field col s12 m6">
+			<div class="input-field col s12 m6 l4">
                 <select id="situacion" required>
                     <option value="0">Todos</option>
                     <option value="1"> Por salir</option>
                 </select>
                 <label for="tipo_documento">Situacion</label>
             </div>
-			<div class="input-field col s12 m6">
+			<div class="input-field col s12 m6 l4">
 				<select id="tipo_ingreso" required>
 					<?php foreach ($tipo_ingreso as $row):?>
 						<option value="<?= $row->TIPING_N_ID?>"> <?= $row->TIPING_C_DESCRIPCION ?> </option>
@@ -83,10 +83,10 @@
 				<th class="left-align">Empresa</th>
 				<th class="left-align">Tipo Ingreso</th>
 				<th class="left-align">Motivo Ingreso</th>
-				<th class="left-align">Fecha Ingreso</th>
-				<th class="left-align">Hora llegada</th>
-				<th class="left-align">Hora Ingreso</th>
-				<th class="left-align">Fecha hora salida</th>
+				<th class="center-align">Fecha Ingreso</th>
+				<th class="center-align">Hora llegada</th>
+				<th class="center-align">Hora Ingreso</th>
+				<th class="center-align">Fecha hora salida</th>
 				<th class="left-align">Eliminar</th>     
             </tr>
         </thead>
@@ -94,7 +94,7 @@
         </tbody>
     </table>
 </div>
-<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="<?= base_url()?>/ingreso/nuevo"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="<?= base_url()?>ingreso/nuevo"><i class="material-icons">add</i></a>
 
 
 <!-- Modal Structure -->
@@ -193,6 +193,7 @@
 			M.updateTextFields();
 			buscar()
 		}
+		buscar()
 	});
 	function buscar(){
 
@@ -258,9 +259,8 @@
 						salida = `<span confirmarSalida(${element.MOVPER_N_ID}) style="cursor-pointer" class="material-icons">assignment</span>`;
 					}
 
-					 let $eliminar ;
+					let $eliminar ;
 					
-					console.log(element.MOVPER_C_SITUACION);
 					if( element.MOVPER_C_SITUACION  == '0'){
 						$eliminar = `<span style="cursor:pointer; color:blue" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
 					}else{
@@ -274,10 +274,10 @@
 								<td class="left-align">${element.RAZON_SOCIAL_VISITANTE}</td>
 								<td style="text-align">${element.TIPING_C_DESCRIPCION}</td> 
 								<td class="left-align">${element.MOTVIS_C_DESCRIPCION}</td>
-								<td class="left-align">${element.FECHA_INGRESO}</td>
-								<td class="left-align">${element.HORA_LLEGADA}</td>
-								<td class="left-align">${element.HORA_INGRESO} </td>
-								<td class="left-align">${element.FECHA_HORA_SALIDA}${salida} </td>
+								<td class="center-align">${element.FECHA_INGRESO}</td>
+								<td class="center-align">${element.HORA_LLEGADA}</td>
+								<td class="center-align">${element.HORA_INGRESO} ${ingreso}</td>
+								<td class="center-align">${element.FECHA_HORA_SALIDA}${salida} </td>
 								<td class="left-align">${$eliminar} </td> 
 							</tr>
 					`);

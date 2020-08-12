@@ -47,7 +47,7 @@
 				<select id="tipo_ingreso" required>
 					<option value="0">Elige una opción</option>
 					<?php foreach ($tipo_ingreso as $row): ?>
-						<option value="<?= $row->TIPING_N_ID?>"> <  <?= $row->TIPING_C_DESCRIPCION ?> </option>
+						<option value="<?= $row->TIPING_N_ID?>"><?= $row->TIPING_C_DESCRIPCION ?> </option>
 					<?php endforeach; ?>
 				</select>
 				<label>Tipo Ingreso </label>
@@ -216,8 +216,6 @@
 		let persona_id = parseInt(document.getElementById("persona_id").value);
 		let tipo_ingreso = parseInt(document.getElementById("tipo_ingreso").value);
 		let motivo = parseInt(document.getElementById("motivo").value);
-
-		alert(motivo);
 		let cliente = parseInt(document.getElementById("cliente").value);
 		let contacto = parseInt(document.getElementById("contacto").value);
 		let remision = document.getElementById("remision").value;
@@ -226,8 +224,7 @@
 		let observaciones = document.getElementById("observaciones").value;
 		let usuario = <?= $this->data['session']->USUARI_N_ID ?>
 
-		data = {sp, empresa, cliente_visitante, persona_id, tipo_ingreso, motivo, cliente, contacto, remision, obra, orden_compra, observaciones, usuario};
-		
+		let data = {sp, empresa, cliente_visitante, persona_id, tipo_ingreso, motivo, cliente, contacto, remision, obra, orden_compra, observaciones, usuario};
 		fetch(url, {
 			method: "POST",
 			body: JSON.stringify(data),
