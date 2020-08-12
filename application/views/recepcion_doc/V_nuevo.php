@@ -89,8 +89,6 @@
     </div>
 </div>
 
-
-
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		M.updateTextFields();
@@ -190,10 +188,11 @@
 				$('.preloader-background').css({'display': 'none'});                            
 			});	
     }	
-    function validarUpload()
+    async function validarUpload()
     {
         if(archivo.value != ''){
-            uploadFile('archivo')
+			await uploadFile('archivo')
+			guardar();
         }else{
             guardar();
         }
@@ -254,25 +253,7 @@
 			mostrarHoraActual();
 		}, 1000);
     }
-    async function uploadFile(inputId)
-    {
-        M.toast({html: 'Subiendo archivo...', classes: 'rounded'});
-        var input = document.getElementById(inputId);
-        let url = '<?= base_url() ?>api/uploadfile';
-        var data = new FormData()
-        data.append('file', input.files[0])
-        await fetch(url, {
-                method: 'POST',
-                body: data
-            })
-            .then(function(response){
-               return response.text();
-            }).then(function(data){
-                document.getElementById('name_file').value = data;
-                M.toast({html: 'Archivo guardardo', classes: 'rounded'});   
-                guardar();
-            });
-    }
+    
     function sleep(miliseconds) {
         var currentTime = new Date().getTime();
 

@@ -145,6 +145,37 @@ class C_ingreso extends CI_Controller {
         require_once(APPPATH.'views/acuerdo/reporte/index.php');
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
-    }
+	}
+
+
+
+
+	public function delete($id)
+	{
+		$sql = "Exec MOVIMIENTO_PERSONA_DEL  {$this->session->userdata('empresa_id')}, {$id}, {$this->data['session']->USUARI_N_ID} ";        
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('ingreso', 'refresh');  
+	}
+
+	public function confirmar_ingreso($id){
+		$sql = "Exec MOVIMIENTO_PERSONA_UPD {$this->session->userdata('empresa_id')}, {$id},'1' ,{$this->data['session']->USUARI_N_ID}";        
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Se ha confirmado el ingreso correctamente');
+        redirect('ingreso', 'refresh');
+	}
+
+	public function confirmar_salida($id){
+		$sql = "Exec MOVIMIENTO_PERSONA_UPD {$this->session->userdata('empresa_id')}, {$id},'2' ,{$this->data['session']->USUARI_N_ID}";        
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Se ha confirmado la salida correctamente');
+        redirect('ingreso', 'refresh');
+	}
+
+
+
+
+
+
 }
 

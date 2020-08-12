@@ -187,7 +187,9 @@ $route['bloqueos/bloquear'] = 'C_bloqueo/crea_bloqueo';
 //ingreso
 $route['ingreso'] = 'C_ingreso';
 $route['ingreso/nuevo'] = 'C_ingreso/nuevo';
-$route['bloqueos/nuevo'] = 'C_bloqueo/nuevo';
+$route['ingreso/(:num)/eliminar'] = function ($id){return 'C_ingreso/delete/'.$id;};
+$route['ingreso/(:num)/confirmar_ingreso'] = function ($id){return 'C_ingreso/confirmar_ingreso/'.$id;};
+$route['salida/(:num)/confirmar_salida'] = function ($id){return 'C_ingreso/confirmar_salida/'.$id;};
 
 //persona
 $route['personas'] = 'C_persona';
