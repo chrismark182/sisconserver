@@ -87,6 +87,7 @@
 				<th class="center-align">Hora llegada</th>
 				<th class="center-align">Hora Ingreso</th>
 				<th class="center-align">Fecha hora salida</th>
+				<th class="center-align">Imprimir</th>
 				<th class="left-align">Eliminar</th>     
             </tr>
         </thead>
@@ -249,20 +250,22 @@
 					const element = data[index]; 
 
 					let ingreso = ``;
-					if(element.HORA_INGRESO == '')
-					{
-						ingreso = `<span onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">assignment</span>`;
-					}
 					let salida = ``;
-					if(element.FECHA_HORA_SALIDA == '')
-					{
-						salida = `<span confirmarSalida(${element.MOVPER_N_ID}) style="cursor-pointer" class="material-icons">assignment</span>`;
-					}
-
+					
 					let $eliminar ;
 					
 					if( element.MOVPER_C_SITUACION  == '0'){
-						$eliminar = `<span style="cursor:pointer; color:blue" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
+						$eliminar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
+						if(element.HORA_INGRESO == '')
+						{
+							ingreso = `<span onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">assignment</span>`;
+						}
+					}else if( element.MOVPER_C_SITUACION  == '1'){
+						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
+						if(element.FECHA_HORA_SALIDA == '')
+						{
+							salida = `<span onclick="confirmarSalida(${element.MOVPER_N_ID})" style="cursor:pointer" class="material-icons">assignment</span>`;
+						}
 					}else{
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
 					}
@@ -278,6 +281,11 @@
 								<td class="center-align">${element.HORA_LLEGADA}</td>
 								<td class="center-align">${element.HORA_INGRESO} ${ingreso}</td>
 								<td class="center-align">${element.FECHA_HORA_SALIDA}${salida} </td>
+								<td class="center-align">
+									<a href="ingreso/reporte/${element.MOVPER_N_ID}" target="_blank">
+										<i class="material-icons">layers</i>
+									</a>
+								</td> 
 								<td class="left-align">${$eliminar} </td> 
 							</tr>
 					`);

@@ -45,11 +45,20 @@
                 <input id="nombres" maxlength="100" type="text" name="nombres" class="validate">
                 <label class="active" for="nombres">Nombres</label> 
             </div>
-            <div class="input-field col s12 m6 l8">
+            <div class="input-field col s12 m6 l4">
                 <input id="apellidos" maxlength="100" type="text" name="apellidos" class="validate">
                 <label class="active" for="apellidos">Apellidos</label> 
             </div>
-        
+            <input type="hidden" id="name_file" name="foto">
+            <div class="file-field input-field col s12 m6 l4">
+                <div class="btn">
+                    <span>Foto</span>
+                    <input id="archivo" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
             <div class="input-field col s12 m6 l4">
                 <input id="scrt_ini" type="text" value="" class="datepicker">
                 <label class="active" for="scrt_ini">SCTR Inicio</label> 
@@ -70,9 +79,17 @@
     document.addEventListener('DOMContentLoaded', function() {
         console.log("cargo pantalla")
         var btn_guardar = document.getElementById("btn_guardar"); 
-        btn_guardar.addEventListener("click", validar, false); 
+        btn_guardar.addEventListener("click", validarUpload, false); 
     });
-
+    async function validarUpload()
+    {
+        if(archivo.value != ''){
+			await uploadFile('archivo')
+			validar();
+        }else{
+            validar();
+        }
+    }
     function validar()
     {
 		console.log("Validar");

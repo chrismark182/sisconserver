@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="col s4">
-			<img style="width:100%"  src="<?= base_url()?>assets/images/sin-imagen.jpg"/>
+			<img id="foto" style="width:100%"  src="<?= base_url()?>assets/images/sin-imagen.jpg"/>
 			<p id="sctr" ></p>
 			<p style="font-weight:bold"  class="center red-text text-darken-4"  id="bloqueado" ></p>
 		</div>
@@ -124,7 +124,7 @@
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = "VISITANTE_NUEVO_LIS";
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		let tipo_doc = document.getElementById("tipo_doc").value;
+		let tipo_doc = parseInt(document.getElementById("tipo_doc").value);
 		let documento = document.getElementById("documento").value;
 
 		data = {sp, empresa, tipo_doc, documento};
@@ -146,11 +146,16 @@
 				if(data[0].CANTIDAD_BLOQUEOS > 0){
 					document.getElementById('bloqueado').innerHTML = 'BLOQUEADO';
 				}
-				console.log(data);
+				let foto = `<?= base_url()?>assets/images/sin-imagen.jpg`;
+				if(data[0].PERSON_C_FOTO != '')
+				{
+					foto = `<?= base_url()?>uploads/${data[0].PERSON_C_FOTO}`;
+				}
 				document.getElementById('cliente_visita_id').value = data[0].CLIENT_N_ID;					
 				document.getElementById('persona_id').value = data[0].PERSON_N_ID;	
 				document.getElementById('nombre').value = data[0].PERSON_C_NOMBRE;
 				document.getElementById('apellido').value = data[0].PERSON_C_APELLIDOS;
+				document.getElementById('foto').src = foto;
 				document.getElementById('empresa').value = data[0].CLIENT_C_RAZON_SOCIAL;
 				M.updateTextFields();
 			}else{
