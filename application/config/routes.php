@@ -178,6 +178,9 @@ $route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };
 $route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente'; };
 $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
 
+$route['ind_vis_cliente'] = function (){return 'C_visitas_indicadores/cliente'; };
+
+
 //bloqueo
 
 $route['bloqueos'] = 'C_bloqueo';
@@ -190,6 +193,7 @@ $route['ingreso/nuevo'] = 'C_ingreso/nuevo';
 $route['ingreso/(:num)/eliminar'] = function ($id){return 'C_ingreso/delete/'.$id;};
 $route['ingreso/(:num)/confirmar_ingreso'] = function ($id){return 'C_ingreso/confirmar_ingreso/'.$id;};
 $route['salida/(:num)/confirmar_salida'] = function ($id){return 'C_ingreso/confirmar_salida/'.$id;};
+$route['ingreso/reporte/(:num)'] = function ($id){return 'C_ingreso/reporte/'.$id;};;
 
 //persona
 $route['personas'] = 'C_persona';

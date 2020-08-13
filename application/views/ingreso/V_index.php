@@ -82,7 +82,6 @@
 				<th class="left-align">NOMBRES</th>
                 <th class="left-align">APELLIDOS</th>
 				<th class="left-align">TIPO</th>
-				<th class="left-align">MOTIVO</th>
 				<th class="center-align">FECHA</th>
 				<th class="center-align">LLEGADA</th>
 				<th class="center-align">INGRESO</th>
@@ -225,17 +224,16 @@
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
 								<td style="text-align">${element.TIPING_C_DESCRIPCION}</td> 
-								<td class="left-align">${element.MOTVIS_C_DESCRIPCION}</td>
 								<td class="center-align">${element.FECHA_INGRESO}</td>
 								<td class="center-align">${element.HORA_LLEGADA}</td>
 								<td class="center-align">${element.HORA_INGRESO} ${ingreso}</td>
 								<td class="center-align">${element.FECHA_HORA_SALIDA}${salida} </td>
 								<td class="center-align">
 									<a href="ingreso/reporte/${element.MOVPER_N_ID}" target="_blank">
-										<i class="material-icons">layers</i>
+										<i class="material-icons">event_note</i>
 									</a>
 								</td> 
-								<td class="left-align">${$eliminar} </td> 
+								<td class="center-align">${$eliminar} </td> 
 							</tr>
 					`);
 				}
