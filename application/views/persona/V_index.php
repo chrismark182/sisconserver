@@ -50,10 +50,12 @@
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
                 <th class="left-align">EMPRESA</th>
+                <th class="left-align">TIPO DOC.</th>
                 <th class="left-align">DOCUMENTO</th>
-                <th class="left-align">NRO. DOCUMENTO</th>
                 <th class="left-align">NOMBRES</th>
                 <th class="left-align">APELLIDOS</th>
+                <th class="center-align">VENCE SCTR</th>
+                <th class="center-align">SITUACION</th>
                 <th class="center-align">FOTO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>
@@ -153,12 +155,24 @@
                         $foto = `<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Tienen foto">photo_camera</i>`
                     }
 
+                    if(element.PERSON_N_BLOQUEOS > 0)
+                    {
+                        $bloqueo = `<i class="material-icons tooltipped" style="color: #999999" data-position="bottom" data-tooltip="Bloqueado">block</i>`
+                    }else
+                    {
+                        $bloqueo = `<i class="material-icons tooltipped"></i>`
+                    }
+
                     $('#resultados').append(`   <tr>
 													<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
-													<td class="left-align">${element.TIPDOC_C_DESCRIPCION}</td>
+													<td class="left-align">${element.TIPDOC_C_ABREVIATURA}</td>
                                                     <td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
                                                     <td class="left-align">${element.PERSON_C_NOMBRE}</td>
                                                     <td class="left-align">${element.PERSON_C_APELLIDOS}</td>
+                                                    <td class="center-align">${element.PERSON_C_FECHA_SCTR_FIN}</td>
+                                                    <td class="center-align">
+                                                        ${$bloqueo}
+                                                    </td>
                                                     <td class="center-align">
                                                         ${$foto}
                                                     </td>

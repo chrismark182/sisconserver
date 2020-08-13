@@ -48,10 +48,11 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">NOMBRES</th>
-                <th class="left-align">APELLIDOS</th>
-                <th class="left-align">NRO. DOCUMENTO</th>
 				<th class="left-align">EMPRESA</th>
+				<th class="left-align">TIPO DOC.</th>
+				<th class="left-align">DOCUMENTO</th>
+				<th class="left-align">NOMBRES</th>
+                <th class="left-align">APELLIDOS</th>
 				<th class="center-align">INF. BLOQUEO</th>
 				<th class="left-align">USUARIO</th>
 				<th class="center-align">FECHA BLOQUEO</th>          
@@ -182,10 +183,11 @@
 
 					$('#resultados').append(`   		
 							<tr>
+								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
+								<td class="left-align">${element.TIPDOC_C_ABREVIATURA}</td>
+								<td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
-								<td class="left-align">${element.PERSON_C_DOCUMENTO}</td>
-								<td class="left-align">${element.CLIENT_C_RAZON_SOCIAL}</td>
 								<td style="text-align:center">${bloqueo}</td> 
 								<td class="left-align">${element.USUARI_C_USERNAME}</td>
 								<td class="center-align">${element.PERBLO_D_FECHA_REG}</td>

@@ -60,12 +60,12 @@
                 </div>
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="scrt_ini" type="text" value="" class="datepicker">
+                <input id="scrt_ini" type="text" value="" name="scrt_ini" class="datepicker">
                 <label class="active" for="scrt_ini">SCTR Inicio</label> 
             </div>
             
             <div class="input-field col s12 m6 l4">
-                <input id="scrt_fin" type="text" value="" class="datepicker">
+                <input id="scrt_fin" type="text" value="" name="scrt_fin" class="datepicker">
                 <label class="active" for="scrt_fin">SCTR Vencimiento</label> 
             </div>
             <div class="input-field col s12">
@@ -81,6 +81,7 @@
         var btn_guardar = document.getElementById("btn_guardar"); 
         btn_guardar.addEventListener("click", validarUpload, false); 
     });
+
     async function validarUpload()
     {
         if(archivo.value != ''){
@@ -90,6 +91,7 @@
             validar();
         }
     }
+    
     function validar()
     {
 		console.log("Validar");

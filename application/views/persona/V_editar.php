@@ -1,7 +1,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s12">
-            <a href="<?= base_url() ?>personas" class="breadcrumb">Personas Visitantes</a>
+            <a href="<?= base_url() ?>personas" class="breadcrumb">Persona Visitante</a>
             <a href="#!" class="breadcrumb">Editar</a>
         </div>
     </div>
@@ -54,17 +54,27 @@
                 <input id="nombres" maxlength="100" type="text" name="nombres" value ="<?= $personas->PERSON_C_NOMBRE ?>" class="validate">
                 <label class="active" for="nombres">Nombres</label> 
             </div>
-            <div class="input-field col s12 m6 l8">
+            <div class="input-field col s12 m6 l4">
                 <input id="apellidos" maxlength="100" type="text" name="apellidos" value ="<?= $personas->PERSON_C_APELLIDOS ?>" class="validate">
                 <label class="active" for="apellidos">Apellidos</label> 
             </div>
-        
+            <input type="hidden" id="name_file" name="foto">
+            <div class="file-field input-field col s12 m6 l4">
+                <div class="btn">
+                    <span>Foto</span>
+                    <input id="archivo" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+
             <div class="input-field col s12 m6 l4">
-                <input id="scrt_ini" type="text" value="" class="datepicker" value ="<?= $personas->PERSON_C_FECHA_SCTR_INI ?>">
+                <input id="scrt_ini" type="text" name="scrt_ini" class="datepicker" value ="<?= $personas->PERSON_C_FECHA_SCTR_INI ?>">
                 <label class="active" for="scrt_ini">SCTR Inicio</label> 
             </div>
             <div class="input-field col s12 m6 l4">
-                <input id="scrt_fin" type="text" value="" class="datepicker" value ="<?= $personas->PERSON_C_FECHA_SCTR_FIN ?>">
+                <input id="scrt_fin" type="text" name="scrt_fin" class="datepicker" value ="<?= $personas->PERSON_C_FECHA_SCTR_FIN ?>">
                 <label class="active" for="scrt_fin">SCTR Vencimiento</label> 
             </div>
             
@@ -77,6 +87,20 @@
 
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+        console.log("cargo pantalla")
+        var btn_guardar = document.getElementById("btn_guardar"); 
+        btn_guardar.addEventListener("click", validarUpload, false); 
+    });
 
+    async function validarUpload()
+    {
+        if(archivo.value != ''){
+			await uploadFile('archivo')
+			document.getElementById('form').submit();
+        }else{
+            document.getElementById('form').submit();
+        }
+    }
 </script>
         

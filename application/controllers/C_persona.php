@@ -76,17 +76,25 @@ class C_Persona extends CI_Controller {
 	
 	public function actualizar($empresa,$persona)
     {
-        $sql = "Exec PERSONA_UPD "      .$empresa. ","
-										.$persona. ",'" 
-										. $this->input->post('nombres') . "','" 
-										. $this->input->post('apellidos') . "','" 
-										. $this->input->post('scrt_ini') . "','" 
-										. $this->input->post('scrt_fin') . "'," 
-										. $this->data['session']->USUARI_N_ID ;
-		
-										$this->M_crud->sql($sql);
-										$url = 'personas?n=' . $this->input->post('ndocumento'); 
-										redirect($url,'refresh');
+		if( trim($this->input->post('nombres'))  != '' &&
+            trim($this->input->post('apellidos')) != ''
+            ):
+			$sql = "Exec PERSONA_UPD "      .$empresa. ","
+											.$persona. ",'" 
+											. $this->input->post('nombres') . "','" 
+											. $this->input->post('apellidos') . "','" 
+											. $this->input->post('foto') . "','" 
+											. $this->input->post('scrt_ini') . "','" 
+											. $this->input->post('scrt_fin') . "'," 
+											. $this->data['session']->USUARI_N_ID ;
+			
+											$this->M_crud->sql($sql);
+											$url = 'personas?n=' . $this->input->post('ndocumento'); 
+											redirect($url,'refresh');
+		else:
+			$this->session->set_flashdata('message','No puede guardar en vacio ');
+			header("Location: editar");
+		endif;
 	}
 	
 	public function eliminar($id)
