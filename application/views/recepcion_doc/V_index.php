@@ -302,7 +302,7 @@
 		});
 	}
 
-	function eliminar($id)
+	function  eliminar($id)
 	{
 		console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');

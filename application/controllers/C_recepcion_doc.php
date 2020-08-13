@@ -145,9 +145,9 @@ class C_recepcion_doc extends CI_Controller {
         $this->pdfgenerator->generate($html, "reporte.pdf");
 	}
 	
-	public function eliminarRecepcion($id)
+	public function eliminar_recepcion_doc($id)
     {
-       $sql = "Exec RECEPCION_DOCUMENTOS_DEL {$id}";        
+       $sql = "Exec RECEPCION_DOCUMENTOS_DEL { $empresa ,$this->data['session']->USUARI_N_ID,$id}";        
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
