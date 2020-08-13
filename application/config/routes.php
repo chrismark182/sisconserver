@@ -210,4 +210,8 @@ $route['recepcion_doc/nuevo'] = 'C_recepcion_doc/nuevo';
 $route['recepcion_doc/(:num)/eliminar'] = function ($id){return 'C_recepcion_doc/eliminar_recepcion_doc/'.$id;};
 
 
+//Revision de documentos
+$route['revision_doc'] = 'C_revision_doc';
+$route['revision_doc/(:num)/aceptar'] = function ($id){return 'C_revision_doc/aceptar/'.$id;};
+$route['revision_doc/(:num)/rechazar'] = function ($id){return 'C_revision_doc/rechazar/'.$id;};
 
