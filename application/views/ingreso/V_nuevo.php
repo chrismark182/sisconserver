@@ -1,83 +1,85 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="#!" class="breadcrumb">Visitantes</a>
-        <a href="<?= base_url() ?>ingreso" class="breadcrumb">Ingreso</a>
-        <a href="#!" class="breadcrumb">Nuevo</a>
-      </div>
+      	<div class="col s12">
+        	<a href="#!" class="breadcrumb">Visitantes</a>
+        	<a href="<?= base_url() ?>ingreso" class="breadcrumb">Ingreso</a>
+        	<a href="#!" class="breadcrumb">Nuevo</a>
+      	</div>
     </div>
 </nav>
+
 <div class="section container">
 	<div class="row">
 		<div class="input-field col s12 m6 l4">
 			<input placeholder=" " id="fecha" type="text" class="validate" readonly >
-			<label for="fecha">Fecha</label>
+			<label for="fecha">Fecha Actual</label>
 		</div>
 		<div class="input-field col s12 m6 l4">
 			<select id="tipo_doc" required>
-				<option value="0">Todos</option>
+				<option value="0">Seleccionar Tipo Documento</option>
 				<?php foreach ($misdoc as $row): ?>
 					<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
 				<?php endforeach; ?>
 			</select>
-			<label for="tipo_doc">Tipo de documentos</label>
+			<label for="tipo_doc">Tipo de Documento</label>
 		</div>	
 		<div class="input-field col s12 m6 l4">
 			<input id="documento" type="text" class="validate" onchange="buscar()" onfocusout="buscar()">
-			<label for="documento">Documento</label>
+			<label for="documento">Número de Documento</label>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col s8">
 			<div class="input-field col s12" >
+				<input type="hidden" id="cliente_visita_id">
+				<input class="ancho" id="empresa" type="text" value="" readonly>
+				<label class="active" for="empresa">Empresa Visitante</label>
+			</div>	
+
+			<div class="input-field col s6" >
 				<input type="hidden" id="persona_id">
 				<input  id="apellido" type="text" value="" readonly >
 				<label class="active" for="apellido">Apellidos</label>
 			</div>
-			<div class="input-field col s12"  >
+			<div class="input-field col s6"  >
 				<input class="ancho" id="nombre" type="text" value="" readonly>
 				<label class="active" for="nombre">Nombres</label>
 			</div>
-			<div class="input-field col s12" >
-				<input type="hidden" id="cliente_visita_id">
-				<input class="ancho" id="empresa" type="text" value="" readonly>
-				<label class="active" for="empresa">Empresa</label>
-			</div>			
-			<div class="input-field col s12">
+		
+			<div class="input-field col s6">
 				<select id="tipo_ingreso" required>
-					<option value="0">Elige una opción</option>
+					<option value="0">Seleccionar Tipo de Ingreso</option>
 					<?php foreach ($tipo_ingreso as $row): ?>
 						<option value="<?= $row->TIPING_N_ID?>"><?= $row->TIPING_C_DESCRIPCION ?> </option>
 					<?php endforeach; ?>
 				</select>
-				<label>Tipo Ingreso </label>
+				<label>Tipo de Ingreso</label>
 			</div>
-
-			<div class="input-field col s12  ">
+			<div class="input-field col s6">
 				<select id="motivo" required>
-				<option value="0">Elige una opción</option>
+				<option value="0">Seleccionar Motivo</option>
 					<?php foreach ($motivo_visita as $row): ?>
 						<option value="<?= $row->MOTVIS_N_ID?>"><?= $row->MOTVIS_C_DESCRIPCION ?></option>
 					<?php endforeach; ?>
 				</select>
-				<label>Ingreso Como </label>
+				<label>Motivo de la Visita</label>
 			</div>
 
-	
 			<div class="input-field col s12 ">
 				<select id="cliente" onchange="buscarContactoCliente()" required>
-					<option value="0">Elige una opción</option>
+					<option value="0">Seleccionar una Empresa</option>
 					<?php foreach ($clientes as $row): ?>
 						<option value="<?= $row->CLIENT_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL?> </option>
 					<?php endforeach; ?>
 				</select>
-				<label>Cliente</label>
+				<label>Empresa Visitada</label>
 			</div>
 			<div class="input-field col s12  ">
 				<select id="contacto" required>
-					<option value="0">Elige una opción</option>				
+					<option value="0">Seleccionar Contácto</option>				
 				</select>
-				<label>Persona de Contacto</label>
+				<label>Persona de Contácto</label>
 			</div>
 		</div>
 		<div class="col s4">
@@ -87,30 +89,30 @@
 			<p id="ingreso" class="center"></p>
 		</div>
 	</div>
+	
 	<div class="row">
 		<div class="input-field col s12 m6 l4">
-			<input id="remision" type="text">
-			<label class="active" for="remision">Guia Remision</label>
+			<input id="remision" maxlength="20" type="text">
+			<label class="active" for="remision">Guía Remisión</label>
 		</div>
 		<div class="input-field col s12 m6 l4">
-			<input id="obra" type="text">
+			<input id="obra" maxlength="20" type="text">
 			<label class="active"  for="obra">Obra</label>
 		</div>
 		<div class="input-field col s12 m6 l4">
-			<input id="orden_compra" type="text">
-			<label class="active"  for="orden-compra" >Orden de compra</label>
+			<input id="orden_compra" maxlength="20" type="text">
+			<label class="active"  for="orden-compra" >Orden de Compra</label>
 		</div>
 		<div class="input-field col s12">
-			<textarea id="observaciones" class="materialize-textarea"></textarea>
+			<textarea id="observaciones" maxlength="100" class="materialize-textarea"></textarea>
 			<label for="observaciones">Observaciones</label>
         </div>
 	</div>
+	
 	<div class="input-field col s4">
         <div class="btn-small" style="display: none" id="btnBuscar" onclick="guardar()" >Guardar</div>
     </div>
 </div>
-
-
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -143,10 +145,13 @@
 		})
 		.then(function(data){
 			if(data.length > 0 ){
+				M.toast({html: 'Obteniendo datos de la Persona...', classes: 'rounded'});
+
 				let bloqueado = `<span class="green-text text-darken-4">SIN BLOQUEO</span>`;
 				if(data[0].CANTIDAD_BLOQUEOS > 0){
 					bloqueado = `<span class="red-text text-darken-4">BLOQUEADO</span>`;
 				}
+
 				let foto = `<?= base_url()?>assets/images/sin-imagen.jpg`;
 				if(data[0].PERSON_C_FOTO != '')
 				{
@@ -157,6 +162,7 @@
 				if(data[0].SCTR_SITUACION == 0){
 					sctr = `<span class="red-text text-darken-4">SCRT VENCIDO</span>`;
 				}
+
 				let ingreso = ``;
 				if(data[0].INGRESO_VIGENTE > 0){
 					ingreso = `<span class="red-text text-darken-4">PERSONA YA INGRESÓ</span>`;
@@ -168,6 +174,7 @@
 				}else{
 					document.getElementById('btnBuscar').style.display = 'none';
 				}
+
 				document.getElementById('cliente_visita_id').value = data[0].CLIENT_N_ID;					
 				document.getElementById('persona_id').value = data[0].PERSON_N_ID;	
 				document.getElementById('nombre').value = data[0].PERSON_C_NOMBRE;
@@ -181,7 +188,6 @@
 			}else{
 				M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
 			}
-
 			$('.preloader-background').css({'display': 'none'});                            
 		});	
 	}	
@@ -230,10 +236,9 @@
 				$('.preloader-background').css({'display': 'none'});                            
 			});	
 	}	
+
 	function guardar()
     {
-		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
-
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = "MOVIMIENTO_PERSONA_INS";
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -263,11 +268,12 @@
 		.then(function(data){
 			if(data.length > 0 ){
 				console.log(data);
+				M.toast({html: 'Visita registrada correctamente', classes: 'rounded'});
 				setTimeout(() => {
 					window.location.href= "<?= base_url() ?>ingreso?id=" + data[0].ID;                
 				}, 1000);
 			}else{
-				M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+				M.toast({html: 'No se pudo grabar', classes: 'rounded'});
 			}
 
 			$('.preloader-background').css({'display': 'none'});                            

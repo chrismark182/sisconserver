@@ -8,7 +8,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Ingreso</a>
+            <a href="#!" class="breadcrumb">Ingreso y Salida</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -28,19 +28,19 @@
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
             <div class="input-field col s12 m6 l4">
-                <input id="id" maxlength="200" type="text" name="id"  class="validate">
+                <input id="id" maxlength="20" type="text" name="id"  class="validate">
                 <label class="active" for="id">ID Visita</label> 
             </div>
 			<div class="input-field col s12 m6 l4">
-                <input id="empresa_visita" maxlength="11" type="text" class="validate">
-                <label class="active" for="empresa_visita">Empresa visita</label> 
+                <input id="empresa_visita" maxlength="50" type="text" class="validate">
+                <label class="active" for="empresa_visita">Empresa Visitada</label> 
             </div>
 			<div class="input-field col s12 m6 l4">
-                <input id="apellido_visitante" maxlength="11" type="text" class="validate">
-                <label class="active" for="apellido_visitante">Apellido </label> 
+                <input id="apellido_visitante" maxlength="50" type="text" class="validate">
+                <label class="active" for="apellido_visitante">Apellido Visitante</label> 
             </div>			
 			<div class="input-field col s12 m6 l4">
-                <input id="empresa_visitante" maxlength="200" type="text" name="empresa_visitante"  class="validate">
+                <input id="empresa_visitante" maxlength="50" type="text" name="empresa_visitante"  class="validate">
                 <label class="active" for="empresa_visitante">Empresa Visitante</label> 
             </div>	
 			<div class="input-field col s12 m6 l4">
@@ -54,9 +54,9 @@
 			<div class="input-field col s12 m6 l4">
                 <select id="situacion" required>
                     <option value="0">Todos</option>
-                    <option value="1"> Por salir</option>
+                    <option value="1">Por Salir</option>
                 </select>
-                <label for="tipo_documento">Situacion</label>
+                <label for="tipo_documento">Situación</label>
             </div>
 			<div class="input-field col s12 m6 l4">
 				<select id="tipo_ingreso" required>
@@ -64,7 +64,7 @@
 						<option value="<?= $row->TIPING_N_ID?>"> <?= $row->TIPING_C_DESCRIPCION ?> </option>
 					<?php endforeach; ?>
 				</select>
-				<label for="tipo_ingreso">Tipo de ingreso</label>
+				<label for="tipo_ingreso">Tipo de Ingreso</label>
 			</div>
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
@@ -77,18 +77,18 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">Id </th>
-				<th class="left-align">Nombre</th>
-                <th class="left-align">Apellido</th>
-				<th class="left-align">Empresa</th>
-				<th class="left-align">Tipo Ingreso</th>
-				<th class="left-align">Motivo Ingreso</th>
-				<th class="center-align">Fecha Ingreso</th>
-				<th class="center-align">Hora llegada</th>
-				<th class="center-align">Hora Ingreso</th>
-				<th class="center-align">Fecha hora salida</th>
-				<th class="center-align">Imprimir</th>
-				<th class="left-align">Eliminar</th>     
+                <th class="left-align">ID</th>
+				<th class="left-align">EMPRESA</th>
+				<th class="left-align">NOMBRES</th>
+                <th class="left-align">APELLIDOS</th>
+				<th class="left-align">TIPO</th>
+				<th class="left-align">MOTIVO</th>
+				<th class="center-align">FECHA</th>
+				<th class="center-align">LLEGADA</th>
+				<th class="center-align">INGRESO</th>
+				<th class="center-align">SALIDA</th>
+				<th class="center-align">IMPRIMIR</th>
+				<th class="left-align">ELIMINAR</th>     
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -99,59 +99,6 @@
 
 
 <!-- Modal Structure -->
-
-<div id="modalInfoBloqueos" class="modal modal-fixed-footer">
-    <div class="modal-content" >
-		<h4>Datos del bloqueo</h4>
-		<div class="divider"></div>
-		<p>Motivo bloqueo: <span id="bloqueo_motivo"></span></p>
-		<p>Usuario bloqueo: <span id="bloqueo_usuario"></span></p>
-		<p>Fecha bloqueo: <span id="bloqueo_fecha"></span></p>
-		<div class="btn" onclick="modalDesbloquear()">DESBLOQUEAR</div>
-    </div>
-	<div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
-    </div>
-</div> 
-
-<div id="modalInfoDesbloqueado" class="modal modal-fixed-footer">
-    <div class="modal-content" >
-		<h4>Datos del Ingreso</h4>
-		<div class="divider"></div>
-		<p>Motivo Ingreso: <span id="des_bloqueo_motivo"></span></p>
-		<p>Usuario Ingreso: <span id="des_bloqueo_usuario"></span></p>
-		<p>Fecha ingreso: <span id="des_bloqueo_fecha"></span></p>
-		<br>
-		<h4>Datos del desbloqueo</h4>
-		<div class="divider"></div>
-		<p>Motivo desbloqueo: <span id="desbloqueo_motivo"></span></p>
-		<p>Usuario desbloqueo: <span id="desbloqueo_usuario"></span></p>
-		<p>Fecha desbloqueo: <span id="desbloqueo_fecha"></span></p>
-		
-    </div>
-	<div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
-    </div>
-</div> 
-
-<div id="modalBloqueos" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4 class="left">Desbloquear persona</h4>
-        <div class="section row">
-            <input type="hidden" id="persona_id" >
-			<input type="hidden" id="bloqueo_item" >
-            <div class="input-field col s12">
-                <textarea id="motivo" class="materialize-textarea"></textarea>
-                <label for="motivo">Motivo del desbloqueo</label>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" waves-effect waves-green btn-flat" onclick="desbloquear()">Aceptar</a>
-    </div>
-</div>
-
-
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
         <h4>Eliminar</h4>
@@ -166,7 +113,7 @@
 <div id="modalIngreso" class="modal">
     <div class="modal-content">
         <h4>Ingreso</h4>
-        <p>¿Está seguro que desea confirmar el ingreso ?</p>
+        <p>¿Está seguro que desea confirmar el INGRESO ?</p>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
@@ -177,7 +124,7 @@
 <div id="modalSalida" class="modal">
     <div class="modal-content">
         <h4>Salida</h4>
-        <p>¿Está seguro que desea confirmar la salida?</p>
+        <p>¿Está seguro que desea confirmar la SALIDA?</p>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
@@ -190,14 +137,14 @@
 		let n = getParameterByName('n');
 		if(n != '')
 		{
-			document.getElementById('n_documento').value = n;
+			document.getElementById('id').value = n;
 			M.updateTextFields();
 			buscar()
 		}
-		buscar()
 	});
-	function buscar(){
 
+	function buscar(){
+		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
 		$('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 		
@@ -229,7 +176,8 @@
 		let situacion = document.getElementById('situacion').value;
 		let tipo_ingreso = parseInt(document.getElementById('tipo_ingreso').value);
 	 	let	data = {sp, empresa, id, empresa_visita,apellido,empresa_visitante,fecha_desde,fecha_hasta,situacion,tipo_ingreso};	
-        $('#resultados').html('');
+        
+		$('#resultados').html('');
         fetch(url, {
                     method: 'POST', // or 'PUT'
                     body: JSON.stringify(data), // data can be `string` or {object}!
@@ -246,6 +194,7 @@
 			console.log(data);
 			if(data.length > 0)
 			{
+				M.toast({html: 'Cargando Ingresos y Salidas', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
 
@@ -258,13 +207,13 @@
 						$eliminar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
 						if(element.HORA_INGRESO == '')
 						{
-							ingreso = `<span onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">assignment</span>`;
+							ingreso = `<span style="color:#039be5" onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">directions_walk</span>`;
 						}
 					}else if( element.MOVPER_C_SITUACION  == '1'){
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
 						if(element.FECHA_HORA_SALIDA == '')
 						{
-							salida = `<span onclick="confirmarSalida(${element.MOVPER_N_ID})" style="cursor:pointer" class="material-icons">assignment</span>`;
+							salida = `<span style="color:#039be5" onclick="confirmarSalida(${element.MOVPER_N_ID})" style="cursor:pointer" class="material-icons">directions_walk</span>`;
 						}
 					}else{
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
@@ -272,9 +221,9 @@
 					$('#resultados').append(`   		
 							<tr>
 								<td class="left-align">${element.MOVPER_N_ID}</	td>
+								<td class="left-align">${element.RAZON_SOCIAL_VISITANTE}</td>
 								<td class="left-align">${element.PERSON_C_NOMBRE}</td>
 								<td class="left-align">${element.PERSON_C_APELLIDOS}</td>
-								<td class="left-align">${element.RAZON_SOCIAL_VISITANTE}</td>
 								<td style="text-align">${element.TIPING_C_DESCRIPCION}</td> 
 								<td class="left-align">${element.MOTVIS_C_DESCRIPCION}</td>
 								<td class="center-align">${element.FECHA_INGRESO}</td>
@@ -297,145 +246,7 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
 	}
-
-	function muestraInfoBloqueo(id, item)
-	{		
-		document.getElementById('persona_id').value = id;
-		document.getElementById('bloqueo_item').value = item;
-
-		let url = '<?= base_url() ?>api/execsp';
-		let sp = 'PERSONA_BLOQUEO_ITEM_LIS';				
-		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		data = {sp, empresa, id, item};
-
-		fetch(url, {
-					method: 'POST', // or 'PUT'
-					body: JSON.stringify(data), // data can be `string` or {object}!
-					headers:{
-						'Content-Type': 'application/json'
-						}
-					})
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(data) 
-		{
-			console.log(data);
-			let element = data[0];
-			document.getElementById('bloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_BLOQUEO;
-			document.getElementById('bloqueo_usuario').innerHTML = element.USUARI_C_USERNAME;
-			document.getElementById('bloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_REG;
-			$('#modalInfoBloqueos').modal('open');
-			$('.preloader-background').css({'display': 'none'});                            
-		});
-	}
-	function muestraInfoDesbloqueo(id, item)
-	{		
-		document.getElementById('persona_id').value = id;
-		document.getElementById('bloqueo_item').value = item;
-
-		let url = '<?= base_url() ?>api/execsp';
-		let sp = 'PERSONA_BLOQUEO_ITEM_LIS';				
-		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		data = {sp, empresa, id, item};
-
-		fetch(url, {
-					method: 'POST', // or 'PUT'
-					body: JSON.stringify(data), // data can be `string` or {object}!
-					headers:{
-						'Content-Type': 'application/json'
-						}
-					})
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(data) 
-		{
-			console.log(data);
-			let element = data[0];
-			document.getElementById('des_bloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_BLOQUEO;
-			document.getElementById('des_bloqueo_usuario').innerHTML = element.USUARI_C_USERNAME;
-			document.getElementById('des_bloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_REG;
-
-			document.getElementById('desbloqueo_motivo').innerHTML = element.PERBLO_C_MOTIVO_DESBLOQUEO;
-			document.getElementById('desbloqueo_usuario').innerHTML = element.USUARIO_DESBLOQUEA;
-			document.getElementById('desbloqueo_fecha').innerHTML = element.PERBLO_D_FECHA_UPD;
-
-			$('#modalInfoDesbloqueado').modal('open');
-			$('.preloader-background').css({'display': 'none'});                            
-		});
-	}
-	function modalDesbloquear()
-    {
-		$('.modal').modal('close');
-        $('#modalBloqueos').modal('open');
-    }
-	function desbloquear()
-    {
-
-		let url = '<?= base_url() ?>api/execsp';
-		let sp = 'PERSONA_BLOQUEO_UPD';				
-		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		let persona = parseInt(document.getElementById('persona_id').value);
-		let item = parseInt(document.getElementById('bloqueo_item').value);
-		let motivo = document.getElementById('motivo').value;
-		let usuario = <?= $session->USUARI_N_ID ?>;
-		data = {sp, empresa, persona, item, motivo, usuario};
-
-		fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-			M.toast({html: 'Persona desbloqueada correctamente!', classes: 'rounded'});
-            $('.preloader-background').css({'display': 'none'});                            
-			setTimeout(() => {
-			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
-            }, 1000);
-		}).catch(error => console.log(error));
-		
-
-	}
 	
-	function insertarFechaHora (){
-		let url = '<?= base_url() ?>api/execsp';
-		let sp = 'PERSONA_BLOQUEO_UPD';				
-		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		
-		
-		let motivo = document.getElementById('motivo').value;
-		let usuario = <?= $session->USUARI_N_ID ?>;
-		data = {sp, empresa, persona, item, motivo, usuario};
-
-		fetch(url, {
-                    method: 'POST', // or 'PUT'
-                    body: JSON.stringify(data), // data can be `string` or {object}!
-                    headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) 
-        {
-			M.toast({html: 'Persona desbloqueada correctamente!', classes: 'rounded'});
-            $('.preloader-background').css({'display': 'none'});                            
-			setTimeout(() => {
-			    window.location.href= "<?= base_url() ?>bloqueos?n=" + data[0].PERSON_C_DOCUMENTO;                
-            }, 1000);
-		}).catch(error => console.log(error));
-
-		
-	}
-
 	function confirmarIngreso($id)
 	{
 		console.log('confirmar ingreso')
@@ -450,15 +261,10 @@
 		$('#botonConfirmarSalida').attr('href', 'salida/'+$id+'/confirmar_salida')
 	}
 
-	
-
 	function eliminar($id)
 	{
 		console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
-        $('#btnConfirmar').attr('href', 'ingreso/'+$id+'/eliminar')
-		
+        $('#btnConfirmar').attr('href', 'ingreso/'+$id+'/eliminar')		
 	}
-
-
 </script>
