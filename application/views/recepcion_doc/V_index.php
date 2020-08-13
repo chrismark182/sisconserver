@@ -285,12 +285,11 @@
 		});
 	}
 
-	function eliminar($id)
+	function  eliminar($id)
 	{
 		console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'recepcion_doc/'+$id+'/eliminar')
-		
 	}
 	
 </script>
