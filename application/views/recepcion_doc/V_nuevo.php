@@ -3,7 +3,7 @@
     <div class="nav-wrapper">
       <div class="col s12">
         <a href="#!" class="breadcrumb">Visitantes</a>
-        <a href="<?= base_url() ?>ingreso" class="breadcrumb">Ingreso</a>
+        <a href="<?= base_url() ?>recepcion_doc" class="breadcrumb">Recepción de Documentos</a>
         <a href="#!" class="breadcrumb">Nuevo</a>
       </div>
     </div>

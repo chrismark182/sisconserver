@@ -5,7 +5,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Recepción de documentos</a>
+            <a href="#!" class="breadcrumb">Recepción de Documentos</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -21,47 +21,44 @@
         </ul>
     </div>
 </nav>
+
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
 			<div class="input-field col s12 m6 l4">
+                <input id="empresa_de" maxlength="200" type="text">
+                <label class="active" for="empresa_de">Empresa De</label> 
+            </div>
+			<div class="input-field col s12 m6 l4">
+                <input id="nombre_de" maxlength="200" type="text">
+                <label class="active" for="nombre_de">Nombre De</label> 
+            </div>
+			<div class="input-field col s12 m6 l4">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
+            </div>
+
+			<div class="input-field col s12 m6 l4">
+                <input id="empresa_para" maxlength="200" type="text">
+                <label class="active" for="empresa_de">Empresa Para</label> 
+            </div>
+			<div class="input-field col s12 m6 l4">
+                <input id="contacto_recibe" maxlength="200" type="text">
+                <label class="active" for="contacto_recibe">Contacto Para</label> 
             </div>
             <div class="input-field col s12 m6 l4">
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
-                <input id="empresa_de" maxlength="200" type="text">
-                <label class="active" for="empresa_de">Empresa de</label> 
-            </div>
-			<div class="input-field col s12 m6 l4">
-                <input id="empresa_para" maxlength="200" type="text">
-                <label class="active" for="empresa_de">Empresa para</label> 
-            </div>
-
-			<div class="input-field col s12 m6 l4">
-                <input id="nombre_de" maxlength="200" type="text">
-                <label class="active" for="nombre_de">Nombre de</label> 
-            </div>
-
-			<div class="input-field col s12 m6 l4">
-                <input id="contacto_recibe" maxlength="200" type="text">
-                <label class="active" for="contacto_recibe">Contacto que recibe</label> 
-            </div>
 			
 			<div class="input-field col s12 m6 l4">
                 <input id="numero_doc_recibido" maxlength="200" type="text">
-                <label class="active" for="numero_doc_recibido">NUmero Documento recibido</label> 
+                <label class="active" for="numero_doc_recibido">Número Documento Recibido</label> 
             </div>
-
 			<div class="input-field col s12 m6 l4">
                 <input id="situacion" maxlength="200" type="text">
-                <label class="active" for="situacion">Situacion</label> 
+                <label class="active" for="situacion">Situación</label> 
             </div>
-			
-
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
             </div>
@@ -73,16 +70,16 @@
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
-                <th class="left-align">ID </th>
-                <th class="left-align">Fecha de recepción</th>
-                <th class="left-align">Empresa De</th>
-				<th class="left-align">Empresa Para</th>
-				<th class="left-align">Tipo de documento</th>
-				<th class="left-align">Número documento</th>
-				<th class="center-align">Escaneo Adjunto</th>
-				<th class="left-align">Fecha Vencimiento</th>
-				<th class="left-align">Situacion</th>
-				<th class="left-align">Eliminar</th>          
+                <th class="center-align">ID </th>
+                <th class="center-align">RECEPCIÓN</th>
+                <th class="left-align">DE</th>
+				<th class="left-align">PARA</th>
+				<th class="left-align">DOCUMENTO</th>
+				<th class="left-align">NÚMERO</th>
+				<th class="center-align">VER ADJUNTO</th>
+				<th class="center-align">VENCIMIENTO</th>
+				<th class="center-align">SITUACION</th>
+				<th class="center-align">ELIMINAR</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -140,10 +137,10 @@
 			M.updateTextFields();
 			buscar()
 		}
-		buscar()
 	});
-	function buscar(){
 
+	function buscar(){
+		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
 		$('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 
@@ -208,12 +205,16 @@
 			
 			if(data.length > 0)
 			{
+				M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
 					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
+					
+					$situacion = '';
 					if(element.MOVDOC_C_SITUACION == '1')
 					{
 						adjunto = `<a href="<?= base_url() ?>uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
+						$situacion = `<p style="color: #4690F5;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
 					}
 
 					if( element.MOVDOC_C_SITUACION  == '0' ||  element.MOVDOC_C_SITUACION  == '1'  ){
@@ -222,18 +223,32 @@
 					else{
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
 					}
+
+					if(element.MOVDOC_C_SITUACION == '0')
+					{
+						$situacion = `<p style="color: #EE9A08;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+					if(element.MOVDOC_C_SITUACION == '2')
+					{
+						$situacion = `<p style="color: #EE3324;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+					if(element.MOVDOC_C_SITUACION == '3')
+					{
+						$situacion = `<p style="color: #1EB635;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+
 					$('#resultados').append(`   		
 							<tr>
-								<td class="left-align">${element.MOVDOC_N_ID}</td>
-								<td class="left-align">${element.MOVDOC_C_FECHA_RECEPCION}</td>
+								<td class="center-align">${element.MOVDOC_N_ID}</td>
+								<td class="center-align">${element.MOVDOC_C_FECHA_RECEPCION}</td>
 								<td class="left-align">${element.RAZON_SOCIAL_DE}</td>
 								<td class="left-align">${element.RAZON_SOCIAL_PARA}</td>
 								<td class="left-align">${element.TIDORE_C_ABREVIATURA}</td>
 								<td class="left-align">${element.MOVDOC_C_NUMERO_DOCUMENTO}</td>
 								<td class="center-align">${adjunto}</td>
-								<td class="left-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
-								<td class="left-align">${element.MOVDOC_C_SITUACION}</td>
-								<td class="left-align">${$eliminar} </td> 
+								<td class="center-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
+								<td class="center-align">${$situacion}</td>
+								<td class="center-align">${$eliminar} </td> 
 							</tr>
 					`);
 				}
@@ -250,11 +265,13 @@
 		document.getElementById('id_movimiento').value = id;
 		$('#modalUpload').modal('open');
 	}
+
 	async function validarUpload()
 	{
 		await uploadFile('archivo')
 		update();
 	}
+
 	function update()
 	{		
 		console.log('actualizando registro')
@@ -290,8 +307,6 @@
 		console.log('confirmar eliminar')
         $('#modalEliminar').modal('open');
         $('#btnConfirmar').attr('href', 'recepcion_doc/'+$id+'/eliminar')
-		
 	}
-	
 </script>
 
