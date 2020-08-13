@@ -80,6 +80,11 @@ $route['navasoft_servicios'] = 'C_navasoft_servicios';
 $route['navasoft_servicios/buscar'] = 'C_navasoft_servicios/buscar';
 $route['navasoft_servicios/generar_dbf'] = 'C_navasoft_servicios/generar_dbf';
 
+//Traslado Navasoft - Alquiler
+$route['navasoft_alquiler'] = 'C_navasoft_alquiler';
+$route['navasoft_alquiler/buscar'] = 'C_navasoft_alquiler/buscar';
+$route['navasoft_alquiler/generar_dbf'] = 'C_navasoft_alquiler/generar_dbf';
+
 //Clientes
 $route['clientes'] = 'C_cliente';
 $route['cliente/nuevo'] = 'C_cliente/nuevo';
