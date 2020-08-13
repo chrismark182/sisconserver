@@ -143,6 +143,15 @@ class C_recepcion_doc extends CI_Controller {
         require_once(APPPATH.'views/acuerdo/reporte/index.php');
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
+	}
+	
+	public function eliminarRecepcion($id)
+    {
+       $sql = "Exec RECEPCION_DOCUMENTOS_DEL {$id}";        
+
+        $this->M_crud->sql($sql);      
+        $this->session->set_flashdata('message','Datos eliminados correctamente');
+        redirect('recepcion_doc', 'refresh');       
     }
 }
 

@@ -81,7 +81,8 @@
 				<th class="left-align">Número documento</th>
 				<th class="center-align">Escaneo Adjunto</th>
 				<th class="left-align">Fecha Vencimiento</th>
-				<th class="left-align">Situacion</th>          
+				<th class="left-align">Situacion</th>
+				<th class="left-align">Eliminar</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -114,6 +115,21 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="validarUpload()">Aceptar</a>
     </div>
 </div> 
+
+
+<div id="modalEliminar" class="modal">
+    <div class="modal-content">
+        <h4>Eliminar</h4>
+        <p>¿Está seguro que desea elimniar el registro?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+
+
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -199,6 +215,13 @@
 					{
 						adjunto = `<a href="<?= base_url() ?>uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
 					}
+
+					if( element.MOVDOC_C_SITUACION  == '0' ||  element.MOVDOC_C_SITUACION  == '1'  ){
+						$eliminar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="eliminar(${element.MOVDOC_N_ID})">delete</span>`;
+					}
+					else{
+						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
+					}
 					$('#resultados').append(`   		
 							<tr>
 								<td class="left-align">${element.MOVDOC_N_ID}</td>
@@ -210,7 +233,7 @@
 								<td class="center-align">${adjunto}</td>
 								<td class="left-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
 								<td class="left-align">${element.MOVDOC_C_SITUACION}</td>
-								
+								<td class="left-align">${$eliminar} </td> 
 							</tr>
 					`);
 				}
@@ -260,6 +283,14 @@
 
 			$('.preloader-background').css({'display': 'none'});                            
 		});
+	}
+
+	function eliminar($id)
+	{
+		console.log('confirmar eliminar')
+        $('#modalEliminar').modal('open');
+        $('#btnConfirmar').attr('href', 'recepcion_doc/'+$id+'/eliminar')
+		
 	}
 	
 </script>
