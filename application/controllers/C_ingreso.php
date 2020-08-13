@@ -139,10 +139,10 @@ class C_ingreso extends CI_Controller {
 
     public function reporte($id)
     {
-        $sql= "Exec ALQUILER_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
+        $sql= "Exec MOVIMIENTO_PERSONA_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
         $result = $this->M_crud->sql($sql);
         ob_start();        
-        require_once(APPPATH.'views/acuerdo/reporte/index.php');
+        require_once(APPPATH.'views/ingreso/reporte/index.php');
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
 	}
