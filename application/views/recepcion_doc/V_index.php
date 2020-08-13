@@ -40,7 +40,28 @@
                 <input id="empresa_para" maxlength="200" type="text">
                 <label class="active" for="empresa_de">Empresa para</label> 
             </div>
+
+			<div class="input-field col s12 m6 l4">
+                <input id="nombre_de" maxlength="200" type="text">
+                <label class="active" for="nombre_de">Nombre de</label> 
+            </div>
+
+			<div class="input-field col s12 m6 l4">
+                <input id="contacto_recibe" maxlength="200" type="text">
+                <label class="active" for="contacto_recibe">Contacto que recibe</label> 
+            </div>
 			
+			<div class="input-field col s12 m6 l4">
+                <input id="numero_doc_recibido" maxlength="200" type="text">
+                <label class="active" for="numero_doc_recibido">NUmero Documento recibido</label> 
+            </div>
+
+			<div class="input-field col s12 m6 l4">
+                <input id="situacion" maxlength="200" type="text">
+                <label class="active" for="situacion">Situacion</label> 
+            </div>
+			
+
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
             </div>
@@ -59,7 +80,8 @@
 				<th class="left-align">Tipo de documento</th>
 				<th class="left-align">Número documento</th>
 				<th class="center-align">Escaneo Adjunto</th>
-				<th class="left-align">Fecha Vencimiento</th>          
+				<th class="left-align">Fecha Vencimiento</th>
+				<th class="left-align">Situacion</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -113,12 +135,14 @@
 		
 		let fecha_desde = $('#desde').val();
 			fecha_desde = fecha_desde.split('/');
-		let desde = fecha_desde[2] + fecha_desde[1] + fecha_desde[0];
+		let desde = fecha_desde[2] + fecha_desde[1] + fecha_desde[0] ;
+		console.log(fecha_desde[0]);
 		
 		let fecha_hasta = $('#hasta').val();
 			fecha_hasta = fecha_hasta.split('/');
 		let hasta = fecha_hasta[2] + fecha_hasta[1] + fecha_hasta[0];
 
+		console.log(desde);
 		let empresa_de = '%';
 		if(document.getElementById('empresa_de').value != ''){
 			empresa_de = document.getElementById('empresa_de').value + '%';
@@ -127,7 +151,29 @@
 		if(document.getElementById('empresa_para').value != ''){
 			empresa_para = document.getElementById('empresa_para').value + '%';
 		}
-		let data = {sp, desde, hasta, empresa_de, empresa_para};
+
+		let nombre_de = '%';
+		if(document.getElementById('nombre_de').value != ''){
+			nombre_de = '%' + document.getElementById('nombre_de').value + '%';
+		}
+
+		let contacto_recibe = '%';
+		if(document.getElementById('contacto_recibe').value != ''){
+			contacto_recibe = '%' + document.getElementById('contacto_recibe').value + '%';
+		}
+
+		let numero_doc_recibido = '%';
+		if(document.getElementById('numero_doc_recibido').value != ''){
+			numero_doc_recibido = '%' + document.getElementById('numero_doc_recibido').value + '%';
+		}
+
+		let situacion = '%';
+		if(document.getElementById('situacion').value != ''){
+			situacion = document.getElementById('situacion').value ;
+		}
+		
+		
+		let data = {sp, desde, hasta, empresa_de, empresa_para, nombre_de , contacto_recibe, numero_doc_recibido,situacion};
         
         $('#resultados').html('');
         fetch(url, {
@@ -163,6 +209,8 @@
 								<td class="left-align">${element.MOVDOC_C_NUMERO_DOCUMENTO}</td>
 								<td class="center-align">${adjunto}</td>
 								<td class="left-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
+								<td class="left-align">${element.MOVDOC_C_SITUACION}</td>
+								
 							</tr>
 					`);
 				}
