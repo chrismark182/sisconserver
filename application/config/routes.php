@@ -178,6 +178,9 @@ $route['ind_ser_mes'] = function (){return 'C_ind_ser_mes'; };
 $route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente'; };
 $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
 
+$route['ind_vis_cliente'] = function (){return 'C_visitas_indicadores/cliente'; };
+
+
 //bloqueo
 
 $route['bloqueos'] = 'C_bloqueo';
