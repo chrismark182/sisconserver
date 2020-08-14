@@ -168,22 +168,18 @@
 				return response.json();
 			})
 			.then(function(data){
+				$('#contacto').html(`<option value="" disabled selected>Elige una opción</option>`)
 				if(data.length > 0 ){
 					console.log(data)	
 					M.toast({html: 'Datos encontrados', classes: 'rounded'});
-					$('#contacto').html(`<option value="" disabled selected>Elije una opción</option>`)
 					for (let index = 0; index < data.length; index++) {
-						const element = data[index];
-				
-								$('#contacto').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}  </option>`);
-
+						const element = data[index];				
+						$('#contacto').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}</option>`);
 					}
-					$('select').formSelect();		
 				}else{
 					M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
-					location.reload();
 				}
-
+				$('select').formSelect();		
 				$('.preloader-background').css({'display': 'none'});                            
 			});	
     }	

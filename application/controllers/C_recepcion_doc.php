@@ -38,103 +38,7 @@ class C_recepcion_doc extends CI_Controller {
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('recepcion_doc/V_nuevo', $this->data);        
     }
-
-    //Procesos
-    public function buscar()
-    {
-	    $data = json_decode(file_get_contents('php://input'), true);
-        $sql= "Exec ALQUILER_LIS {$data['empresa']}, {$data['acuerdo']}, '{$data['cliente']}', '{$data['sede']}', '{$data['fecha_desde']}', '{$data['fecha_hasta']}'";
-        $query = $this->M_crud->sql($sql);
-        echo json_encode($query, true);
-    }
-
-    public function editar($empresa,$cliente)
-    {  
-        $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
-                                    .$cliente ;
-        
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $clientes = $this->M_crud->sql($sql);
-        $this->data['cliente'] = $clientes[0];
-       
-        $this->load->view('cliente/V_editar',$this->data);
-    }
-
-    public function crear()
-    {
-        $facturable = '0';
-        if($this->input->post('facturable') == 'on'):
-            $facturable = '1';
-        endif;
-        $sql = "Exec ALQUILER_INS   {$this->data['empresa']->EMPRES_N_ID}, 
-                                    {$this->input->post('sede')}, 
-                                    {$this->input->post('ubicacion')},
-                                    {$this->input->post('cliente')}, 
-                                    '{$facturable}',
-                                    '{$this->input->post('fecha_inicio')}', 
-                                    '{$this->input->post('fecha_termino')}', 
-                                    {$this->input->post('area')}, 
-                                    '{$this->input->post('observaciones')}', 
-                                    {$this->input->post('moneda')}, 
-                                    {$this->input->post('precio')}, 
-                                    {$this->data['session']->USUARI_N_ID}";
-        $id = $this->M_crud->sql($sql);
-        $url = 'acuerdos?aca=' . $id[0]->ALQUIL_N_ID; 
-        redirect($url,'refresh');   
-    }
-
-    public function actualizar($empresa,$cliente)
-    {
-        $sql = "Exec CLIENTE_UPD "      . $empresa. ","
-                                        . $cliente. ",'" 
-                                        . $this->input->post('t_documento')."','"
-                                        . $this->input->post('ndocumento') . "','" 
-                                        . $this->input->post('razon_social') ."','"
-                                        . $this->input->post('direccion')."','"
-                                        . $esclient . "','"
-                                        . $esproveedor . "','"
-                                        . $estransportista . "','"
-                                        . $ordencompra . "',"
-                                        .$this->data['session']->USUARI_N_ID ; 
-        
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        $url = 'clientes?n=' . $this->input->post('ndocumento');
-        redirect($url, 'refresh');     
-    }
-
-    public function eliminar($empresa,$acuerdo)
-    {
-        $sql = "Exec ALQUILER_DEL "     . $empresa .","
-                                        . $acuerdo; 
-                                      /*   .","
-                                        .$this->data['session']->USUARI_N_ID ;  */
-                                        
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('acuerdos', 'refresh');       
-    }  
-
-    public function eliminar_periodo($empresa,$acuerdo, $periodo)
-    {
-        $sql = "Exec ALQUILER_DETALLE_DEL {$empresa}, {$acuerdo}, {$periodo}, {$this->data['session']->USUARI_N_ID}";                                         
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos eliminados correctamente');
-        redirect('acuerdos', 'refresh');       
-    }  
-
-    public function cerrar($empresa,$acuerdo)
-    {
-        $sql = "Exec ALQUILER_CERRAR "  . $empresa .","
-                                        . $acuerdo .","
-                                        .$this->data['session']->USUARI_N_ID ;  
-                                        
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Acuerdo cerrado correctamente');
-        $url = 'acuerdos?aca=' . $acuerdo;
-        redirect($url, 'refresh');       
-    }  
-
+   
     public function reporte($id)
     {
         $sql= "Exec ALQUILER_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
@@ -145,9 +49,9 @@ class C_recepcion_doc extends CI_Controller {
         $this->pdfgenerator->generate($html, "reporte.pdf");
 	}
 	
-	public function eliminar_recepcion_doc($id)
+	public function eliminar($id)
     {
-       $sql = "Exec RECEPCION_DOCUMENTOS_DEL { $empresa ,$this->data['session']->USUARI_N_ID,$id}";        
+        $sql = "Exec MOVIMIENTO_DOCUMENTO_DEL {$this->data['empresa']->EMPRES_N_ID},{$id},{$this->data['session']->USUARI_N_ID}";    
 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');

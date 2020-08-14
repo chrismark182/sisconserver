@@ -213,7 +213,7 @@
 					$situacion = '';
 					if(element.MOVDOC_C_SITUACION == '1')
 					{
-						adjunto = `<a href="<?= base_url() ?>uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
+						adjunto = `<a href="uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
 						$situacion = `<p style="color: #4690F5;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
 					}
 

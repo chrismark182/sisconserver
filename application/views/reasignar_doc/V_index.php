@@ -22,7 +22,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="section container">
     <table class="striped" style="font-size: 12px;">
         <thead class="blue-grey darken-1" style="color: white">
             <tr>          
@@ -30,6 +30,7 @@
                 <th class="center-align">RECEPCIÓN</th>
                 <th class="left-align">DE</th>
 				<th class="left-align">PARA</th>
+				<th class="left-align">CONTACTO PARA</th>
 				<th class="left-align">DOCUMENTO</th>
 				<th class="left-align">NÚMERO</th>
 				<th class="center-align">VER ADJUNTO</th>
@@ -41,8 +42,6 @@
         </tbody>
     </table>
 </div>
-<a class="btn-floating btn-large waves-effect waves-light red" style="bottom:16px; right:16px; position:fixed;" href="recepcion_doc/nuevo"><i class="material-icons">add</i></a>
-
 
 <!-- Modal Structure -->
 
@@ -76,10 +75,10 @@
 
 		<input id="documento_id" type="hidden"/>
 			<div class="input-field col s12">
-				<select id="empresa_para" required>
+				<select id="empresa_para" onchange="buscarContactoCliente()">
 					<option value="0" disabled selected >Elige una opción</option>
 					<?php foreach ($clientes as $row): ?>
-						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL ?> </option>
+						<option value="<?= $row->CLIENT_N_ID ?>"> <?= $row->CLIENT_C_RAZON_SOCIAL ?> </option>
 					<?php endforeach; ?>
 				</select>
 				<label>Empresa Para</label>
@@ -87,9 +86,6 @@
 			<div class="input-field col s12">
 				<select id="contacto_para" required>
 					<option value="0" disabled selected >Elige una opción</option>
-					<?php foreach ($contacto_para as $row): ?>
-						<option value="<?= $row->CLICON_N_ID?>"> <?= $row->CLICON_C_NOMBRE ?> </option>
-					<?php endforeach; ?>
 				</select>
 				<label>Contacto Para</label>
 			</div>
@@ -101,13 +97,7 @@
 </div>
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		let n = getParameterByName('n');
-		if(n != '')
-		{
-			document.getElementById('n_documento').value = n;
-			M.updateTextFields();
-			buscar()
-		}
+	    buscar()
 	});
 
 	function buscar(){
@@ -150,6 +140,7 @@
 								<td class="center-align">${element.MOVDOC_C_FECHA_RECEPCION}</td>
 								<td class="left-align">${element.RAZON_SOCIAL_DE}</td>
 								<td class="left-align">${element.RAZON_SOCIAL_PARA}</td>
+								<td class="left-align">${element.CLICON_C_NOMBRE}</td>
 								<td class="left-align">${element.TIDORE_C_ABREVIATURA}</td>
 								<td class="left-align">${element.MOVDOC_C_NUMERO_DOCUMENTO}</td>
 								<td class="center-align">${adjunto}</td>
@@ -165,15 +156,9 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
 	}
-
-	buscar();
-	
-
     function reasignaDoc(){
-		alert("Cambiare el destinatario del doc");
-		
-		let url = '<?= base_url() ?>api/execsp';
-		
+	
+		let url = '<?= base_url() ?>api/execsp';		
 		let sp = 'REASIGNAR_DOCUMENTO';
 		
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -194,7 +179,9 @@
                     })
         .then(function(response) {
             return response.json();
-		})
+		}).then(function(data){
+			buscar();                        
+		});	
 
 	}
 
@@ -252,6 +239,48 @@
 		console.log('reasignar documento');
         $('#modalReasignarDoc').modal('open');
 	}
+	function buscarContactoCliente()
+    {
+		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
 
+		let url = '<?= base_url() ?>api/execsp';
+		let sp = "CONTACTO_LIS";
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		let cliente = parseInt(document.getElementById("empresa_para").value);
+		let contacto = 0;
+		let razon_social = '%';
+		let ndocumento = '%';
+		let nombres = '%';
+		let apellidos = '%';
+
+		data = {sp, empresa, cliente, contacto, razon_social, ndocumento, nombres, apellidos};
+		
+		fetch(url, {
+
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(function(response){
+				return response.json();
+			})
+			.then(function(data){
+				$('#contacto_para').html(`<option value="" disabled selected>Elige una opción</option>`)
+				if(data.length > 0 ){
+					console.log(data)	
+					M.toast({html: 'Datos encontrados', classes: 'rounded'});
+					for (let index = 0; index < data.length; index++) {
+						const element = data[index];				
+						$('#contacto_para').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}</option>`);
+					}
+				}else{
+					M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+				}
+				$('select').formSelect();		
+				$('.preloader-background').css({'display': 'none'});                            
+			});	
+    }	
 </script>
 

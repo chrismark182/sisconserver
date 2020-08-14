@@ -212,7 +212,7 @@ $route['personas/(:num)/eliminar'] = function ($id){return 'C_persona/eliminar/'
 //Recepción de documentos
 $route['recepcion_doc'] = 'C_recepcion_doc';
 $route['recepcion_doc/nuevo'] = 'C_recepcion_doc/nuevo';
-$route['recepcion_doc/(:num)/eliminar'] = function ($id){return 'C_recepcion_doc/eliminar_recepcion_doc/'.$id;};
+$route['recepcion_doc/(:num)/eliminar'] = function ($id){return 'C_recepcion_doc/eliminar/'.$id;};
 
 
 //Revision de documentos
