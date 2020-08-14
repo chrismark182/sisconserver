@@ -72,21 +72,28 @@
 <div id="modalReasignarDoc" class="modal">
     <div class="modal-content">
         <h4>Reasignar Documento</h4>
+		<div class="row">
 
-
-		<select id="tipo_documento" required>
-			<option value="0">Empresa Para</option>
-			<?php foreach ($empresa_para as $row): ?>
-				<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL ?> </option>
-			<?php endforeach; ?>
-        </select>
-
-		<select id="tipo_documento" required>
-			<option value="0">Contacto Para</option>
-			<?php foreach ($contacto_para as $row): ?>
-				<option value="<?= $row->CLICON_N_ID?>"> <?= $row->CLICON_C_NOMBRE ?> </option>
-			<?php endforeach; ?>
-        </select>
+		<input id="documento_id" type="hidden"/>
+			<div class="input-field col s12">
+				<select id="empresa_para" required>
+					<option value="0" disabled selected >Elige una opción</option>
+					<?php foreach ($clientes as $row): ?>
+						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL ?> </option>
+					<?php endforeach; ?>
+				</select>
+				<label>Empresa Para</label>
+			</div>
+			<div class="input-field col s12">
+				<select id="contacto_para" required>
+					<option value="0" disabled selected >Elige una opción</option>
+					<?php foreach ($contacto_para as $row): ?>
+						<option value="<?= $row->CLICON_N_ID?>"> <?= $row->CLICON_C_NOMBRE ?> </option>
+					<?php endforeach; ?>
+				</select>
+				<label>Contacto Para</label>
+			</div>
+		</div>
     </div>
     <div class="modal-footer">
         <a id="btnConfirmar" href="#!" onclick="reasignaDoc()" class="modal-close waves-effect waves-green btn">MODIFICAR</a>
@@ -135,7 +142,7 @@
 					const element = data[index]; 
 					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
 					
-					$situacion = `<p style="color: #1EB635;" onclick="reasignarDoc()"><i class="material-icons" style="cursor: pointer">content_paste</i></p>`;
+					$situacion = `<p style="color: #1EB635;" onclick="modalReasignar(${element.MOVDOC_N_ID})"><i class="material-icons" style="cursor: pointer">content_paste</i></p>`;
 
 					$('#resultados').append(`   		
 							<tr>
@@ -160,18 +167,22 @@
 	}
 
 	buscar();
+	
 
     function reasignaDoc(){
 		alert("Cambiare el destinatario del doc");
-		let empresa_para = document.getElementById('empresa_para').value;
-		let contacto_recibe = document.getElementById('contacto_recibe').value;
-
+		
 		let url = '<?= base_url() ?>api/execsp';
+		
+		let sp = 'REASIGNAR_DOCUMENTO';
+		
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		let documento_id = document.getElementById("documento_id").value;
+		let empresa_para = document.getElementById('empresa_para').value;
+		let contacto_para = document.getElementById('contacto_para').value;
+		let usuario = <?= $session->USUARI_N_ID ?>;
 
-		let sp = 'ASIGNAR_DOC_UPD';
-		
-		
-		let data = {sp, empresa_para, contacto_recibe};
+		let data = {sp,empresa,documento_id,empresa_para, contacto_para,usuario};
         
         $('#resultados').html('');
         fetch(url, {
@@ -236,8 +247,9 @@
         $('#btnConfirmar').attr('href', 'recepcion_doc/'+$id+'/eliminar')
 	}
 
-	function reasignarDoc(){
-		console.log('reasignar documento')
+	function modalReasignar($id){
+		document.getElementById('documento_id').value = $id
+		console.log('reasignar documento');
         $('#modalReasignarDoc').modal('open');
 	}
 

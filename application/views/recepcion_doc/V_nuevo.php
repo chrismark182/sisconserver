@@ -99,11 +99,9 @@
         var elems = document.querySelectorAll('.timepicker');
         var instances = M.Timepicker.init(elems, options);
 	});
-
 	function buscar()
     {
 		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
-
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = "VISITANTE_NUEVO_LIS";
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
@@ -111,9 +109,7 @@
 		let documento = document.getElementById("documento").value;
 
 		data = {sp, empresa, tipo_doc, documento};
-		
 		fetch(url, {
-
 			method: "POST",
 			body: JSON.stringify(data),
 			headers: {
@@ -178,11 +174,14 @@
 					$('#contacto').html(`<option value="" disabled selected>Elije una opción</option>`)
 					for (let index = 0; index < data.length; index++) {
 						const element = data[index];
-						$('#contacto').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}</option>`);
+				
+								$('#contacto').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}  </option>`);
+
 					}
 					$('select').formSelect();		
 				}else{
 					M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+					location.reload();
 				}
 
 				$('.preloader-background').css({'display': 'none'});                            
