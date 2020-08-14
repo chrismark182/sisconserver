@@ -220,3 +220,5 @@ $route['revision_doc'] = 'C_revision_doc';
 $route['revision_doc/(:num)/aceptar'] = function ($id){return 'C_revision_doc/aceptar/'.$id;};
 $route['revision_doc/(:num)/rechazar'] = function ($id){return 'C_revision_doc/rechazar/'.$id;};
 
+//Reasignacion documento
+$route['reasignar_doc'] = 'C_reasignar_doc';
