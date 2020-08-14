@@ -27,7 +27,8 @@ class C_reasignar_doc extends CI_Controller {
 	public function index() 
 	{   
 		$empresa_para = "SELECT * FROM CLIENTE";
-		$this->data['empresa_para'] = $this->M_crud->sql($contacto_para);
+		$this->data['empresa_para'] = $this->M_crud->sql($empresa_para);
+
 		$contacto_para = "SELECT * FROM CLIENTE_CONTACTO";
 		$this->data['contacto_para'] = $this->M_crud->sql($contacto_para);
 		$this->load->view('reasignar_doc/V_index', $this->data);
