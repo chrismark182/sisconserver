@@ -214,29 +214,33 @@
         let usuario = <?= $this->data['session']->USUARI_N_ID ?>
 
 		let data = {sp, empresa, cliente_de, nombre_de, cliente_para, contacto, tipo_doc, nro_documento, nameFile, observaciones, situacion, usuario};
-		
-		fetch(url, {
-			method: "POST",
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		.then(function(response){
-			return response.json();
-		})
-		.then(function(data){
-			if(data.length > 0 ){
-				console.log(data);
-				setTimeout(() => {
-					window.location.href= "<?= base_url() ?>recepcion_doc?id=" + data[0].ID;                
-				}, 1000);
-			}else{
-				M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
-			}
-
-			$('.preloader-background').css({'display': 'none'});                            
-		});	
+		if(contacto != 0)
+		{
+			fetch(url, {
+				method: "POST",
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(function(response){
+				return response.json();
+			})
+			.then(function(data){
+				if(data.length > 0 ){
+					console.log(data);
+					setTimeout(() => {
+						window.location.href= "<?= base_url() ?>recepcion_doc?id=" + data[0].ID;                
+					}, 1000);
+				}else{
+					M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+				}
+	
+				$('.preloader-background').css({'display': 'none'});                            
+			});	
+		}else{
+			M.toast({html: 'Debe llenar todos los campos', classes: 'rounded'});
+		}
 	}	
 	
 	function mostrarHoraActual()

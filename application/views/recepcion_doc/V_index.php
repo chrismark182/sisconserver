@@ -26,6 +26,10 @@
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
 			<div class="input-field col s12 m6 l4">
+                <input id="id" maxlength="20" type="text" name="id"  class="validate">
+                <label class="active" for="id">ID</label> 
+            </div>
+			<div class="input-field col s12 m6 l4">
                 <input id="empresa_de" maxlength="200" type="text">
                 <label class="active" for="empresa_de">Empresa De</label> 
             </div>
@@ -56,8 +60,14 @@
                 <label class="active" for="numero_doc_recibido">Número Documento Recibido</label> 
             </div>
 			<div class="input-field col s12 m6 l4">
-                <input id="situacion" maxlength="200" type="text">
-                <label class="active" for="situacion">Situación</label> 
+				<select id="situacion">
+					<option value="-1" selected>Todos</option>
+					<option value="0">Pendiente</option>
+					<option value="1">Para revisión</option>
+					<option value="2">Rechazado</option>
+					<option value="3">Aceptado</option>
+				</select>
+                <label>Situación</label> 
             </div>
             <div class="input-field col s4">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
@@ -130,10 +140,10 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		let n = getParameterByName('n');
+		let n = getParameterByName('id');
 		if(n != '')
 		{
-			document.getElementById('n_documento').value = n;
+			document.getElementById('id').value = n;
 			M.updateTextFields();
 			buscar()
 		}
@@ -145,6 +155,11 @@
 		let url = '<?= base_url() ?>api/execsp';
 
 		let sp = 'MOVIMIENTO_DOCUMENTO_LIS';
+		let empresa = <?= $empresa->EMPRES_N_ID ?>;
+		let id = 0;
+		if(document.getElementById('id').value != ''){
+			id =  parseInt(document.getElementById('id').value );
+		}
 		
 		let fecha_desde = $('#desde').val();
 			fecha_desde = fecha_desde.split('/');
@@ -180,13 +195,9 @@
 			numero_doc_recibido = '%' + document.getElementById('numero_doc_recibido').value + '%';
 		}
 
-		let situacion = '%';
-		if(document.getElementById('situacion').value != ''){
-			situacion = document.getElementById('situacion').value ;
-		}
-		
-		
-		let data = {sp, desde, hasta, empresa_de, empresa_para, nombre_de , contacto_recibe, numero_doc_recibido,situacion};
+		let situacion = document.getElementById('situacion').value;
+				
+		let data = {sp,empresa, id, desde, hasta, empresa_de, empresa_para, nombre_de , contacto_recibe, numero_doc_recibido,situacion};
         
         $('#resultados').html('');
         fetch(url, {

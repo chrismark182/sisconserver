@@ -133,7 +133,7 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		let n = getParameterByName('n');
+		let n = getParameterByName('id');
 		if(n != '')
 		{
 			document.getElementById('id').value = n;
@@ -206,7 +206,7 @@
 						$eliminar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="eliminar(${element.MOVPER_N_ID})">delete</span>`;	
 						if(element.HORA_INGRESO == '')
 						{
-							ingreso = `<span style="color:#039be5" onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">directions_walk</span>`;
+							ingreso = `<span style="cursor:pointer;; color:#039be5" onclick="confirmarIngreso(${element.MOVPER_N_ID})"  style="cursor:pointer" class="material-icons">directions_walk</span>`;
 						}
 					}else if( element.MOVPER_C_SITUACION  == '1'){
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
