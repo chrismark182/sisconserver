@@ -41,7 +41,7 @@ class C_recepcion_doc extends CI_Controller {
 	}
 	public function editar($id)
 	{
-		echo $id;
+		$this->data["id"] = $id;
 		$this->data['list_movimiento_edit'] = $this->M_crud->sql("Exec MOVIMIENTO_DOCUMENTO_EDIT_LIS  {$this->data['empresa']->EMPRES_N_ID},{$id}");
 		$this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");

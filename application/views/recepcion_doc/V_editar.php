@@ -10,7 +10,7 @@
 </nav>
 <div class="section container">
 
-	<input type="hidden" id="<? echo $id  ?>" />
+	<input type="hidden" id="id" value="<?php  print_r($id); ?>" />
 
 	<div class="row">
 		<?php foreach ($list_movimiento_edit as $row): ?>
@@ -85,20 +85,20 @@
 
 <script>
 
+
 	function actualizar()
     {
 		M.toast({html: 'Actualizando informacion...', classes: 'rounded'});
 		let url = '<?= base_url() ?>api/execsp';
 		let sp = "MOVIMIENTO_DOCUMENTO_EDIT_UPDATE";
-
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
-		let
+		let id  = parseInt(document.getElementById("id").value);
 		let tipo_doc = document.getElementById("tipo_doc").value;
 		let nro_documento = document.getElementById("nro_documento").value;
 		let vencimiento = document.getElementById("vencimiento").value;
 		let observaciones = document.getElementById("observaciones").value;
 
-		data = {sp,empresa ,tipo_doc, nro_documento, vencimiento, observaciones};
+		data = {sp,empresa,id,tipo_doc, nro_documento, vencimiento, observaciones};
 		fetch(url, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -143,20 +143,10 @@
 				return response.json();
 			})
 			.then(function(data){
-				$('#contacto').html(`<option value="" disabled selected>Elige una opción</option>`)
-				if(data.length > 0 ){
-					console.log(data)	
-					M.toast({html: 'Datos encontrados', classes: 'rounded'});
-					for (let index = 0; index < data.length; index++) {
-						const element = data[index];				
-						$('#contacto').append(`<option value="${element.CLICON_N_ID}">${element.CLICON_C_NOMBRE} ${element.CLICON_C_APELLIDOS}</option>`);
-					}
-				}else{
-					M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
-				}
-				$('select').formSelect();		
+				
+	
 				$('.preloader-background').css({'display': 'none'});                            
-			});	
+			});
     }	
     
 	function guardar()

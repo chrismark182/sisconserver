@@ -294,6 +294,7 @@
 								<td class="center-align">${$eliminar} </td>
 								<td class="center-align">${$editar}</td> 
 							</tr>
+							<
 					`);
 				}
 			}
