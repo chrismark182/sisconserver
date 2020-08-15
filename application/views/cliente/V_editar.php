@@ -21,7 +21,6 @@
                                 $selected='selected';
                             endif;
                             ?> 
-
                             <option value="<?= $tdocumento->TIPDOC_N_ID ?>" <?= $selected ?>><?= $tdocumento->TIPDOC_C_DESCRIPCION ?></option>
                         <?php endforeach; ?> 
                     <?php endif; ?>

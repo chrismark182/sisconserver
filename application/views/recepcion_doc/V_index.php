@@ -21,7 +21,6 @@
         </ul>
     </div>
 </nav>
-
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
@@ -89,7 +88,8 @@
 				<th class="center-align">VER ADJUNTO</th>
 				<th class="center-align">VENCIMIENTO</th>
 				<th class="center-align">SITUACION</th>
-				<th class="center-align">ELIMINAR</th>          
+				<th class="center-align">ELIMINAR</th>
+				<th class="center-align">EDITAR</th>          
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -122,8 +122,6 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="validarUpload()">Aceptar</a>
     </div>
 </div> 
-
-
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
         <h4>Eliminar</h4>
@@ -132,6 +130,32 @@
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
         <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    </div>
+</div>
+
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <h4>Editar</h4>
+		<div class="row">
+			<div class="input-field col s12 m6">
+				<select id="tipo_documento" required>
+					<option value="0">Todos</option>
+					<?php foreach ($misdoc as $row): ?>
+						<option value="<?= $row->TIPDOC_N_ID?>"> <?= $row->TIPDOC_C_ABREVIATURA ?> </option>
+					<?php endforeach; ?>
+				</select>
+				<label for="tipo_documento">Tipo de Documento</label>
+			</div>
+			<div class="input-field col s6">
+          		<input placeholder="Placeholder" id="first_name" type="text" class="validate">
+          		<label for="first_name">Numero Documento</label>
+        	</div>
+		</div>
+        <p>¿Está seguro que desea Editar el registro?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        <a id="botonConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
 
@@ -248,6 +272,14 @@
 						$situacion = `<p style="color: #1EB635;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
 					}
 
+
+					if(element.MOVDOC_C_SITUACION == '0'  || element.MOVDOC_C_SITUACION == '1')
+					{
+						$editar = `<a href="<?= base_url() ?>recepcion_doc/${element.MOVDOC_N_ID}/editar" style="color: #1EB635;"><i class="material-icons" style="cursor: pointer">edit</i></a> `;
+					}else{
+						$editar = `<p style="color: #1EB635;">  ${element.MOVDOC_C_SITUACION} </p>`;
+					}
+
 					$('#resultados').append(`   		
 							<tr>
 								<td class="center-align">${element.MOVDOC_N_ID}</td>
@@ -259,7 +291,8 @@
 								<td class="center-align">${adjunto}</td>
 								<td class="center-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
 								<td class="center-align">${$situacion}</td>
-								<td class="center-align">${$eliminar} </td> 
+								<td class="center-align">${$eliminar} </td>
+								<td class="center-align">${$editar}</td> 
 							</tr>
 					`);
 				}
@@ -312,7 +345,6 @@
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
-
 	function  eliminar($id)
 	{
 		console.log('confirmar eliminar')

@@ -26,11 +26,9 @@ class C_servicio extends CI_Controller {
 	}
 
 	public function index()
-	{
-        
+	{   
 		$sql = "Exec SERVICIO_LIS 0,0";
         $this->data['servicios'] = $this->M_crud->sql($sql);  
-
 		$this->load->view('servicio/V_index', $this->data);
 	}
 	public function nuevo(){
@@ -83,35 +81,33 @@ endif;
     public function actualizar($empresa,$servicio)
     {
 
-$requiereos='0';
-$afectoigv='0';
-if($this->input->post('requiereos')=='on'):
-$requiereos='1';
-endif;
-if($this->input->post('afectoigv')=='on'):
-    $afectoigv='1';
-endif;
-        if(trim($this->input->post('descripcion')) != ''):
-        $sql = "Exec SERVICIO_UPD "    . $empresa . ","
-                                        . $servicio . ",'" 
-                                        . $this->input->post('descripcion') . "','"
-                                        .$requiereos. "','" 
-                                        .$afectoigv. "',"
-                                        . $this->data['session']->USUARI_N_ID;
-                                        
-                    
-        $this->M_crud->sql($sql);      
-        $this->session->set_flashdata('message','Datos actualizados correctamente');
-        redirect('servicios', 'refresh'); 
-        
-        else:
+		$requiereos='0';
+		$afectoigv='0';
+		if($this->input->post('requiereos')=='on'):
+		$requiereos='1';
+		endif;
+		if($this->input->post('afectoigv')=='on'):
+			$afectoigv='1';
+		endif;
+		if(trim($this->input->post('descripcion')) != ''):
+		$sql = "Exec SERVICIO_UPD "    . $empresa . ","
+										. $servicio . ",'" 
+										. $this->input->post('descripcion') . "','"
+										.$requiereos. "','" 
+										.$afectoigv. "',"
+										. $this->data['session']->USUARI_N_ID;
+										
+					
+		$this->M_crud->sql($sql);      
+		$this->session->set_flashdata('message','Datos actualizados correctamente');
+		redirect('servicios', 'refresh'); 
+		
+		else:
+			$this->session->set_flashdata('message','No puede guardar en vacio');
+			header("Location: editar");
 
-            $this->session->set_flashdata('message','No puede guardar en vacio');
-            header("Location: editar");
-
-        endif;
-
-    }  
+		endif;
+	}  
     public function eliminar($empresa,$servicio)
     {
         $sql = "Exec SERVICIO_DEL "     . $empresa .","

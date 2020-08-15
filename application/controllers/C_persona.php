@@ -51,8 +51,7 @@ class C_Persona extends CI_Controller {
 		$sql = "Exec PERSONA_LIS2 "  .$empresa. ","
                                     .$persona ;
         $personas = $this->M_crud->sql($sql);
-        $this->data['personas'] = $personas[0];
-       
+        $this->data['personas'] = $personas[0];       
         $this->load->view('persona/V_editar',$this->data);
 	}
 	
