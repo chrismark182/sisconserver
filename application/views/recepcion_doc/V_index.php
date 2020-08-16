@@ -88,7 +88,8 @@
 				<th class="center-align">VER ADJUNTO</th>
 				<th class="center-align">VENCIMIENTO</th>
 				<th class="center-align">SITUACION</th>
-				<th class="center-align">ELIMINAR</th>
+				<th class="center-align">HISTORIAL</th>
+                <th class="center-align">ELIMINAR</th>
 				<th class="center-align">EDITAR</th>          
             </tr>
         </thead>
@@ -166,65 +167,14 @@
 		<table class="striped" style="font-size: 12px;">
 			<thead class="blue-grey darken-1" style="color: white">
 				<tr>          
-					<th class="center-align">EMPRESA ID </th>
-					<th class="center-align">MODOLO ID</th>
-					<th class="left-align">MOVDOC ID</th>
-					<th class="left-align">CLIENTE ID CONTACTO PARA</th>
-					<th class="left-align">CLIENTE ID PARA</th>
+					<th class="left-align">CLIENTE PARA</th>
+					<th class="left-align">CONTACTO</th>
 					<th class="left-align">SITUACION</th>
-					<th class="center-align">USUARIO UPD</th>
-					<th class="center-align">FECHA UPD</th>
-					<th class="center-align">RAZON SOCIAL</th>
-					<th class="center-align">CLIENTE CONTACTO NOMBRE</th>
-					<th class="center-align">MOVIMIENTO DOCUMENTO SITUACION</th>
-					<th class="center-align">NOMBRE DE</th>
-					<th class="center-align">FECHA ACTUALIZACION</th>          
+					<th class="left-align">USUARIO</th>
+					<th class="center-align">FECHA ACTUALIZACION</th>
 				</tr>
 			</thead>
-			<tbody id="resultados">   
-					<?php foreach ($historial as $row): ?>
-					<tr>
-						<td>
-							<?= $row->EMPRES_N_ID?>
-						</td>				
-						<td>
-							<?= $row->MODOLO_N_ID?>
-						</td>
-						<td>
-							<?= $row->MOVDOC_N_ID?>
-						</td>
-						<td>
-							<?= $row->CLICON_N_ID_PARA?>
-						</td>
-						<td>
-							<?= $row->CLIENT_N_ID_PARA?>
-						</td>
-						<td>
-							<?= $row->MODOLO_C_SITUACION?>
-						</td>
-						<td>
-							<?= $row->MODOLO_N_USUARIO_UPD?>
-						</td>
-						<td>
-							<?= $row->MODOLO_D_FECHA_UPD?>
-						</td>
-						<td>
-							<?= $row->RAZON_SOCIAL_PARA?>
-						</td>
-						<td>
-							<?= $row->CLICON_C_NOMBRE?>
-						</td>
-						<td>
-							<?= $row->MOVDOC_C_SITUACION?>
-						</td>
-						<td>
-							<?= $row->MOVDOC_C_NOMBRE_DE?>
-						</td>
-						<td>
-							<?= $row->MOVDOC_D_FECHA_UPD?>
-						</td>
-					</tr>
-					<?php endforeach; ?>
+			<tbody id="resultados_historial">   
 			</tbody>
 		</table>
 		<div class="modal-footer">
@@ -312,9 +262,9 @@
 			
 			if(data.length > 0)
 			{
-				let historial = `<div style="text-align: center;"> <i class="material-icons tooltipped" style="color: #039be5;text-align:center ;cursor: pointer" onclick="historial()">history</i></div>`;
-				M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
+                M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
+
 					const element = data[index]; 
 					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
 					$situacion = '';
@@ -345,7 +295,7 @@
 					}
 
 
-					$editar = `<a href="#" style="color: #999999;"><i class="material-icons" style="cursor: pointer">edit</i></a>`;
+					$editar = `<i class="material-icons" style="color: #999999;">edit</i>`;
 					if(element.MOVDOC_C_SITUACION == '0'  || element.MOVDOC_C_SITUACION == '1')
 					{
 						$editar = `<a href="<?= base_url() ?>recepcion_doc/${element.MOVDOC_N_ID}/editar" style="color: #1EB635;"><i class="material-icons" style="cursor: pointer">edit</i></a>`;
@@ -362,14 +312,13 @@
 								<td class="left-align">${element.MOVDOC_C_NUMERO_DOCUMENTO}</td>
 								<td class="center-align">${adjunto}</td>
 								<td class="center-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
-								<td class="center-align">${$situacion}</td>
+                                <td class="center-align">${$situacion}</td>
+                                <td class="center-align"><i class="material-icons tooltipped" style="color: #039be5;text-align:center ;cursor: pointer" onclick="historial(${element.MOVDOC_N_ID})">history</i></td>
 								<td class="center-align">${$eliminar} </td>
 								<td class="center-align">${$editar}</td> 
 							</tr>
 					`);
 				}
-				$('#resultados').append(` <tr> <td> ${historial} </td> </tr>`);
-				
 			}
 			else{
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
@@ -378,9 +327,78 @@
         });
 	}
 
-	function historial()
+    function historial(id)
 	{
-		$('#modalHistorial').modal('open');
+        $('.preloader-background').css({'display': 'block'}); 
+        let url = '<?= base_url() ?>api/execsp';
+        let sp = 'HISTORIAL_MOVIMIENTO_DOCUMENTO';
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        let data = {sp, empresa, id}
+        fetch(url, {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!
+                    headers:{
+                        'Content-Type': 'application/json'
+                        }
+                    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) 
+        {
+			//$('#total').html(data.length);
+            $('#resultados_historial').html('');
+            console.log(data)
+			if(data.length > 0)
+			{
+                M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
+				for (let index = 0; index < data.length; index++) {
+
+					const element = data[index]; 				
+					$situacion = '';
+					if(element.MODOLO_C_SITUACION == '1')
+					{
+						adjunto = `<a href="uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
+						$situacion = `<p style="color: #4690F5;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+
+					if( element.MODOLO_C_SITUACION  == '0' ||  element.MODOLO_C_SITUACION  == '1'  ){
+						$eliminar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="eliminar(${element.MOVDOC_N_ID})">delete</span>`;
+					}
+					else{
+						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
+					}
+
+					if(element.MODOLO_C_SITUACION == '0')
+					{
+						$situacion = `<p style="color: #EE9A08;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+					if(element.MODOLO_C_SITUACION == '2')
+					{
+						$situacion = `<p style="color: #EE3324;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+					if(element.MODOLO_C_SITUACION == '3')
+					{
+						$situacion = `<p style="color: #1EB635;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+
+					$('#resultados_historial').append(`   		
+							<tr>
+								<td class="left-align">${element.RAZON_SOCIAL_PARA}</td>
+								<td class="left-align">${element.CLICON_C_NOMBRE}</td>
+                                <td class="left-align">${$situacion}</td>
+								<td class="left-align">${element.USUARI_C_USERNAME}</td>
+								<td class="center-align">${element.MODOLO_C_FECHA_UPD}</td>								
+							</tr>
+					`);
+				}
+                $('#modalHistorial').modal('open');
+			}
+			else{
+                M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
+            }
+            $('.preloader-background').css({'display': 'none'});                            
+        });
 	}
 
 	function modalUpload(id)

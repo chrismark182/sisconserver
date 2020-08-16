@@ -24,13 +24,11 @@ class C_recepcion_doc extends CI_Controller {
     }    
     public function index() 
 	{   
-		$this->data['historial'] = $this->M_crud->sql("Exec HISTORIAL_MOVIMIENTO_DOCUMENTO");        
 		$this->load->view('recepcion_doc/V_index', $this->data);
     }
     public function nuevo()
     {
-		$this->_init();	
-		        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
+        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
         $this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");        
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
@@ -39,7 +37,8 @@ class C_recepcion_doc extends CI_Controller {
 	public function editar($id)
 	{
 		$this->data["id"] = $id;
-		$this->data['list_movimiento_edit'] = $this->M_crud->sql("Exec MOVIMIENTO_DOCUMENTO_EDIT_LIS  {$this->data['empresa']->EMPRES_N_ID},{$id}");
+		$movimiento_documentos = $this->M_crud->sql("Exec MOVIMIENTO_DOCUMENTO_EDIT_LIS  {$this->data['empresa']->EMPRES_N_ID},{$id}");
+		$this->data['movdoc'] = $movimiento_documentos[0];
 		$this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
 		$this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");
