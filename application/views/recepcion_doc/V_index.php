@@ -228,7 +228,6 @@
 			</tbody>
 		</table>
 		<div class="modal-footer">
-			<a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
 			<a id="botonConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     	</div>
 	</div>
