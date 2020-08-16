@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_recepcion_doc extends CI_Controller {
     var $data = array();
-
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +22,6 @@ class C_recepcion_doc extends CI_Controller {
 	{
 		$this->output->set_template('siscon');
     }    
-    //Vistas
     public function index() 
 	{   
 		$this->data['historial'] = $this->M_crud->sql("Exec HISTORIAL_MOVIMIENTO_DOCUMENTO");        
@@ -31,12 +29,10 @@ class C_recepcion_doc extends CI_Controller {
     }
     public function nuevo()
     {
-		$this->_init();
-		
+		$this->_init();	
 		        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
-        $this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");
-        
+        $this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");        
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
         $this->load->view('recepcion_doc/V_nuevo', $this->data);        
 	}
@@ -49,7 +45,6 @@ class C_recepcion_doc extends CI_Controller {
 		$this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");
 		$this->load->view('recepcion_doc/V_editar', $this->data);
 	}
-
 	public function actualizar($empresa,$servicio)
     {
 		$requiereos='0';
@@ -66,9 +61,7 @@ class C_recepcion_doc extends CI_Controller {
 										. $this->input->post('descripcion') . "','"
 										.$requiereos. "','" 
 										.$afectoigv. "',"
-										. $this->data['session']->USUARI_N_ID;
-										
-					
+										. $this->data['session']->USUARI_N_ID;					
 		$this->M_crud->sql($sql);      
 		$this->session->set_flashdata('message','Datos actualizados correctamente');
 		redirect('servicios', 'refresh'); 
@@ -76,10 +69,8 @@ class C_recepcion_doc extends CI_Controller {
 		else:
 			$this->session->set_flashdata('message','No puede guardar en vacio');
 			header("Location: editar");
-
 		endif;
 	} 
-
     public function reporte($id)
     {
         $sql= "Exec ALQUILER_LIS_REPORTE {$this->session->userdata('empresa_id')},{$id}";
@@ -89,16 +80,12 @@ class C_recepcion_doc extends CI_Controller {
         $html = ob_get_clean();
         $this->pdfgenerator->generate($html, "reporte.pdf");
 	}
-	
 	public function eliminar($id)
     {
         $sql = "Exec MOVIMIENTO_DOCUMENTO_DEL {$this->data['empresa']->EMPRES_N_ID},{$id},{$this->data['session']->USUARI_N_ID}";    
-
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('recepcion_doc', 'refresh');       
-	}
-	
-	
+	}	
 }
 
