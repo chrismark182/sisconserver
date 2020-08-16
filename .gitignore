@@ -34,3 +34,4 @@ application/config/config.php
 uploads/*.jpg
 uploads/*.png
 uploads/*.jpeg
+uploads/*.pdf
