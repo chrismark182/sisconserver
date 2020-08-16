@@ -26,13 +26,14 @@ class C_recepcion_doc extends CI_Controller {
     //Vistas
     public function index() 
 	{   
-		           
+		$this->data['historial'] = $this->M_crud->sql("Exec HISTORIAL_MOVIMIENTO_DOCUMENTO");        
 		$this->load->view('recepcion_doc/V_index', $this->data);
     }
     public function nuevo()
     {
-        $this->_init();
-        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
+		$this->_init();
+		
+		        $this->data['clientes'] = $this->M_crud->sql("Exec CLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, 0,'',''");
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
         $this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");
         

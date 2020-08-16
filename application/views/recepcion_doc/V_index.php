@@ -160,6 +160,80 @@
 </div>
 
 
+<div id="modalHistorial" class="modal">
+    <div class="modal-content">
+        <h4>Historial</h4>
+		<table class="striped" style="font-size: 12px;">
+			<thead class="blue-grey darken-1" style="color: white">
+				<tr>          
+					<th class="center-align">EMPRESA ID </th>
+					<th class="center-align">MODOLO ID</th>
+					<th class="left-align">MOVDOC ID</th>
+					<th class="left-align">CLIENTE ID CONTACTO PARA</th>
+					<th class="left-align">CLIENTE ID PARA</th>
+					<th class="left-align">SITUACION</th>
+					<th class="center-align">USUARIO UPD</th>
+					<th class="center-align">FECHA UPD</th>
+					<th class="center-align">RAZON SOCIAL</th>
+					<th class="center-align">CLIENTE CONTACTO NOMBRE</th>
+					<th class="center-align">MOVIMIENTO DOCUMENTO SITUACION</th>
+					<th class="center-align">NOMBRE DE</th>
+					<th class="center-align">FECHA ACTUALIZACION</th>          
+				</tr>
+			</thead>
+			<tbody id="resultados">   
+					<?php foreach ($historial as $row): ?>
+					<tr>
+						<td>
+							<?= $row->EMPRES_N_ID?>
+						</td>				
+						<td>
+							<?= $row->MODOLO_N_ID?>
+						</td>
+						<td>
+							<?= $row->MOVDOC_N_ID?>
+						</td>
+						<td>
+							<?= $row->CLICON_N_ID_PARA?>
+						</td>
+						<td>
+							<?= $row->CLIENT_N_ID_PARA?>
+						</td>
+						<td>
+							<?= $row->MODOLO_C_SITUACION?>
+						</td>
+						<td>
+							<?= $row->MODOLO_N_USUARIO_UPD?>
+						</td>
+						<td>
+							<?= $row->MODOLO_D_FECHA_UPD?>
+						</td>
+						<td>
+							<?= $row->RAZON_SOCIAL_PARA?>
+						</td>
+						<td>
+							<?= $row->CLICON_C_NOMBRE?>
+						</td>
+						<td>
+							<?= $row->MOVDOC_C_SITUACION?>
+						</td>
+						<td>
+							<?= $row->MOVDOC_C_NOMBRE_DE?>
+						</td>
+						<td>
+							<?= $row->MOVDOC_D_FECHA_UPD?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+			</tbody>
+		</table>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+			<a id="botonConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
+    	</div>
+	</div>
+</div>
+
 
 
 <script>
@@ -184,7 +258,6 @@
 		if(document.getElementById('id').value != ''){
 			id =  parseInt(document.getElementById('id').value );
 		}
-		
 		let fecha_desde = $('#desde').val();
 			fecha_desde = fecha_desde.split('/');
 		let desde = fecha_desde[2] + fecha_desde[1] + fecha_desde[0] ;
@@ -240,11 +313,11 @@
 			
 			if(data.length > 0)
 			{
+				let historial = `<div style="text-align: center;"> <i class="material-icons tooltipped" style="color: #039be5;text-align:center ;cursor: pointer" onclick="historial()">history</i></div>`;
 				M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
 					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
-					
 					$situacion = '';
 					if(element.MOVDOC_C_SITUACION == '1')
 					{
@@ -280,6 +353,7 @@
 						$editar = `<p style="color: #1EB635;">  ${element.MOVDOC_C_SITUACION} </p>`;
 					}
 
+
 					$('#resultados').append(`   		
 							<tr>
 								<td class="center-align">${element.MOVDOC_N_ID}</td>
@@ -294,15 +368,21 @@
 								<td class="center-align">${$eliminar} </td>
 								<td class="center-align">${$editar}</td> 
 							</tr>
-							<
 					`);
 				}
+				$('#resultados').append(` <tr> <td> ${historial} </td> </tr>`);
+				
 			}
 			else{
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                            
         });
+	}
+
+	function historial()
+	{
+		$('#modalHistorial').modal('open');
 	}
 
 	function modalUpload(id)
