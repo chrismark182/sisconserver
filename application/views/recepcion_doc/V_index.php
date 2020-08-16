@@ -345,11 +345,10 @@
 					}
 
 
+					$editar = `<a href="#" style="color: #999999;"><i class="material-icons" style="cursor: pointer">edit</i></a>`;
 					if(element.MOVDOC_C_SITUACION == '0'  || element.MOVDOC_C_SITUACION == '1')
 					{
-						$editar = `<a href="<?= base_url() ?>recepcion_doc/${element.MOVDOC_N_ID}/editar" style="color: #1EB635;"><i class="material-icons" style="cursor: pointer">edit</i></a> `;
-					}else{
-						$editar = `<p style="color: #1EB635;">  ${element.MOVDOC_C_SITUACION} </p>`;
+						$editar = `<a href="<?= base_url() ?>recepcion_doc/${element.MOVDOC_N_ID}/editar" style="color: #1EB635;"><i class="material-icons" style="cursor: pointer">edit</i></a>`;
 					}
 
 
