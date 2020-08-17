@@ -184,6 +184,7 @@ $route['ind_alq_cliente'] = function (){return 'C_alquiler_indicadores/cliente';
 $route['ind_alq_mes'] = function (){return 'C_alquiler_indicadores/mes'; };
 
 $route['ind_vis_cliente'] = function (){return 'C_visitas_indicadores/cliente'; };
+$route['ind_tiempo_ent'] = function (){return 'C_recepcion_indicadores/cliente'; };
 
 
 //bloqueo
