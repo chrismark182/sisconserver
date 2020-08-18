@@ -24,7 +24,7 @@
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
         <form action="<?= base_url() ?>clientes" method="post">
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l2">
                 <input id="id" maxlength="20" type="text" name="id"  class="validate">
                 <label class="active" for="id">ID</label> 
             </div>
@@ -32,43 +32,43 @@
                 <input id="empresa_de" maxlength="200" type="text">
                 <label class="active" for="empresa_de">Empresa De</label> 
             </div>
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l3">
                 <input id="nombre_de" maxlength="200" type="text">
                 <label class="active" for="nombre_de">Nombre De</label> 
             </div>
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l3">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="desde">Desde</label> 
             </div>
 
+			<div class="input-field col s12 m6 l2">
+                <input id="numero_doc_recibido" maxlength="200" type="text">
+                <label class="active" for="numero_doc_recibido">Número Documento</label> 
+            </div>
 			<div class="input-field col s12 m6 l4">
                 <input id="empresa_para" maxlength="200" type="text">
                 <label class="active" for="empresa_de">Empresa Para</label> 
             </div>
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l3">
                 <input id="contacto_recibe" maxlength="200" type="text">
-                <label class="active" for="contacto_recibe">Contacto Para</label> 
+                <label class="active" for="contacto_recibe">Contácto Para</label> 
             </div>
-            <div class="input-field col s12 m6 l4">
+            <div class="input-field col s12 m6 l3">
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
             </div>
 			
-			<div class="input-field col s12 m6 l4">
-                <input id="numero_doc_recibido" maxlength="200" type="text">
-                <label class="active" for="numero_doc_recibido">Número Documento Recibido</label> 
-            </div>
-			<div class="input-field col s12 m6 l4">
+			<div class="input-field col s12 m6 l6">
 				<select id="situacion">
 					<option value="-1" selected>Todos</option>
 					<option value="0">Pendiente</option>
-					<option value="1">Para revisión</option>
+					<option value="1">En Revisión</option>
 					<option value="2">Rechazado</option>
 					<option value="3">Aceptado</option>
 				</select>
                 <label>Situación</label> 
             </div>
-            <div class="input-field col s4">
+            <div class="input-field col s6">
                 <div class="btn-small" id="btnBuscar" onclick="buscar()" >Buscar</div>
             </div>
         </form>
@@ -87,7 +87,7 @@
 				<th class="left-align">NÚMERO</th>
 				<th class="center-align">VER ADJUNTO</th>
 				<th class="center-align">VENCIMIENTO</th>
-				<th class="center-align">SITUACION</th>
+				<th class="center-align">SITUACIÓN</th>
 				<th class="center-align">HISTORIAL</th>
                 <th class="center-align">ELIMINAR</th>
 				<th class="center-align">EDITAR</th>          
@@ -169,9 +169,9 @@
 				<tr>          
 					<th class="left-align">CLIENTE PARA</th>
 					<th class="left-align">CONTACTO</th>
-					<th class="left-align">SITUACION</th>
+					<th class="left-align">SITUACIÓN</th>
 					<th class="left-align">USUARIO</th>
-					<th class="center-align">FECHA ACTUALIZACION</th>
+					<th class="center-align">FECHA ACTUALIZACIÓN</th>
 				</tr>
 			</thead>
 			<tbody id="resultados_historial">   
@@ -266,11 +266,17 @@
 				for (let index = 0; index < data.length; index++) {
 
 					const element = data[index]; 
-					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
+					
+					let adjunto = `<a href="uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="Ver Documento">attachment</i></a>`;
 					$situacion = '';
-					if(element.MOVDOC_C_SITUACION == '1')
+					
+					if(element.MOVDOC_C_SITUACION == '0')
 					{
-						adjunto = `<a href="uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
+						adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" data-tooltip="No tiene Documento Escaneado" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
+						$situacion = `<p style="color: #EE9A08;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
+					}
+					if(element.MOVDOC_C_SITUACION == '1')
+					{	
 						$situacion = `<p style="color: #4690F5;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
 					}
 
@@ -281,10 +287,6 @@
 						$eliminar = `<span style="color:grey" class="material-icons">delete</span>`;
 					}
 
-					if(element.MOVDOC_C_SITUACION == '0')
-					{
-						$situacion = `<p style="color: #EE9A08;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
-					}
 					if(element.MOVDOC_C_SITUACION == '2')
 					{
 						$situacion = `<p style="color: #EE3324;"><b>${element.MOVDOC_C_SITUACION_DES}</b><i class="material-icons" style="cursor: pointer"></i></p>`;
@@ -313,7 +315,7 @@
 								<td class="center-align">${adjunto}</td>
 								<td class="center-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
                                 <td class="center-align">${$situacion}</td>
-                                <td class="center-align"><i class="material-icons tooltipped" style="color: #039be5;text-align:center ;cursor: pointer" onclick="historial(${element.MOVDOC_N_ID})">history</i></td>
+                                <td class="center-align"><i class="material-icons tooltipped" style="color: #039be5;text-align:center ;cursor: pointer" data-tooltip="Ver Historial" onclick="historial(${element.MOVDOC_N_ID})">history</i></td>
 								<td class="center-align">${$eliminar} </td>
 								<td class="center-align">${$editar}</td> 
 							</tr>
@@ -324,11 +326,13 @@
                 M.toast({html: 'No se encontraron resultados', classes: 'rounded'});
             }
             $('.preloader-background').css({'display': 'none'});                            
+			$('.tooltipped').tooltip();
         });
 	}
 
     function historial(id)
 	{
+		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
         $('.preloader-background').css({'display': 'block'}); 
         let url = '<?= base_url() ?>api/execsp';
         let sp = 'HISTORIAL_MOVIMIENTO_DOCUMENTO';
@@ -351,7 +355,7 @@
             console.log(data)
 			if(data.length > 0)
 			{
-                M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
+                M.toast({html: 'Cargando Historial', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 
 					const element = data[index]; 				
@@ -442,6 +446,7 @@
 			$('.preloader-background').css({'display': 'none'});                            
 		});
 	}
+
 	function  eliminar($id)
 	{
 		console.log('confirmar eliminar')

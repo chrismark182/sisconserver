@@ -99,6 +99,7 @@
         var elems = document.querySelectorAll('.timepicker');
         var instances = M.Timepicker.init(elems, options);
 	});
+
 	function buscar()
     {
 		M.toast({html: 'Buscando resultado...', classes: 'rounded'});
@@ -183,6 +184,7 @@
 				$('.preloader-background').css({'display': 'none'});                            
 			});	
     }	
+
     async function validarUpload()
     {
         if(archivo.value != ''){
@@ -192,6 +194,7 @@
             guardar();
         }
     }
+
 	function guardar()
     {
         M.toast({html: 'Grabando...', classes: 'rounded'});         
@@ -210,10 +213,11 @@
 		let tipo_doc = parseInt(document.getElementById("tipo_doc").value);
 		let nro_documento = document.getElementById("nro_documento").value;
         let nameFile = document.getElementById("name_file").value;
+		let vencimiento = document.getElementById("vencimiento").value;
 		let observaciones = document.getElementById("observaciones").value;
         let usuario = <?= $this->data['session']->USUARI_N_ID ?>
 
-		let data = {sp, empresa, cliente_de, nombre_de, cliente_para, contacto, tipo_doc, nro_documento, nameFile, observaciones, situacion, usuario};
+		let data = {sp, empresa, cliente_de, nombre_de, cliente_para, contacto, tipo_doc, nro_documento, nameFile, vencimiento, observaciones, situacion, usuario};
 		if(contacto != 0)
 		{
 			fetch(url, {

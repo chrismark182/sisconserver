@@ -55,7 +55,7 @@
                 <th class="left-align">NOMBRES</th>
                 <th class="left-align">APELLIDOS</th>
                 <th class="center-align">VENCE SCTR</th>
-                <th class="center-align">SITUACION</th>
+                <th class="center-align">BLOQUEO</th>
                 <th class="center-align">FOTO</th>
                 <th class="center-align">EDITAR</th>
                 <th class="center-align">ELIMINAR</th>

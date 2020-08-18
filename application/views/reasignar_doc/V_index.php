@@ -5,7 +5,7 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
         <div class="col s4" style="display: inline-block">
-            <a href="#!" class="breadcrumb">Reasignacion de Documentos</a>
+            <a href="#!" class="breadcrumb">Reasignación de Documentos</a>
         </div>
         <ul id="nav-mobile" class="right">
             <div class="input-field col s6 left-align" style="margin: 0px; font-size: 12px;">
@@ -35,7 +35,7 @@
 				<th class="left-align">NÚMERO</th>
 				<th class="center-align">VER ADJUNTO</th>
 				<th class="center-align">VENCIMIENTO</th>
-				<th class="center-align">SITUACION</th>
+				<th class="center-align">ASIGNAR</th>
             </tr>
         </thead>
         <tbody id="resultados">   
@@ -87,7 +87,7 @@
 				<select id="contacto_para" required>
 					<option value="0" disabled selected >Elige una opción</option>
 				</select>
-				<label>Contacto Para</label>
+				<label>Contácto Para</label>
 			</div>
 		</div>
     </div>
@@ -95,6 +95,7 @@
         <a id="btnConfirmar" href="#!" onclick="reasignaDoc()" class="modal-close waves-effect waves-green btn">MODIFICAR</a>
     </div>
 </div>
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 	    buscar()
@@ -105,8 +106,7 @@
 		$('.preloader-background').css({'display': 'block'});
 		let url = '<?= base_url() ?>api/execsp';
 
-		let sp = 'REASIGNACION_DOC_LIS';
-		
+		let sp = 'MOVIMIENTO_DOCUMENTO_REASIGNAR_LIS';
 		
 		let data = {sp};
         
@@ -127,12 +127,12 @@
 			
 			if(data.length > 0)
 			{
-				M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
+				M.toast({html: 'Cargando Documentos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
-					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
 					
-					$situacion = `<p style="color: #1EB635;" onclick="modalReasignar(${element.MOVDOC_N_ID})"><i class="material-icons" style="cursor: pointer">content_paste</i></p>`;
+					let adjunto = `<a href="<?= base_url() ?>uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
+					$asignar = `<p style="color: #1EB635;" onclick="modalReasignar(${element.MOVDOC_N_ID})"><i class="material-icons" style="cursor: pointer">content_paste</i></p>`;
 
 					$('#resultados').append(`   		
 							<tr>
@@ -145,7 +145,7 @@
 								<td class="left-align">${element.MOVDOC_C_NUMERO_DOCUMENTO}</td>
 								<td class="center-align">${adjunto}</td>
 								<td class="center-align">${element.MOVDOC_D_FECHA_VENCIMIENTO}</td>
-								<td class="center-align">${$situacion}</td>
+								<td class="center-align">${$asignar}</td>
 							</tr>
 					`);
 				}
@@ -156,10 +156,11 @@
             $('.preloader-background').css({'display': 'none'});                            
         });
 	}
+
     function reasignaDoc(){
 	
 		let url = '<?= base_url() ?>api/execsp';		
-		let sp = 'REASIGNAR_DOCUMENTO';
+		let sp = 'MOVIMIENTO_DOCUMENTO_REASIGNAR_UPD';
 		
 		let empresa = <?= $empresa->EMPRES_N_ID ?>;
 		let documento_id = document.getElementById("documento_id").value;
@@ -239,6 +240,7 @@
 		console.log('reasignar documento');
         $('#modalReasignarDoc').modal('open');
 	}
+
 	function buscarContactoCliente()
     {
 		M.toast({html: 'Buscando resultado...', classes: 'rounded'});

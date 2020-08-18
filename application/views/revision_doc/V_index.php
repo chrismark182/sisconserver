@@ -100,7 +100,7 @@
 			
 			if(data.length > 0)
 			{
-				M.toast({html: 'Cargando Documentos Recibidos', classes: 'rounded'});
+				M.toast({html: 'Cargando Documentos', classes: 'rounded'});
 				for (let index = 0; index < data.length; index++) {
 					const element = data[index]; 
 					let adjunto = `<i class="material-icons tooltipped" style="color: #039be5; cursor: pointer" onclick="modalUpload(${element.MOVDOC_N_ID})">attach_file</i>`;
@@ -110,8 +110,8 @@
 						adjunto = `<a href="<?= base_url() ?>uploads/${element.MOVDOC_C_FOTO}" target="_blank"><i class="material-icons tooltipped" style="color: #039be5; cursor: pointer">attachment</i></a>`;
 					}
 
-					$aceptar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="aceptar(${element.MOVDOC_N_ID})">event_available</span>`;
-					$rechazar = `<span style="cursor:pointer; color:#039be5" class="material-icons" onclick="rechazar(${element.MOVDOC_N_ID})">event_busy</span>`;
+					$aceptar = `<span style="cursor:pointer; color:#1EB635" class="material-icons" onclick="aceptar(${element.MOVDOC_N_ID})">event_available</span>`;
+					$rechazar = `<span style="cursor:pointer; color:#EE3324" class="material-icons" onclick="rechazar(${element.MOVDOC_N_ID})">event_busy</span>`;
 
 					$('#resultados').append(`   		
 							<tr>
