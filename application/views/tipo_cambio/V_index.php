@@ -25,7 +25,7 @@
 <!-- Buscador -->
 <div class="section container center" style="padding-top: 0px">
     <div class="row" style="margin-bottom: 0px">
-        <form action="<?= base_url() ?>ordenes" method="post" id="form">
+        <form action="<?= base_url() ?>cambio" method="post" id="form">
             
             <div class="input-field col s12 m6 l6">
                 <input id="desde" type="text" value="<?= $fechaDesde->format('m/d/Y') ?>" class="datepicker">
@@ -85,12 +85,12 @@
 
     function buscar()
         {
-            let empresa = <?= $empresa->EMPRES_N_ID ?>;
-            $fecha_desde = $('#desde').val();
-            $fecha_desde = $fecha_desde.split('/');
-            
-            $fecha_hasta = $('#hasta').val();
-            $fecha_hasta = $fecha_hasta.split('/');
+        let empresa = <?= $empresa->EMPRES_N_ID ?>;
+        $fecha_desde = $('#desde').val();
+        $fecha_desde = $fecha_desde.split('/');
+        
+        $fecha_hasta = $('#hasta').val();
+        $fecha_hasta = $fecha_hasta.split('/');
 
         console.log("Buscando")
         M.toast({html: 'Buscando resultado...', classes: 'rounded'});

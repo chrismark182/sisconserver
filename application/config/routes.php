@@ -150,8 +150,6 @@ $route['tarifa/(:num)/(:num)/eliminar'] = function ($empresa ,$tarifa){return 'C
 $route['cambios'] = 'C_tipo_cambio';
 $route['cambio/nuevo'] = 'C_tipo_cambio/nuevo';
 $route['cambio/crear'] = 'C_tipo_cambio/crear';
-$route['cambio/(:num)/(:num)/editar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/editar/'.$empresa.'/'.$cambio;};
-$route['cambio/(:num)/(:num)/actualizar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/actualizar/'.$empresa.'/'.$cambio;};
 $route['cambio/(:num)/(:num)/eliminar'] = function ($empresa ,$cambio){return 'C_tipo_cambio/eliminar/'.$empresa.'/'.$cambio;};
 
 

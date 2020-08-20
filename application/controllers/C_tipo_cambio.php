@@ -39,18 +39,7 @@ class C_tipo_cambio extends CI_Controller {
         
         
     }
-    public function editar($empresa,$cliente)
-    {  
-        $this->_init();
-        $sql = "Exec CLIENTE_LIS2 "  .$empresa. ","
-                                    .$cliente ;
-        
-        $this->data['tdocumentos'] = $this->M_crud->read('tipo_documento', array());
-        $clientes = $this->M_crud->sql($sql);
-        $this->data['cliente'] = $clientes[0];
-       
-        $this->load->view('tipo_cambio/V_editar',$this->data);
-    }
+    
     public function crear(){
 
                 $sql = "Exec TIPO_CAMBIO_INS "      . $this->data['empresa']->EMPRES_N_ID .  ",'"
@@ -70,7 +59,6 @@ class C_tipo_cambio extends CI_Controller {
         $sql = "Exec TIPO_CAMBIO_DEL "     . $empresa .","
                                         . $cambio.","
                                         .$this->data['session']->USUARI_N_ID ; 
-                       echo $sql;                 
         $this->M_crud->sql($sql);      
         $this->session->set_flashdata('message','Datos eliminados correctamente');
         redirect('cambios', 'refresh');       
