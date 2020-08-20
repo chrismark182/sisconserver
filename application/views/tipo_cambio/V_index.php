@@ -35,20 +35,15 @@
                 <input id="hasta" type="text" value="<?= $fechaHasta->format('m/d/Y') ?>" class="datepicker">
                 <label class="active" for="hasta">Hasta</label> 
                     <div class="input-field col l1">
-                        <div class="btn-small" id="btn_buscar">Buscar</div>
+                        <div class="btn-small" id="btnBuscar">Buscar</div>
                     </div>
             </div>
         </form>
     </div>    
 </div>
 
-
-
-
-
 <div class="container">
     <div class="section container">
-
         <div>
             &nbsp;
         </div>
@@ -81,9 +76,14 @@
       <a id="btnConfirmar" href="#!" class="modal-close waves-effect waves-green btn">ACEPTAR</a>
     </div>
 </div>
+
 <script>
-    
-        function buscar()
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnBuscar = document.getElementById("btnBuscar"); 
+        btnBuscar.addEventListener("click", buscar, false);
+    });
+
+    function buscar()
         {
             let empresa = <?= $empresa->EMPRES_N_ID ?>;
             $fecha_desde = $('#desde').val();
@@ -118,7 +118,7 @@
             $('#total').html(data.length);
             if(data.length > 0)
             {
-                M.toast({html: 'Cargando Ordenes de Servicio', classes: 'rounded'});
+                M.toast({html: 'Cargando Tipo de Cambio', classes: 'rounded'});
                 for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                     
@@ -126,11 +126,11 @@
                     
                     $('#resultados').append(`   
                         <tr>
-                        <td class="left-align">${element.TIPCAM_C_FECHA}</td>
-                        <td class="rigth-align">${element.TIPCAM_N_VALOR_VENTA}</td>
-                            <td class="center-align">
-                                ${$eliminar}
-                            </td>
+                        <td class="center-align">${element.TIPCAM_C_FECHA}</td>
+                        <td class="center-align">${element.TIPCAM_N_VALOR_VENTA}</td>
+                        <td class="center-align">
+                            ${$eliminar}
+                        </td>
                         </tr>
                     `);
                 }
