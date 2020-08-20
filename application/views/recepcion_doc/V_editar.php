@@ -43,7 +43,7 @@
     <div class="row">
         <div class="input-field col s12 m6 l4">
             <select id="tipo_doc" required>
-                <option value="0">Elige una opción</option>
+                <option value="0"><?= $movdoc->TIDORE_C_ABREVIATURA ?></option>
                 <?php foreach ($tipo_documentos as $row): ?>
                     <option value="<?= $row->TIDORE_N_ID?>"> <?= $row->TIDORE_C_ABREVIATURA ?> </option>
                 <?php endforeach; ?>
@@ -51,15 +51,15 @@
             <label for="tipo_doc">Tipo de documentos</label>
         </div>
         <div class="input-field col s12 m6 l4" >
-            <input id="nro_documento" type="text" value="" >
+            <input id="nro_documento" type="text" value="<?= $movdoc->MOVDOC_C_NUMERO_DOCUMENTO?>" >
             <label class="active" for="nro_documento">Nro. Documento</label>
         </div>
         <div class="input-field col s12 m6 l4">
-            <input id="vencimiento" type="text" class="datepicker">
+            <input id="vencimiento" type="text" value="<?= $movdoc->MOVDOC_D_FECHA_VENCIMIENTO?>" class="datepicker">
             <label for="vencimiento">Fecha vencimiento</label>
         </div>
         <div class="input-field col s12 m6 l12">
-            <textarea id="observaciones" class="materialize-textarea"></textarea>
+            <textarea id="observaciones" value="<?= $movdoc->MOVDOC_C_OBSERVACIONES?>" class="materialize-textarea"></textarea>
             <label for="observaciones">Observaciones</label>
         </div>
     </div>
