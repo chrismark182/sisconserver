@@ -181,6 +181,7 @@
         .then(function(response) {
             return response.json();
 		}).then(function(data){
+            
 			buscar();                        
 		});	
 
@@ -236,7 +237,10 @@
 	}
 
 	function modalReasignar($id){
-		document.getElementById('documento_id').value = $id
+        document.getElementById('documento_id').value = $id
+        document.getElementById('empresa_para').value = '0';
+        document.getElementById('contacto_para').value = '0';
+        $('select').formSelect();		
 		console.log('reasignar documento');
         $('#modalReasignarDoc').modal('open');
 	}

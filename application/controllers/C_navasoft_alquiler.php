@@ -101,7 +101,7 @@ class C_navasoft_alquiler extends CI_Controller {
             'nrod'          => $resultSet['NROD'],
             'origen'        => $resultSet['ORIGEN']
         );
-        var_dump($cabecera);
+        //var_dump($cabecera);
         $result = (object) null;
         
         $this->M_dbf->create('docterminal', $cabecera, 0);

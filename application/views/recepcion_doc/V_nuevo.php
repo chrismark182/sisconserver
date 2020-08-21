@@ -27,11 +27,11 @@
                     <option value="<?= $row->CLIENT_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL?> </option>
                 <?php endforeach; ?>
             </select>
-            <label>De</label>
+            <label>De*</label>
         </div>
 		<div class="input-field col s12 m6 l8">
 			<input id="nombre_de" type="text" class="validate">
-			<label for="nombre_de">Nombre</label>
+			<label for="nombre_de">Nombre*</label>
 		</div>
     </div>
     <div class="row">
@@ -42,13 +42,13 @@
                     <option value="<?= $row->CLIENT_N_ID?>"> <?= $row->CLIENT_C_RAZON_SOCIAL?> </option>
                 <?php endforeach; ?>
             </select>
-            <label>Para</label>
+            <label>Para*</label>
         </div>
         <div class="input-field col s12 m6 l8">
             <select id="contacto" required>
                 <option value="0">Elige una opción</option>				
             </select>
-            <label>Persona de Contacto</label>
+            <label>Persona de Contacto*</label>
         </div>
     </div>
     <div class="row">
@@ -59,11 +59,11 @@
 					<option value="<?= $row->TIDORE_N_ID?>"> <?= $row->TIDORE_C_ABREVIATURA ?> </option>
 				<?php endforeach; ?>
 			</select>
-			<label for="tipo_doc">Tipo de documentos</label>
+			<label for="tipo_doc">Tipo de documentos*</label>
 		</div>
         <div class="input-field col s12 m6 l3" >
             <input id="nro_documento" type="text" required>
-            <label class="active" for="nro_documento">Nro. Documento</label>
+            <label class="active" for="nro_documento">Nro. Documento*</label>
         </div>
         <input type="hidden" id="name_file">
         <div class="file-field input-field col s12 m6 l5">
@@ -84,6 +84,7 @@
 			<label for="observaciones">Observaciones</label>
         </div>
 	</div>
+    <div>(*) Campos obligatorios </div>  
 	<div class="input-field col s4">
         <div class="btn-small" id="btnBuscar" onclick="validarUpload()" >Guardar</div>
     </div>
@@ -189,12 +190,18 @@
     async function validarUpload()
     {
         let documento = document.getElementById('nro_documento');
-        if(archivo.value != '' && documento.value !=  ''){
-            await uploadFile('archivo')
-            guardar();
+        let archivo = document.getElementById('archivo');
+
+        if(parseInt(document.getElementById('tipo_doc').value) != 0 && documento.value !=  ''){
+            if(archivo.value != '')
+            {
+                await uploadFile('archivo')
+                guardar();
+            }else{
+                guardar();
+            }
         }else{
-            //alert('Pro favor ingrese un documento');
-            M.toast({html: 'Por favor ingrese un documento', classes: 'rounded'});
+            M.toast({html: 'Por favor ingrese todos los datos obligatorios', classes: 'rounded'});
         }
     }
 
