@@ -2,7 +2,6 @@
 <nav class="blue-grey lighten-1" style="padding: 0 1em;">
     <div class="nav-wrapper">
       <div class="col s12">
-        <a href="#!" class="breadcrumb">Visitantes</a>
         <a href="<?= base_url() ?>recepcion_doc" class="breadcrumb">Recepción de Documentos</a>
         <a href="#!" class="breadcrumb">Editar</a>
       </div>

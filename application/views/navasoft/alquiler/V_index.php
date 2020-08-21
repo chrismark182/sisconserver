@@ -201,6 +201,7 @@
         M.toast({html: 'Generando archivos DBF...'});
         $('.preloader-background').css({'display': 'block'});
         var url =  '<?= base_url() ?>navasoft_alquiler/generar_dbf';
+        console.log(url);
         var data = {
                     empresa: empresa, 
                     liquidacion: liquidacion,
