@@ -51,7 +51,7 @@
             <label for="tipo_doc">Tipo de documentos</label>
         </div>
         <div class="input-field col s12 m6 l4" >
-            <input id="nro_documento" type="text" value="<?= $movdoc->MOVDOC_C_NUMERO_DOCUMENTO?>" >
+            <input id="nro_documento" type="text" value="<?= $movdoc->MOVDOC_C_NUMERO_DOCUMENTO?>" required >
             <label class="active" for="nro_documento">Nro. Documento</label>
         </div>
         <div class="input-field col s12 m6 l4">
@@ -64,11 +64,25 @@
         </div>
     </div>
     <div class=" left input-field col s4">
-        <div class="btn-small" id="btnActualizar" onclick="actualizar()" >Actualizar</div>
+        <div class="btn-small" id="btnActualizar" onclick="verificar()" >Actualizar</div>
     </div>
 </div>
 
 <script>
+
+    function verificar (){
+
+
+
+        if(document.getElementById('nro_documento').value != ''){
+            
+            actualizar();
+        }
+        else{
+            //alert('Ingresa el numero de documento');
+            M.toast({html: 'Por favor ingrese un documento', classes: 'rounded'});
+        }
+    }
 
     function actualizar()
     {

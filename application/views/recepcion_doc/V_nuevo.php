@@ -62,7 +62,7 @@
 			<label for="tipo_doc">Tipo de documentos</label>
 		</div>
         <div class="input-field col s12 m6 l3" >
-            <input id="nro_documento" type="text" value="" >
+            <input id="nro_documento" type="text" required>
             <label class="active" for="nro_documento">Nro. Documento</label>
         </div>
         <input type="hidden" id="name_file">
@@ -98,7 +98,8 @@
         }
         var elems = document.querySelectorAll('.timepicker');
         var instances = M.Timepicker.init(elems, options);
-	});
+    });
+
 
 	function buscar()
     {
@@ -187,11 +188,13 @@
 
     async function validarUpload()
     {
-        if(archivo.value != ''){
-			await uploadFile('archivo')
-			guardar();
-        }else{
+        let documento = document.getElementById('nro_documento');
+        if(archivo.value != '' && documento.value !=  ''){
+            await uploadFile('archivo')
             guardar();
+        }else{
+            //alert('Pro favor ingrese un documento');
+            M.toast({html: 'Por favor ingrese un documento', classes: 'rounded'});
         }
     }
 

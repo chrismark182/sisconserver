@@ -32,7 +32,11 @@ class C_recepcion_doc extends CI_Controller {
         $this->data['entidades'] = $this->M_crud->sql("Exec CLIENTE_ESCLIENTE_LIS {$this->data['empresa']->EMPRES_N_ID}, '1'");
         $this->data['tipo_documentos'] = $this->M_crud->sql("Exec TIPO_DOCUMENTO_RECIBIDO_LIS");        
         $this->data['monedas'] = $this->M_crud->sql("Exec MONEDA_LIS");
-        $this->load->view('recepcion_doc/V_nuevo', $this->data);        
+        $this->load->view('recepcion_doc/V_nuevo', $this->data);
+        
+        if(empty($_POST['documento'])){
+            return 'Por favor ingrese el numero del documento';
+        }
 	}
 	public function editar($id)
 	{
