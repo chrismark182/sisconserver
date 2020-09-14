@@ -222,21 +222,3 @@ $route['revision_doc/(:num)/rechazar'] = function ($id){return 'C_revision_doc/r
 
 //Reasignacion documento
 $route['reasignar_doc'] = 'C_reasignar_doc';
-
-//SOLICITUD ABASTECIMIENTO
-$route['solicitudabastecimiento'] = 'C_solicitudabastecimiento';
-$route['solicitudabastecimiento/nuevo'] = 'C_solicitudabastecimiento/nuevo';
-$route['solicitudabastecimiento/crear'] = 'C_solicitudabastecimiento/crear';
-$route['solicitudabastecimiento/do_upload'] = 'C_solicitudabastecimiento/do_upload';
-$route['solicitudabastecimiento/validate'] = 'C_solicitudabastecimiento/validate';
-$route['solicitudabastecimiento/autorizar'] = 'C_solicitudabastecimiento/autorizar';
-
-//INFO
-$route['info/validate'] = 'C_info/validate';
-$route['info/updateprecio'] = 'C_info/updateprecio';
-$route['info/edit'] = 'C_info/edit';
-$route['info/conprecio'] = 'C_info/conprecio';
-$route['info/pagoins'] = 'C_info/pagoins';
-$route['info/detpagolist'] = 'C_info/detpagolist';
-$route['info/detcullist'] = 'C_info/detcullist';
-$route['info/aprobarsolicitud'] = 'C_info/aprobarsolicitud';

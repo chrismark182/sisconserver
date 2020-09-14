@@ -20,14 +20,7 @@
             <div class="input-field col s12 m6 l4">
                 <input id="abreviatura" maxlength="10" type="text" name="abreviatura" class="validate">
                 <label class="active" for="abreviatura">Abreviatura</label> 
-            </div> 
-
-			<div class="input-field col s12 m6 l12">
-                <input id="metrajetotal" maxlength="100" type="number" step="0.01" name="metrajetotal" class="validate" style="width:20%;float: left;" >
-                <label class="active" for="metrajetotal">Metraje Total</label> 
-            </div>
-				
-				
+            </div>      
             <div class="btn-small" id="btn_guardar" >Guardar
             </div>
         </div>
@@ -46,8 +39,7 @@
         if( 
             document.getElementById('descripcion').value.trim() != '' &&
             document.getElementById('direccion').value.trim()  != '' &&
-            document.getElementById('abreviatura').value.trim() != '' &&
-			document.getElementById('metrajetotal').value.trim() != ''
+            document.getElementById('abreviatura').value.trim() != ''
         )
         {
             var url =  '<?= base_url() ?>sede/crear';
@@ -55,7 +47,6 @@
             descripcion: document.getElementById("descripcion").value,            
             direccion: document.getElementById("direccion").value,
             abreviatura: document.getElementById("abreviatura").value,
-            metrajetotal: document.getElementById("metrajetotal").value,
             usuario: <?= $session->USUARI_N_ID ?>
                     };
 
